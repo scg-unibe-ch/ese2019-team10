@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ese2019-team10.iml" filepath="$PROJECT_DIR$/.idea/ese2019-team10.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ESE-2018-Scaffolding.iml" filepath="$PROJECT_DIR$/.idea/ESE-2018-Scaffolding.iml" />
     </modules>
   </component>
 </project>
