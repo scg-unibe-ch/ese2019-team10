@@ -1,0 +1,22 @@
+<ion-app>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>
+        ToDo-List
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-card>
+      <ion-row>
+        <ion-col size="6">
+          <ion-input placeholder="List Name" name="name" [(ngModel)]="todoList.name"></ion-input>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button (click)="onTodoListCreate()">Create List</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+    <app-todo-list [todoList]="todoList" (destroy)="onTodoListDestroy($event)" *ngFor="let todoList of todoLists"></app-todo-list>
+  </ion-content>
+</ion-app>

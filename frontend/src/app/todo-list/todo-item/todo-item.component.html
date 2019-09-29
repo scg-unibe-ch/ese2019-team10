@@ -1,0 +1,11 @@
+<ion-row>
+  <ion-col size="5">
+    <ion-input placeholder="Item Name" name="name" [(ngModel)]="todoItem.name" (ngModelChange)="onSave()"></ion-input>
+  </ion-col>
+  <ion-col size="1">
+    <ion-checkbox [(ngModel)]="todoItem.done" (ngModelChange)="onSave()">Done</ion-checkbox>
+  </ion-col>
+  <ion-col size="2">
+    <ion-button color="danger" (click)="onDestroy()">Delete Item</ion-button>
+  </ion-col>
+</ion-row>

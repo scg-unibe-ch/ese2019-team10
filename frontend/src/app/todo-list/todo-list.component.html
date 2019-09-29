@@ -1,0 +1,19 @@
+<ion-card>
+  <ion-row>
+    <ion-col size="6">
+      <ion-input placeholder="List Name" name="name" [(ngModel)]="todoList.name" (ngModelChange)="onSave()"></ion-input>
+    </ion-col>
+    <ion-col size="2">
+      <ion-button color="danger" (click)="onDestroy()">Delete List</ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="6">
+      <ion-input placeholder="Item Name" name="name" [(ngModel)]="todoItem.name"></ion-input>
+    </ion-col>
+    <ion-col size="2">
+      <ion-button (click)="onTodoItemCreate()">Create Item</ion-button>
+    </ion-col>
+  </ion-row>
+  <app-todo-item [todoItem]="todoItem" (destroy)="onTodoItemDestroy($event)" *ngFor="let todoItem of todoItems"></app-todo-item>
+</ion-card>
