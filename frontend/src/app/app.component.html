@@ -2,12 +2,42 @@
   <ion-header>
     <ion-toolbar>
       <ion-title>
-        ToDo-List
+        Event App
       </ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
     <ion-card>
+
+      <ion-row>
+        <ion-card-title>
+          <h2>
+            Welcome!
+          </h2>
+        </ion-card-title>
+      </ion-row>
+
+      <ion-row>
+        <ion-card-content>
+         <p>Please sign in or register to start using this event platform.</p>
+        </ion-card-content>
+
+      </ion-row>
+      <ion-row>
+      <ion-button>
+        <ion-icon slot="start" name="log-in"></ion-icon>
+        Sign In
+      </ion-button>
+      </ion-row>
+        <ion-row>
+      <ion-button>
+        <ion-icon slot="start" name="person-add"></ion-icon>
+        Register
+      </ion-button>
+        </ion-row>
+    </ion-card>
+
+      <ion-card>
       <ion-row>
         <ion-col size="6">
           <ion-input placeholder="List Name" name="name" [(ngModel)]="todoList.name"></ion-input>
