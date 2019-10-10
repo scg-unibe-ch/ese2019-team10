@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Registration
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+
+    <ion-row>
+      <ion-card-content>
+        <p>Please register to be able to plan an event or offer your services.</p>
+      </ion-card-content>
+    </ion-row>
+
+    <div class="registration-form">
+      <form  #registerForm="ngForm">
+        <ion-row>
+          <ion-col>
+            <ion-list inset>
+
+              <ion-item>
+                <ion-label position="floating">E-Mail</ion-label>
+                <ion-input type="email" placeholder="E-Mail" name="email" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Password</ion-label>
+                <ion-input type="password" placeholder="Password" name="password" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Confirm password</ion-label>
+                <ion-input type="password" placeholder="Password" name="password2" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">First name</ion-label>
+                <ion-input type="text" placeholder="First name" name="firstname" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Last name</ion-label>
+                <ion-input type="text" placeholder="Last name" name="lastname" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Phone</ion-label>
+                <ion-input type="tel" placeholder="Phone number" name="phone" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Country</ion-label>
+                <ion-input type="text" placeholder="Switzerland" name="country" required></ion-input>
+              </ion-item>
+
+            </ion-list>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="signup-col">
+            <ion-button class="submit-btn" type="submit">
+              <ion-icon slot="start" name="person-add"></ion-icon>
+              Register</ion-button></ion-col>
+        </ion-row>
+
+      </form>
+    </div>
+
+
+  </ion-card>
+</ion-content>

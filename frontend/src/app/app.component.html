@@ -1,52 +1,23 @@
 <ion-app>
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>
-        Event App
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-card>
 
-      <ion-row>
-        <ion-card-title>
-          <h2>
-            Welcome!
-          </h2>
-        </ion-card-title>
-      </ion-row>
+  <ion-menu side="start" menuId="first" contentId="content">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Navigate</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content id="content">
+      <ion-list *ngFor="let pages of navigate">
+        <ion-menu-toggle auto-hide="true">
+          <ion-item [routerLink]="pages.url" routerDirection="forward">
+            <ion-icon [name]="pages.icon" slot="start"></ion-icon>
+            {{pages.title}}
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
 
-      <ion-row>
-        <ion-card-content>
-         <p>Please sign in or register to start using this event platform.</p>
-        </ion-card-content>
+  <ion-router-outlet></ion-router-outlet>
 
-      </ion-row>
-      <ion-row>
-      <ion-button>
-        <ion-icon slot="start" name="log-in"></ion-icon>
-        Sign In
-      </ion-button>
-      </ion-row>
-        <ion-row>
-      <ion-button>
-        <ion-icon slot="start" name="person-add"></ion-icon>
-        Register
-      </ion-button>
-        </ion-row>
-    </ion-card>
-
-      <ion-card>
-      <ion-row>
-        <ion-col size="6">
-          <ion-input placeholder="List Name" name="name" [(ngModel)]="todoList.name"></ion-input>
-        </ion-col>
-        <ion-col size="2">
-          <ion-button (click)="onTodoListCreate()">Create List</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-card>
-    <app-todo-list [todoList]="todoList" (destroy)="onTodoListDestroy($event)" *ngFor="let todoList of todoLists"></app-todo-list>
-  </ion-content>
 </ion-app>

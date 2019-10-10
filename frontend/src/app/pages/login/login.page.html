@@ -1,0 +1,53 @@
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+       Login
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+<ion-content>
+  <ion-card>
+
+    <ion-row>
+      <ion-card-content>
+        <p>Please sign in to access your account!</p>
+      </ion-card-content>
+    </ion-row>
+
+    <div class="login-form">
+      <form  #registerForm="ngForm">
+        <ion-row>
+          <ion-col>
+            <ion-list inset>
+
+              <ion-item>
+                <ion-label position="floating">E-Mail</ion-label>
+                <ion-input type="text" placeholder="E-Mail" name="email" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Password</ion-label>
+                <ion-input type="password" placeholder="Password" name="password" required></ion-input>
+              </ion-item>
+
+            </ion-list>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col class="signup-col">
+            <ion-button class="submit-btn" type="submit" [disabled]="!registerForm.form.valid">
+              <ion-icon slot="start" name="log-in"></ion-icon>
+              Login</ion-button></ion-col>
+        </ion-row>
+
+      </form>
+    </div>
+
+  </ion-card>
+</ion-content>

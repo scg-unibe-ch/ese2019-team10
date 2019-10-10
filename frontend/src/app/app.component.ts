@@ -5,6 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {TodoList} from './todo-list';
 import {HttpClient} from '@angular/common/http';
+// import {LoginPage} from './login/login.page';
+
 
 @Component({
   selector: 'app-root',
@@ -13,6 +15,9 @@ import {HttpClient} from '@angular/common/http';
 })
 
 export class AppComponent implements OnInit {
+  rootPage: any = 'HomePage';
+  navigate: any;
+
   todoList: TodoList = new TodoList(null, '');
   todoLists: TodoList[] = [];
 
@@ -22,6 +27,7 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     private httpClient: HttpClient
   ) {
+    this.sideMenu();
     this.initializeApp();
   }
 
@@ -51,4 +57,30 @@ export class AppComponent implements OnInit {
   onTodoListDestroy(todoList: TodoList) {
     this.todoLists.splice(this.todoLists.indexOf(todoList), 1);
   }
+
+
+  sideMenu() {
+    this.navigate =
+      [
+        {
+          title: 'Home',
+          url: '/home',
+          icon: 'home'
+        },
+        {
+          title: 'Login',
+          url: '/login',
+          icon: 'log-in'
+        },
+        {
+          title: 'Register',
+          url: '/register',
+          icon: 'person-add'
+        },
+      ];
+  }
+
+
+
 }
+
