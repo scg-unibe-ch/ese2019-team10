@@ -148,11 +148,16 @@
             <ion-list>
 
         <ion-item>
-          <ion-label>Terms & Conditions</ion-label>
+          <ion-content>
+            <ion-button target="_blank" href="/terms">
+              <ion-icon slot="start" name="clipboard"></ion-icon>
+              Terms & Conditions
+            </ion-button>
+          </ion-content>
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">I accept the terms and conditions</ion-label>
+          <ion-label>I accept the terms and conditions</ion-label>
           <ion-checkbox name="terms" formControlName="terms"></ion-checkbox>
         </ion-item>
         <div class="validation-errors">
