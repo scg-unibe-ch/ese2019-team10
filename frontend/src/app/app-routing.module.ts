@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: './pages/home/home.module#HomePageModule' },
   { path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule' },
+  { path: 'registered', loadChildren: './pages/registered/registered.module#RegisteredPageModule' },
   // { path: 'login', component: LoginPage },
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' }
   ];
