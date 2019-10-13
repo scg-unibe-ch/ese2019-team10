@@ -28,14 +28,24 @@ export class RegisterPage implements OnInit {
       { type: 'required', message: 'Last name is required.' }
     ],
     email: [
-      { type: 'required', message: 'E-Mail is required.' },
-      { type: 'pattern', message: 'Please enter a valid email.' }
+      { type: 'required', message: 'E-mail is required.' },
+      { type: 'pattern', message: 'Please enter a valid e-mail.' }
     ],
     phone: [
       { type: 'required', message: 'Phone is required.' },
     ],
     gender: [
       { type: 'required', message: 'Gender is required.' },
+    ],
+    street: [
+      { type: 'required', message: 'Street is required.' },
+    ],
+    zip: [
+      { type: 'required', message: 'Zip code is required.' },
+      { type: 'pattern', message: 'Please enter a valid zip code.' }
+    ],
+    city: [
+      { type: 'required', message: 'City is required.' },
     ],
     country: [
       { type: 'required', message: 'Country is required.' },
@@ -87,6 +97,12 @@ export class RegisterPage implements OnInit {
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
       gender: new FormControl('', Validators.required),
+      street: new FormControl('', Validators.required),
+      zip: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[0-9]+$')
+      ])),
+      city: new FormControl('', Validators.required),
       country: new FormControl('', Validators.required),
       phone: new FormControl('', Validators.required),
       matchingPasswords: this.matchingPasswordsGroup,

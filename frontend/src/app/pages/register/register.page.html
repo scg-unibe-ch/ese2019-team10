@@ -123,6 +123,43 @@
               </div>
 
               <ion-item>
+                <ion-label position="floating">Street</ion-label>
+                <ion-input type="text" placeholder="Street" name="street" formControlName="street"  required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validationMessages.street">
+                  <div class="error-message" *ngIf="validationsForm.get('street').hasError(validation.type) && (validationsForm.get('street').dirty || validationsForm.get('street').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating">Zip Code</ion-label>
+                <ion-input type="text" placeholder="Zip code" name="zip" formControlName="zip" required></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validationMessages.zip">
+                  <div class="error-message" *ngIf="validationsForm.get('zip').hasError(validation.type) && (validationsForm.get('zip').dirty || validationsForm.get('zip').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating">City</ion-label>
+                <ion-input type="text" placeholder="City" name="city" formControlName="city"  required></ion-input>
+
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validationMessages.city">
+                  <div class="error-message" *ngIf="validationsForm.get('city').hasError(validation.type) && (validationsForm.get('city').dirty || validationsForm.get('city').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+
+              <ion-item>
                 <ion-label position="floating">Country</ion-label>
                 <ion-select name="country" formControlName="country" cancelText="Cancel" okText="OK">
                   <ion-select-option *ngFor="let country of countries" [value]="country">{{country}}</ion-select-option>
