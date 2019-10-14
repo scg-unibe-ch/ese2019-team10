@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import {TodoList} from './todo-list';
 import {HttpClient} from '@angular/common/http';
+import {NavigationEnd, Router, RouterEvent} from '@angular/router';
 // import {LoginPage} from './login/login.page';
 
 
@@ -25,7 +26,8 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private router: Router
   ) {
     this.sideMenu();
     this.initializeApp();
@@ -42,6 +44,15 @@ export class AppComponent implements OnInit {
     this.httpClient.get('http://localhost:3000/todolist').subscribe((instances: any) => {
       this.todoLists = instances.map((instance) => new TodoList(instance.id, instance.name));
     });
+
+    this.router.events.subscribe((event: RouterEvent) => {
+      if (event instanceof NavigationEnd) {
+        this.navigate.map( p => {
+          return p.active = (event.url === p.url);
+        });
+      }
+    });
+
   }
 
   onTodoListCreate() {

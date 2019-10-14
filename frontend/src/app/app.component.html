@@ -3,14 +3,14 @@
   <ion-menu side="start" menuId="first" contentId="content">
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-title>Navigate</ion-title>
+        <ion-title>Navigation</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content id="content">
+    <ion-content id="menu">
       <ion-list *ngFor="let pages of navigate">
         <ion-menu-toggle auto-hide="true">
-          <ion-item [routerLink]="pages.url" routerDirection="forward">
-            <ion-icon [name]="pages.icon" slot="start"></ion-icon>
+          <ion-item [routerLink]="pages.url" [class.active-item]="pages.active" routerDirection="forward">
+            <ion-icon [name]="pages.icon" [class.active-item]="pages.active" slot="start"></ion-icon>
             {{pages.title}}
           </ion-item>
         </ion-menu-toggle>
@@ -18,6 +18,6 @@
     </ion-content>
   </ion-menu>
 
-  <ion-router-outlet></ion-router-outlet>
+  <ion-router-outlet id="content"></ion-router-outlet>
 
 </ion-app>
