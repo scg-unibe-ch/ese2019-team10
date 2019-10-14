@@ -24,9 +24,16 @@
           <ion-col>
             <ion-list inset>
 
+              <ion-item-divider class="ion-margin-top" color="dark">
+                <ion-label>
+                    <ion-icon class="formicon" slot="start" name="mail"></ion-icon>
+                  Account Information
+                </ion-label>
+              </ion-item-divider>
+
               <ion-item>
                 <ion-label position="floating">E-Mail</ion-label>
-                <ion-input type="email" placeholder="E-Mail" name="email" formControlName="email" required></ion-input>
+                <ion-input type="email" name="email" formControlName="email" required></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.email">
@@ -40,7 +47,7 @@
 
               <ion-item>
                 <ion-label position="floating">Password</ion-label>
-                <ion-input type="password" placeholder="Password" name="password" formControlName="password"  required></ion-input>
+                <ion-input type="password" name="password" formControlName="password"  required></ion-input>
               </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of registrationMessages.password">
@@ -52,7 +59,7 @@
 
               <ion-item>
                 <ion-label position="floating">Confirm password</ion-label>
-                <ion-input type="password" placeholder="Password" name="confirmPassword" formControlName="confirmPassword" required></ion-input>
+                <ion-input type="password" name="confirmPassword" formControlName="confirmPassword" required></ion-input>
               </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of registrationMessages.confirmPassword">
@@ -72,9 +79,16 @@
                   </ng-container>
                 </div>
 
+              <ion-item-divider class="ion-margin-top" color="dark">
+                <ion-label>
+                  <ion-icon class="formicon" slot="start" name="person"></ion-icon>
+                  Personal Information
+                </ion-label>
+              </ion-item-divider>
+
               <ion-item>
-                <ion-label position="floating">First name</ion-label>
-                <ion-input type="text" placeholder="First name" name="firstName" formControlName="firstName"  required></ion-input>
+                <ion-label position="floating">First Name</ion-label>
+                <ion-input type="text" name="firstName" formControlName="firstName"  required></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.firstName">
@@ -85,8 +99,8 @@
               </div>
 
               <ion-item>
-                <ion-label position="floating">Last name</ion-label>
-                <ion-input type="text" placeholder="Last name" name="lastName" formControlName="lastName" required></ion-input>
+                <ion-label position="floating">Last Name</ion-label>
+                <ion-input type="text" name="lastName" formControlName="lastName" required></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.lastName">
@@ -112,7 +126,7 @@
 
               <ion-item>
                 <ion-label position="floating">Phone</ion-label>
-                <ion-input type="tel" placeholder="Phone number" name="phone" formControlName="phone"  required></ion-input>
+                <ion-input type="tel" name="phone" formControlName="phone"  required></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.phone">
@@ -122,9 +136,16 @@
                 </ng-container>
               </div>
 
+              <ion-item-divider class="ion-margin-top" color="dark">
+                <ion-label>
+                  <ion-icon class="formicon" slot="start" name="pin"></ion-icon>
+                  Address
+                </ion-label>
+              </ion-item-divider>
+
               <ion-item>
                 <ion-label position="floating">Street</ion-label>
-                <ion-input type="text" placeholder="Street" name="street" formControlName="street"  required></ion-input>
+                <ion-input type="text" name="street" formControlName="street"  required></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.street">
@@ -136,7 +157,7 @@
 
               <ion-item>
                 <ion-label position="floating">Zip Code</ion-label>
-                <ion-input type="text" placeholder="Zip code" name="zip" formControlName="zip" required></ion-input>
+                <ion-input type="text" name="zip" formControlName="zip" required></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.zip">
@@ -148,7 +169,7 @@
 
               <ion-item>
                 <ion-label position="floating">City</ion-label>
-                <ion-input type="text" placeholder="City" name="city" formControlName="city"  required></ion-input>
+                <ion-input type="text" name="city" formControlName="city"  required></ion-input>
 
               </ion-item>
               <div class="validation-errors">
@@ -174,24 +195,19 @@
               </div>
 
 
+              <ion-item-divider class="ion-margin-top" color="dark">
+                <ion-label>
+                  <ion-icon class="formicon" slot="start" name="clipboard"></ion-icon>
+                  Terms & Conditions
+                </ion-label>
+              </ion-item-divider>
 
-            </ion-list>
-          </ion-col>
-        </ion-row>
 
-
-        <ion-row>
-          <ion-col>
-            <ion-list>
-
-        <ion-item>
-          <ion-content>
-            <ion-button target="_blank" href="/terms">
-              <ion-icon slot="start" name="clipboard"></ion-icon>
-              Terms & Conditions
+            <ion-button class="terms" type="button" routerDirection="forward" target="_blank" href="/terms" expand="block" color="medium" fill="outline">
+              Terms & conditions
+              <ion-icon class="leftmargin" slot="end" name="open"></ion-icon>
             </ion-button>
-          </ion-content>
-        </ion-item>
+
 
         <ion-item>
           <ion-label>I accept the terms and conditions</ion-label>
@@ -205,7 +221,7 @@
           </ng-container>
         </div>
 
-        <ion-row>
+        <ion-row class="ion-margin-top">
           <ion-button class="submit-btn" expand="full" type="submit" [disabled]="!registrationForm.valid">
             <ion-icon slot="start" name="person-add"></ion-icon>
             Register</ion-button>

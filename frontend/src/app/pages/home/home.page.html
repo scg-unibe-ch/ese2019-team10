@@ -1,3 +1,4 @@
+  <script src="home.module.ts"></script>
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
@@ -28,14 +29,14 @@
       </ion-row>
 
       <ion-row>
-        <ion-button [routerLink]="['/login']">
+        <ion-button type="button" [routerLink]="['/login']">
           <ion-icon slot="start" name="log-in"></ion-icon>
           Log in
         </ion-button>
       </ion-row>
 
       <ion-row>
-        <ion-button [routerLink]="['/register']">
+        <ion-button type="button" [routerLink]="['/register']">
           <ion-icon slot="start" name="person-add"></ion-icon>
           Register
         </ion-button>
