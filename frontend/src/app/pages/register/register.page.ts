@@ -15,12 +15,12 @@ export class RegisterPage implements OnInit {
     private router: Router
   ) { }
 
-  validationsForm: FormGroup;
+  registrationForm: FormGroup;
   matchingPasswordsGroup: FormGroup;
   countries: Array<string>;
   genders: Array<string>;
 
-  validationMessages = {
+  registrationMessages = {
     firstName: [
       { type: 'required', message: 'First name is required.' }
     ],
@@ -89,7 +89,7 @@ export class RegisterPage implements OnInit {
       return PasswordValidator.areEqual(formGroup);
     });
 
-    this.validationsForm = this.formBuilder.group({
+    this.registrationForm = this.formBuilder.group({
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
       email: new FormControl('', Validators.compose([
@@ -110,7 +110,7 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  sendForm(value) {
+  onSubmit(value) {
     console.log(value);
     this.router.navigate(['/', 'registered']).then(nav => {
       console.log(nav); // true if navigation is successful
