@@ -11,5 +11,5 @@
 
 ### Learning Outcomes
 
-- To help with the organization, we created a [wiki](/https://github.com/scg-unibe-ch/ese2019-team10/wiki) and a [project](https://github.com/scg-unibe-ch/ese2019-team10/projects) on our github page. 
+- To help with the organization, we created a [wiki](https://github.com/scg-unibe-ch/ese2019-team10/wiki) and a [project](https://github.com/scg-unibe-ch/ese2019-team10/projects) on our github page. 
 - All of us allready had some knowledge of some of the technologies involved in this project but all of has had to learn new things, such as how to create routes for navigation or how to validate a form.
