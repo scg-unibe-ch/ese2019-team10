@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { PasswordValidator } from '../../validators/password.validator';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +13,8 @@ export class RegisterPage implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
   ) { }
 
   registrationForm: FormGroup;
@@ -112,6 +114,7 @@ export class RegisterPage implements OnInit {
 
   onSubmit(value) {
     console.log(value);
+    this.authService.register(this.registrationForm.value).subscribe();
     this.router.navigate(['/', 'registered']).then(nav => {
       console.log(nav); // true if navigation is successful
     }, err => {

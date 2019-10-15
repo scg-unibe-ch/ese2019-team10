@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from '@ionic/angular';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
   ) { }
 
   loginForm: FormGroup;
@@ -41,7 +43,8 @@ export class LoginPage implements OnInit {
   onSubmit(value) {
 
     console.log(value);
-    this.router.navigate(['/', 'registered']).then(nav => {
+    this.authService.login(this.loginForm.value).subscribe();
+    this.router.navigate(['/', 'dashboard']).then(nav => {
       console.log(nav); // true if navigation is successful
     }, err => {
       console.log(err); // when there's an error

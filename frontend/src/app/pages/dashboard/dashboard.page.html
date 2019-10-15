@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Dashboard
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-card>
+
+    <ion-row>
+      <ion-card-content>
+        <p>Welcome to your personal dashboard!</p>
+      </ion-card-content>
+    </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-list inset>
+
+                <ion-item>
+                  <p>{{ data }}</p>
+                </ion-item>
+
+
+                <ion-item>
+                  <ion-button expand="full" (click)="loadSpecialInfo()">Load Special Info</ion-button>
+                </ion-item>
+
+              <ion-item>
+                <ion-button expand="full" (click)="logout()">Logout</ion-button>
+              </ion-item>
+
+            </ion-list>
+          </ion-col>
+        </ion-row>
+
+  </ion-card>
+</ion-content>
