@@ -24,7 +24,7 @@
           <ion-col>
             <ion-list inset>
 
-              <ion-item-divider class="ion-margin-top" color="dark">
+              <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
                 <ion-label>
                     <ion-icon class="formicon" slot="start" name="mail"></ion-icon>
                   Account Information
@@ -79,7 +79,7 @@
                   </ng-container>
                 </div>
 
-              <ion-item-divider class="ion-margin-top" color="dark">
+              <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
                 <ion-label>
                   <ion-icon class="formicon" slot="start" name="person"></ion-icon>
                   Personal Information
@@ -136,7 +136,7 @@
                 </ng-container>
               </div>
 
-              <ion-item-divider class="ion-margin-top" color="dark">
+              <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
                 <ion-label>
                   <ion-icon class="formicon" slot="start" name="pin"></ion-icon>
                   Address
@@ -195,7 +195,7 @@
               </div>
 
 
-              <ion-item-divider class="ion-margin-top" color="dark">
+              <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
                 <ion-label>
                   <ion-icon class="formicon" slot="start" name="clipboard"></ion-icon>
                   Terms & Conditions
@@ -203,14 +203,14 @@
               </ion-item-divider>
 
 
-            <ion-button class="terms" type="button" routerDirection="forward" target="_blank" href="/terms" expand="block" color="medium" fill="outline">
-              Terms & conditions
-              <ion-icon class="leftmargin" slot="end" name="open"></ion-icon>
+            <ion-button class="terms ion-text-capitalize"  type="button" routerDirection="forward" target="_blank" href="/terms" color="medium" fill="outline" expand="block">
+              <span class="ion-text-left">Read the terms
+              <ion-icon class="leftmargin" name="open"></ion-icon></span>
             </ion-button>
 
 
         <ion-item>
-          <ion-label>I accept the terms and conditions</ion-label>
+          <ion-label>I accept</ion-label>
           <ion-checkbox name="terms" formControlName="terms"></ion-checkbox>
         </ion-item>
         <div class="validation-errors">
