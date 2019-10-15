@@ -59,8 +59,8 @@ export class AuthService {
   login(credentials) {
     return this.http.post(`${this.url}/api/login`, credentials)
       .pipe(
-        tap(res => {
-          this.storage.set(TOKEN_KEY, res.token).then(r => {
+        tap((res: any) => {
+          this.storage.set(TOKEN_KEY, res.token).then(() => {
             this.user = this.helper.decodeToken(res.token);
             this.authenticationState.next(true);
           });

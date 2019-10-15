@@ -17,7 +17,7 @@ export class DashboardPage implements OnInit {
   }
 
   loadSpecialInfo() {
-    this.authService.getSpecialData().subscribe(res => {
+    this.authService.getSpecialData().subscribe((res: any) => {
       this.data = res.msg;
     });
   }
