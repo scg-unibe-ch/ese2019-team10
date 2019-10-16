@@ -223,4 +223,4 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/osx,node,linux,windows,webstorm
 
 # ignores defined by dev team
-*.swp # swap files created by vim
+*.swp

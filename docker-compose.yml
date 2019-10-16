@@ -1,0 +1,34 @@
+version: "3.3"
+services:
+  backend-webserver:
+    build: backend/
+    networks:
+      - dev-net
+    depends_on:
+      - database
+    restart: "no"
+    ports:
+      - "8080:3000"
+  database:
+    image: mariadb:10.4.3
+    restart: always
+    networks:
+      dev-net:
+        aliases:
+          - app-database
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: blog_db
+    volumes:
+      - ../ese-db-volume:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    networks:
+      - dev-net
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=app-database
+networks:
+  dev-net:

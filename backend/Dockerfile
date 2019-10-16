@@ -9,7 +9,8 @@ RUN npm install
 
 # copy code and build app
 COPY . .
-RUN npm run tsc
+RUN npm run tslint && \
+    npm run tsc
 
 # run app
 CMD [ "node", "./build/server.js" ]

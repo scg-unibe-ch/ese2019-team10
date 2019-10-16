@@ -1,12 +1,13 @@
 {
   "name": "backend",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "author": "",
   "homepage": "https://expressjs.com/",
   "description": "A todo list backend with express and node",
   "main": "build/server.js",
   "scripts": {
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "tslint": "tslint -p tsconfig.json -c tslint.json 'app/**/*.ts'"
   },
   "keywords": [],
   "license": "ISC",
@@ -17,7 +18,7 @@
     "reflect-metadata": "^0.1.13",
     "sequelize": "^4.44.3",
     "sequelize-typescript": "^0.6.11",
-    "sqlite3": "^4.1.0",
+    "mysql2": "^1.7.0",
     "typescript": "^3.6.3"
   },
   "devDependencies": {
