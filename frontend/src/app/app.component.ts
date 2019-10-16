@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 
-import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {Platform} from '@ionic/angular';
+import {SplashScreen} from '@ionic-native/splash-screen/ngx';
+import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {TodoList} from './todo-list';
 import {HttpClient} from '@angular/common/http';
 import {NavigationEnd, Router, RouterEvent} from '@angular/router';
 // import {LoginPage} from './login/login.page';
-import { AuthService } from './services/auth.service';
+import {AuthService} from './services/auth.service';
 
 
 @Component({
@@ -47,11 +47,12 @@ export class AppComponent implements OnInit {
             console.log(err); // when there's an error
           });
         } else {
-          this.router.navigate(['login']).then(nav => {
+          console.log(state);
+/*          this.router.navigate(['login']).then(nav => {
             console.log(nav); // true if navigation is successful
           }, err => {
             console.log(err); // when there's an error
-          });
+          });*/
         }
       });
     });
@@ -64,7 +65,7 @@ export class AppComponent implements OnInit {
 
     this.router.events.subscribe((event: RouterEvent) => {
       if (event instanceof NavigationEnd) {
-        this.navigate.map( p => {
+        this.navigate.map(p => {
           return p.active = (event.url === p.url);
         });
       }
@@ -107,7 +108,6 @@ export class AppComponent implements OnInit {
         },
       ];
   }
-
 
 
 }

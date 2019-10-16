@@ -1,42 +1,47 @@
-  <script src="home.module.ts"></script>
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>
-        Event App
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+<script src="home.module.ts"></script>
 
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Event App
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content>
-    <ion-card>
+<ion-content class="home-body">
+
+  <div>
+
+    <ion-card class="home-buttons">
 
       <ion-row>
         <ion-card-title>
           <h2>
-            Welcome!
+            <ion-text color="light">Welcome!</ion-text>
           </h2>
         </ion-card-title>
       </ion-row>
 
-      <ion-row>
-        <ion-card-content>
-          <p>Please log in or register to start using this event platform.</p>
-        </ion-card-content>
-      </ion-row>
+      <!--
+            <ion-row>
+              <ion-card-content>
+                <ion-text color="light"><p>Please log in or register to start using this event platform.</p></ion-text>
+              </ion-card-content>
+            </ion-row>
+      -->
 
-      <ion-row>
-        <ion-button type="button" [routerLink]="['/login']">
+      <ion-row class="ion-margin-top">
+        <ion-button type="button" [routerLink]="['/login']" color="light" fill="outline" class="login">
           <ion-icon slot="start" name="log-in"></ion-icon>
           Log in
         </ion-button>
       </ion-row>
 
-      <ion-row>
-        <ion-button type="button" [routerLink]="['/register']">
+      <ion-row class="ion-margin-top">
+        <ion-button type="button" [routerLink]="['/register']" color="light" fill="outline" class="register">
           <ion-icon slot="start" name="person-add"></ion-icon>
           Register
         </ion-button>
@@ -44,7 +49,5 @@
 
     </ion-card>
 
-  </ion-content>
-
-
-
+  </div>
+</ion-content>

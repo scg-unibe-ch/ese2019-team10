@@ -1,0 +1,30 @@
+ion-content {
+  --ion-background-color: linear-gradient(135deg, #FDBB2D 0%, #3A1C71 100%);
+}
+
+ion-content {
+  div {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+ion-card {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.home-buttons {
+  text-align: center;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+  max-width: 500px;
+}
+
