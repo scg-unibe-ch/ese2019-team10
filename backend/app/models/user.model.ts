@@ -24,4 +24,12 @@ export class User extends Model<User> {
 
   @HasMany(() => Service, 'id')
   public services!: number[];
+
+  post_(user_data: any): void {
+    this.fristname = user_data['firstname'];
+    this.lastname = user_data['lastname'];
+    // this.email = user_data['email'];
+    this.address = user_data['address'];
+    this.password_hash = user_data['password'];
+  }
 }
