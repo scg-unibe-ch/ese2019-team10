@@ -11,6 +11,7 @@ import {City} from './models/city.model';
 import {Country} from './models/country.model';
 import {EventUser} from './models/EventUser';
 import {ServiceUser} from './models/ServiceUser';
+import {RegisterController} from './controllers';
 
 const sequelize =  new Sequelize({
   database: 'app_db',
@@ -41,8 +42,11 @@ app.use(function (req, res, next) {
 });
 
 app.use('/welcome', WelcomeController);
+// api/register endpoint
+app.use('/api/register', RegisterController);
 
-sequelize.sync().then(() => {
+// .sync() is not recommended for production
+sequelize.authenticate().then(() => {
 // start serving the application on the given port
   app.listen(port, () => {
     // success callback, log something to console as soon as the application has started
