@@ -45,8 +45,8 @@ app.use('/welcome', WelcomeController);
 // api/register endpoint
 app.use('/api/register', RegisterController);
 
-// .sync() is not recommended for production
-sequelize.authenticate().then(() => {
+// .sync() is not recommended for production, yes, but I use it for development!
+sequelize.sync().then(() => {
 // start serving the application on the given port
   app.listen(port, () => {
     // success callback, log something to console as soon as the application has started
