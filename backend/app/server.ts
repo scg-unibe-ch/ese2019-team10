@@ -9,15 +9,22 @@ import {User} from './models/user.model';
 import {Event} from './models/event.model';
 import {City} from './models/city.model';
 import {Country} from './models/country.model';
+import {EventUser} from './models/EventUser';
+import {ServiceUser} from './models/ServiceUser';
 
 const sequelize =  new Sequelize({
-  database: 'blog_db',
+  database: 'app_db',
   host: 'app-database',
   dialect: 'mysql',
   username: 'root',
   password: 'admin',
+  define: {
+    engine: 'innoDB',
+    charset: 'utf8',
+    collate: 'utf8_unicode_ci'
+  }
 });
-sequelize.addModels([Service, User, Event, City, Country]);
+sequelize.addModels([Service, User, Event, City, Country, ServiceUser, EventUser]);
 
 // create a new express application instance
 const app: express.Application = express();

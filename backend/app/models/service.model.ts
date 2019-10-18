@@ -1,11 +1,12 @@
-import {BelongsTo, Column, Model, Table} from 'sequelize-typescript';
+import {BelongsToMany, Column, HasMany, Model, Table} from 'sequelize-typescript';
 import {User} from './user.model';
+import {ServiceUser} from './ServiceUser';
 
 @Table
 export class Service extends Model<Service> {
   @Column
   public name!: string;
 
-  @BelongsTo(() => User, 'id')
+  @BelongsToMany(() => User, () => ServiceUser)
   public userId!: number;
 }

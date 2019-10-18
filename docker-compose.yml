@@ -10,7 +10,7 @@ services:
     ports:
       - "3000:3000"
   database:
-    image: mariadb:10.4.3
+    image: mariadb:10.0
     restart: always
     networks:
       dev-net:
@@ -18,7 +18,7 @@ services:
           - app-database
     environment:
       MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: blog_db
+      MYSQL_DATABASE: app_db
     volumes:
       - ../ese-db-volume:/var/lib/mysql
   phpmyadmin:
