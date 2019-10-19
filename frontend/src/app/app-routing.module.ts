@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'terms', loadChildren: './pages/terms/terms.module#TermsPageModule' },
   { path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule', canActivate: [AuthGuardService]
   },
+  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
   ];
 
 @NgModule({
