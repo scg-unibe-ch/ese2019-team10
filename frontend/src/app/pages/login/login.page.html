@@ -1,13 +1,13 @@
-   <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>
-       Login
-      </ion-title>
-    </ion-toolbar>
-   </ion-header>
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
 
 <ion-content>
@@ -33,20 +33,24 @@
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of loginMessages.email">
-                    <div class="error-message" *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
-                      <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                    <div class="error-message"
+                         *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                      <ion-icon name="information-circle-outline"></ion-icon>
+                      {{ validation.message }}
                     </div>
                   </ng-container>
                 </div>
 
                 <ion-item>
                   <ion-label position="floating">Password</ion-label>
-                  <ion-input type="password" name="password" formControlName="password"  required></ion-input>
+                  <ion-input type="password" name="password" formControlName="password" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of loginMessages.password">
-                    <div class="error-message" *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
-                      <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                    <div class="error-message"
+                         *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+                      <ion-icon name="information-circle-outline"></ion-icon>
+                      {{ validation.message }}
                     </div>
                   </ng-container>
                 </div>
@@ -56,7 +60,8 @@
               <ion-row>
                 <ion-button class="submit-btn" expand="full" type="submit" [disabled]="!loginForm.valid">
                   <ion-icon slot="start" name="log-in"></ion-icon>
-                  Login</ion-button>
+                  Login
+                </ion-button>
               </ion-row>
 
             </ion-list>

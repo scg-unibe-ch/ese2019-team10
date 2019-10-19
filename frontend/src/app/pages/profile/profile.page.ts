@@ -5,11 +5,11 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.page.html',
-  styleUrls: ['./register.page.scss'],
+  selector: 'app-profile',
+  templateUrl: './profile.page.html',
+  styleUrls: ['./profile.page.scss'],
 })
-export class RegisterPage implements OnInit {
+export class ProfilePage implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
@@ -20,6 +20,8 @@ export class RegisterPage implements OnInit {
 
   registrationForm: FormGroup;
   matchingPasswordsGroup: FormGroup;
+  countries: Array<string>;
+  genders: Array<string>;
 
   registrationMessages = {
     firstName: [
@@ -32,15 +34,24 @@ export class RegisterPage implements OnInit {
       {type: 'required', message: 'E-mail is required.'},
       {type: 'pattern', message: 'Please enter a valid e-mail.'}
     ],
+    phone: [
+      {type: 'required', message: 'Phone number is required.'},
+    ],
+    gender: [
+      {type: 'required', message: 'Gender is required.'},
+    ],
     street: [
       {type: 'required', message: 'Street is required.'},
-    ],
-    city: [
-      {type: 'required', message: 'City is required.'},
     ],
     postalCode: [
       {type: 'required', message: 'Postal code is required.'},
       {type: 'pattern', message: 'Please enter a valid postal code.'}
+    ],
+    city: [
+      {type: 'required', message: 'City is required.'},
+    ],
+    country: [
+      {type: 'required', message: 'Country is required.'},
     ],
     password: [
       {type: 'required', message: 'Password is required.'},
@@ -59,6 +70,16 @@ export class RegisterPage implements OnInit {
   };
 
   ngOnInit() {
+    this.countries = [
+      'Switzerland',
+      'Liechtenstein',
+      'Other'
+    ];
+    this.genders = [
+      'Male',
+      'Female',
+      'Other'
+    ];
 
     this.matchingPasswordsGroup = new FormGroup({
       password: new FormControl('', Validators.compose([
@@ -78,12 +99,15 @@ export class RegisterPage implements OnInit {
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
+      gender: new FormControl('', Validators.required),
       street: new FormControl('', Validators.required),
-      city: new FormControl('', Validators.required),
       postalCode: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[0-9]+$')
       ])),
+      city: new FormControl('', Validators.required),
+      country: new FormControl('', Validators.required),
+      phone: new FormControl('', Validators.required),
       matchingPasswords: this.matchingPasswordsGroup,
       terms: new FormControl(false, Validators.pattern('true'))
     });
@@ -91,7 +115,7 @@ export class RegisterPage implements OnInit {
 
   onSubmit(value) {
     console.log(value);
-    this.authService.register(this.registrationForm.value).subscribe();
+    this.authService.saveProfile(this.registrationForm.value).subscribe();
     this.router.navigate(['/', 'registered']).then(nav => {
       console.log(nav); // true if navigation is successful
     }, err => {

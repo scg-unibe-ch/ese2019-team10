@@ -59,9 +59,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.httpClient.get('http://localhost:3000/todolist').subscribe((instances: any) => {
+/*    this.httpClient.get('http://localhost:3000/todolist').subscribe((instances: any) => {
       this.todoLists = instances.map((instance) => new TodoList(instance.id, instance.name));
-    });
+    });*/
 
     this.router.events.subscribe((event: RouterEvent) => {
       if (event instanceof NavigationEnd) {
@@ -73,7 +73,7 @@ export class AppComponent implements OnInit {
 
   }
 
-  onTodoListCreate() {
+  /*onTodoListCreate() {
     this.httpClient.post('http://localhost:3000/todolist', {
       name: this.todoList.name
     }).subscribe((instance: any) => {
@@ -85,7 +85,7 @@ export class AppComponent implements OnInit {
 
   onTodoListDestroy(todoList: TodoList) {
     this.todoLists.splice(this.todoLists.indexOf(todoList), 1);
-  }
+  }*/
 
 
   sideMenu() {
