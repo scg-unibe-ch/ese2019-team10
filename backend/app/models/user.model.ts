@@ -33,10 +33,10 @@ export class User extends Model<User> {
   public events!: Event[];
 
   post_(user_data: any): void {
-    this.firstname = user_data['firstname'];
-    this.lastname = user_data['lastname'];
-    // this.email = user_data['email'];
-    this.address = user_data['address'];
+    this.firstname = user_data['firstName'];
+    this.lastname = user_data['lastName'];
+    this.email = user_data['email'];
+    this.address = user_data['street'];
     this.password_hash = user_data['password'];
   }
 }
