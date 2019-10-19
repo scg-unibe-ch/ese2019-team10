@@ -9,6 +9,7 @@ import {AuthService} from '../../services/auth.service';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
+
 export class RegisterPage implements OnInit {
 
   constructor(
@@ -23,40 +24,49 @@ export class RegisterPage implements OnInit {
 
   registrationMessages = {
     firstName: [
-      {type: 'required', message: 'First name is required.'}
+      {type: 'required', message: 'Your first name is required.'},
+      {type: 'maxlength', message: 'Your first name should be less than 100 characters long.'},
     ],
     lastName: [
-      {type: 'required', message: 'Last name is required.'}
+      {type: 'required', message: 'Your last name is required.'},
+      {type: 'maxlength', message: 'Your last name should be less than 100 characters long.'},
     ],
     email: [
-      {type: 'required', message: 'E-mail is required.'},
-      {type: 'pattern', message: 'Please enter a valid e-mail.'}
+      {type: 'required', message: 'Your e-mail address is required.'},
+      {type: 'email', message: 'Please enter a valid e-mail address.'},
+      {type: 'pattern', message: 'Please enter a valid e-mail address.'},
+      {type: 'maxlength', message: 'Your e-mail address must be less than 100 characters long.'}
     ],
     street: [
-      {type: 'required', message: 'Street is required.'},
+      {type: 'required', message: 'Your street is required.'},
+      {type: 'maxlength', message: 'Your street should be less than 100 characters long.'}
     ],
     city: [
-      {type: 'required', message: 'City is required.'},
+      {type: 'required', message: 'Your city is required.'},
+      {type: 'maxlength', message: 'Your city should be less than 100 characters long.'}
     ],
     postalCode: [
-      {type: 'required', message: 'Postal code is required.'},
-      {type: 'pattern', message: 'Please enter a valid postal code.'}
+      {type: 'required', message: 'Your postal code is required.'},
+      {type: 'pattern', message: 'Please enter a valid postal code.'},
+      {type: 'maxlength', message: 'Your postal code should be less than 20 characters long.'}
     ],
     password: [
-      {type: 'required', message: 'Password is required.'},
-      {type: 'minlength', message: 'Password must be at least 5 characters long.'},
-      {type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number.'}
+      {type: 'required', message: 'Your password is required.'},
+      {type: 'minlength', message: 'Your password must be at least 5 characters long.'},
+      {type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number.'},
+      {type: 'maxlength', message: 'Your password should be less than 500 characters long.'}
     ],
     confirmPassword: [
-      {type: 'required', message: 'Confirm password is required.'}
+      {type: 'required', message: 'Please confirm your password.'}
     ],
     matchingPasswords: [
-      {type: 'areEqual', message: 'Password mismatch.'}
+      {type: 'areEqual', message: 'Your passwords mismatch.'}
     ],
     terms: [
-      {type: 'pattern', message: 'You must accept terms and conditions.'}
+      {type: 'pattern', message: 'You need to accept the terms and conditions.'}
     ],
   };
+
 
   ngOnInit() {
 
@@ -64,7 +74,8 @@ export class RegisterPage implements OnInit {
       password: new FormControl('', Validators.compose([
         Validators.minLength(5),
         Validators.required,
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$'),
+        Validators.maxLength(500),
       ])),
       confirmPassword: new FormControl('', Validators.required)
     }, (formGroup: FormGroup) => {
@@ -72,17 +83,34 @@ export class RegisterPage implements OnInit {
     });
 
     this.registrationForm = this.formBuilder.group({
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
+      firstName: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
+      lastName: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
       email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+        // Validators.email,
+        Validators.pattern('^[^\s@]+@[^\s@]+\.[^\s@]+$'),
+        Validators.maxLength(100)
       ])),
-      street: new FormControl('', Validators.required),
-      city: new FormControl('', Validators.required),
+      street: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
+      city: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
       postalCode: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[0-9]+$')
+        // postal codes can have numbers, letters, spaces, and hyphens
+        // Validators.pattern('^[A-Za-z0-9- ]+$'),
+        Validators.pattern('^[0-9]+$'),
+        Validators.maxLength(20)
       ])),
       matchingPasswords: this.matchingPasswordsGroup,
       terms: new FormControl(false, Validators.pattern('true'))
@@ -90,8 +118,16 @@ export class RegisterPage implements OnInit {
   }
 
   onSubmit(value) {
-    console.log(value);
-    this.authService.register(this.registrationForm.value).subscribe();
+    const user = {
+      firstName: this.registrationForm.value.firstName,
+      lastName: this.registrationForm.value.lastName,
+      password: this.registrationForm.value.matchingPasswords.password,
+      street: this.registrationForm.value.street,
+      city: this.registrationForm.value.city,
+      postalCode: this.registrationForm.value.postalCode,
+    };
+    console.log(user);
+    this.authService.register(user).subscribe();
     this.router.navigate(['/', 'registered']).then(nav => {
       console.log(nav); // true if navigation is successful
     }, err => {
