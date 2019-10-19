@@ -38,6 +38,10 @@ export class RegisterPage implements OnInit {
     city: [
       {type: 'required', message: 'City is required.'},
     ],
+    postalCode: [
+      {type: 'required', message: 'Postal code is required.'},
+      {type: 'pattern', message: 'Please enter a valid postal code.'}
+    ],
     password: [
       {type: 'required', message: 'Password is required.'},
       {type: 'minlength', message: 'Password must be at least 5 characters long.'},
@@ -76,6 +80,10 @@ export class RegisterPage implements OnInit {
       ])),
       street: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
+      postalCode: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[0-9]+$')
+      ])),
       matchingPasswords: this.matchingPasswordsGroup,
       terms: new FormControl(false, Validators.pattern('true'))
     });

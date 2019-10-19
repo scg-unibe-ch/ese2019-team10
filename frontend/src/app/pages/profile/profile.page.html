@@ -156,12 +156,12 @@
               </div>
 
               <ion-item>
-                <ion-label position="floating">Zip Code</ion-label>
-                <ion-input type="text" name="zip" formControlName="zip" required></ion-input>
+                <ion-label position="floating">Postal Code</ion-label>
+                <ion-input type="text" name="postalCode" formControlName="postalCode" required></ion-input>
               </ion-item>
               <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.zip">
-                  <div class="error-message" *ngIf="registrationForm.get('zip').hasError(validation.type) && (registrationForm.get('zip').dirty || registrationForm.get('zip').touched)">
+                <ng-container *ngFor="let validation of registrationMessages.postalCode">
+                  <div class="error-message" *ngIf="registrationForm.get('postalCode').hasError(validation.type) && (registrationForm.get('postalCode').dirty || registrationForm.get('postalCode').touched)">
                     <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
                   </div>
                 </ng-container>
@@ -170,7 +170,6 @@
               <ion-item>
                 <ion-label position="floating">City</ion-label>
                 <ion-input type="text" name="city" formControlName="city"  required></ion-input>
-
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.city">

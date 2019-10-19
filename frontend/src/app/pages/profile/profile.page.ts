@@ -35,7 +35,7 @@ export class ProfilePage implements OnInit {
       {type: 'pattern', message: 'Please enter a valid e-mail.'}
     ],
     phone: [
-      {type: 'required', message: 'Phone is required.'},
+      {type: 'required', message: 'Phone number is required.'},
     ],
     gender: [
       {type: 'required', message: 'Gender is required.'},
@@ -43,9 +43,9 @@ export class ProfilePage implements OnInit {
     street: [
       {type: 'required', message: 'Street is required.'},
     ],
-    zip: [
-      {type: 'required', message: 'Zip code is required.'},
-      {type: 'pattern', message: 'Please enter a valid zip code.'}
+    postalCode: [
+      {type: 'required', message: 'Postal code is required.'},
+      {type: 'pattern', message: 'Please enter a valid postal code.'}
     ],
     city: [
       {type: 'required', message: 'City is required.'},
@@ -101,7 +101,7 @@ export class ProfilePage implements OnInit {
       ])),
       gender: new FormControl('', Validators.required),
       street: new FormControl('', Validators.required),
-      zip: new FormControl('', Validators.compose([
+      postalCode: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[0-9]+$')
       ])),
