@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -19,26 +19,26 @@
       </ion-card-content>
     </ion-row>
 
-        <ion-row>
-          <ion-col>
-            <ion-list inset>
+    <ion-row>
+      <ion-col>
+        <ion-list inset>
 
-                <ion-item>
-                  <p>{{ data }}</p>
-                </ion-item>
+          <ion-item>
+            <p>{{ data }}</p>
+          </ion-item>
 
 
-                <ion-item>
-                  <ion-button expand="full" (click)="loadSpecialInfo()">Load Special Info</ion-button>
-                </ion-item>
+          <ion-item>
+            <ion-button expand="full" (click)="loadSpecialInfo()">Load Special Info</ion-button>
+          </ion-item>
 
-              <ion-item>
-                <ion-button expand="full" (click)="logout()">Logout</ion-button>
-              </ion-item>
+          <ion-item>
+            <ion-button expand="full" (click)="logout()">Logout</ion-button>
+          </ion-item>
 
-            </ion-list>
-          </ion-col>
-        </ion-row>
+        </ion-list>
+      </ion-col>
+    </ion-row>
 
   </ion-card>
 </ion-content>
