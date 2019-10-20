@@ -9,7 +9,7 @@ router.options('/', (req:  Request, res: Response ) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:8100');
   res.header( 'Access-Control-Allow-Methods', 'GET, POST, PUT');
   res.sendStatus(200);
-})
+});
 
 router.get('/approved', async (req: Request, res: Response) => {
   let options = {};
