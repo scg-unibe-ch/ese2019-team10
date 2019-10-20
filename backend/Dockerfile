@@ -1,4 +1,4 @@
-FROM node:10.16.3 as backend-dev
+FROM node:10.16.3
 
 # Create app directory
 WORKDIR /usr/src/app
