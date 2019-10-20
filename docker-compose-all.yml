@@ -31,5 +31,13 @@ services:
       - "8081:80"
     environment:
       - PMA_HOST=app-database
+  frontend-webserver:
+    build: frontend/
+    networks:
+      - dev-net
+    ports:
+      - "8100:4200"
+    restart: "no"
+    command: npm run ng serve
 networks:
   dev-net:
