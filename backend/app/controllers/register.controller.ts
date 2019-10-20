@@ -1,13 +1,39 @@
 import {Router, Request, Response} from 'express';
+import {Sequelize} from 'sequelize-typescript';
 import {User} from '../models/user.model';
 
 const router: Router = Router();
+const Op = Sequelize.Op;
 
 
-router.get('/', async (req: Request, res: Response) => {
-  const instances = await User.findAll();
+router.get('/approved', async (req: Request, res: Response) => {
+  let options = {};
+  options = {
+    where: {
+      approved: true
+    }
+  };
+  const instances = await User.findAll(options);
   res.statusCode = 200;
   res.send(instances.map(e => e));
+});
+
+router.get('/to-approve', async (req: Request, res: Response) => {
+  let options = {};
+  options = {
+      where: {
+        approved: false
+      }
+  };
+  const instances = await User.findAll(options);
+  res.statusCode = 200;
+  res.send(instances.map(e => e));
+});
+
+router.put('/approve', async (req: Request, res: Response) => {
+  const instances = await User.findAll();
+  res.statusCode = 200;
+  res.send('{"msg": "User approved"}');
 });
 
 router.post('/', async (req: Request, res: Response) => {
@@ -17,5 +43,7 @@ router.post('/', async (req: Request, res: Response) => {
   res.statusCode = 201;
   res.send('{"msg": "User created"}');
 });
+
+
 
 export const RegisterController: Router = router;

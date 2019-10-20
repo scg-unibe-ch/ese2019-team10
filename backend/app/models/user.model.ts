@@ -38,5 +38,6 @@ export class User extends Model<User> {
     this.email = user_data['email'];
     this.address = user_data['street'];
     this.password_hash = user_data['password'];
+    this.approved = false;
   }
 }
