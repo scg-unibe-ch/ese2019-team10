@@ -9,7 +9,8 @@ RUN npm install
 
 # copy code and build app
 COPY . .
-RUN npm run tslint && \
+RUN chmod +x *.sh
+RUN npm run tslint app/*.ts app/*/*.ts && \
     npm run tsc
 
 # run app
