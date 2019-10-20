@@ -14,7 +14,7 @@ import {ServiceUser} from './models/ServiceUser';
 import {RegisterController} from './controllers';
 import {LoginController} from './controllers';
 
-const sequelize =  new Sequelize({
+/*const sequelize =  new Sequelize({
   database: 'app_db',
   host: 'app-database',
   dialect: 'mysql',
@@ -25,7 +25,8 @@ const sequelize =  new Sequelize({
     charset: 'utf8',
     collate: 'utf8_unicode_ci'
   }
-});
+});*/
+const sequelize = new Sequelize('mysql://root:laurMAN+7@127.0.0.1:3306/app_db');
 sequelize.addModels([Service, User, Event, City, Country, ServiceUser, EventUser]);
 
 // create a new express application instance
