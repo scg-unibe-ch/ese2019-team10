@@ -13,6 +13,7 @@ import {EventUser} from './models/EventUser';
 import {ServiceUser} from './models/ServiceUser';
 import {RegisterController} from './controllers';
 import {LoginController} from './controllers';
+import {AccessController} from './controllers/access.controller';
 
 const sequelize =  new Sequelize({
   database: 'app_db',
@@ -42,7 +43,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/welcome', WelcomeController);
+app.use('/welcome', AccessController, WelcomeController);
 // api/register endpoint
 app.use('/api/register', RegisterController);
 app.use('/api/login', LoginController);

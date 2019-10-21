@@ -23,14 +23,21 @@ router.post('/', async (req: Request, res: Response ) => {
     const providedPasswordHash: string = sha3_256(req.body.password);
 
     if ( user === null ) {
+      res.statusMessage = 'Wrong username/password combination.';
       res.sendStatus(401); // forbidden
       return;
     }
 
-    const compareResult: number = user.passwordHash.localeCompare(providedPasswordHash);
+    const pwCompareResult: number = user.passwordHash.localeCompare(providedPasswordHash);
 
-    // if email and password match, return bearer token
-    if (compareResult === 0) {
+    // if email and password match and user is approved, return bearer token
+    if ( ! user.approved ) {
+      res.statusMessage = 'Your account is not approved yet.';
+      res.sendStatus(401); // send unauthorized
+    } else if ( pwCompareResult !== 0 ) {
+      res.statusMessage = 'Wrong username/password combination.';
+      res.sendStatus(401); // send unauthorized
+    } else {
       const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
         algorithm: 'RS256',
         expiresIn: 120,
@@ -41,8 +48,6 @@ router.post('/', async (req: Request, res: Response ) => {
         idToken: jwtBearerToken,
         expiresIn: 120
       });
-    } else {
-      res.sendStatus(401); // send unauthorized
     }
   });
 });
