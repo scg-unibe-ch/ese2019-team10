@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
+
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.page.html',
-  styleUrls: ['./dashboard.page.scss'],
+  selector: 'app-users',
+  templateUrl: './users.page.html',
+  styleUrls: ['./users.page.scss'],
 })
-export class DashboardPage implements OnInit {
+export class UsersPage implements OnInit {
   private data: any;
 
   constructor(
@@ -20,10 +21,6 @@ export class DashboardPage implements OnInit {
     this.authService.getApprovedUsers().subscribe((res: any) => {
       this.data = res.msg;
     });
-  }
-
-  logout() {
-    this.authService.logout();
   }
 
 }

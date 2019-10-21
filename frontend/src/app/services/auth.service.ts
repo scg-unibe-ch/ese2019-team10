@@ -48,12 +48,7 @@ export class AuthService {
   }
 
   register(credentials) {
-    return this.http.post(`${this.url}/api/register`, credentials).pipe(
-      catchError(e => {
-        this.showAlert(e.error.msg);
-        throw new Error(e);
-      })
-    );
+    return this.http.post(`${this.url}/api/register`, credentials);
   }
 
   saveProfile(credentials) {
@@ -66,6 +61,9 @@ export class AuthService {
   }
 
   login(credentials) {
+    this.user = this.helper.decodeToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c');
+    console.log(this.user);
+
     return this.http.post(`${this.url}/api/login`, credentials)
       .pipe(
         tap((res: any) => {
@@ -74,10 +72,10 @@ export class AuthService {
             this.authenticationState.next(true);
           });
         }),
-        catchError(e => {
+/*        catchError(e => {
           this.showAlert(e.error.msg);
           throw new Error(e);
-        })
+        })*/
       );
   }
 
@@ -87,17 +85,19 @@ export class AuthService {
     });
   }
 
-  getSpecialData() {
-    return this.http.get(`${this.url}/api/special`).pipe(
+  getApprovedUsers() {
+    return this.http.get(`${this.url}/api/register/approved`);
+/*
+    .pipe(
       catchError(e => {
         const status = e.status;
         if (status === 401) {
           this.showAlert('You are not authorized for this!');
-          this.logout();
+          // this.logout();
         }
         throw new Error(e);
       })
-    );
+    );*/
   }
 
   isAuthenticated() {

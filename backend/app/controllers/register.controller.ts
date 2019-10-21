@@ -1,9 +1,7 @@
 import {Router, Request, Response} from 'express';
-import {Sequelize} from 'sequelize-typescript';
 import {User} from '../models/user.model';
 
 const router: Router = Router();
-const Op = Sequelize.Op;
 
 router.options('/', (req:  Request, res: Response ) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:8100');
@@ -35,8 +33,23 @@ router.get('/to-approve', async (req: Request, res: Response) => {
   res.send(instances.map(e => e));
 });
 
-router.put('/approve', async (req: Request, res: Response) => {
-  const instances = await User.findAll();
+router.put('/approve/:id', async (req: Request, res: Response) => {
+  const id = parseInt(req.params.id, undefined);
+  const instance = await User.findByPk(id);
+  if (instance == null) {
+    res.statusCode = 404;
+    res.json({
+      'msg': 'not found'
+    });
+    return;
+  }
+  User.update({
+    approved: true,
+  }, {
+    where: {
+      id: id
+    }
+  });
   res.statusCode = 200;
   res.send('{"msg": "User approved"}');
 });
