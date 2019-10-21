@@ -32,11 +32,17 @@ router.post('/', async (req: Request, res: Response ) => {
 
     // if email and password match and user is approved, return bearer token
     if ( ! user.approved ) {
-      res.statusMessage = 'Your account is not approved yet.';
-      res.sendStatus(401); // send unauthorized
+      res.statusMessage = 'Account is not approved yet.';
+      res.statusCode = 401;
+      res.send({
+        msg: 'Account is not approved yet.'
+      }); // send unauthorized
     } else if ( pwCompareResult !== 0 ) {
       res.statusMessage = 'Wrong username/password combination.';
-      res.sendStatus(401); // send unauthorized
+      res.statusCode = 401;
+      res.send({
+        msg: 'Wrong user/password combination.'
+      }); // send unauthorized
     } else {
       const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
         algorithm: 'RS256',
