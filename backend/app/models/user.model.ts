@@ -27,6 +27,15 @@ export class User extends Model<User> {
   @Column
   public email!: string;
 
+  @Column
+  public isAdmin!: boolean;
+
+  @Column
+  public isServiceProvider!: boolean;
+
+  @Column
+  public isEventManager!: boolean;
+
   @HasMany(() => Service, 'id')
   public services!: Service[];
 

@@ -13,11 +13,11 @@ import {EventUser} from './models/EventUser';
 import {ServiceUser} from './models/ServiceUser';
 import {RegisterController} from './controllers';
 import {LoginController} from './controllers';
-import {AccessController} from './controllers/access.controller';
+import {CheckAccessController} from './controllers/checkAccess.controller';
 
-/*const sequelize =  new Sequelize({
+const sequelize =  new Sequelize({
   database: 'app_db',
-  host: 'app-database',
+  host: 'database',
   dialect: 'mysql',
   username: 'root',
   password: 'admin',
@@ -26,8 +26,7 @@ import {AccessController} from './controllers/access.controller';
     charset: 'utf8',
     collate: 'utf8_unicode_ci'
   }
-});*/
-const sequelize = new Sequelize('mysql://root:admin@database:3306/app_db');
+});
 sequelize.addModels([Service, User, Event, City, Country, ServiceUser, EventUser]);
 
 // create a new express application instance
@@ -44,7 +43,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/welcome', AccessController, WelcomeController);
+app.use('/welcome', CheckAccessController, WelcomeController);
 // api/register endpoint
 app.use('/api/register', RegisterController);
 app.use('/api/login', LoginController);

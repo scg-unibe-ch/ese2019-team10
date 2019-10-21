@@ -19,43 +19,44 @@ router.post('/', async (req: Request, res: Response ) => {
   const userPassword = req.body.password;
 
   // search for a user with provided email and compare password hashes
-  User.findOne({where: {email: userEmail}}).then( user => {
-    const providedPasswordHash: string = sha3_256(req.body.password);
+  User.findOne( { where: {email: userEmail} } )
+    .then( user => {
+      const providedPasswordHash: string = sha3_256(req.body.password);
 
-    if ( user === null ) {
-      res.statusMessage = 'Wrong username/password combination.';
-      res.sendStatus(401); // forbidden
-      return;
-    }
+      if ( user === null ) {
+        res.statusMessage = 'Wrong username/password combination.';
+        res.sendStatus(401); // forbidden
+        return;
+      }
 
-    const pwCompareResult: number = user.passwordHash.localeCompare(providedPasswordHash);
+      const pwCompareResult: number = user.passwordHash.localeCompare(providedPasswordHash);
 
-    // if email and password match and user is approved, return bearer token
-    if ( ! user.approved ) {
-      res.statusMessage = 'Account is not approved yet.';
-      res.statusCode = 401;
-      res.send({
-        msg: 'Account is not approved yet.'
-      }); // send unauthorized
-    } else if ( pwCompareResult !== 0 ) {
-      res.statusMessage = 'Wrong username/password combination.';
-      res.statusCode = 401;
-      res.send({
-        msg: 'Wrong user/password combination.'
-      }); // send unauthorized
-    } else {
-      const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
-        algorithm: 'RS256',
-        expiresIn: 120,
-        subject: userEmail
-      });
+      // if email and password match and user is approved, return bearer token, otherwise unauthorized
+      if ( ! user.approved ) {
+        res.statusMessage = 'Account is not approved yet.';
+        res.statusCode = 401;
+        res.send({
+          msg: 'Account is not approved yet.'
+        }); // send unauthorized
+      } else if ( pwCompareResult !== 0 ) {
+        res.statusMessage = 'Wrong username/password combination.';
+        res.statusCode = 401;
+        res.send({
+          msg: 'Wrong user/password combination.'
+        }); // send unauthorized
+      } else {
+        const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
+          algorithm: 'RS256',
+          expiresIn: 120,
+          subject: userEmail
+        });
 
-      res.status(200).json({
-        idToken: jwtBearerToken,
-        expiresIn: 120
-      });
-    }
-  });
+        res.status(200).json({
+          idToken: jwtBearerToken,
+          expiresIn: 120
+        });
+      }
+    });
 });
 
 export const LoginController: Router = router;

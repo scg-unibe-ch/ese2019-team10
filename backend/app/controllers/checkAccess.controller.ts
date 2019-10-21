@@ -24,4 +24,4 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-export const AccessController: Router = router;
+export const CheckAccessController: Router = router;
