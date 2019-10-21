@@ -27,7 +27,7 @@ import {AccessController} from './controllers/access.controller';
     collate: 'utf8_unicode_ci'
   }
 });*/
-const sequelize = new Sequelize('mysql://root:laurMAN+7@127.0.0.1:3306/app_db');
+const sequelize = new Sequelize('mysql://root:admin@database:3306/app_db');
 sequelize.addModels([Service, User, Event, City, Country, ServiceUser, EventUser]);
 
 // create a new express application instance
