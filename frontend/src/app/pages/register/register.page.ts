@@ -94,7 +94,7 @@ export class RegisterPage implements OnInit {
       email: new FormControl('', Validators.compose([
         Validators.required,
         // Validators.email,
-        Validators.pattern('^[^\s@]+@[^\s@]+\.[^\s@]+$'),
+        Validators.pattern('^[^ @]+@[^ @]+\.[^ @]+$'),
         Validators.maxLength(100)
       ])),
       street: new FormControl('', Validators.compose([
