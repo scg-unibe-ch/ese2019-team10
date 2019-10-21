@@ -34,7 +34,7 @@ router.get('/to-approve', async (req: Request, res: Response) => {
 });
 
 router.put('/approve/:id', async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
+  const id = parseInt(req.params.id, undefined);
   const instance = await User.findByPk(id);
   if (instance == null) {
     res.statusCode = 404;

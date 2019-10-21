@@ -48,12 +48,7 @@ export class AuthService {
   }
 
   register(credentials) {
-    return this.http.post(`${this.url}/api/register`, credentials).pipe(
-      catchError(e => {
-        this.showAlert(e.error.msg);
-        throw new Error(e);
-      })
-    );
+    return this.http.post(`${this.url}/api/register`, credentials);
   }
 
   saveProfile(credentials) {
@@ -74,10 +69,10 @@ export class AuthService {
             this.authenticationState.next(true);
           });
         }),
-        catchError(e => {
+/*        catchError(e => {
           this.showAlert(e.error.msg);
           throw new Error(e);
-        })
+        })*/
       );
   }
 

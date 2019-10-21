@@ -44,12 +44,11 @@ export class LoginPage implements OnInit {
 
     console.log(value);
     this.authService.login(this.loginForm.value).subscribe();
-    this.router.navigate(['/', 'dashboard']).then(nav => {
+/*    this.router.navigate(['/', 'dashboard']).then(nav => {
       console.log(nav); // true if navigation is successful
     }, err => {
       console.log(err); // when there's an error
-    });
-
+    });*/
   }
 
 }

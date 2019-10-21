@@ -128,11 +128,11 @@ export class RegisterPage implements OnInit {
     };
     console.log(user);
     this.authService.register(user).subscribe();
-    this.router.navigate(['/', 'registered']).then(nav => {
+    /*this.router.navigate(['/', 'registered']).then(nav => {
       console.log(nav); // true if navigation is successful
     }, err => {
       console.log(err); // when there's an error
-    });
+    });*/
   }
 
 }
