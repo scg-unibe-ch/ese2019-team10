@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Dashboard
+      Users
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -15,7 +15,7 @@
 
     <ion-row>
       <ion-card-content>
-        <p>Welcome to your personal dashboard!</p>
+        <p>Welcome to the user administration!</p>
       </ion-card-content>
     </ion-row>
 
@@ -27,17 +27,15 @@
             <p>{{ data }}</p>
           </ion-item>
 
-
-          <ion-item>
-            <ion-button expand="full" (click)="loadUsers()">Load Special Info</ion-button>
-          </ion-item>
-
-          <ion-item>
-            <ion-button expand="full" (click)="logout()">Logout</ion-button>
-          </ion-item>
-
         </ion-list>
       </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-button class="submit-btn" expand="full" type="button" (click)="loadUsers()" color="tertiary">
+        <ion-icon slot="start" name="download"></ion-icon>
+        Load Users
+      </ion-button>
     </ion-row>
 
   </ion-card>

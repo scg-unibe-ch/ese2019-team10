@@ -82,17 +82,19 @@ export class AuthService {
     });
   }
 
-  getSpecialData() {
-    return this.http.get(`${this.url}/api/special`).pipe(
+  getApprovedUsers() {
+    return this.http.get(`${this.url}/api/register/approved`);
+/*
+    .pipe(
       catchError(e => {
         const status = e.status;
         if (status === 401) {
           this.showAlert('You are not authorized for this!');
-          this.logout();
+          // this.logout();
         }
         throw new Error(e);
       })
-    );
+    );*/
   }
 
   isAuthenticated() {
