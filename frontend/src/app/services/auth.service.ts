@@ -61,6 +61,9 @@ export class AuthService {
   }
 
   login(credentials) {
+    this.user = this.helper.decodeToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c');
+    console.log(this.user);
+
     return this.http.post(`${this.url}/api/login`, credentials)
       .pipe(
         tap((res: any) => {
