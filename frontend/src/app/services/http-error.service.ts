@@ -15,6 +15,7 @@ import {retry, catchError} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
+
 export class HttpErrorService implements HttpInterceptor {
 
   constructor(
