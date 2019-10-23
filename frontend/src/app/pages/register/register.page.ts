@@ -3,6 +3,8 @@ import {Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
 import {PasswordValidator} from '../../validators/password.validator';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
+import {AlertService} from 'src/app/services/alert.service';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +18,7 @@ export class RegisterPage implements OnInit {
     public formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private alertService: AlertService,
   ) {
   }
 
@@ -127,7 +130,27 @@ export class RegisterPage implements OnInit {
       postalCode: this.registrationForm.value.postalCode,
     };
     console.log(user);
-    this.authService.register(user).subscribe();
+    this.authService.register(user).subscribe(
+      (data: any) => {
+        console.log(data.msg);
+        this.router.navigate(['/', 'registered']).then(nav => {
+          console.log(nav); // true if navigation is successful
+        }, err => {
+          console.log(err); // when there's an error
+        });
+
+        this.alertService.presentToast(data.msg).then(r => {
+          console.log(r);
+        }, err => {
+          console.log(err);
+        });
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+      }
+    );
     /*this.router.navigate(['/', 'registered']).then(nav => {
       console.log(nav); // true if navigation is successful
     }, err => {

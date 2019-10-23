@@ -16,10 +16,10 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule',
-    canActivate: [AuthGuardService]
+    // canActivate: [AuthGuardService]
   },
   {path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule'},
-  { path: 'admin/users', loadChildren: './admin/users/users.module#UsersPageModule' },
+  {path: 'admin/users', loadChildren: './admin/users/users.module#UsersPageModule'},
 ];
 
 @NgModule({

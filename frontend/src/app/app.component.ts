@@ -8,7 +8,7 @@ import {HttpClient} from '@angular/common/http';
 import {NavigationEnd, Router, RouterEvent} from '@angular/router';
 // import {LoginPage} from './login/login.page';
 import {AuthService} from './services/auth.service';
-
+import {AuthInterceptorService} from './services/auth-interceptor.service';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
     private httpClient: HttpClient,
     private router: Router,
     private authService: AuthService,
+    private authInterceptorService: AuthInterceptorService,
   ) {
     this.sideMenu();
     this.initializeApp();

@@ -23,20 +23,50 @@
       <ion-col>
         <ion-list inset>
 
+          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+            <ion-label>
+              <ion-icon class="form-icon" slot="start" name="mail"></ion-icon>
+              Unapproved Users
+            </ion-label>
+          </ion-item-divider>
+
           <ion-item>
-            <p>{{ data }}</p>
+            <p>{{ unapprovedUsers }}</p>
           </ion-item>
+
+          <ion-row>
+            <ion-button class="submit-btn" expand="full" type="button" (click)="loadUnapprovedUsers()" color="tertiary">
+              <ion-icon slot="start" name="download"></ion-icon>
+              Load Unapproved Users
+            </ion-button>
+          </ion-row>
+
+
+          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+            <ion-label>
+              <ion-icon class="form-icon" slot="start" name="mail"></ion-icon>
+              Approved Users
+            </ion-label>
+          </ion-item-divider>
+
+          <ion-item>
+            <p>{{ approvedUsers }}</p>
+          </ion-item>
+
+          <ion-row>
+            <ion-button class="submit-btn" expand="full" type="button" (click)="loadApprovedUsers()" color="tertiary">
+              <ion-icon slot="start" name="download"></ion-icon>
+              Load Approved Users
+            </ion-button>
+          </ion-row>
 
         </ion-list>
       </ion-col>
     </ion-row>
 
-    <ion-row>
-      <ion-button class="submit-btn" expand="full" type="button" (click)="loadUsers()" color="tertiary">
-        <ion-icon slot="start" name="download"></ion-icon>
-        Load Users
-      </ion-button>
-    </ion-row>
+
+
+
 
   </ion-card>
 </ion-content>

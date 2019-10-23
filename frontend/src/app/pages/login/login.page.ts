@@ -3,6 +3,8 @@ import {NavController, NavParams} from '@ionic/angular';
 import {Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
+import {AlertService} from 'src/app/services/alert.service';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +18,7 @@ export class LoginPage implements OnInit {
     public formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private alertService: AlertService,
   ) {
   }
 
@@ -43,7 +46,27 @@ export class LoginPage implements OnInit {
   onSubmit(value) {
 
     console.log(value);
-    this.authService.login(this.loginForm.value).subscribe();
+    this.authService.login(this.loginForm.value).subscribe(
+      (data: any) => {
+        console.log(data.msg);
+        this.router.navigate(['/', 'dashboard']).then(nav => {
+          console.log(nav); // true if navigation is successful
+        }, err => {
+          console.log(err); // when there's an error
+        });
+
+        this.alertService.presentToast(data.msg).then(r => {
+          console.log(r);
+        }, err => {
+          console.log(err);
+        });
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+      }
+    );
 /*    this.router.navigate(['/', 'dashboard']).then(nav => {
       console.log(nav); // true if navigation is successful
     }, err => {

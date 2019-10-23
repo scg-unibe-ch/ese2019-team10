@@ -1,17 +1,18 @@
-import { Injectable } from '@angular/core';
-import { Platform, AlertController } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Storage } from '@ionic/storage';
-import { environment } from '../../environments/environment';
-import { tap, catchError } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Platform, AlertController} from '@ionic/angular';
+import {HttpClient} from '@angular/common/http';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import {Storage} from '@ionic/storage';
+import {environment} from '../../environments/environment';
+import {tap, catchError} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
 
 const TOKEN_KEY = 'access_token';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
 
   url = environment.url;
@@ -72,10 +73,10 @@ export class AuthService {
             this.authenticationState.next(true);
           });
         }),
-/*        catchError(e => {
-          this.showAlert(e.error.msg);
-          throw new Error(e);
-        })*/
+        /*        catchError(e => {
+                  this.showAlert(e.error.msg);
+                  throw new Error(e);
+                })*/
       );
   }
 
@@ -87,17 +88,21 @@ export class AuthService {
 
   getApprovedUsers() {
     return this.http.get(`${this.url}/api/register/approved`);
-/*
-    .pipe(
-      catchError(e => {
-        const status = e.status;
-        if (status === 401) {
-          this.showAlert('You are not authorized for this!');
-          // this.logout();
-        }
-        throw new Error(e);
-      })
-    );*/
+    /*
+        .pipe(
+          catchError(e => {
+            const status = e.status;
+            if (status === 401) {
+              this.showAlert('You are not authorized for this!');
+              // this.logout();
+            }
+            throw new Error(e);
+          })
+        );*/
+  }
+
+  getUnapprovedUsers() {
+    return this.http.get(`${this.url}/api/register/to-approve`);
   }
 
   isAuthenticated() {
