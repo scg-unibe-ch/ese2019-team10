@@ -122,6 +122,7 @@ export class RegisterPage implements OnInit {
 
   onSubmit(value) {
     const user = {
+      email: this.registrationForm.value.email,
       firstName: this.registrationForm.value.firstName,
       lastName: this.registrationForm.value.lastName,
       password: this.registrationForm.value.matchingPasswords.password,
