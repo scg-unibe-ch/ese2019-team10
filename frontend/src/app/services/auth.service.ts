@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Platform, AlertController} from '@ionic/angular';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Storage} from '@ionic/storage';
 import {environment} from '../../environments/environment';
@@ -10,7 +10,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 const TOKEN_KEY = 'access_token';
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json'
+    'Content-Type': 'application/json'
   })
 };
 
@@ -55,6 +55,17 @@ export class AuthService {
 
   register(credentials) {
     return this.http.post(this.url + 'register', credentials);
+  }
+
+  approveUser(userID) {
+
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json');
+
+
+    return this.http.put(this.url + 'register/approve/' + userID,
+      {},
+      {headers});
   }
 
   saveProfile(credentials) {
