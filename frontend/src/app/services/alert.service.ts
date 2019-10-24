@@ -13,7 +13,7 @@ export class AlertService {
     const toast = await this.toastController.create({
       message: msg,
       duration: 2000,
-      position: 'top',
+      position: 'middle',
       color: 'dark'
     });
     await toast.present();

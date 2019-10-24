@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
 import {AlertService} from '../../services/alert.service';
 
 
@@ -11,25 +11,28 @@ import {AlertService} from '../../services/alert.service';
 export class UsersPage implements OnInit {
   private approvedUsers: any;
   private numberApproved: number;
+  private loadedAU: boolean;
   private unapprovedUsers: any;
   private numberUnapproved: number;
+  private loadedUU: boolean;
   private data: any;
 
   constructor(
     private authService: AuthService,
     private alertService: AlertService,
-
-  )  { }
+  ) {
+  }
 
   ngOnInit() {
-  this.numberApproved = -1;
-  this.numberUnapproved = -1;
+    this.loadedAU = false;
+    this.loadedUU = false;
   }
 
   loadApprovedUsers() {
     this.authService.getApprovedUsers().subscribe((res: any) => {
       this.approvedUsers = res;
       this.numberApproved = res.length;
+      this.loadedAU = true;
       console.log(res);
     });
   }
@@ -38,13 +41,46 @@ export class UsersPage implements OnInit {
     this.authService.getUnapprovedUsers().subscribe((res: any) => {
       this.unapprovedUsers = res;
       this.numberUnapproved = res.length;
+      this.loadedUU = true;
       console.log(res);
-/*      this.alertService.presentToast(res).then(r => {
-        console.log(r);
-      }, err => {
-        console.log(err);
-      });*/
+      /*      this.alertService.presentToast(res).then(r => {
+              console.log(r);
+            }, err => {
+              console.log(err);
+            });*/
     });
   }
+
+  approveUser(id) {
+    console.log(id);
+    this.authService.approveUser(id).subscribe(val => {
+        console.log('PUT call successful value returned in body',
+          val);
+      },
+        response => {
+          console.log('PUT call in error', response);
+        },
+        () => {
+          console.log('The PUT observable is now completed.');
+          this.alertService.presentToast('user has been approved').then(r => {
+            console.log(r);
+          }, err => {
+            console.log(err);
+          });
+        }
+    );
+
+
+
+/*    if (this.loadedAU) {
+      this.loadApprovedUsers();
+    }
+
+    if (this.loadedUU) {
+      this.loadUnapprovedUsers();
+    }*/
+
+  }
+
 
 }
