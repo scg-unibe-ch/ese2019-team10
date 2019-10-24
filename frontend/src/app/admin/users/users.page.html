@@ -19,53 +19,84 @@
       </ion-card-content>
     </ion-row>
 
+
+    <ion-item-divider class="ion-margin-top" color="warning" sticky="true">
+      <ion-label color="dark">
+        <ion-icon class="form-icon" slot="start" name="person-add"></ion-icon>
+        <strong *ngIf="numberUnapproved > -1; else noNumber">Unapproved Users: {{numberUnapproved}}</strong>
+        <ng-template #noNumber><strong>Unapproved Users</strong></ng-template>
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-list>
+      <ion-list-header *ngIf="numberUnapproved > 0">
+        The following users are waiting for approval:
+      </ion-list-header>
+
+      <ion-list-header *ngIf="numberUnapproved === 0">
+        No users are waiting for approval.
+      </ion-list-header>
+
+      <ion-item *ngFor="let user of unapprovedUsers">
+        <ion-avatar slot="start">
+          <img src="../../../assets/favicon.old.png" alt="basic avatar">
+        </ion-avatar>
+        <ion-label>
+          <h2>E-Mail: {{user.email}}</h2>
+          <h3>Name: {{user.firstName}} {{user.lastName}}</h3>
+          <p>Address: {{user.address}}</p>
+          <ion-toggle slot="end" color="warning"></ion-toggle>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+
     <ion-row>
-      <ion-col>
-        <ion-list inset>
-
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
-            <ion-label>
-              <ion-icon class="form-icon" slot="start" name="mail"></ion-icon>
-              Unapproved Users
-            </ion-label>
-          </ion-item-divider>
-
-          <ion-item>
-            <p>{{ unapprovedUsers }}</p>
-          </ion-item>
-
-          <ion-row>
-            <ion-button class="submit-btn" expand="full" type="button" (click)="loadUnapprovedUsers()" color="tertiary">
-              <ion-icon slot="start" name="download"></ion-icon>
-              Load Unapproved Users
-            </ion-button>
-          </ion-row>
-
-
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
-            <ion-label>
-              <ion-icon class="form-icon" slot="start" name="mail"></ion-icon>
-              Approved Users
-            </ion-label>
-          </ion-item-divider>
-
-          <ion-item>
-            <p>{{ approvedUsers }}</p>
-          </ion-item>
-
-          <ion-row>
-            <ion-button class="submit-btn" expand="full" type="button" (click)="loadApprovedUsers()" color="tertiary">
-              <ion-icon slot="start" name="download"></ion-icon>
-              Load Approved Users
-            </ion-button>
-          </ion-row>
-
-        </ion-list>
-      </ion-col>
+      <ion-button class="submit-btn" expand="full" type="button" (click)="loadUnapprovedUsers()" color="tertiary">
+       <ion-icon slot="start" name="refresh"></ion-icon>
+        Load Unapproved Users
+      </ion-button>
     </ion-row>
 
 
+    <ion-item-divider class="ion-margin-top" color="secondary" sticky="true">
+      <ion-label color="dark">
+        <ion-icon class="form-icon" slot="start" name="people"></ion-icon>
+        <strong *ngIf="numberApproved > -1; else elseBlock">Approved Users: {{numberApproved}}</strong>
+        <ng-template #elseBlock><strong>Approved Users</strong></ng-template>
+      </ion-label>
+    </ion-item-divider>
 
+
+    <ion-list>
+      <ion-list-header *ngIf="numberApproved > 0">
+        The following users have already been approved:
+      </ion-list-header>
+
+      <ion-list-header *ngIf="numberApproved === 0">
+        No user has been approved.
+      </ion-list-header>
+
+    <ion-item *ngFor="let user of approvedUsers">
+      <ion-avatar slot="start">
+        <img src="../../../assets/favicon.old.png" alt="basic avatar">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{'E-Mail: ' + user.email}}</h2>
+        <h3>{{'Name: ' + user.firstName + ' ' + user.lastName}}</h3>
+        <p>{{'Address: ' + user.address}}</p>
+        <ion-toggle slot="end" color="secondary" checked></ion-toggle>
+      </ion-label>
+    </ion-item>
+
+    </ion-list>
+
+    <ion-row>
+      <ion-button class="submit-btn" expand="full" type="button" (click)="loadApprovedUsers()" color="tertiary">
+        <ion-icon slot="start" name="refresh"></ion-icon>
+        Load Approved Users
+      </ion-button>
+    </ion-row>
 
 
   </ion-card>

@@ -8,6 +8,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class DashboardPage implements OnInit {
   private data: any;
+  private firstName: string;
+  private lastName: string;
 
   constructor(
     private authService: AuthService,
@@ -16,9 +18,12 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
   }
 
-  loadUsers() {
+  loadData() {
     this.authService.getApprovedUsers().subscribe((res: any) => {
-      this.data = res.msg;
+      console.log(res);
+      this.firstName = res[0].firstName;
+      this.lastName = res[0].lastName;
+      this.data = 'Is your name ' + this.firstName + ' ' + this.lastName + '?';
     });
   }
 

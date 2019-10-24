@@ -56,7 +56,12 @@ router.post('/', async (req: Request, res: Response ) => {
           expiresIn: 120
         });
       }
-    });
+    },
+        err => {
+          res.statusMessage = err;
+          res.sendStatus(401); // forbidden
+          return;
+      });
 });
 
 export const LoginController: Router = router;

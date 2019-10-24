@@ -1,13 +1,18 @@
 import {Injectable} from '@angular/core';
 import {Platform, AlertController} from '@ionic/angular';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Storage} from '@ionic/storage';
 import {environment} from '../../environments/environment';
 import {tap, catchError} from 'rxjs/operators';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 const TOKEN_KEY = 'access_token';
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -49,11 +54,11 @@ export class AuthService {
   }
 
   register(credentials) {
-    return this.http.post(`${this.url}/api/register`, credentials);
+    return this.http.post(this.url + 'register', credentials);
   }
 
   saveProfile(credentials) {
-    return this.http.post(`${this.url}/api/profile`, credentials).pipe(
+    return this.http.post(this.url + 'profile', credentials).pipe(
       catchError(e => {
         this.showAlert(e.error.msg);
         throw new Error(e);
@@ -61,15 +66,16 @@ export class AuthService {
     );
   }
 
-  login(credentials) {
+  login(credentials): Observable<any> {
+    console.log(credentials);
     this.user = this.helper.decodeToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c');
     console.log(this.user);
 
-    return this.http.post(`${this.url}/api/login`, credentials)
+    return this.http.post(this.url + 'login', credentials, httpOptions)
       .pipe(
         tap((res: any) => {
           this.storage.set(TOKEN_KEY, res.token).then(() => {
-            this.user = this.helper.decodeToken(res.token);
+            this.user = this.helper.decodeToken(res.idToken);
             this.authenticationState.next(true);
           });
         }),
@@ -87,7 +93,7 @@ export class AuthService {
   }
 
   getApprovedUsers() {
-    return this.http.get(`${this.url}/api/register/approved`);
+    return this.http.get(this.url + 'register/approved');
     /*
         .pipe(
           catchError(e => {
@@ -102,7 +108,7 @@ export class AuthService {
   }
 
   getUnapprovedUsers() {
-    return this.http.get(`${this.url}/api/register/to-approve`);
+    return this.http.get(this.url + 'register/to-approve');
   }
 
   isAuthenticated() {
