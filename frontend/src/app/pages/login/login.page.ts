@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
 import {tap} from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginPage implements OnInit {
     private router: Router,
     private authService: AuthService,
     private alertService: AlertService,
+    private titleService: Title,
   ) {
   }
 
@@ -34,6 +36,7 @@ export class LoginPage implements OnInit {
   };
 
   ngOnInit() {
+    this.titleService.setTitle ('Login | Event-App');
 
     this.loginForm = this.formBuilder.group({
       email: new FormControl('', Validators.required),

@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, Title} from '@angular/platform-browser';
 import {RouteReuseStrategy, RouterModule} from '@angular/router';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -56,12 +56,15 @@ export function jwtOptionsFactory(storage) {
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    {
+      provide: RouteReuseStrategy, useClass: IonicRouteStrategy
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorService,
       multi: true
-    }
+    },
+    Title
   ],
   bootstrap: [AppComponent]
 })

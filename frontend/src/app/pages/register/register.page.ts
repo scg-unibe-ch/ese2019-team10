@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
 import {tap} from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register',
@@ -19,6 +20,7 @@ export class RegisterPage implements OnInit {
     private router: Router,
     private authService: AuthService,
     private alertService: AlertService,
+    private titleService: Title,
   ) {
   }
 
@@ -72,6 +74,8 @@ export class RegisterPage implements OnInit {
 
 
   ngOnInit() {
+    this.titleService.setTitle ('Register | Event-App');
+
 
     this.matchingPasswordsGroup = new FormGroup({
       password: new FormControl('', Validators.compose([

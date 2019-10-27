@@ -3,6 +3,7 @@ import {Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
 import {PasswordValidator} from '../../validators/password.validator';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +16,7 @@ export class ProfilePage implements OnInit {
     public formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private titleService: Title,
   ) {
   }
 
@@ -70,6 +72,8 @@ export class ProfilePage implements OnInit {
   };
 
   ngOnInit() {
+    this.titleService.setTitle ('Profile | Event-App');
+
     this.countries = [
       'Switzerland',
       'Liechtenstein',

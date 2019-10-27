@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,9 +14,11 @@ export class DashboardPage implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private titleService: Title,
   )  { }
 
   ngOnInit() {
+    this.titleService.setTitle ('Dashboard | Event-App');
   }
 
   loadData() {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-terms',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TermsPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private titleService: Title,
+  ) { }
 
   ngOnInit() {
+    this.titleService.setTitle ('Terms | Event-App');
+
   }
 
 }
