@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Users
+      User Administration
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -15,20 +15,20 @@
 
     <ion-row>
       <ion-card-content>
-        <p>Welcome to the user administration!</p>
+        <p>Hi, admin! Here you can view all users and approve new users!</p>
       </ion-card-content>
     </ion-row>
 
 
     <ion-item-divider class="ion-margin-top" color="warning" sticky>
       <ion-label color="dark">
-        <ion-icon class="form-icon" slot="start" name="person-add"></ion-icon>
+        <ion-icon class="form-icon ion-margin-end" slot="start" name="person-add"></ion-icon>
         <strong *ngIf="loadedUU; else noNumber">Unapproved Users: {{numberUnapproved}}</strong>
         <ng-template #noNumber><strong>Unapproved Users</strong></ng-template>
       </ion-label>
     </ion-item-divider>
 
-    <ion-list>
+    <ion-list *ngIf="loadedUU">
       <ion-list-header *ngIf="numberUnapproved > 0">
         The following users are waiting for approval:
       </ion-list-header>
@@ -45,30 +45,39 @@
           <h2>E-Mail: {{user.email}}</h2>
           <h3>Name: {{user.firstName}} {{user.lastName}}</h3>
           <p>Address: {{user.address}}</p>
-          <ion-toggle slot="end" color="warning" (ionChange)="approveUser(user.id)"></ion-toggle>
+          <ion-toggle slot="end" color="warning" (ionChange)="approveUser(user.id, user.email)"></ion-toggle>
         </ion-label>
       </ion-item>
 
     </ion-list>
 
     <ion-row>
-      <ion-button class="submit-btn" expand="full" type="button" (click)="loadUnapprovedUsers()" color="tertiary">
-       <ion-icon slot="start" name="refresh"></ion-icon>
-        Load Unapproved Users
-      </ion-button>
+      <ion-col>
+        <ion-button *ngIf="!loadedUU; else hideUnapproved" class="submit-btn" expand="full" type="button"
+                    (click)="showUnapprovedUsers()" color="dark">
+          <ion-icon slot="start" name="arrow-dropdown"></ion-icon>
+          Show Unapproved Users
+        </ion-button>
+        <ng-template #hideUnapproved>
+          <ion-button class="submit-btn" expand="full" type="button" (click)="hideUnapprovedUsers()" color="dark">
+            <ion-icon slot="start" name="arrow-dropup"></ion-icon>
+            Hide Unapproved Users
+          </ion-button>
+        </ng-template>
+      </ion-col>
     </ion-row>
 
 
-    <ion-item-divider class="ion-margin-top" color="secondary" sticky>
+    <ion-item-divider class="ion-margin-top" color="success" sticky>
       <ion-label color="dark">
-        <ion-icon class="form-icon" slot="start" name="people"></ion-icon>
+        <ion-icon class="form-icon ion-margin-end" slot="start" name="people"></ion-icon>
         <strong *ngIf="loadedAU; else elseBlock">Approved Users: {{numberApproved}}</strong>
         <ng-template #elseBlock><strong>Approved Users</strong></ng-template>
       </ion-label>
     </ion-item-divider>
 
 
-    <ion-list>
+    <ion-list *ngIf="loadedAU">
       <ion-list-header *ngIf="numberApproved > 0">
         The following users have already been approved:
       </ion-list-header>
@@ -77,25 +86,34 @@
         No user has been approved.
       </ion-list-header>
 
-    <ion-item *ngFor="let user of approvedUsers">
-      <ion-avatar slot="start">
-        <img src="../../../assets/favicon.old.png" alt="basic avatar">
-      </ion-avatar>
-      <ion-label>
-        <h2>{{'E-Mail: ' + user.email}}</h2>
-        <h3>{{'Name: ' + user.firstName + ' ' + user.lastName}}</h3>
-        <p>{{'Address: ' + user.address}}</p>
-        <ion-toggle slot="end" color="secondary" checked></ion-toggle>
-      </ion-label>
-    </ion-item>
+      <ion-item *ngFor="let user of approvedUsers">
+        <ion-avatar slot="start">
+          <img src="../../../assets/favicon.old.png" alt="basic avatar">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{'E-Mail: ' + user.email}}</h2>
+          <h3>{{'Name: ' + user.firstName + ' ' + user.lastName}}</h3>
+          <p>{{'Address: ' + user.address}}</p>
+          <ion-icon slot="end" name="checkmark" color="success"></ion-icon>
+        </ion-label>
+      </ion-item>
 
     </ion-list>
 
     <ion-row>
-      <ion-button class="submit-btn" expand="full" type="button" (click)="loadApprovedUsers()" color="tertiary">
-        <ion-icon slot="start" name="refresh"></ion-icon>
-        Load Approved Users
-      </ion-button>
+      <ion-col>
+        <ion-button *ngIf="!loadedAU; else hideApproved" class="submit-btn" expand="full" type="button"
+                    (click)="showApprovedUsers()" color="dark">
+          <ion-icon slot="start" name="arrow-dropdown"></ion-icon>
+          Show Approved Users
+        </ion-button>
+        <ng-template #hideApproved>
+          <ion-button class="submit-btn" expand="full" type="button" (click)="hideApprovedUsers()" color="dark">
+            <ion-icon slot="start" name="arrow-dropup"></ion-icon>
+            Hide Approved Users
+          </ion-button>
+        </ng-template>
+      </ion-col>
     </ion-row>
 
 

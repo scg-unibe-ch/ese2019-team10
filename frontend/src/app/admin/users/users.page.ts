@@ -28,7 +28,7 @@ export class UsersPage implements OnInit {
     this.loadedUU = false;
   }
 
-  loadApprovedUsers() {
+  showApprovedUsers() {
     this.authService.getApprovedUsers().subscribe((res: any) => {
       this.approvedUsers = res;
       this.numberApproved = res.length;
@@ -37,7 +37,11 @@ export class UsersPage implements OnInit {
     });
   }
 
-  loadUnapprovedUsers() {
+  hideApprovedUsers() {
+    this.loadedAU = false;
+  }
+
+  showUnapprovedUsers() {
     this.authService.getUnapprovedUsers().subscribe((res: any) => {
       this.unapprovedUsers = res;
       this.numberUnapproved = res.length;
@@ -51,7 +55,11 @@ export class UsersPage implements OnInit {
     });
   }
 
-  approveUser(id) {
+  hideUnapprovedUsers() {
+    this.loadedUU = false;
+  }
+
+  approveUser(id, email) {
     console.log(id);
     this.authService.approveUser(id).subscribe(val => {
         console.log('PUT call successful value returned in body',
@@ -62,16 +70,13 @@ export class UsersPage implements OnInit {
         },
         () => {
           console.log('The PUT observable is now completed.');
-          this.alertService.presentToast('user has been approved').then(r => {
+          this.alertService.presentToast(email + ' has been approved').then(r => {
             console.log(r);
           }, err => {
             console.log(err);
           });
         }
     );
-
-
-
 /*    if (this.loadedAU) {
       this.loadApprovedUsers();
     }
