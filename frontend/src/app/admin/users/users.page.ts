@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {AlertService} from '../../services/alert.service';
-
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.page.html',
   styleUrls: ['./users.page.scss'],
 })
+
 export class UsersPage implements OnInit {
   private approvedUsers: any;
   private numberApproved: number;
@@ -20,12 +21,15 @@ export class UsersPage implements OnInit {
   constructor(
     private authService: AuthService,
     private alertService: AlertService,
+    private titleService: Title,
   ) {
   }
 
   ngOnInit() {
     this.loadedAU = false;
     this.loadedUU = false;
+    this.titleService.setTitle ('User Administration | Event-App');
+
   }
 
   showApprovedUsers() {
