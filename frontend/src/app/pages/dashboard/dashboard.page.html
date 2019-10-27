@@ -13,26 +13,43 @@
       </ion-card-content>
     </ion-row>
 
-    <ion-row>
+    <ion-row class="ion-margin-top">
       <ion-col>
-        <ion-list inset>
-
-          <ion-item>
-            <p>{{ data }}</p>
-          </ion-item>
-
-
-          <ion-item>
-            <ion-button expand="full" (click)="loadData()">Load Special Info</ion-button>
-          </ion-item>
-
-          <ion-item>
-            <ion-button expand="full" (click)="logout()">Logout</ion-button>
-          </ion-item>
-
-        </ion-list>
+        <ion-item>
+          <p>{{ data }}</p>
+        </ion-item>
       </ion-col>
     </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <ion-button type="button" (click)="loadData()" color="secondary" fill="outline" class="profile"
+                    expand="default">
+          <ion-icon slot="start" name="refresh" class="ion-padding-end"></ion-icon>
+          Load Data
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <ion-button type="button" [routerLink]="['/profile']" color="secondary" fill="outline" class="profile"
+                    expand="default">
+          <ion-icon slot="start" name="person" class="ion-padding-end"></ion-icon>
+          Profile
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <ion-button type="button" (click)="logout()" color="secondary" fill="outline" class="profile" expand="default">
+          <ion-icon slot="start" name="log-out" class="ion-padding-end"></ion-icon>
+          Logout
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
 
   </ion-card>
 </ion-content>
