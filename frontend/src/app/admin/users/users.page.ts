@@ -31,6 +31,7 @@ export class UsersPage implements OnInit {
   showApprovedUsers() {
     this.authService.getApprovedUsers().subscribe((res: any) => {
       this.approvedUsers = res;
+      this.approvedUsers = this.approvedUsers.sort((a, b) => (a.email > b.email) ? 1 : -1);
       this.numberApproved = res.length;
       this.loadedAU = true;
       console.log(res);
@@ -44,6 +45,7 @@ export class UsersPage implements OnInit {
   showUnapprovedUsers() {
     this.authService.getUnapprovedUsers().subscribe((res: any) => {
       this.unapprovedUsers = res;
+      this.unapprovedUsers = this.unapprovedUsers.sort((a, b) => (a.email > b.email) ? 1 : -1);
       this.numberUnapproved = res.length;
       this.loadedUU = true;
       console.log(res);
