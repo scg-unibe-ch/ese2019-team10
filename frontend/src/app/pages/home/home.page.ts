@@ -7,13 +7,15 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  private title: string;
 
   constructor(
     private titleService: Title,
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle ('Event-App');
+    this.title = 'Home';
+    this.titleService.setTitle (this.title + ' | Event-App');
   }
 
 }

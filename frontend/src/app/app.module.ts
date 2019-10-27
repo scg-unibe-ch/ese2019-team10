@@ -14,6 +14,7 @@ import {JwtModule, JWT_OPTIONS} from '@auth0/angular-jwt';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HttpErrorService} from './services/http-error.service';
+import {SharedComponentsModule} from './components/shared-components.module';
 
 // import { LoginPage} from './pages/login/login.page';
 // import { RegisterPage} from './pages/register/register.page';
@@ -52,7 +53,8 @@ export function jwtOptionsFactory(storage) {
         useFactory: jwtOptionsFactory,
         deps: [Storage],
       }
-    })],
+    }),
+    SharedComponentsModule],
   providers: [
     StatusBar,
     SplashScreen,

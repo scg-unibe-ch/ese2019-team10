@@ -7,13 +7,15 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./terms.page.scss'],
 })
 export class TermsPage implements OnInit {
+  private title: string;
 
   constructor(
     private titleService: Title,
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle ('Terms | Event-App');
+    this.title = 'Terms & Conditions';
+    this.titleService.setTitle (this.title + ' | Event-App');
 
   }
 

@@ -14,6 +14,7 @@ import { Title } from '@angular/platform-browser';
 })
 
 export class LoginPage implements OnInit {
+  private title: string;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -36,7 +37,8 @@ export class LoginPage implements OnInit {
   };
 
   ngOnInit() {
-    this.titleService.setTitle ('Login | Event-App');
+    this.title = 'Login';
+    this.titleService.setTitle (this.title + ' | Event-App');
 
     this.loginForm = this.formBuilder.group({
       email: new FormControl('', Validators.required),

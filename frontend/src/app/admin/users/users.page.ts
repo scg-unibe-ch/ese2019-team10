@@ -16,7 +16,7 @@ export class UsersPage implements OnInit {
   private unapprovedUsers: any;
   private numberUnapproved: number;
   private loadedUU: boolean;
-  private data: any;
+  private title: string;
 
   constructor(
     private authService: AuthService,
@@ -28,7 +28,8 @@ export class UsersPage implements OnInit {
   ngOnInit() {
     this.loadedAU = false;
     this.loadedUU = false;
-    this.titleService.setTitle ('User Administration | Event-App');
+    this.title = 'User Administration';
+    this.titleService.setTitle (this.title + ' | Event-App');
 
   }
 

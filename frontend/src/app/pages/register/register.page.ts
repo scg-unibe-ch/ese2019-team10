@@ -14,6 +14,7 @@ import { Title } from '@angular/platform-browser';
 })
 
 export class RegisterPage implements OnInit {
+  private title: string;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -74,7 +75,8 @@ export class RegisterPage implements OnInit {
 
 
   ngOnInit() {
-    this.titleService.setTitle ('Register | Event-App');
+    this.title = 'Register';
+    this.titleService.setTitle (this.title + ' | Event-App');
 
 
     this.matchingPasswordsGroup = new FormGroup({

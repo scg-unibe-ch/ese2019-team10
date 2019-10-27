@@ -11,6 +11,7 @@ export class DashboardPage implements OnInit {
   private data: any;
   private firstName: string;
   private lastName: string;
+  private title: string;
 
   constructor(
     private authService: AuthService,
@@ -18,7 +19,8 @@ export class DashboardPage implements OnInit {
   )  { }
 
   ngOnInit() {
-    this.titleService.setTitle ('Dashboard | Event-App');
+    this.title = 'Dashboard';
+    this.titleService.setTitle (this.title + ' | Event-App');
   }
 
   loadData() {

@@ -11,6 +11,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  private title: string;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -72,7 +73,8 @@ export class ProfilePage implements OnInit {
   };
 
   ngOnInit() {
-    this.titleService.setTitle ('Profile | Event-App');
+    this.title = 'Profile';
+    this.titleService.setTitle (this.title + ' | Event-App');
 
     this.countries = [
       'Switzerland',
