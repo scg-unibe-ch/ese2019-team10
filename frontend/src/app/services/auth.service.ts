@@ -68,6 +68,15 @@ export class AuthService {
       {headers});
   }
 
+  loadProfile() {
+    return this.http.get(this.url + 'profile').pipe(
+      catchError(e => {
+        this.showAlert(e.error.msg);
+        throw new Error(e);
+      })
+    );
+  }
+
   saveProfile(credentials) {
     return this.http.post(this.url + 'profile', credentials).pipe(
       catchError(e => {

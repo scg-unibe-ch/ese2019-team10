@@ -8,12 +8,12 @@
 
     <ion-row>
       <ion-card-content>
-        <p>Please register to be able to plan an event or offer your services.</p>
+        <p>Here you can edit your profile!</p>
       </ion-card-content>
     </ion-row>
 
     <div class="registration-form">
-      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit(profileForm.value)">
         <ion-row>
           <ion-col>
             <ion-list inset>
@@ -32,7 +32,7 @@
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.email">
                   <div class="error-message"
-                       *ngIf="registrationForm.get('email').hasError(validation.type) && (registrationForm.get('email').dirty || registrationForm.get('email').touched)">
+                       *ngIf="profileForm.get('email').hasError(validation.type) && (profileForm.get('email').dirty || profileForm.get('email').touched)">
                     <ion-icon name="information-circle-outline"></ion-icon>
                     {{ validation.message }}
                   </div>
@@ -48,7 +48,7 @@
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of registrationMessages.password">
                     <div class="error-message"
-                         *ngIf="registrationForm.get('matchingPasswords').get('password').hasError(validation.type) && (registrationForm.get('matchingPasswords').get('password').dirty || registrationForm.get('matchingPasswords').get('password').touched)">
+                         *ngIf="profileForm.get('matchingPasswords').get('password').hasError(validation.type) && (profileForm.get('matchingPasswords').get('password').dirty || profileForm.get('matchingPasswords').get('password').touched)">
                       <ion-icon name="information-circle-outline"></ion-icon>
                       {{ validation.message }}
                     </div>
@@ -63,7 +63,7 @@
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of registrationMessages.confirmPassword">
                     <div class="error-message"
-                         *ngIf="registrationForm.get('matchingPasswords').get('confirmPassword').hasError(validation.type) && (registrationForm.get('matchingPasswords').get('confirmPassword').dirty || registrationForm.get('matchingPasswords').get('confirmPassword').touched)">
+                         *ngIf="profileForm.get('matchingPasswords').get('confirmPassword').hasError(validation.type) && (profileForm.get('matchingPasswords').get('confirmPassword').dirty || profileForm.get('matchingPasswords').get('confirmPassword').touched)">
                       <ion-icon name="information-circle-outline"></ion-icon>
                       {{ validation.message }}
                     </div>
@@ -75,7 +75,7 @@
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.matchingPasswords">
                   <div class="error-message"
-                       *ngIf="registrationForm.get('matchingPasswords').hasError(validation.type) && (registrationForm.get('matchingPasswords').get('confirmPassword').dirty || registrationForm.get('matchingPasswords').get('confirmPassword').touched)">
+                       *ngIf="profileForm.get('matchingPasswords').hasError(validation.type) && (profileForm.get('matchingPasswords').get('confirmPassword').dirty || profileForm.get('matchingPasswords').get('confirmPassword').touched)">
                     <ion-icon name="information-circle-outline"></ion-icon>
                     {{ validation.message }}
                   </div>
@@ -96,7 +96,7 @@
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.firstName">
                   <div class="error-message"
-                       *ngIf="registrationForm.get('firstName').hasError(validation.type) && (registrationForm.get('firstName').dirty || registrationForm.get('firstName').touched)">
+                       *ngIf="profileForm.get('firstName').hasError(validation.type) && (profileForm.get('firstName').dirty || profileForm.get('firstName').touched)">
                     <ion-icon name="information-circle-outline"></ion-icon>
                     {{ validation.message }}
                   </div>
@@ -110,7 +110,7 @@
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.lastName">
                   <div class="error-message"
-                       *ngIf="registrationForm.get('lastName').hasError(validation.type) && (registrationForm.get('lastName').dirty || registrationForm.get('lastName').touched)">
+                       *ngIf="profileForm.get('lastName').hasError(validation.type) && (profileForm.get('lastName').dirty || profileForm.get('lastName').touched)">
                     <ion-icon name="information-circle-outline"></ion-icon>
                     {{ validation.message }}
                   </div>
@@ -126,7 +126,24 @@
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.gender">
                   <div class="error-message"
-                       *ngIf="registrationForm.get('gender').hasError(validation.type) && (registrationForm.get('gender').dirty || registrationForm.get('gender').touched)">
+                       *ngIf="profileForm.get('gender').hasError(validation.type) && (profileForm.get('gender').dirty || profileForm.get('gender').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+
+              <ion-item>
+                <ion-label position="floating">Birthday</ion-label>
+                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="birthday" pickerFormat="DD MMMM YYYY"
+                              min="1900"
+                              max="{{year}}-{{month}}-{{day}}">
+                </ion-datetime>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of registrationMessages.birthday">
+                  <div class="error-message"
+                       *ngIf="profileForm.get('birthday').hasError(validation.type) && (profileForm.get('birthday').dirty || profileForm.get('birthday').touched)">
                     <ion-icon name="information-circle-outline"></ion-icon>
                     {{ validation.message }}
                   </div>
@@ -140,7 +157,7 @@
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.phone">
                   <div class="error-message"
-                       *ngIf="registrationForm.get('phone').hasError(validation.type) && (registrationForm.get('phone').dirty || registrationForm.get('phone').touched)">
+                       *ngIf="profileForm.get('phone').hasError(validation.type) && (profileForm.get('phone').dirty || profileForm.get('phone').touched)">
                     <ion-icon name="information-circle-outline"></ion-icon>
                     {{ validation.message }}
                   </div>
@@ -161,7 +178,7 @@
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.street">
                   <div class="error-message"
-                       *ngIf="registrationForm.get('street').hasError(validation.type) && (registrationForm.get('street').dirty || registrationForm.get('street').touched)">
+                       *ngIf="profileForm.get('street').hasError(validation.type) && (profileForm.get('street').dirty || profileForm.get('street').touched)">
                     <ion-icon name="information-circle-outline"></ion-icon>
                     {{ validation.message }}
                   </div>
@@ -175,7 +192,7 @@
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.postalCode">
                   <div class="error-message"
-                       *ngIf="registrationForm.get('postalCode').hasError(validation.type) && (registrationForm.get('postalCode').dirty || registrationForm.get('postalCode').touched)">
+                       *ngIf="profileForm.get('postalCode').hasError(validation.type) && (profileForm.get('postalCode').dirty || profileForm.get('postalCode').touched)">
                     <ion-icon name="information-circle-outline"></ion-icon>
                     {{ validation.message }}
                   </div>
@@ -189,7 +206,7 @@
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.city">
                   <div class="error-message"
-                       *ngIf="registrationForm.get('city').hasError(validation.type) && (registrationForm.get('city').dirty || registrationForm.get('city').touched)">
+                       *ngIf="profileForm.get('city').hasError(validation.type) && (profileForm.get('city').dirty || profileForm.get('city').touched)">
                     <ion-icon name="information-circle-outline"></ion-icon>
                     {{ validation.message }}
                   </div>
@@ -205,7 +222,7 @@
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.country">
                   <div class="error-message"
-                       *ngIf="registrationForm.get('country').hasError(validation.type) && (registrationForm.get('country').dirty || registrationForm.get('country').touched)">
+                       *ngIf="profileForm.get('country').hasError(validation.type) && (profileForm.get('country').dirty || profileForm.get('country').touched)">
                     <ion-icon name="information-circle-outline"></ion-icon>
                     {{ validation.message }}
                   </div>
@@ -216,36 +233,24 @@
               <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
                 <ion-label>
                   <ion-icon class="form-icon" slot="start" name="clipboard"></ion-icon>
-                  Terms & Conditions
+                  App Usage
                 </ion-label>
               </ion-item-divider>
 
-
-              <ion-button class="terms ion-text-capitalize" type="button" routerDirection="forward" target="_blank"
-                          href="/terms" color="medium" fill="outline" expand="block">
-              <span class="ion-text-left">Read the terms
-              <ion-icon class="left-margin" name="open"></ion-icon></span>
-              </ion-button>
-
+              <ion-item>
+                <ion-label>I want to provide a service</ion-label>
+                <ion-checkbox name="serviceProvider" formControlName="serviceProvider"></ion-checkbox>
+              </ion-item>
 
               <ion-item>
-                <ion-label>I accept</ion-label>
-                <ion-checkbox name="terms" formControlName="terms"></ion-checkbox>
+                <ion-label>I want to plan an event</ion-label>
+                <ion-checkbox name="eventManager" formControlName="eventManager"></ion-checkbox>
               </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.terms">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('terms').hasError(validation.type) && (registrationForm.get('terms').dirty || registrationForm.get('terms').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
 
               <ion-row class="ion-margin-top">
-                <ion-button class="submit-btn" expand="full" type="submit" [disabled]="!registrationForm.valid">
+                <ion-button class="submit-btn" expand="full" type="submit" [disabled]="!profileForm.valid">
                   <ion-icon slot="start" name="person-add"></ion-icon>
-                  Register
+                  Save your profile
                 </ion-button>
               </ion-row>
 

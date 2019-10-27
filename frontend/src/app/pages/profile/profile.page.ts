@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
-import {PasswordValidator} from '../../validators/password.validator';
 import {Router} from '@angular/router';
+import {Title} from '@angular/platform-browser';
+import {tap} from 'rxjs/operators';
+
+import {PasswordValidator} from '../../validators/password.validator';
 import {AuthService} from '../../services/auth.service';
-import { Title } from '@angular/platform-browser';
+import {AlertService} from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,69 +15,90 @@ import { Title } from '@angular/platform-browser';
 })
 export class ProfilePage implements OnInit {
   private title: string;
+  profileForm: FormGroup;
+  matchingPasswordsGroup: FormGroup;
+  countries: Array<string>;
+  genders: Array<string>;
+  day = null;
+  month = null;
+  year = null;
+  currentTime = null;
 
   constructor(
     public formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private alertService: AlertService,
     private titleService: Title,
   ) {
   }
 
-  registrationForm: FormGroup;
-  matchingPasswordsGroup: FormGroup;
-  countries: Array<string>;
-  genders: Array<string>;
-
   registrationMessages = {
     firstName: [
-      {type: 'required', message: 'First name is required.'}
+      {type: 'required', message: 'Your first name is required.'},
+      {type: 'maxlength', message: 'Your first name should be less than 100 characters long.'},
     ],
     lastName: [
-      {type: 'required', message: 'Last name is required.'}
+      {type: 'required', message: 'Your last name is required.'},
+      {type: 'maxlength', message: 'Your last name should be less than 100 characters long.'},
     ],
     email: [
-      {type: 'required', message: 'E-mail is required.'},
-      {type: 'pattern', message: 'Please enter a valid e-mail.'}
+      {type: 'required', message: 'Your e-mail address is required.'},
+      {type: 'email', message: 'Please enter a valid e-mail address.'},
+      {type: 'pattern', message: 'Please enter a valid e-mail address.'},
+      {type: 'maxlength', message: 'Your e-mail address must be less than 100 characters long.'}
     ],
     phone: [
-      {type: 'required', message: 'Phone number is required.'},
+      {type: 'required', message: 'Your phone number is required.'},
+      {type: 'maxlength', message: 'Your phone number should be less than 100 characters long.'}
     ],
     gender: [
-      {type: 'required', message: 'Gender is required.'},
+      {type: 'required', message: 'Your gender is required.'},
+    ],
+    birthday: [
+      {type: 'required', message: 'Your birthday is required.'},
     ],
     street: [
-      {type: 'required', message: 'Street is required.'},
-    ],
-    postalCode: [
-      {type: 'required', message: 'Postal code is required.'},
-      {type: 'pattern', message: 'Please enter a valid postal code.'}
+      {type: 'required', message: 'Your street is required.'},
+      {type: 'maxlength', message: 'Your street should be less than 100 characters long.'}
     ],
     city: [
-      {type: 'required', message: 'City is required.'},
+      {type: 'required', message: 'Your city is required.'},
+      {type: 'maxlength', message: 'Your city should be less than 100 characters long.'}
+    ],
+    postalCode: [
+      {type: 'required', message: 'Your postal code is required.'},
+      {type: 'pattern', message: 'Please enter a valid postal code.'},
+      {type: 'maxlength', message: 'Your postal code should be less than 20 characters long.'}
     ],
     country: [
-      {type: 'required', message: 'Country is required.'},
+      {type: 'required', message: 'Your country is required.'},
+      {type: 'maxlength', message: 'Your country should be less than 100 characters long.'}
     ],
     password: [
-      {type: 'required', message: 'Password is required.'},
-      {type: 'minlength', message: 'Password must be at least 5 characters long.'},
-      {type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number.'}
+      {type: 'required', message: 'Your password is required.'},
+      {type: 'minlength', message: 'Your password must be at least 5 characters long.'},
+      {type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number.'},
+      {type: 'maxlength', message: 'Your password should be less than 500 characters long.'}
     ],
     confirmPassword: [
-      {type: 'required', message: 'Confirm password is required.'}
+      {type: 'required', message: 'Please confirm your password.'}
     ],
     matchingPasswords: [
-      {type: 'areEqual', message: 'Password mismatch.'}
+      {type: 'areEqual', message: 'Your passwords mismatch.'}
     ],
     terms: [
-      {type: 'pattern', message: 'You must accept terms and conditions.'}
+      {type: 'pattern', message: 'You need to accept the terms and conditions.'}
     ],
   };
 
   ngOnInit() {
     this.title = 'Profile';
-    this.titleService.setTitle (this.title + ' | Event-App');
+    this.titleService.setTitle(this.title + ' | Event-App');
+    this.currentTime = new Date();
+    this.day = this.currentTime.getDate();
+    this.month = this.currentTime.getMonth() + 1;
+    this.year = this.currentTime.getFullYear();
 
     this.countries = [
       'Switzerland',
@@ -87,18 +111,21 @@ export class ProfilePage implements OnInit {
       'Other'
     ];
 
+    // this.authService.loadProfile();
+
     this.matchingPasswordsGroup = new FormGroup({
       password: new FormControl('', Validators.compose([
         Validators.minLength(5),
         Validators.required,
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$'),
+        Validators.maxLength(500),
       ])),
       confirmPassword: new FormControl('', Validators.required)
     }, (formGroup: FormGroup) => {
       return PasswordValidator.areEqual(formGroup);
     });
 
-    this.registrationForm = this.formBuilder.group({
+    this.profileForm = this.formBuilder.group({
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
       email: new FormControl('', Validators.compose([
@@ -106,6 +133,7 @@ export class ProfilePage implements OnInit {
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
       gender: new FormControl('', Validators.required),
+      birthday: new FormControl(null, Validators.required),
       street: new FormControl('', Validators.required),
       postalCode: new FormControl('', Validators.compose([
         Validators.required,
@@ -115,18 +143,44 @@ export class ProfilePage implements OnInit {
       country: new FormControl('', Validators.required),
       phone: new FormControl('', Validators.required),
       matchingPasswords: this.matchingPasswordsGroup,
-      terms: new FormControl(false, Validators.pattern('true'))
+      serviceProvider: new FormControl(false),
+      eventManager: new FormControl(false),
     });
   }
 
-  onSubmit(value) {
-    console.log(value);
-    this.authService.saveProfile(this.registrationForm.value).subscribe();
-    this.router.navigate(['/', 'registered']).then(nav => {
-      console.log(nav); // true if navigation is successful
-    }, err => {
-      console.log(err); // when there's an error
-    });
+  onSubmit() {
+    const user = {
+      email: this.profileForm.value.email,
+      password: this.profileForm.value.matchingPasswords.password,
+      firstName: this.profileForm.value.firstName,
+      lastName: this.profileForm.value.lastName,
+      gender: this.profileForm.value.gender,
+      birthday: this.profileForm.value.birthday,
+      street: this.profileForm.value.street,
+      city: this.profileForm.value.city,
+      postalCode: this.profileForm.value.postalCode,
+      country: this.profileForm.value.country,
+      serviceProvider: this.profileForm.value.serviceProvider,
+      eventManager: this.profileForm.value.eventManager,
+    };
+    console.log(user);
+
+    /*this.authService.saveProfile(user).subscribe(
+      (data: any) => {
+        console.log(data.msg);
+
+        this.alertService.presentToast(data.msg).then(r => {
+          console.log(r);
+        }, err => {
+          console.log(err);
+        });
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+      }
+    );*/
   }
 
 }

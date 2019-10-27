@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
-import {PasswordValidator} from '../../validators/password.validator';
 import {Router} from '@angular/router';
+import {Title} from '@angular/platform-browser';
+import {tap} from 'rxjs/operators';
+
+import {PasswordValidator} from '../../validators/password.validator';
 import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
-import {tap} from 'rxjs/operators';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register',
@@ -76,7 +77,7 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() {
     this.title = 'Register';
-    this.titleService.setTitle (this.title + ' | Event-App');
+    this.titleService.setTitle(this.title + ' | Event-App');
 
 
     this.matchingPasswordsGroup = new FormGroup({
@@ -158,11 +159,7 @@ export class RegisterPage implements OnInit {
       () => {
       }
     );
-    /*this.router.navigate(['/', 'registered']).then(nav => {
-      console.log(nav); // true if navigation is successful
-    }, err => {
-      console.log(err); // when there's an error
-    });*/
+
   }
 
 }
