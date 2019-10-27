@@ -20,6 +20,7 @@ const routes: Routes = [
   },
   {path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule'},
   {path: 'admin/users', loadChildren: './admin/users/users.module#UsersPageModule'},
+  {path: 'about', loadChildren: './pages/about/about.module#AboutPageModule'},
 ];
 
 @NgModule({

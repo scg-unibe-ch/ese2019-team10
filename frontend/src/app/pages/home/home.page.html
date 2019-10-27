@@ -31,19 +31,34 @@
             </ion-row>
       -->
 
+      <ion-grid>
       <ion-row class="ion-margin-top">
-        <ion-button type="button" [routerLink]="['/login']" color="light" fill="outline" class="login">
-          <ion-icon slot="start" name="log-in"></ion-icon>
-          Log in
+        <ion-col>
+        <ion-button type="button" [routerLink]="['/about']" color="light" fill="outline" class="about" expand="block">
+          <ion-icon slot="start" name="information-circle-outline" class="ion-padding-end"></ion-icon>
+          <ion-text slot="end" class="">About</ion-text>
         </ion-button>
+        </ion-col>
       </ion-row>
 
       <ion-row class="ion-margin-top">
-        <ion-button type="button" [routerLink]="['/register']" color="light" fill="outline" class="register">
-          <ion-icon slot="start" name="person-add"></ion-icon>
+        <ion-col>
+        <ion-button type="button" [routerLink]="['/login']" color="light" fill="outline" class="login" expand="block">
+          <ion-icon slot="start" name="log-in" class="ion-padding-end"></ion-icon>
+          Log in
+        </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-margin-top">
+        <ion-col>
+        <ion-button type="button" [routerLink]="['/register']" color="light" fill="outline" class="register" expand="block">
+          <ion-icon slot="start" name="person-add" class="ion-padding-end"></ion-icon>
           Register
         </ion-button>
+        </ion-col>
       </ion-row>
+      </ion-grid>
 
     </ion-card>
 
