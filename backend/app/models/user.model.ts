@@ -1,8 +1,10 @@
-import {Column, HasMany, HasOne, Model, Table} from 'sequelize-typescript';
+import {BelongsToMany, Column, HasMany, HasOne, Model, Table} from 'sequelize-typescript';
 import {Service} from './service.model';
 import {City} from './city.model';
 import {Event} from './event.model';
 import {sha3_256} from 'js-sha3';
+import {Role} from './role.model';
+import {RoleUser} from './RoleUser';
 
 @Table
 export class User extends Model<User> {
@@ -27,14 +29,8 @@ export class User extends Model<User> {
   @Column
   public email!: string;
 
-  @Column
-  public isAdmin!: boolean;
-
-  @Column
-  public isServiceProvider!: boolean;
-
-  @Column
-  public isEventManager!: boolean;
+  @BelongsToMany(() => Role, () => RoleUser)
+  public Role!: Role[];
 
   @HasMany(() => Service, 'id')
   public services!: Service[];
