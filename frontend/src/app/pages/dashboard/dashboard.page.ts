@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Title } from '@angular/platform-browser';
+import {AdminService} from '../../services/admin.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +16,7 @@ export class DashboardPage implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private adminService: AdminService,
     private titleService: Title,
   )  { }
 
@@ -24,7 +26,7 @@ export class DashboardPage implements OnInit {
   }
 
   loadData() {
-    this.authService.getApprovedUsers().subscribe((res: any) => {
+    this.adminService.getApprovedUsers().subscribe((res: any) => {
       console.log(res);
       this.firstName = res[0].firstName;
       this.lastName = res[0].lastName;

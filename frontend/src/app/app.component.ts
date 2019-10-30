@@ -6,9 +6,11 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {TodoList} from './todo-list';
 import {HttpClient} from '@angular/common/http';
 import {NavigationEnd, Router, RouterEvent} from '@angular/router';
-// import {LoginPage} from './login/login.page';
+
 import {AuthService} from './services/auth.service';
 import {AuthInterceptorService} from './services/auth-interceptor.service';
+import {AdminService} from './services/admin.service';
+
 
 @Component({
   selector: 'app-root',
@@ -31,6 +33,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private authInterceptorService: AuthInterceptorService,
+    private adminService: AdminService,
   ) {
     this.sideMenu();
     this.initializeApp();
@@ -49,20 +52,20 @@ export class AppComponent implements OnInit {
           });
         } else {
           console.log(state);
-/*          this.router.navigate(['login']).then(nav => {
-            console.log(nav); // true if navigation is successful
-          }, err => {
-            console.log(err); // when there's an error
-          });*/
+          /*          this.router.navigate(['login']).then(nav => {
+                      console.log(nav); // true if navigation is successful
+                    }, err => {
+                      console.log(err); // when there's an error
+                    });*/
         }
       });
     });
   }
 
   ngOnInit() {
-/*    this.httpClient.get('http://localhost:3000/todolist').subscribe((instances: any) => {
-      this.todoLists = instances.map((instance) => new TodoList(instance.id, instance.name));
-    });*/
+    /*    this.httpClient.get('http://localhost:3000/todolist').subscribe((instances: any) => {
+          this.todoLists = instances.map((instance) => new TodoList(instance.id, instance.name));
+        });*/
 
     this.router.events.subscribe((event: RouterEvent) => {
       if (event instanceof NavigationEnd) {

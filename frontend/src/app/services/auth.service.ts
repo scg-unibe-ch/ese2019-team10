@@ -41,6 +41,10 @@ export class AuthService {
     });
   }
 
+  isAuthenticated() {
+    return this.authenticationState.value;
+  }
+
   checkToken() {
     this.storage.get(TOKEN_KEY).then(token => {
       if (token) {
@@ -61,36 +65,6 @@ export class AuthService {
 
   register(credentials) {
     return this.http.post(this.url + 'register', credentials);
-  }
-
-  approveUser(userID) {
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json');
-
-    return this.http.put(this.url + 'register/approve/' + userID,
-      {},
-      {headers});
-  }
-
-  loadProfile(): Observable<User> {
-    return this.http.get<User>(this.url + 'profile').pipe(
-      tap((res: User) => console.log(res))
-    );
-    /*    .pipe(
-          catchError(e => {
-            this.showAlert(e.error.msg);
-            throw new Error(e);
-          })
-        );*/
-  }
-
-  saveProfile(credentials) {
-    return this.http.post(this.url + 'profile', credentials).pipe(
-      catchError(e => {
-        this.showAlert(e.error.msg);
-        throw new Error(e);
-      })
-    );
   }
 
   login(credentials): Observable<any> {
@@ -125,28 +99,27 @@ export class AuthService {
     });
   }
 
-  getApprovedUsers() {
-    return this.http.get(this.url + 'register/approved');
-    /*
-        .pipe(
+  loadProfile(): Observable<User> {
+    return this.http.get<User>(this.url + 'profile').pipe(
+      tap((res: User) => console.log(res))
+    );
+    /*    .pipe(
           catchError(e => {
-            const status = e.status;
-            if (status === 401) {
-              this.showAlert('You are not authorized for this!');
-              // this.logout();
-            }
+            this.showAlert(e.error.msg);
             throw new Error(e);
           })
         );*/
   }
 
-  getUnapprovedUsers() {
-    return this.http.get(this.url + 'register/to-approve');
+  saveProfile(credentials) {
+    return this.http.post(this.url + 'profile', credentials).pipe(
+      catchError(e => {
+        this.showAlert(e.error.msg);
+        throw new Error(e);
+      })
+    );
   }
 
-  isAuthenticated() {
-    return this.authenticationState.value;
-  }
 
   showAlert(msg) {
     const alert = this.alertController.create({

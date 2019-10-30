@@ -16,9 +16,6 @@ import {AppComponent} from './app.component';
 import {HttpErrorService} from './services/http-error.service';
 import {SharedComponentsModule} from './components/shared-components.module';
 
-// import { LoginPage} from './pages/login/login.page';
-// import { RegisterPage} from './pages/register/register.page';
-
 export function jwtOptionsFactory(storage) {
   return {
     tokenGetter: () => {
@@ -32,10 +29,6 @@ export function jwtOptionsFactory(storage) {
 @NgModule({
   declarations: [
     AppComponent,
-    // TodoListComponent,
-    // TodoItemComponent,
-    // LoginPage,
-    // RegisterPage
   ],
   entryComponents: [],
   imports: [
