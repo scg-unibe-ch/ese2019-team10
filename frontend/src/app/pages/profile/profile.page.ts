@@ -57,7 +57,7 @@ export class ProfilePage implements OnInit {
       'Other'
     ];
 
-   // this.user = this.authService.loadProfile();
+    // this.user = this.authService.loadProfile();
 
     this.matchingPasswordsGroup = new FormGroup({
       password: new FormControl('', Validators.compose([
@@ -72,11 +72,11 @@ export class ProfilePage implements OnInit {
     });
 
     this.profileForm = this.formBuilder.group({
-      firstName: new FormControl('',  Validators.compose([
+      firstName: new FormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
-      lastName: new FormControl('',  Validators.compose([
+      lastName: new FormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
@@ -112,33 +112,21 @@ export class ProfilePage implements OnInit {
         Validators.maxLength(100)
       ])),
       matchingPasswords: this.matchingPasswordsGroup,
-      serviceProvider: new FormControl(false),
-      eventManager: new FormControl(false),
+      isServiceProvider: new FormControl(false),
+      isEventManager: new FormControl(false),
     });
   }
 
-  private prepareSave(): User {
-    return new User().deserialize(this.profileForm.value);
+  private prepareProfileSave(): User {
+    const form = this.profileForm.value;
+    form.password = form.matchingPasswords.password;
+    form.matchingPasswords = undefined;
+    delete form.matchingPasswords;
+    return new User().deserialize(form);
   }
 
   onSubmit() {
-    const updateUser = this.prepareSave();
-
-    const user = {
-      email: this.profileForm.value.email,
-      password: this.profileForm.value.matchingPasswords.password,
-      firstName: this.profileForm.value.firstName,
-      lastName: this.profileForm.value.lastName,
-      gender: this.profileForm.value.gender,
-      birthday: this.profileForm.value.birthday,
-      phone: this.profileForm.value.phone,
-      street: this.profileForm.value.street,
-      city: this.profileForm.value.city,
-      postalCode: this.profileForm.value.postalCode,
-      country: this.profileForm.value.country,
-      serviceProvider: this.profileForm.value.serviceProvider,
-      eventManager: this.profileForm.value.eventManager,
-    };
+    const updateUser = this.prepareProfileSave();
     console.log(updateUser);
 
     /*this.authService.saveProfile(user).subscribe(

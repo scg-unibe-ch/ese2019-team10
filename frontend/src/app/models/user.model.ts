@@ -1,6 +1,6 @@
 import {Deserializable} from './deserializable.model';
 
-export class User {
+export class User implements Deserializable {
   email: string;
   password: string;
   firstName: string;
@@ -12,12 +12,11 @@ export class User {
   city: string;
   postalCode: number;
   country: string;
-  serviceProvider: boolean;
-  eventManager: boolean;
+  isServiceProvider: boolean;
+  isEventManager: boolean;
 
   deserialize(input: any): User {
     Object.assign(this, input);
     return this;
   }
-
 }

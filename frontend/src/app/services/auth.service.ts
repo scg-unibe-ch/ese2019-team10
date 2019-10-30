@@ -8,6 +8,8 @@ import {BehaviorSubject, Observable} from 'rxjs';
 
 import {environment} from '../../environments/environment';
 import {User} from '../models/user.model';
+import {Router} from '@angular/router';
+import {AlertService} from './alert.service';
 
 const TOKEN_KEY = 'access_token';
 const httpOptions = {
@@ -21,7 +23,6 @@ const httpOptions = {
 })
 
 export class AuthService {
-
   url = environment.url;
   user = null;
   authenticationState = new BehaviorSubject(false);
@@ -31,7 +32,10 @@ export class AuthService {
     private helper: JwtHelperService,
     private storage: Storage,
     private plt: Platform,
-    private alertController: AlertController) {
+    private alertController: AlertController,
+    private alertService: AlertService,
+    private router: Router,
+  ) {
     this.plt.ready().then(() => {
       this.checkToken();
     });
@@ -60,10 +64,8 @@ export class AuthService {
   }
 
   approveUser(userID) {
-
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json');
-
 
     return this.http.put(this.url + 'register/approve/' + userID,
       {},
@@ -74,12 +76,12 @@ export class AuthService {
     return this.http.get<User>(this.url + 'profile').pipe(
       tap((res: User) => console.log(res))
     );
-/*    .pipe(
-      catchError(e => {
-        this.showAlert(e.error.msg);
-        throw new Error(e);
-      })
-    );*/
+    /*    .pipe(
+          catchError(e => {
+            this.showAlert(e.error.msg);
+            throw new Error(e);
+          })
+        );*/
   }
 
   saveProfile(credentials) {
@@ -92,10 +94,6 @@ export class AuthService {
   }
 
   login(credentials): Observable<any> {
-    console.log(credentials);
-    this.user = this.helper.decodeToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c');
-    console.log(this.user);
-
     return this.http.post(this.url + 'login', credentials, httpOptions)
       .pipe(
         tap((res: any) => {
@@ -114,6 +112,16 @@ export class AuthService {
   logout() {
     this.storage.remove(TOKEN_KEY).then(() => {
       this.authenticationState.next(false);
+      this.router.navigate(['/', 'home']).then(nav => {
+        console.log(nav); // true if navigation is successful
+      }, err => {
+        console.log(err); // when there's an error
+      });
+      this.alertService.presentToast('You have logged out. See you soon!').then(r => {
+        console.log(r);
+      }, err => {
+        console.log(err);
+      });
     });
   }
 
