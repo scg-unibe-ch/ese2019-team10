@@ -6,9 +6,12 @@ router.get(/^\/*/g, ( req: Request, res: Response, next: NextFunction ) => {
   const userEmail: string = res.locals.jwtPayload.sub;
 
   User.findOne( {where : {'email': userEmail}}).then( user => {
-    if ( user !== null && user.isAdmin ) {
-      next();
+    if ( user !== null ) {
+      user.Role.forEach((role) => { if (role.name === 'Admin') { next(); } });
     }
+
+    req.statusCode = 401;
+    req.statusMessage = 'You are not authorized to do this!';
   });
 });
 

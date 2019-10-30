@@ -14,6 +14,21 @@ import {ServiceUser} from './models/ServiceUser';
 import {RegisterController} from './controllers';
 import {LoginController} from './controllers';
 import {CheckAccessController} from './controllers/checkAccess.controller';
+import {Role} from './models/role.model';
+import {RoleUser} from './models/RoleUser';
+
+/**
+ * Create required roles if they don't exist yet
+ */
+function createRoles() {
+  // For each string in this array, a role with this name will exist in the table
+  const roleArray: string[] = ['Admin', 'ServiceProvider', 'EventManager'];
+
+  roleArray.forEach((roleName) => {
+    const instance: Role = new Role();
+    instance.createIfNotExits(roleName);
+  });
+}
 
 const sequelize =  new Sequelize({
   database: 'app_db',
@@ -27,7 +42,7 @@ const sequelize =  new Sequelize({
     collate: 'utf8_unicode_ci'
   }
 });
-sequelize.addModels([Service, User, Event, City, Country, ServiceUser, EventUser]);
+sequelize.addModels([Service, User, Event, City, Country, ServiceUser, EventUser, Role, RoleUser]);
 
 // create a new express application instance
 const app: express.Application = express();
@@ -37,7 +52,7 @@ app.use(express.json());
 const port = 3000;
 
 app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8100');
   res.header('Access-Control-Allow-Methods', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
@@ -51,6 +66,7 @@ app.use('/api/login', LoginController);
 // .sync() is not recommended for production, yes, but I use it for development!
 sequelize.sync().then(() => {
 // start serving the application on the given port
+  createRoles();
   app.listen(port, () => {
     // success callback, log something to console as soon as the application has started
     console.log(`Listening at http://localhost:${port}/`);
