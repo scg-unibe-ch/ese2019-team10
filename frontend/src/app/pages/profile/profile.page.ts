@@ -7,7 +7,10 @@ import {tap} from 'rxjs/operators';
 import {PasswordValidator} from '../../validators/password.validator';
 import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
-import {ValidationMessages} from '../../models/validation-messages';
+import {ValidationMessages} from '../../models/validation-messages.model';
+import {User} from '../../models/user.model';
+import {Observable} from 'rxjs';
+import {LoginUser} from '../../models/login-user.model';
 
 @Component({
   selector: 'app-profile',
@@ -32,6 +35,7 @@ export class ProfilePage implements OnInit {
     private authService: AuthService,
     private alertService: AlertService,
     private titleService: Title,
+    // private user: Observable<User>,
   ) {
   }
 
@@ -54,7 +58,7 @@ export class ProfilePage implements OnInit {
       'Other'
     ];
 
-    // this.authService.loadProfile();
+   // this.user = this.authService.loadProfile();
 
     this.matchingPasswordsGroup = new FormGroup({
       password: new FormControl('', Validators.compose([
@@ -91,7 +95,13 @@ export class ProfilePage implements OnInit {
     });
   }
 
+  private prepareSave(): User {
+    return new User().deserialize(this.profileForm.value);
+  }
+
   onSubmit() {
+    const updateUser = this.prepareSave();
+
     const user = {
       email: this.profileForm.value.email,
       password: this.profileForm.value.matchingPasswords.password,
@@ -107,7 +117,7 @@ export class ProfilePage implements OnInit {
       serviceProvider: this.profileForm.value.serviceProvider,
       eventManager: this.profileForm.value.eventManager,
     };
-    console.log(user);
+    console.log(updateUser);
 
     /*this.authService.saveProfile(user).subscribe(
       (data: any) => {

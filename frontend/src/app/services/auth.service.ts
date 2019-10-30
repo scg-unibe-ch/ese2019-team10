@@ -3,9 +3,11 @@ import {Platform, AlertController} from '@ionic/angular';
 import {HttpClient, HttpHeaders, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Storage} from '@ionic/storage';
-import {environment} from '../../environments/environment';
 import {tap, catchError} from 'rxjs/operators';
 import {BehaviorSubject, Observable} from 'rxjs';
+
+import {environment} from '../../environments/environment';
+import {User} from '../models/user.model';
 
 const TOKEN_KEY = 'access_token';
 const httpOptions = {
@@ -68,13 +70,16 @@ export class AuthService {
       {headers});
   }
 
-  loadProfile() {
-    return this.http.get(this.url + 'profile').pipe(
+  loadProfile(): Observable<User> {
+    return this.http.get<User>(this.url + 'profile').pipe(
+      tap((res: User) => console.log(res))
+    );
+/*    .pipe(
       catchError(e => {
         this.showAlert(e.error.msg);
         throw new Error(e);
       })
-    );
+    );*/
   }
 
   saveProfile(credentials) {

@@ -6,6 +6,7 @@ import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
 import {tap} from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
+import {LoginUser} from '../../models/login-user.model';
 
 @Component({
   selector: 'app-login',
@@ -47,11 +48,15 @@ export class LoginPage implements OnInit {
 
   }
 
+  private prepareSave(): LoginUser {
+    return new LoginUser().deserialize(this.loginForm.value);
+  }
 
-  onSubmit(value) {
+  onSubmit() {
+    const user = this.prepareSave();
 
-    console.log(value);
-    this.authService.login(this.loginForm.value).subscribe(
+    console.log(user);
+    this.authService.login(user).subscribe(
       (data: any) => {
         console.log(data.msg);
         this.router.navigate(['/', 'dashboard']).then(nav => {

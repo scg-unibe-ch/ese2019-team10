@@ -7,7 +7,7 @@ import {tap} from 'rxjs/operators';
 import {PasswordValidator} from '../../validators/password.validator';
 import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
-import {ValidationMessages} from '../../models/validation-messages';
+import {ValidationMessages} from '../../models/validation-messages.model';
 
 @Component({
   selector: 'app-register',
