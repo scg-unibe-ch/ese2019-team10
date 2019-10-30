@@ -8,7 +8,7 @@ const router: Router = Router();
 router.get('/', (req: Request, res: Response, next: NextFunction) => {
   const jwtToken: string | undefined = req.header('auth');
   // if auth is not set, return unauthorized
-  if ( ! jwtToken === undefined ) {
+  if ( !jwtToken === undefined || jwtToken === null ) {
     res.sendStatus(401);
     return;
   }

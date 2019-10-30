@@ -16,6 +16,8 @@ import {LoginController} from './controllers';
 import {CheckAccessController} from './controllers/checkAccess.controller';
 import {Role} from './models/role.model';
 import {RoleUser} from './models/RoleUser';
+import {AdminController} from './controllers/admin.controller';
+import {CheckAdminController} from './controllers/checkAdmin.controller.';
 
 /**
  * Create required roles if they don't exist yet
@@ -62,6 +64,7 @@ app.use('/welcome', CheckAccessController, WelcomeController);
 // api/register endpoint
 app.use('/api/register', RegisterController);
 app.use('/api/login', LoginController);
+app.use('/api/admin', AdminController);
 
 // .sync() is not recommended for production, yes, but I use it for development!
 sequelize.sync().then(() => {
