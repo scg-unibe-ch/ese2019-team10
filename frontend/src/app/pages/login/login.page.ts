@@ -2,11 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {NavController, NavParams} from '@ionic/angular';
 import {Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
 import {Router} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
-import {AlertService} from 'src/app/services/alert.service';
 import {tap} from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
+
+import {AuthService} from '../../services/auth.service';
+import {AlertService} from 'src/app/services/alert.service';
 import {LoginUser} from '../../models/login-user.model';
+import {ValidationMessages} from '../../models/validation-messages.model';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +18,8 @@ import {LoginUser} from '../../models/login-user.model';
 
 export class LoginPage implements OnInit {
   private title: string;
+  private loginMessages = ValidationMessages;
+  private loginForm: FormGroup;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -26,16 +30,6 @@ export class LoginPage implements OnInit {
   ) {
   }
 
-  loginForm: FormGroup;
-
-  loginMessages = {
-    email: [
-      {type: 'required', message: 'E-mail is required.'}
-    ],
-    password: [
-      {type: 'required', message: 'Password is required.'}
-    ]
-  };
 
   ngOnInit() {
     this.title = 'Login';

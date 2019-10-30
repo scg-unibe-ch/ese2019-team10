@@ -10,7 +10,6 @@ import {AlertService} from 'src/app/services/alert.service';
 import {ValidationMessages} from '../../models/validation-messages.model';
 import {User} from '../../models/user.model';
 import {Observable} from 'rxjs';
-import {LoginUser} from '../../models/login-user.model';
 
 @Component({
   selector: 'app-profile',
