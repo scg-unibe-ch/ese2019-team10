@@ -8,7 +8,6 @@
   <ion-card>
 
 
-
     <div class="login-form">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <ion-row>
@@ -19,7 +18,8 @@
 
                 <ion-item>
                   <ion-label position="floating">E-Mail address</ion-label>
-                  <ion-input type="email" name="email" formControlName="email" autocomplete="email" required></ion-input>
+                  <ion-input autocomplete="email" formControlName="email" name="email" required
+                             type="email"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of loginMessages.email">
@@ -33,7 +33,8 @@
 
                 <ion-item>
                   <ion-label position="floating">Password</ion-label>
-                  <ion-input type="password" name="password" formControlName="password" autocomplete="current-password" required></ion-input>
+                  <ion-input autocomplete="current-password" formControlName="password" name="password" required
+                             type="password"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of loginMessages.password">
