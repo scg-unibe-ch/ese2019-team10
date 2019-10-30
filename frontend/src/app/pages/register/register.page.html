@@ -13,7 +13,7 @@
     </ion-row>
 
     <div class="registration-form">
-      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
+      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
         <ion-row>
           <ion-col>
             <ion-list inset>
@@ -43,7 +43,8 @@
 
                 <ion-item>
                   <ion-label position="floating">Password</ion-label>
-                  <ion-input type="password" name="password" formControlName="password" autocomplete="new-password" required></ion-input>
+                  <ion-input type="password" name="password" formControlName="password" autocomplete="new-password"
+                             required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of registrationMessages.password">
@@ -57,7 +58,8 @@
 
                 <ion-item>
                   <ion-label position="floating">Confirm password</ion-label>
-                  <ion-input type="password" name="confirmPassword" formControlName="confirmPassword" autocomplete="new-password"
+                  <ion-input type="password" name="confirmPassword" formControlName="confirmPassword"
+                             autocomplete="new-password"
                              required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
@@ -91,7 +93,8 @@
 
               <ion-item>
                 <ion-label position="floating">First Name</ion-label>
-                <ion-input type="text" name="firstName" formControlName="firstName" autocomplete="given-name" required></ion-input>
+                <ion-input type="text" name="firstName" formControlName="firstName" autocomplete="given-name"
+                           required></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.firstName">
@@ -105,7 +108,8 @@
 
               <ion-item>
                 <ion-label position="floating">Last Name</ion-label>
-                <ion-input type="text" name="lastName" formControlName="lastName" autocomplete="family-name" required></ion-input>
+                <ion-input type="text" name="lastName" formControlName="lastName" autocomplete="family-name"
+                           required></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.lastName">
@@ -119,7 +123,8 @@
 
               <ion-item>
                 <ion-label position="floating">Street</ion-label>
-                <ion-input type="text" name="street" formControlName="street" autocomplete="street-address" required></ion-input>
+                <ion-input type="text" name="street" formControlName="street" autocomplete="street-address"
+                           required></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.street">
@@ -133,7 +138,8 @@
 
               <ion-item>
                 <ion-label position="floating">City</ion-label>
-                <ion-input type="text" name="city" formControlName="city" autocomplete="address-level2" required></ion-input>
+                <ion-input type="text" name="city" formControlName="city" autocomplete="address-level2"
+                           required></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.city">
@@ -147,7 +153,8 @@
 
               <ion-item>
                 <ion-label position="floating">Postal Code</ion-label>
-                <ion-input type="text" name="postalCode" formControlName="postalCode" autocomplete="postal-code" required></ion-input>
+                <ion-input type="text" name="postalCode" formControlName="postalCode" autocomplete="postal-code"
+                           required></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.postalCode">
@@ -189,7 +196,8 @@
               </div>
 
               <ion-row class="ion-margin-top">
-                <ion-button class="submit-btn" expand="full" type="submit" [disabled]="!registrationForm.valid" color="tertiary">
+                <ion-button class="submit-btn" expand="full" type="submit" [disabled]="!registrationForm.valid"
+                            color="tertiary">
                   <ion-icon slot="start" name="person-add"></ion-icon>
                   Register
                 </ion-button>

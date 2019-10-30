@@ -16,18 +16,18 @@ import {ValidationMessages} from '../../models/validation-messages';
 })
 export class ProfilePage implements OnInit {
   private title: string;
-  profileForm: FormGroup;
-  matchingPasswordsGroup: FormGroup;
-  countries: Array<string>;
-  genders: Array<string>;
-  day = null;
-  month = null;
-  year = null;
-  currentTime = null;
-  validationMessages = ValidationMessages;
+  private profileForm: FormGroup;
+  private matchingPasswordsGroup: FormGroup;
+  private countries: Array<string>;
+  private genders: Array<string>;
+  private day = null;
+  private month = null;
+  private year = null;
+  private currentTime = null;
+  private validationMessages = ValidationMessages;
 
   constructor(
-    public formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
     private alertService: AlertService,
@@ -99,6 +99,7 @@ export class ProfilePage implements OnInit {
       lastName: this.profileForm.value.lastName,
       gender: this.profileForm.value.gender,
       birthday: this.profileForm.value.birthday,
+      phone: this.profileForm.value.phone,
       street: this.profileForm.value.street,
       city: this.profileForm.value.city,
       postalCode: this.profileForm.value.postalCode,
