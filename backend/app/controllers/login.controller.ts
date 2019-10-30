@@ -8,12 +8,6 @@ const RSA_PRIVATE_KEY: Buffer = readFileSync('dev-private.key');
 
 const router: Router = Router();
 
-router.options('/', (req: Request, res: Response ) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8100');
-  res.header( 'Access-Control-Allow-Methods', 'GET, POST, PUT');
-  res.sendStatus(200);
-});
-
 router.post('/', async (req: Request, res: Response ) => {
   const userEmail: string = req.body.email.toLowerCase();
   const userPassword = req.body.password;
