@@ -8,6 +8,8 @@ import {BehaviorSubject, Observable} from 'rxjs';
 
 import {environment} from '../../environments/environment';
 import {User} from '../models/user.model';
+import {Router} from '@angular/router';
+import {AlertService} from './alert.service';
 
 const TOKEN_KEY = 'access_token';
 const httpOptions = {
@@ -30,7 +32,10 @@ export class AuthService {
     private helper: JwtHelperService,
     private storage: Storage,
     private plt: Platform,
-    private alertController: AlertController) {
+    private alertController: AlertController,
+    private alertService: AlertService,
+    private router: Router,
+  ) {
     this.plt.ready().then(() => {
       this.checkToken();
     });
@@ -107,6 +112,16 @@ export class AuthService {
   logout() {
     this.storage.remove(TOKEN_KEY).then(() => {
       this.authenticationState.next(false);
+      this.router.navigate(['/', 'home']).then(nav => {
+        console.log(nav); // true if navigation is successful
+      }, err => {
+        console.log(err); // when there's an error
+      });
+      this.alertService.presentToast('You have logged out. See you soon!').then(r => {
+        console.log(r);
+      }, err => {
+        console.log(err);
+      });
     });
   }
 

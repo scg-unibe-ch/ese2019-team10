@@ -65,7 +65,7 @@ export class LoginPage implements OnInit {
           console.log(err); // when there's an error
         });
 
-        this.alertService.presentToast(data.msg).then(r => {
+        this.alertService.presentToast('You have logged in. Welcome!').then(r => {
           console.log(r);
         }, err => {
           console.log(err);
