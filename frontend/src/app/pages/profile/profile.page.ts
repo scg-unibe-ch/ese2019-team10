@@ -73,22 +73,45 @@ export class ProfilePage implements OnInit {
     });
 
     this.profileForm = this.formBuilder.group({
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
+      firstName: new FormControl('',  Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
+      lastName: new FormControl('',  Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
       email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+        // Validators.email,
+        Validators.pattern('^[^ @]+@[^ @]+\.[^ @]+$'),
+        Validators.maxLength(100)
       ])),
       gender: new FormControl('', Validators.required),
       birthday: new FormControl(null, Validators.required),
-      street: new FormControl('', Validators.required),
+      street: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
       postalCode: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[0-9]+$')
+        // postal codes can have numbers, letters, spaces, and hyphens
+        // Validators.pattern('^[A-Za-z0-9- ]+$'),
+        Validators.pattern('^[0-9]+$'),
+        Validators.maxLength(20)
       ])),
-      city: new FormControl('', Validators.required),
-      country: new FormControl('', Validators.required),
-      phone: new FormControl('', Validators.required),
+      city: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
+      country: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
+      phone: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
       matchingPasswords: this.matchingPasswordsGroup,
       serviceProvider: new FormControl(false),
       eventManager: new FormControl(false),
