@@ -15,5 +15,7 @@ Testing more, both manually and by writing actual tests, would have been useful 
 
 With our actual app-specific code we had fewer problems. But a difficulty was to coordinate backend and frontend so that api calls would work. We had some errors due to incompatible variable names. Since this was because of lack of information about the what the api would expect and return, we decided to specify the api in our wiki. But knowing (or rather: deciding) what exactly an api should send and receive continues to be an ongoing challenge.
 
+In the backend, we used postman to test our api, and introduced promises in the register controller to better handle errors. In the frontend, we implemented models for the validation messages and for the users (though the latter is still very much a work in progress).
 
+We also created a new git branch for development and we use the master branch for milestone releases.
 
