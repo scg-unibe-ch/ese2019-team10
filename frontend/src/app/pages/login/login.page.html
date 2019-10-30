@@ -7,23 +7,19 @@
 <ion-content>
   <ion-card>
 
-    <ion-row>
-      <ion-card-content>
-        <p>Please sign in to access your account!</p>
-      </ion-card-content>
-    </ion-row>
 
     <div class="login-form">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <ion-row>
           <ion-col>
             <ion-list inset>
               <fieldset>
-                <legend>Login</legend>
+
 
                 <ion-item>
-                  <ion-label position="floating">E-Mail</ion-label>
-                  <ion-input type="email" name="email" formControlName="email" autocomplete="email" required></ion-input>
+                  <ion-label position="floating">E-Mail address</ion-label>
+                  <ion-input autocomplete="email" formControlName="email" name="email" required
+                             type="email"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of loginMessages.email">
@@ -37,7 +33,8 @@
 
                 <ion-item>
                   <ion-label position="floating">Password</ion-label>
-                  <ion-input type="password" name="password" formControlName="password" autocomplete="current-password" required></ion-input>
+                  <ion-input autocomplete="current-password" formControlName="password" name="password" required
+                             type="password"></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of loginMessages.password">
@@ -52,9 +49,18 @@
               </fieldset>
 
               <ion-row>
-                <ion-button class="submit-btn" expand="full" type="submit" [disabled]="!loginForm.valid" color="tertiary">
-                  <ion-icon slot="start" name="log-in"></ion-icon>
+                <ion-button [disabled]="!loginForm.valid" class="submit-btn" color="success" expand="full"
+                            type="submit">
+                  <ion-icon name="log-in" slot="start"></ion-icon>
                   Login
+                </ion-button>
+              </ion-row>
+
+              <ion-row>
+                <ion-button [routerLink]="['/terms']" class="terms" color="secondary" expand="block" fill="outline"
+                            type="button">
+                  <ion-icon name="book" slot="start"></ion-icon>
+                  Terms
                 </ion-button>
               </ion-row>
 

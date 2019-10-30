@@ -7,7 +7,9 @@ import {tap} from 'rxjs/operators';
 import {PasswordValidator} from '../../validators/password.validator';
 import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
-import {ValidationMessages} from '../../models/validation-messages';
+import {ValidationMessages} from '../../models/validation-messages.model';
+import {User} from '../../models/user.model';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -32,6 +34,7 @@ export class ProfilePage implements OnInit {
     private authService: AuthService,
     private alertService: AlertService,
     private titleService: Title,
+    // private user: Observable<User>,
   ) {
   }
 
@@ -54,7 +57,7 @@ export class ProfilePage implements OnInit {
       'Other'
     ];
 
-    // this.authService.loadProfile();
+   // this.user = this.authService.loadProfile();
 
     this.matchingPasswordsGroup = new FormGroup({
       password: new FormControl('', Validators.compose([
@@ -69,29 +72,58 @@ export class ProfilePage implements OnInit {
     });
 
     this.profileForm = this.formBuilder.group({
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
+      firstName: new FormControl('',  Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
+      lastName: new FormControl('',  Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
       email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+        // Validators.email,
+        Validators.pattern('^[^ @]+@[^ @]+\.[^ @]+$'),
+        Validators.maxLength(100)
       ])),
       gender: new FormControl('', Validators.required),
       birthday: new FormControl(null, Validators.required),
-      street: new FormControl('', Validators.required),
+      street: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
       postalCode: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[0-9]+$')
+        // postal codes can have numbers, letters, spaces, and hyphens
+        // Validators.pattern('^[A-Za-z0-9- ]+$'),
+        Validators.pattern('^[0-9]+$'),
+        Validators.maxLength(20)
       ])),
-      city: new FormControl('', Validators.required),
-      country: new FormControl('', Validators.required),
-      phone: new FormControl('', Validators.required),
+      city: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
+      country: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
+      phone: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
       matchingPasswords: this.matchingPasswordsGroup,
       serviceProvider: new FormControl(false),
       eventManager: new FormControl(false),
     });
   }
 
+  private prepareSave(): User {
+    return new User().deserialize(this.profileForm.value);
+  }
+
   onSubmit() {
+    const updateUser = this.prepareSave();
+
     const user = {
       email: this.profileForm.value.email,
       password: this.profileForm.value.matchingPasswords.password,
@@ -107,7 +139,7 @@ export class ProfilePage implements OnInit {
       serviceProvider: this.profileForm.value.serviceProvider,
       eventManager: this.profileForm.value.eventManager,
     };
-    console.log(user);
+    console.log(updateUser);
 
     /*this.authService.saveProfile(user).subscribe(
       (data: any) => {

@@ -1,5 +1,23 @@
+
+ion-content {
+  div {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+fieldset {
+  padding: 2em;
+  color: #000000;
+}
+
+
 .ion-margin-top {
-  margin-top: 30px;
+  margin-top: 300px;
 }
 
 .form-icon {
