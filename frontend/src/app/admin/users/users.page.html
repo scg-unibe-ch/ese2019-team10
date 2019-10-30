@@ -4,7 +4,7 @@
 </ion-header>
 
 <ion-content>
-  
+
 
   <ion-card class="ion-margin-top">
     <ion-card-header class="" color="warning">
@@ -52,7 +52,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card  class="ion-margin-top">
+  <ion-card class="ion-margin-top">
     <ion-card-header class="" color="success">
       <ion-card-title>
         <strong *ngIf="loadedAU; else elseBlock">Approved Users: {{numberApproved}}</strong>
@@ -66,7 +66,7 @@
       Show
     </ion-button>
     <ng-template #hideApproved>
-      <ion-button class="submit-btn" expand="full" type="button ion-no-margin" (click)="hideApprovedUsers()"
+      <ion-button class="submit-btn  ion-no-margin" expand="full" type="button" (click)="hideApprovedUsers()"
                   color="dark">
         <ion-icon slot="start" name="arrow-dropup"></ion-icon>
         Hide
