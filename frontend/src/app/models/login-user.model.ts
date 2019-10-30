@@ -1,7 +1,6 @@
 import {Deserializable} from './deserializable.model';
 
-export class LoginUser  {
-
+export class LoginUser implements Deserializable {
   email: string;
   password: string;
 
@@ -9,5 +8,4 @@ export class LoginUser  {
     Object.assign(this, input);
     return this;
   }
-
 }

@@ -21,7 +21,6 @@ const httpOptions = {
 })
 
 export class AuthService {
-
   url = environment.url;
   user = null;
   authenticationState = new BehaviorSubject(false);
@@ -60,10 +59,8 @@ export class AuthService {
   }
 
   approveUser(userID) {
-
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json');
-
 
     return this.http.put(this.url + 'register/approve/' + userID,
       {},
@@ -74,12 +71,12 @@ export class AuthService {
     return this.http.get<User>(this.url + 'profile').pipe(
       tap((res: User) => console.log(res))
     );
-/*    .pipe(
-      catchError(e => {
-        this.showAlert(e.error.msg);
-        throw new Error(e);
-      })
-    );*/
+    /*    .pipe(
+          catchError(e => {
+            this.showAlert(e.error.msg);
+            throw new Error(e);
+          })
+        );*/
   }
 
   saveProfile(credentials) {
@@ -92,10 +89,6 @@ export class AuthService {
   }
 
   login(credentials): Observable<any> {
-    console.log(credentials);
-    this.user = this.helper.decodeToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c');
-    console.log(this.user);
-
     return this.http.post(this.url + 'login', credentials, httpOptions)
       .pipe(
         tap((res: any) => {
