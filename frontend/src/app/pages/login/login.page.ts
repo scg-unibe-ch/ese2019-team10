@@ -7,8 +7,8 @@ import {Title} from '@angular/platform-browser';
 
 import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
-import {LoginUser} from '../../models/login-user.model';
 import {ValidationMessages} from '../../models/validation-messages.model';
+import {User} from '../../models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -49,13 +49,15 @@ export class LoginPage implements OnInit {
 
   }
 
-  private prepareLogin(): LoginUser {
-    return new LoginUser().deserialize(this.loginForm.value);
+  private prepareLogin(): User {
+    return new User().deserialize(this.loginForm.value);
   }
 
   onSubmit() {
-    const user = this.prepareLogin();
+    let user = new User();
+    user = this.prepareLogin();
     console.log(user);
+    console.log(typeof user);
     this.authService.login(user).subscribe(
       (data: any) => {
         console.log(data.msg);
