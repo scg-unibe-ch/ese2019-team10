@@ -8,6 +8,7 @@ import {PasswordValidator} from '../../validators/password.validator';
 import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
 import {ValidationMessages} from '../../models/validation-messages.model';
+import {User} from '../../models/user.model';
 
 @Component({
   selector: 'app-register',
@@ -83,16 +84,16 @@ export class RegisterPage implements OnInit {
     });
   }
 
+  private prepareRegistration(): User {
+    const form = this.registrationForm.value;
+    form.password = form.matchingPasswords.password;
+    form.matchingPasswords = undefined;
+    delete form.matchingPasswords;
+    return new User().deserialize(form);
+  }
+
   onSubmit() {
-    const user = {
-      email: this.registrationForm.value.email,
-      firstName: this.registrationForm.value.firstName,
-      lastName: this.registrationForm.value.lastName,
-      password: this.registrationForm.value.matchingPasswords.password,
-      street: this.registrationForm.value.street,
-      city: this.registrationForm.value.city,
-      postalCode: this.registrationForm.value.postalCode,
-    };
+    const user = this.prepareRegistration();
     console.log(user);
     this.authService.register(user).subscribe(
       (data: any) => {
