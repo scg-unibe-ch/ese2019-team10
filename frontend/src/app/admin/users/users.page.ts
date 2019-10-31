@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
+
 import {AuthService} from '../../services/auth.service';
 import {AlertService} from '../../services/alert.service';
 import {AdminService} from '../../services/admin.service';
-import {Title} from '@angular/platform-browser';
+import {User} from '../../models/user.model';
 
 @Component({
   selector: 'app-users',
@@ -11,10 +13,10 @@ import {Title} from '@angular/platform-browser';
 })
 
 export class UsersPage implements OnInit {
-  private approvedUsers: any;
+  private approvedUsers: User[];
   private numberApproved: number;
   private loadedAU: boolean;
-  private unapprovedUsers: any;
+  private unapprovedUsers: User[];
   private numberUnapproved: number;
   private loadedUU: boolean;
   private title: string;
@@ -39,9 +41,9 @@ export class UsersPage implements OnInit {
     this.adminService.getApprovedUsers().subscribe((res: any) => {
       this.approvedUsers = res;
       this.approvedUsers = this.approvedUsers.sort((a, b) => (a.email > b.email) ? 1 : -1);
-      this.numberApproved = res.length;
+      this.numberApproved = this.approvedUsers.length;
       this.loadedAU = true;
-      console.log(res);
+      console.log(this.approvedUsers);
     });
   }
 
@@ -53,9 +55,9 @@ export class UsersPage implements OnInit {
     this.adminService.getUnapprovedUsers().subscribe((res: any) => {
       this.unapprovedUsers = res;
       this.unapprovedUsers = this.unapprovedUsers.sort((a, b) => (a.email > b.email) ? 1 : -1);
-      this.numberUnapproved = res.length;
+      this.numberUnapproved = this.unapprovedUsers.length;
       this.loadedUU = true;
-      console.log(res);
+      console.log(this.unapprovedUsers);
       /*      this.alertService.presentToast(res).then(r => {
               console.log(r);
             }, err => {

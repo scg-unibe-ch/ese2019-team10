@@ -47,8 +47,8 @@ export class AdminService {
       {headers});
   }
 
-  getApprovedUsers() {
-    return this.http.get(this.url + 'admin/approved');
+  getApprovedUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url + 'admin/approved');
     /*
         .pipe(
           catchError(e => {
@@ -62,8 +62,8 @@ export class AdminService {
         );*/
   }
 
-  getUnapprovedUsers() {
-    return this.http.get(this.url + 'admin/to-approve');
+  getUnapprovedUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url + 'admin/to-approve');
   }
 
 }

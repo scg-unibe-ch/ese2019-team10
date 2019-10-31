@@ -43,7 +43,7 @@
           <ion-label>
             <h2>E-Mail: {{user.email}}</h2>
             <h3>Name: {{user.firstName}} {{user.lastName}}</h3>
-            <p>Address: {{user.address}}</p>
+            <p>ID: {{user.id}}</p>
             <ion-toggle slot="end" color="warning" (ionChange)="approveUser(user.id, user.email)"></ion-toggle>
           </ion-label>
         </ion-item>
@@ -90,7 +90,7 @@
           <ion-label>
             <h2>{{'E-Mail: ' + user.email}}</h2>
             <h3>{{'Name: ' + user.firstName + ' ' + user.lastName}}</h3>
-            <p>{{'Address: ' + user.address}}</p>
+            <p>{{'ID: ' + user.id}}</p>
             <ion-icon slot="end" name="checkmark" color="success"></ion-icon>
           </ion-label>
         </ion-item>
