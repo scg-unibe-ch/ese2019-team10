@@ -3,7 +3,7 @@ import {Platform, AlertController} from '@ionic/angular';
 import {HttpClient, HttpHeaders, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Storage} from '@ionic/storage';
-import {tap, catchError} from 'rxjs/operators';
+import {tap, catchError, map} from 'rxjs/operators';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 import {environment} from '../../environments/environment';
@@ -48,7 +48,9 @@ export class AdminService {
   }
 
   getApprovedUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.url + 'admin/approved');
+    return this.http.get<User[]>(this.url + 'admin/approved').pipe(
+      map((users: any[]) => users.map((user) => new User().deserialize(user)))
+    );
     /*
         .pipe(
           catchError(e => {
@@ -63,7 +65,9 @@ export class AdminService {
   }
 
   getUnapprovedUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.url + 'admin/to-approve');
+    return this.http.get<User[]>(this.url + 'admin/to-approve').pipe(
+      map((users: any[]) => users.map((user) => new User().deserialize(user)))
+    );
   }
 
 }

@@ -20,4 +20,8 @@ export class User implements Deserializable {
     Object.assign(this, input);
     return this;
   }
+
+  getFullName() {
+    return this.firstName + ' ' + this.lastName;
+  }
 }
