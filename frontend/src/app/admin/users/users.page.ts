@@ -37,10 +37,19 @@ export class UsersPage implements OnInit {
 
   }
 
+  nameSort(a, b) {
+    // sort by last name
+    if (a.lastName > b.lastName) { return 1; }
+    if (a.lastName < b.lastName) { return -1; }
+    // if last names are equal, sort by first name
+    if (a.firstName > b.firstName) { return 1; }
+    if (a.firstName < b.firstName) { return -1; }
+  }
+
   showApprovedUsers() {
     this.adminService.getApprovedUsers().subscribe((res: any) => {
       this.approvedUsers = res;
-      this.approvedUsers = this.approvedUsers.sort((a, b) => (a.email > b.email) ? 1 : -1);
+      this.approvedUsers = this.approvedUsers.sort(this.nameSort);
       this.numberApproved = this.approvedUsers.length;
       this.loadedAU = true;
       console.log(this.approvedUsers);
@@ -54,7 +63,7 @@ export class UsersPage implements OnInit {
   showUnapprovedUsers() {
     this.adminService.getUnapprovedUsers().subscribe((res: any) => {
       this.unapprovedUsers = res;
-      this.unapprovedUsers = this.unapprovedUsers.sort((a, b) => (a.email > b.email) ? 1 : -1);
+      this.unapprovedUsers = this.unapprovedUsers.sort(this.nameSort);
       this.numberUnapproved = this.unapprovedUsers.length;
       this.loadedUU = true;
       console.log(this.unapprovedUsers);
