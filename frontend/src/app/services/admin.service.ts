@@ -39,12 +39,7 @@ export class AdminService {
 
 
   approveUser(userID) {
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json');
-
-    return this.http.put(this.url + 'admin/approve/' + userID,
-      {},
-      {headers});
+    return this.http.put(this.url + 'admin/approve/' + userID, {}, httpOptions);
   }
 
   getApprovedUsers(): Observable<User[]> {

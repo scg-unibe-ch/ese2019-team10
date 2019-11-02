@@ -64,7 +64,7 @@ export class AuthService {
   }
 
   register(credentials) {
-    return this.http.post(this.url + 'register', credentials);
+    return this.http.post(this.url + 'register', credentials, httpOptions);
   }
 
   login(credentials): Observable<any> {
@@ -112,7 +112,7 @@ export class AuthService {
   }
 
   saveProfile(credentials) {
-    return this.http.post(this.url + 'profile', credentials).pipe(
+    return this.http.post(this.url + 'profile', credentials, httpOptions).pipe(
       catchError(e => {
         this.showAlert(e.error.msg);
         throw new Error(e);
