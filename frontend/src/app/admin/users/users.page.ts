@@ -34,21 +34,28 @@ export class UsersPage implements OnInit {
     this.loadedUU = false;
     this.title = 'User Administration';
     this.titleService.setTitle(this.title + ' | Event-App');
-
   }
 
   nameSort(a, b) {
     // sort by last name
-    if (a.lastName > b.lastName) { return 1; }
-    if (a.lastName < b.lastName) { return -1; }
+    if (a.lastName > b.lastName) {
+      return 1;
+    }
+    if (a.lastName < b.lastName) {
+      return -1;
+    }
     // if last names are equal, sort by first name
-    if (a.firstName > b.firstName) { return 1; }
-    if (a.firstName < b.firstName) { return -1; }
+    if (a.firstName > b.firstName) {
+      return 1;
+    }
+    if (a.firstName < b.firstName) {
+      return -1;
+    }
   }
 
   showApprovedUsers() {
-    this.adminService.getApprovedUsers().subscribe((res: any) => {
-      this.approvedUsers = res;
+    this.adminService.getApprovedUsers().subscribe((users: any) => {
+      this.approvedUsers = users;
       this.approvedUsers = this.approvedUsers.sort(this.nameSort);
       this.numberApproved = this.approvedUsers.length;
       this.loadedAU = true;
@@ -61,8 +68,8 @@ export class UsersPage implements OnInit {
   }
 
   showUnapprovedUsers() {
-    this.adminService.getUnapprovedUsers().subscribe((res: any) => {
-      this.unapprovedUsers = res;
+    this.adminService.getUnapprovedUsers().subscribe((users: any) => {
+      this.unapprovedUsers = users;
       this.unapprovedUsers = this.unapprovedUsers.sort(this.nameSort);
       this.numberUnapproved = this.unapprovedUsers.length;
       this.loadedUU = true;

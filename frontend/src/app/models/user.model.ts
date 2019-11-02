@@ -1,22 +1,22 @@
 import {Deserializable} from './deserializable.model';
 
 export class User implements Deserializable {
-  email: string;
-  password: string;
-  id: number;
-  firstName: string;
-  lastName: string;
-  gender: string;
-  birthday: string;
-  phone: string;
-  street: string;
-  city: string;
-  postalCode: number;
-  country: string;
-  isServiceProvider: boolean;
-  isEventManager: boolean;
+  public email: string;
+  public password: string;
+  public id: number;
+  public firstName: string;
+  public lastName: string;
+  public gender: string;
+  public birthday: string;
+  public phone: string;
+  public street: string;
+  public city: string;
+  public postalCode: number;
+  public country: string;
+  public isServiceProvider: boolean;
+  public isEventManager: boolean;
 
-  deserialize(input: any): User {
+  deserialize(input: any): this {
     Object.assign(this, input);
     return this;
   }

@@ -49,7 +49,7 @@ export class AdminService {
 
   getApprovedUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.url + 'admin/approved').pipe(
-      map((users: any[]) => users.map((user) => new User().deserialize(user)))
+      map((users) => users.map((user) => new User().deserialize(user)))
     );
     /*
         .pipe(
