@@ -4,11 +4,13 @@ import {IonicModule} from '@ionic/angular';
 
 import {HeaderComponent} from './header/header.component';
 import {ServiceComponent} from './service/service.component';
+import {EventComponent} from './event/event.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     ServiceComponent,
+    EventComponent,
   ],
   imports: [
     CommonModule,
@@ -17,6 +19,7 @@ import {ServiceComponent} from './service/service.component';
   exports: [
     HeaderComponent,
     ServiceComponent,
+    EventComponent,
   ],
 })
 
