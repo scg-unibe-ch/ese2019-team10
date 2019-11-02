@@ -3,7 +3,7 @@ import {Platform, AlertController} from '@ionic/angular';
 import {HttpClient, HttpHeaders, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Storage} from '@ionic/storage';
-import {tap, catchError} from 'rxjs/operators';
+import {tap, catchError, map} from 'rxjs/operators';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 import {environment} from '../../environments/environment';
@@ -100,8 +100,8 @@ export class AuthService {
   }
 
   loadProfile(): Observable<User> {
-    return this.http.get<User>(this.url + 'profile').pipe(
-      tap((res: User) => console.log(res))
+    return this.http.get<User>(this.url + 'profile/load').pipe(
+      map(data => new User().deserialize(data))
     );
     /*    .pipe(
           catchError(e => {
@@ -112,7 +112,7 @@ export class AuthService {
   }
 
   saveProfile(credentials) {
-    return this.http.post(this.url + 'profile', credentials, httpOptions).pipe(
+    return this.http.post(this.url + 'profile/save', credentials, httpOptions).pipe(
       catchError(e => {
         this.showAlert(e.error.msg);
         throw new Error(e);

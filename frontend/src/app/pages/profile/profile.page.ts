@@ -27,6 +27,7 @@ export class ProfilePage implements OnInit {
   private year = null;
   private currentTime = null;
   private validationMessages = ValidationMessages;
+  private user: User;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,7 +58,7 @@ export class ProfilePage implements OnInit {
       'Other'
     ];
 
-    // this.user = this.authService.loadProfile();
+    this.loadUser();
 
     this.matchingPasswordsGroup = new FormGroup({
       password: new FormControl('', Validators.compose([
@@ -117,6 +118,10 @@ export class ProfilePage implements OnInit {
     });
   }
 
+  public loadUser() {
+    this.authService.loadProfile().subscribe(user => this.user = user);
+  }
+
   private prepareProfileSave(): User {
     const form = this.profileForm.value;
     form.password = form.matchingPasswords.password;
@@ -126,10 +131,10 @@ export class ProfilePage implements OnInit {
   }
 
   onSubmit() {
-    const updateUser = this.prepareProfileSave();
-    console.log(updateUser);
+    const saveUser = this.prepareProfileSave();
+    console.log(saveUser);
 
-    /*this.authService.saveProfile(user).subscribe(
+    this.authService.saveProfile(saveUser).subscribe(
       (data: any) => {
         console.log(data.msg);
 
@@ -144,7 +149,7 @@ export class ProfilePage implements OnInit {
       },
       () => {
       }
-    );*/
+    );
   }
 
 }
