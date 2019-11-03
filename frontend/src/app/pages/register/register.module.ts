@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Routes, RouterModule} from '@angular/router';
+import {IonicModule} from '@ionic/angular';
 
-import { RegisterPage } from './register.page';
+import {RegisterPage} from './register.page';
 import {SharedComponentsModule} from '../../components/shared-components.module';
 
 const routes: Routes = [
@@ -25,4 +25,5 @@ const routes: Routes = [
   ],
   declarations: [RegisterPage]
 })
-export class RegisterPageModule {}
+export class RegisterPageModule {
+}

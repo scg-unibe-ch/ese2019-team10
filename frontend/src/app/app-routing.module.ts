@@ -23,6 +23,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {path: 'about', loadChildren: './pages/about/about.module#AboutPageModule'},
+  { path: '**', loadChildren: './pages/page-not-found/page-not-found.module#PageNotFoundPageModule' },
 ];
 
 @NgModule({

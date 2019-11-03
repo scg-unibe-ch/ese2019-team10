@@ -5,13 +5,14 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {IonicModule} from '@ionic/angular';
 
-import {TermsPage} from './terms.page';
+import {PageNotFoundPage} from './page-not-found.page';
 import {SharedComponentsModule} from '../../components/shared-components.module';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: TermsPage
+    component: PageNotFoundPage
   }
 ];
 
@@ -23,7 +24,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedComponentsModule,
   ],
-  declarations: [TermsPage]
+  declarations: [PageNotFoundPage]
 })
-export class TermsPageModule {
+export class PageNotFoundPageModule {
 }
