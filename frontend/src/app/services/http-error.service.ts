@@ -10,7 +10,8 @@ import {
 import {Platform, AlertController} from '@ionic/angular';
 
 import {Observable, throwError} from 'rxjs';
-import {retry, catchError} from 'rxjs/operators';
+import {retry, catchError, map} from 'rxjs/operators';
+import {AlertService} from './alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,14 +19,24 @@ import {retry, catchError} from 'rxjs/operators';
 
 export class HttpErrorService implements HttpInterceptor {
 
+
   constructor(
-    private alertController: AlertController) {
+    private alertController: AlertController,
+    private alertService: AlertService,
+  ) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
       .pipe(
         retry(0),
+        map((event: HttpEvent<any>) => {
+          if (event instanceof HttpResponse) {
+            console.log('event--->>>', event);
+            // this.errorDialogService.openDialog(event);
+          }
+          return event;
+        }),
         catchError((error: HttpErrorResponse) => {
           let errorMessage = '';
           if (error.error instanceof ErrorEvent) {
@@ -34,8 +45,13 @@ export class HttpErrorService implements HttpInterceptor {
             this.showAlert('Error', error.error.message);
           } else {
             // server-side error
-            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-            this.showAlert('Error Code: ' + error.status, error.message);
+            console.log(error.error);
+            errorMessage = `Error Code: ${error.status}\nMessage: ${error.statusText}`;
+            if (error.status === 401 && (error.statusText === 'Wrong username/password combination.' || error.statusText === 'Account is not approved yet.')) {
+              this.alertService.presentToast(error.statusText).then();
+            } else {
+              this.showAlert('Error Code: ' + error.status, error.message);
+            }
           }
           return throwError(errorMessage);
         })

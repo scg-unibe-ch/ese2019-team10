@@ -23,9 +23,9 @@ const httpOptions = {
 })
 
 export class AuthService {
-  url = environment.url;
-  user = null;
-  authenticationState = new BehaviorSubject(false);
+  public url = environment.url;
+  public user = null;
+  public authenticationState = new BehaviorSubject(false);
 
   constructor(
     private http: HttpClient,
@@ -41,10 +41,6 @@ export class AuthService {
     });
   }
 
-  isAuthenticated() {
-    return this.authenticationState.value;
-  }
-
   checkToken() {
     this.storage.get(TOKEN_KEY).then(token => {
       if (token) {
@@ -56,15 +52,29 @@ export class AuthService {
           this.authenticationState.next(true);
         } else {
           this.storage.remove(TOKEN_KEY).then(() => {
-            this.authenticationState.next(false);
+            // this.authenticationState.next(false);
           });
         }
       }
     });
   }
 
+  isAuthenticated() {
+    return this.authenticationState.value;
+  }
+
   register(credentials) {
-    return this.http.post(this.url + 'register', credentials, httpOptions);
+    return this.http.post(this.url + 'register', credentials, httpOptions)
+      .pipe(
+        tap(),
+        catchError(e => {
+          const status = e.status;
+          if (status === 401) {
+            this.alertService.presentToast(e.msg).then();
+          }
+          throw new Error(e);
+        })
+      );
   }
 
   login(credentials): Observable<any> {
@@ -76,10 +86,13 @@ export class AuthService {
             this.authenticationState.next(true);
           });
         }),
-        /*        catchError(e => {
-                  this.showAlert(e.error.msg);
-                  throw new Error(e);
-                })*/
+        catchError(e => {
+          const status = e.status;
+          if (status === 401) {
+            this.alertService.presentToast(e.msg).then();
+          }
+          throw new Error(e);
+        })
       );
   }
 

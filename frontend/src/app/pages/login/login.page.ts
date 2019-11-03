@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController, NavParams} from '@ionic/angular';
 import {Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {tap} from 'rxjs/operators';
 import {Title} from '@angular/platform-browser';
 
@@ -20,6 +20,7 @@ export class LoginPage implements OnInit {
   private title: string;
   private loginMessages = ValidationMessages;
   private loginForm: FormGroup;
+  private returnUrl: string;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -27,6 +28,7 @@ export class LoginPage implements OnInit {
     private authService: AuthService,
     private alertService: AlertService,
     private titleService: Title,
+    private route: ActivatedRoute,
   ) {
   }
 
@@ -34,6 +36,11 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.title = 'Login';
     this.titleService.setTitle(this.title + ' | Event-App');
+
+    this.route.queryParams.subscribe(params => this.returnUrl = params.returnUrl || '/dashboard');
+
+    // this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/dashboard';
+    // console.log(this.route.snapshot.queryParams.returnUrl);
 
     this.loginForm = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
@@ -54,27 +61,45 @@ export class LoginPage implements OnInit {
   }
 
   onSubmit() {
-    let user = new User();
-    user = this.prepareLogin();
+    const user = this.prepareLogin();
     console.log(user);
-    console.log(typeof user);
     this.authService.login(user).subscribe(
       (data: any) => {
         console.log(data.msg);
-        this.router.navigate(['/', 'dashboard']).then(nav => {
+        console.log('return url: ' + this.returnUrl);
+        this.authService.authenticationState.subscribe(state => {
+          console.log('auth state: ' + state);
+          if (state) {
+            this.router.navigateByUrl(this.returnUrl).then(nav => {
+              console.log(nav); // true if navigation is successful
+            }, err => {
+              console.log(err); // when there's an error
+            });
+          } else {
+            console.log(state);
+            /*          /!*          this.router.navigate(['login']).then(nav => {
+                                  console.log(nav); // true if navigation is successful
+                                }, err => {
+                                  console.log(err); // when there's an error
+                                });*!/*/
+          }
+        });
+/*
+        this.router.navigateByUrl(this.returnUrl, { skipLocationChange: true }).then(nav => {
           console.log(nav); // true if navigation is successful
         }, err => {
-          console.log(err); // when there's an error
+          console.log('error: ' + err); // when there's an error
         });
+*/
 
         this.alertService.presentToast('You have logged in. Welcome!').then(r => {
           console.log(r);
         }, err => {
-          console.log(err);
+          console.log('error: ' + err);
         });
       },
       error => {
-        console.log(error);
+        console.log('error: ' + error);
       },
       () => {
       }
