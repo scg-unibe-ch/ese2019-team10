@@ -23,8 +23,8 @@
 
     <ion-row class="ion-margin-top">
       <ion-col>
-        <ion-button type="button" (click)="loadData()" color="secondary" fill="outline" class="profile"
-                    expand="default">
+        <ion-button type="button" (click)="loadData()" color="dark" fill="outline" class="profile"
+                    expand="block">
           <ion-icon slot="start" name="refresh" class="ion-padding-end"></ion-icon>
           Load Data
         </ion-button>
@@ -33,8 +33,8 @@
 
     <ion-row class="ion-margin-top">
       <ion-col>
-        <ion-button type="button" [routerLink]="['/profile']" color="secondary" fill="outline" class="profile"
-                    expand="default">
+        <ion-button type="button" [routerLink]="['/profile']" color="dark" fill="outline" class="profile"
+                    expand="block">
           <ion-icon slot="start" name="person" class="ion-padding-end"></ion-icon>
           Profile
         </ion-button>
@@ -43,7 +43,17 @@
 
     <ion-row class="ion-margin-top">
       <ion-col>
-        <ion-button type="button" (click)="logout()" color="secondary" fill="outline" class="profile" expand="default">
+        <ion-button type="button" [routerLink]="['/admin/users']" color="dark" fill="outline" class="profile"
+                    expand="block">
+          <ion-icon slot="start" name="person" class="ion-padding-end"></ion-icon>
+          User Admin
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <ion-button type="button" (click)="logout()" color="dark" fill="outline" class="profile" expand="block">
           <ion-icon slot="start" name="log-out" class="ion-padding-end"></ion-icon>
           Logout
         </ion-button>

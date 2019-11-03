@@ -35,7 +35,6 @@ export class ProfilePage implements OnInit {
     private authService: AuthService,
     private alertService: AlertService,
     private titleService: Title,
-    // private user: Observable<User>,
   ) {
   }
 
