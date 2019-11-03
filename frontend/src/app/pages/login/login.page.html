@@ -48,6 +48,13 @@
 
               </fieldset>
 
+              <ion-chip *ngIf="error" class="error ion-margin-vertical" color="warning" outline="true">
+                <ion-icon name="alert"></ion-icon>
+                <ion-label>
+                  {{error}}
+                </ion-label>
+              </ion-chip>
+
               <ion-row>
                 <ion-button [disabled]="!loginForm.valid" class="submit-btn" color="success" expand="full"
                             type="submit">

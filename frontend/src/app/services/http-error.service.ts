@@ -48,7 +48,8 @@ export class HttpErrorService implements HttpInterceptor {
             console.log(error.error);
             errorMessage = `Error Code: ${error.status}\nMessage: ${error.statusText}`;
             if (error.status === 401 && (error.statusText === 'Wrong username/password combination.' || error.statusText === 'Account is not approved yet.')) {
-              this.alertService.presentToast(error.statusText).then();
+              // this.alertService.presentToast(error.statusText).then();
+              return throwError(error.statusText);
             } else {
               this.showAlert('Error Code: ' + error.status, error.message);
             }

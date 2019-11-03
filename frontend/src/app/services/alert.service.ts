@@ -14,7 +14,8 @@ export class AlertService {
       message: msg,
       duration: 2000,
       position: 'middle',
-      color: 'dark'
+      color: 'dark',
+      animated: true,
     });
     await toast.present();
   }

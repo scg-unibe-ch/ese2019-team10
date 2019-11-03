@@ -21,6 +21,7 @@ export class LoginPage implements OnInit {
   private loginMessages = ValidationMessages;
   private loginForm: FormGroup;
   private returnUrl: string;
+  private error: string;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -99,7 +100,14 @@ export class LoginPage implements OnInit {
         });
       },
       error => {
-        console.log('error: ' + error);
+        if (error.message === 'Wrong username/password combination.') {
+          this.error = 'Your username and password don\'t match. Please try again.';
+        } else if (error.message === 'Account is not approved yet.') {
+          this.error = 'Your account has not been approved yet. \nPlease wait for an admin to approve it.';
+        } else {
+          console.log('login error: ');
+          console.log(error.message);
+        }
       },
       () => {
       }
