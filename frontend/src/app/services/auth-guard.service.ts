@@ -17,17 +17,17 @@ export class AuthGuardService implements CanActivate {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    console.log('next:' + next.toString() + ', state: ' + state.url);
+    // console.log('next:' + next.toString() + ', state: ' + state.url);
 
     if (this.authService.isAuthenticated()) {
       return true;
     } else {
       this.router.navigate(['login'], { queryParams: { returnUrl: state.url }}).then(r => {
-        this.alertService.presentToast('You need to log in to do this.').then(res => {
+        this.alertService.presentToast('You need to log in to do this.').then(/*res => {
           console.log(res);
         }, err => {
           console.log(err);
-        });
+        }*/);
       });
       return false;
     }

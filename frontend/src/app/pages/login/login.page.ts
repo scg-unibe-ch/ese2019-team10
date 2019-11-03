@@ -66,18 +66,18 @@ export class LoginPage implements OnInit {
     console.log(user);
     this.authService.login(user).subscribe(
       (data: any) => {
-        console.log(data.msg);
-        console.log('return url: ' + this.returnUrl);
+        // console.log(data.msg);
+        // console.log('return url: ' + this.returnUrl);
         this.authService.authenticationState.subscribe(state => {
           console.log('auth state: ' + state);
           if (state) {
-            this.router.navigateByUrl(this.returnUrl).then(nav => {
+            this.router.navigateByUrl(this.returnUrl).then(/*nav => {
               console.log(nav); // true if navigation is successful
             }, err => {
               console.log(err); // when there's an error
-            });
+            }*/);
           } else {
-            console.log(state);
+            // console.log(state);
             /*          /!*          this.router.navigate(['login']).then(nav => {
                                   console.log(nav); // true if navigation is successful
                                 }, err => {
@@ -93,11 +93,12 @@ export class LoginPage implements OnInit {
         });
 */
 
-        this.alertService.presentToast('You have logged in. Welcome!').then(r => {
+        this.alertService.presentToast('You have logged in. Welcome!').then(/*r => {
           console.log(r);
         }, err => {
           console.log('error: ' + err);
-        });
+        }*/
+        );
       },
       error => {
         if (error.message === 'Wrong username/password combination.') {

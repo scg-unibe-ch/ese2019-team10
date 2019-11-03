@@ -52,7 +52,7 @@ export class AuthService {
           this.authenticationState.next(true);
         } else {
           this.storage.remove(TOKEN_KEY).then(() => {
-            // this.authenticationState.next(false);
+            this.authenticationState.next(false);
           });
         }
       }
@@ -67,13 +67,13 @@ export class AuthService {
     return this.http.post(this.url + 'register', credentials, httpOptions)
       .pipe(
         tap(),
-        catchError(e => {
+/*        catchError(e => {
           const status = e.status;
           if (status === 401) {
             this.alertService.presentToast(e.msg).then();
           }
           throw new Error(e);
-        })
+        })*/
       );
   }
 
@@ -87,10 +87,10 @@ export class AuthService {
           });
         }),
         catchError(e => {
-          const status = e.status;
+/*          const status = e.status;
           if (status === 401) {
             this.alertService.presentToast(e.msg).then();
-          }
+          }*/
           throw new Error(e);
         })
       );
@@ -99,16 +99,14 @@ export class AuthService {
   logout() {
     this.storage.remove(TOKEN_KEY).then(() => {
       this.authenticationState.next(false);
-      this.router.navigate(['/', 'home']).then(nav => {
-        console.log(nav); // true if navigation is successful
-      }, err => {
+      this.router.navigate(['/', 'home']).then(/*nav => {}, err => {
         console.log(err); // when there's an error
-      });
-      this.alertService.presentToast('You have logged out. See you soon!').then(r => {
+      }*/);
+      this.alertService.presentToast('You have logged out. See you soon!').then(/*r => {
         console.log(r);
       }, err => {
         console.log(err);
-      });
+      }*/);
     });
   }
 
@@ -126,10 +124,10 @@ export class AuthService {
 
   saveProfile(credentials) {
     return this.http.post(this.url + 'profile/save', credentials, httpOptions).pipe(
-      catchError(e => {
+/*      catchError(e => {
         this.showAlert(e.error.msg);
         throw new Error(e);
-      })
+      })*/
     );
   }
 

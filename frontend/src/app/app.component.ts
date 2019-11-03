@@ -43,9 +43,9 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      /*this.authService.authenticationState.subscribe(state => {
+      this.authService.authenticationState.subscribe(state => {
         console.log('auth state: ' + state);
-        if (state) {
+        /*if (state) {
           this.router.navigateByUrl(this.routingState.getPreviousUrl()).then(nav => {
             console.log(nav); // true if navigation is successful
           }, err => {
@@ -58,8 +58,8 @@ export class AppComponent implements OnInit {
                     }, err => {
                       console.log(err); // when there's an error
                     });*!/!*!/
-        }
-      });*/
+        }*/
+      });
     });
   }
 

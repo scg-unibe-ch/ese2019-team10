@@ -30,13 +30,13 @@ export class HttpErrorService implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         retry(0),
-        map((event: HttpEvent<any>) => {
+/*        map((event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
             console.log('event--->>>', event);
             // this.errorDialogService.openDialog(event);
           }
           return event;
-        }),
+        }),*/
         catchError((error: HttpErrorResponse) => {
           let errorMessage = '';
           if (error.error instanceof ErrorEvent) {
@@ -45,7 +45,7 @@ export class HttpErrorService implements HttpInterceptor {
             this.showAlert('Error', error.error.message);
           } else {
             // server-side error
-            console.log(error.error);
+            // console.log(error.error);
             errorMessage = `Error Code: ${error.status}\nMessage: ${error.statusText}`;
             if (error.status === 401 && (error.statusText === 'Wrong username/password combination.' || error.statusText === 'Account is not approved yet.')) {
               // this.alertService.presentToast(error.statusText).then();
