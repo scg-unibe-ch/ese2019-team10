@@ -26,6 +26,7 @@ export class AuthService {
   public url = environment.url;
   public user = null;
   public authenticationState = new BehaviorSubject(false);
+  private id = 0;
 
   constructor(
     private http: HttpClient,
@@ -81,8 +82,9 @@ export class AuthService {
     return this.http.post(this.url + 'login', credentials, httpOptions)
       .pipe(
         tap((res: any) => {
-          this.storage.set(TOKEN_KEY, res.token).then(() => {
+          this.storage.set(TOKEN_KEY, res.idToken).then(() => {
             this.user = this.helper.decodeToken(res.idToken);
+            this.id = res.userId;
             this.authenticationState.next(true);
           });
         }),
@@ -111,7 +113,7 @@ export class AuthService {
   }
 
   loadProfile(): Observable<User> {
-    return this.http.get<User>(this.url + 'profile/load').pipe(
+    return this.http.get<User>(this.url + 'user/profile/' + this.id).pipe(
       map(data => new User().deserialize(data))
     );
     /*    .pipe(
