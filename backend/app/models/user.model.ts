@@ -30,7 +30,7 @@ export class User extends Model<User> {
   public email!: string;
 
   @BelongsToMany(() => Role, () => RoleUser)
-  public Role!: Role[];
+  public role!: Role[];
 
   @HasMany(() => Service, 'id')
   public services!: Service[];

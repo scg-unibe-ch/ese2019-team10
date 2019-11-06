@@ -33,6 +33,36 @@ function createRoles() {
   });
 }
 
+// create an admin-account
+function createAdmin() {
+  User.findOne({where: {'email': 'admin@mail.com'}}).then(result => {
+    if (result === null) {
+      const admin: User = new User();
+      admin.post_({
+        'firstName': 'admin',
+        'lastName': 'admin',
+        'address': 'none',
+        'password': 'xugai4nie9ief5AhshaiSh1aequaiy',
+        'email': 'admin@mail.com'
+      });
+      admin.save().then(adminInstance => {
+        adminInstance.update({approved: true}).then(updatedAdmin => {console.log('admin approved'); });
+        Role.findOne({where: {'name': 'Admin'}}).then(adminRoleInstance => {
+          if (adminRoleInstance != null) {
+            adminInstance.$add('role', [adminRoleInstance])
+              .then(savedAdmin => {
+                console.log('admin role assigned to admin user'); })
+              .catch( savedAdmin => {
+                console.log('could not assign admin role to admin user');
+              });
+          } else {
+            throw Error('admin role not found!');
+          }
+        });
+      });
+    }
+  });
+}
 
 export const sequelize =  new Sequelize({
   database: 'app_db',
@@ -66,13 +96,14 @@ app.use('/welcome', CheckAccessController, WelcomeController);
 // api/register endpoint
 app.use('/api/register', RegisterController);
 app.use('/api/login', LoginController);
-app.use('/api/admin', AdminController);
+app.use('/api/admin', CheckAccessController, CheckAccessController, AdminController);
 app.use('/api/user', UserController);
 
 // .sync() is not recommended for production, yes, but I use it for development!
 sequelize.sync().then(() => {
 // start serving the application on the given port
   createRoles();
+  createAdmin();
   app.listen(port, () => {
     // success callback, log something to console as soon as the application has started
     console.log(`Listening at http://localhost:${port}/`);

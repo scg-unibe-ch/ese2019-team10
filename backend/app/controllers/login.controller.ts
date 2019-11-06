@@ -41,7 +41,7 @@ router.post('/', async (req: Request, res: Response ) => {
       } else {
         const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
           algorithm: 'RS256',
-          expiresIn: 120,
+          expiresIn: '3h',
           subject: userEmail
         });
 

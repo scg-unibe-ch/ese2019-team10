@@ -11,7 +11,9 @@ router.get(/^\/*/g, ( req: Request, res: Response, next: NextFunction ) => {
 
   User.findOne( {where : {'email': userEmail}}).then( user => {
     if ( user !== null ) {
-      user.Role.forEach((role) => { if (role.name === 'Admin') { next(); } });
+      user.$has('role', 'Admin').then(ret => {
+        next();
+      });
     }
 
     req.statusCode = 401;

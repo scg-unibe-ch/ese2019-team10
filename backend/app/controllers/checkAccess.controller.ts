@@ -5,19 +5,19 @@ import * as jwt from 'jsonwebtoken';
 const RSA_PUBLIC_KEY: Buffer = fs.readFileSync('dev-public.key');
 
 const router: Router = Router();
-router.get('/', (req: Request, res: Response, next: NextFunction) => {
+router.all('/*', (req: Request, res: Response, next: NextFunction) => {
   const jwtToken: string | undefined = req.header('auth');
   // if auth is not set, return unauthorized
-  if ( !jwtToken === undefined || jwtToken === null ) {
+  if ( jwtToken === undefined || jwtToken === null ) {
     res.sendStatus(401);
     return;
   }
 
-  // if jwt.verify succeeds (no error is thrown) the next function gets called
+  // if jwt.verify succeeds (no error is thrown) the next function gets called. If it does not,
+  // an error is thrown response is 401
   try {
-    // @ts-ignore -- can be ignored because jwtToken cannot be undefined here
-    res.locals.jwtPayload = jwt.verify(jwtToken, RSA_PUBLIC_KEY);
-    return next();
+    jwt.verify(jwtToken, RSA_PUBLIC_KEY);
+    next();
   } catch (e) {
     res.sendStatus(401);
     return;
