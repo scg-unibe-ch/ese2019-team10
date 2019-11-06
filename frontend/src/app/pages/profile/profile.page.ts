@@ -30,19 +30,19 @@ interface Event {
 })
 
 export class ProfilePage implements OnInit {
-  private title: string;
+  public title: string;
   public profileForm: FormGroup;
-  private matchingPasswordsGroup: FormGroup;
-  countries: Array<string>;
-  genders: Array<string>;
-  private day = null;
-  private month = null;
-  private year = null;
-  private currentTime = null;
-  private validationMessages = ValidationMessages;
-  private user: User;
-  services: Service[];
-  events: Event[];
+  public matchingPasswordsGroup: FormGroup;
+  public countries: Array<string>;
+  public genders: Array<string>;
+  public day = null;
+  public month = null;
+  public year = null;
+  public currentTime = null;
+  public validationMessages = ValidationMessages;
+  public user: User;
+  public services: Service[];
+  public events: Event[];
   public serviceList: FormArray;
   public eventList: FormArray;
 
@@ -59,8 +59,8 @@ export class ProfilePage implements OnInit {
     this.title = 'Profile';
     this.titleService.setTitle(this.title + ' | Event-App');
     this.currentTime = new Date();
-    this.day = this.currentTime.getDate();
-    this.month = this.currentTime.getMonth() + 1;
+    this.day = String(this.currentTime.getDate()).padStart(2, '0');
+    this.month = String(this.currentTime.getMonth() + 1).padStart(2, '0');
     this.year = this.currentTime.getFullYear();
     this.services = [];
 
@@ -142,8 +142,9 @@ export class ProfilePage implements OnInit {
     });
 
     this.serviceList = this.profileForm.get('services') as FormArray;
+    this.serviceList.removeAt(0);
     this.eventList = this.profileForm.get('events') as FormArray;
-
+    this.eventList.removeAt(0);
   }
 
   get serviceGroup() {
@@ -188,7 +189,6 @@ export class ProfilePage implements OnInit {
   public deleteEvent(index: number): void {
     // this.events.splice(index, 1);
     this.eventList.removeAt(index);
-
   }
 
   public loadUser() {
