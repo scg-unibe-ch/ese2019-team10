@@ -13,7 +13,7 @@ import {EventUser} from './models/EventUser';
 import {ServiceUser} from './models/ServiceUser';
 import {RegisterController} from './controllers';
 import {LoginController} from './controllers';
-import {CheckAccessController} from './controllers/checkAccess.controller';
+import {CheckLoginController} from './controllers/checkLogin.controller';
 import {UserController} from './controllers';
 import {Role} from './models/role.model';
 import {RoleUser} from './models/RoleUser';
@@ -92,11 +92,11 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/welcome', CheckAccessController, WelcomeController);
+app.use('/welcome', CheckLoginController, WelcomeController);
 // api/register endpoint
 app.use('/api/register', RegisterController);
 app.use('/api/login', LoginController);
-app.use('/api/admin', CheckAccessController, CheckAccessController, AdminController);
+app.use('/api/admin', CheckLoginController, CheckLoginController, AdminController);
 app.use('/api/user', UserController);
 
 // .sync() is not recommended for production, yes, but I use it for development!

@@ -7,7 +7,7 @@ const RSA_PUBLIC_KEY: Buffer = fs.readFileSync('dev-public.key');
 const router: Router = Router();
 router.all('/*', (req: Request, res: Response, next: NextFunction) => {
   const jwtToken: string | undefined = req.header('auth');
-  // if auth is not set, return unauthorized
+  // if auth is not set in request header, return unauthorized
   if ( jwtToken === undefined || jwtToken === null ) {
     res.sendStatus(401);
     return;
@@ -24,4 +24,4 @@ router.all('/*', (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-export const CheckAccessController: Router = router;
+export const CheckLoginController: Router = router;

@@ -4,7 +4,7 @@ import {User} from '../models/user.model';
 const router: Router = Router();
 
 /* This method needs res.locals.jwtPayload.sub to be set. This attribute is set in the GET
-   method of the checkAccess.controller.ts. In most cases, checkAccess.controller.ts will have
+   method of the checkLogin.controller.ts. In most cases, checkLogin.controller.ts will have
     to be put before this controller in the routing chain.*/
 router.get(/^\/*/g, ( req: Request, res: Response, next: NextFunction ) => {
   const userEmail: string = res.locals.jwtPayload.sub;

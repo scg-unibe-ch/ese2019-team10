@@ -41,12 +41,13 @@ router.post('/', async (req: Request, res: Response ) => {
       } else {
         const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
           algorithm: 'RS256',
-          expiresIn: '3h',
+          expiresIn: 120,
           subject: userEmail
         });
 
         res.status(200).json({
           idToken: jwtBearerToken,
+          userId: user.id,
           expiresIn: 120
         });
       }
