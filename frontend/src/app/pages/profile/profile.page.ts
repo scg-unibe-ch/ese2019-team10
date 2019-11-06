@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Validators, FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
-import {Router} from '@angular/router';
+import {Router, NavigationEnd} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {tap} from 'rxjs/operators';
 
@@ -63,6 +63,7 @@ export class ProfilePage implements OnInit {
     this.month = String(this.currentTime.getMonth() + 1).padStart(2, '0');
     this.year = this.currentTime.getFullYear();
     this.services = [];
+    this.user = new User().deserialize({});
 
     this.countries = [
       'Switzerland',
@@ -75,7 +76,6 @@ export class ProfilePage implements OnInit {
       'Other'
     ];
 
-    // this.loadUser();
 
     this.matchingPasswordsGroup = new FormGroup({
       password: new FormControl('', Validators.compose([
@@ -90,42 +90,42 @@ export class ProfilePage implements OnInit {
     });
 
     this.profileForm = this.formBuilder.group({
-      firstName: new FormControl('', Validators.compose([
+      firstName: new FormControl(this.user.firstName, Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
-      lastName: new FormControl('', Validators.compose([
+      lastName: new FormControl(this.user.lastName, Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
-      email: new FormControl('', Validators.compose([
+      email: new FormControl(this.user.email, Validators.compose([
         Validators.required,
         // Validators.email,
         Validators.pattern('^[^ @]+@[^ @]+\.[^ @]+$'),
         Validators.maxLength(100)
       ])),
-      gender: new FormControl('', Validators.required),
-      birthday: new FormControl(null, Validators.required),
-      street: new FormControl('', Validators.compose([
+      gender: new FormControl(this.user.gender, Validators.required),
+      birthday: new FormControl(this.user.birthday, Validators.required),
+      street: new FormControl(this.user.street, Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
-      postalCode: new FormControl('', Validators.compose([
+      postalCode: new FormControl(this.user.postalCode, Validators.compose([
         Validators.required,
         // postal codes can have numbers, letters, spaces, and hyphens
         // Validators.pattern('^[A-Za-z0-9- ]+$'),
         Validators.pattern('^[0-9]+$'),
         Validators.maxLength(20)
       ])),
-      city: new FormControl('', Validators.compose([
+      city: new FormControl(this.user.city, Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
-      country: new FormControl('', Validators.compose([
+      country: new FormControl(this.user.country, Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
-      phone: new FormControl('', Validators.compose([
+      phone: new FormControl(this.user.phone, Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
@@ -145,6 +145,10 @@ export class ProfilePage implements OnInit {
     this.serviceList.removeAt(0);
     this.eventList = this.profileForm.get('events') as FormArray;
     this.eventList.removeAt(0);
+  }
+
+  ionViewWillEnter() {
+    this.loadUser();
   }
 
   get serviceGroup() {
@@ -193,6 +197,8 @@ export class ProfilePage implements OnInit {
 
   public loadUser() {
     this.authService.loadProfile().subscribe(user => this.user = user);
+    console.log('this.user');
+    console.log(this.user);
   }
 
   private prepareProfileSave(): User {
