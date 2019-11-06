@@ -11,23 +11,38 @@ import {ValidationMessages} from '../../models/validation-messages.model';
 import {User} from '../../models/user.model';
 import {Observable} from 'rxjs';
 
+// import {Service} from '../../models/service.model';
+
+interface Service {
+  name: string;
+  category: string;
+}
+
+interface Event {
+  name: string;
+  category: string;
+}
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
+
 export class ProfilePage implements OnInit {
   private title: string;
-  private profileForm: FormGroup;
+  public profileForm: FormGroup;
   private matchingPasswordsGroup: FormGroup;
-  private countries: Array<string>;
-  private genders: Array<string>;
+  countries: Array<string>;
+  genders: Array<string>;
   private day = null;
   private month = null;
   private year = null;
   private currentTime = null;
   private validationMessages = ValidationMessages;
   private user: User;
+  services: Service[];
+  events: Event[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,6 +60,7 @@ export class ProfilePage implements OnInit {
     this.day = this.currentTime.getDate();
     this.month = this.currentTime.getMonth() + 1;
     this.year = this.currentTime.getFullYear();
+    this.services = [];
 
     this.countries = [
       'Switzerland',
@@ -57,7 +73,7 @@ export class ProfilePage implements OnInit {
       'Other'
     ];
 
-    this.loadUser();
+    // this.loadUser();
 
     this.matchingPasswordsGroup = new FormGroup({
       password: new FormControl('', Validators.compose([
@@ -113,8 +129,28 @@ export class ProfilePage implements OnInit {
       ])),
       matchingPasswords: this.matchingPasswordsGroup,
       isServiceProvider: new FormControl(false),
+      serviceName: new FormControl(''),
+      serviceCategory: new FormControl(''),
       isEventManager: new FormControl(false),
+      eventName: new FormControl(''),
+      eventCategory: new FormControl(''),
     });
+  }
+
+  public addService() {
+    this.services.push({name: this.profileForm.value.serviceName, category: this.profileForm.value.serviceCategory});
+  }
+
+  public deleteService(index: number): void {
+    this.services.splice(index, 1);
+  }
+
+  public addEvent() {
+    this.events.push({name: this.profileForm.value.eventeName, category: this.profileForm.value.eventCategory});
+  }
+
+  public deleteEvent(index: number): void {
+    this.events.splice(index, 1);
   }
 
   public loadUser() {

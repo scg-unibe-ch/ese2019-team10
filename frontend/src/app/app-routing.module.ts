@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule',
-    canActivate: [AuthGuardService]
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'admin/users', loadChildren: './admin/users/users.module#UsersPageModule',
