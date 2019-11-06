@@ -5,8 +5,9 @@ const router: Router = Router();
 
 // Function to create users
 router.post('/', async (req: Request, res: Response) => {
-  // search for user with requested email. if it already exists (result is not null), return 400
+  // search for user with requested email
   User.findOne({where: {'email': req.body['email']}}).then(user => {
+    // if user does not exist (user is null), create according to request
     if (user === null) {
       const instance = new User();
       instance.post_(req.body);
@@ -17,6 +18,7 @@ router.post('/', async (req: Request, res: Response) => {
         res.statusCode = 500;
         res.json({'msg': 'Error, user not created'});
       });
+    // otherwise send 400
     } else {
       res.statusCode = 400;
       res.json({'msg': 'E-mail address already in use'});

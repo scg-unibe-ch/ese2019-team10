@@ -41,7 +41,7 @@ function createAdmin() {
       admin.post_({
         'firstName': 'admin',
         'lastName': 'admin',
-        'address': 'none',
+        'address': 'some_address',
         'password': 'xugai4nie9ief5AhshaiSh1aequaiy',
         'email': 'admin@mail.com'
       });
@@ -96,8 +96,8 @@ app.use('/welcome', CheckLoginController, WelcomeController);
 // api/register endpoint
 app.use('/api/register', RegisterController);
 app.use('/api/login', LoginController);
-app.use('/api/admin', CheckLoginController, CheckLoginController, AdminController);
-app.use('/api/user', UserController);
+app.use('/api/admin', CheckLoginController, CheckAdminController, AdminController);
+app.use('/api/user', CheckLoginController, UserController);
 
 // .sync() is not recommended for production, yes, but I use it for development!
 sequelize.sync().then(() => {

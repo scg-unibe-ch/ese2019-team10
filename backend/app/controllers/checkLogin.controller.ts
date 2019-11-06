@@ -16,7 +16,7 @@ router.all('/*', (req: Request, res: Response, next: NextFunction) => {
   // if jwt.verify succeeds (no error is thrown) the next function gets called. If it does not,
   // an error is thrown response is 401
   try {
-    jwt.verify(jwtToken, RSA_PUBLIC_KEY);
+    res.locals.jwtPayload = jwt.verify(jwtToken, RSA_PUBLIC_KEY);
     next();
   } catch (e) {
     res.sendStatus(401);

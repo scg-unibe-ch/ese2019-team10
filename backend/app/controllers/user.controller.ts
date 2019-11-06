@@ -4,15 +4,6 @@ import {Event} from '../models/event.model';
 const router: Router = Router();
 import {sequelize} from '../server';
 
-router.options('/', (req:  Request, res: Response ) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8100');
-  res.header( 'Access-Control-Allow-Methods', 'GET, POST, PUT');
-  res.sendStatus(200);
-});
-
-
-
-// Function to list users to approve
 router.get('/profile/:id', async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, undefined);
   let resultUjson: any;
