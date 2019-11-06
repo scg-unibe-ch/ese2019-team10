@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
+import {Validators, FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {tap} from 'rxjs/operators';
@@ -43,6 +43,8 @@ export class ProfilePage implements OnInit {
   private user: User;
   services: Service[];
   events: Event[];
+  public serviceList: FormArray;
+  public eventList: FormArray;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -134,23 +136,59 @@ export class ProfilePage implements OnInit {
       isEventManager: new FormControl(false),
       eventName: new FormControl(''),
       eventCategory: new FormControl(''),
+      services: this.formBuilder.array([this.createService()]),
+      events: this.formBuilder.array([this.createEvent()]),
+
+    });
+
+    this.serviceList = this.profileForm.get('services') as FormArray;
+    this.eventList = this.profileForm.get('events') as FormArray;
+
+  }
+
+  get serviceGroup() {
+    return this.profileForm.get('services') as FormArray;
+  }
+
+  get eventGroup() {
+    return this.profileForm.get('events') as FormArray;
+  }
+
+  createService(): FormGroup {
+    return this.formBuilder.group({
+      serviceName: ['', Validators.required],
+      serviceCategory: ['', Validators.required],
+    });
+  }
+
+  createEvent(): FormGroup {
+    return this.formBuilder.group({
+      eventName: ['', Validators.required],
+      eventCategory: ['', Validators.required],
     });
   }
 
   public addService() {
-    this.services.push({name: this.profileForm.value.serviceName, category: this.profileForm.value.serviceCategory});
+    // this.services.push({name: this.profileForm.value.serviceName, category: this.profileForm.value.serviceCategory});
+    this.serviceList.push(this.createService());
+    console.log(this.profileForm.value);
   }
 
   public deleteService(index: number): void {
-    this.services.splice(index, 1);
+    // this.services.splice(index, 1);
+    this.serviceList.removeAt(index);
   }
 
   public addEvent() {
-    this.events.push({name: this.profileForm.value.eventeName, category: this.profileForm.value.eventCategory});
+    // this.events.push({name: this.profileForm.value.eventeName, category: this.profileForm.value.eventCategory});
+    this.eventList.push(this.createEvent());
+    console.log(this.profileForm.value);
   }
 
   public deleteEvent(index: number): void {
-    this.events.splice(index, 1);
+    // this.events.splice(index, 1);
+    this.eventList.removeAt(index);
+
   }
 
   public loadUser() {
