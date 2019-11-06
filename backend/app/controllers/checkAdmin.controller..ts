@@ -12,6 +12,7 @@ router.all('/*', ( req: Request, res: Response, next: NextFunction ) => {
 
   User.findOne( {where : {'email': userEmail}}).then( user => {
     if ( user !== null ) {
+      // check if user has role 1 (admin), go to next controller if yes, return if no
       user.$has('role', 1).then(hasAdminRole => {
         if (hasAdminRole) {
           next();
