@@ -19,7 +19,7 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
 
   User.findOne({
     where: {id: id},
-    attributes: ['id', 'firstName', 'lastName', 'address', 'email', 'Role']
+    attributes: ['id', 'firstName', 'lastName', 'address', 'email']
   }).then(resultUser => {
     if (resultUser == null) {
       res.statusCode = 404;
