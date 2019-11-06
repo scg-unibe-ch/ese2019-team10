@@ -4,7 +4,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-card>
+
 
     <ion-row>
       <ion-card-content>
@@ -26,8 +26,9 @@
               </ion-item-divider>
 
               <ion-item>
-                <ion-label position="floating">E-Mail</ion-label>
-                <ion-input type="email" name="email" formControlName="email" autocomplete="email" required></ion-input>
+
+                <ion-input autocomplete="email" formControlName="email" name="email" placeholder="E-Mail" required
+                           type="email"></ion-input>
               </ion-item>
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.email">
@@ -42,8 +43,9 @@
               <div formGroupName="matchingPasswords">
 
                 <ion-item>
-                  <ion-label position="floating">Password</ion-label>
-                  <ion-input type="password" name="password" formControlName="password" autocomplete="new-password"
+
+                  <ion-input autocomplete="new-password" formControlName="password" name="password"
+                             placeholder="Password" type="password"
                              required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
@@ -57,8 +59,9 @@
                 </div>
 
                 <ion-item>
-                  <ion-label position="floating">Confirm password</ion-label>
-                  <ion-input type="password" name="confirmPassword" formControlName="confirmPassword"
+
+                  <ion-input formControlName="confirmPassword" name="confirmPassword" placeholder="Confirm Password"
+                             type="password"
                              autocomplete="new-password"
                              required></ion-input>
                 </ion-item>
@@ -92,8 +95,9 @@
               </ion-item-divider>
 
               <ion-item>
-                <ion-label position="floating">First Name</ion-label>
-                <ion-input type="text" name="firstName" formControlName="firstName" autocomplete="given-name"
+
+                <ion-input autocomplete="given-name" formControlName="firstName" name="firstName"
+                           placeholder="First Name" type="text"
                            required></ion-input>
               </ion-item>
               <div class="validation-errors">
@@ -107,8 +111,9 @@
               </div>
 
               <ion-item>
-                <ion-label position="floating">Last Name</ion-label>
-                <ion-input type="text" name="lastName" formControlName="lastName" autocomplete="family-name"
+
+                <ion-input autocomplete="family-name" formControlName="lastName" name="lastName" placeholder="Last Name"
+                           type="text"
                            required></ion-input>
               </ion-item>
               <div class="validation-errors">
@@ -122,8 +127,9 @@
               </div>
 
               <ion-item>
-                <ion-label position="floating">Street</ion-label>
-                <ion-input type="text" name="street" formControlName="street" autocomplete="street-address"
+
+                <ion-input autocomplete="street-address" formControlName="street" name="street" placeholder="Street"
+                           type="text"
                            required></ion-input>
               </ion-item>
               <div class="validation-errors">
@@ -137,8 +143,9 @@
               </div>
 
               <ion-item>
-                <ion-label position="floating">City</ion-label>
-                <ion-input type="text" name="city" formControlName="city" autocomplete="address-level2"
+
+                <ion-input autocomplete="address-level2" formControlName="city" name="city" placeholder="City"
+                           type="text"
                            required></ion-input>
               </ion-item>
               <div class="validation-errors">
@@ -152,8 +159,9 @@
               </div>
 
               <ion-item>
-                <ion-label position="floating">Postal Code</ion-label>
-                <ion-input type="text" name="postalCode" formControlName="postalCode" autocomplete="postal-code"
+
+                <ion-input autocomplete="postal-code" formControlName="postalCode" name="postalCode"
+                           placeholder="Postal Code" type="text"
                            required></ion-input>
               </ion-item>
               <div class="validation-errors">
@@ -210,5 +218,5 @@
       </form>
     </div>
 
-  </ion-card>
+
 </ion-content>
