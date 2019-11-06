@@ -1,5 +1,6 @@
 
 ion-content {
+  --ion-background-color: #ffffff;
   div {
     height: 100%;
     width: 100%;
@@ -11,10 +12,33 @@ ion-content {
 }
 
 fieldset {
-  padding: 2em;
-  color: #000000;
+  padding: 2.5em;
+
 }
 
+.error-message {
+  font-size: 10px;
+  color: #ff1a10;
+}
+
+
+ion-input {
+  border: none;
+  background-color: #f6f6f6;
+  color: #000000;
+  padding: 15px 32px;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #f6f6f6;
+  transition: all 0.5s ease-in-out;
+  height: 35px;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 10px;
+
+}
 
 .ion-margin-top {
   margin-top: 300px;
