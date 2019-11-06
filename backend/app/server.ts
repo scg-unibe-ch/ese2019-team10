@@ -41,7 +41,7 @@ function createAdmin() {
       admin.post_({
         'firstName': 'admin',
         'lastName': 'admin',
-        'address': 'some_address',
+        'street': 'some_address',
         'password': 'xugai4nie9ief5AhshaiSh1aequaiy',
         'email': 'admin@mail.com'
       });
