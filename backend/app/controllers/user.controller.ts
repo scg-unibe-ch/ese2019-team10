@@ -15,7 +15,7 @@ router.options('/', (req:  Request, res: Response ) => {
 // Function to list users to approve
 router.get('/profile/:id', async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, undefined);
-  let resultUjson:any;
+  let resultUjson: any;
 
   User.findOne({
     where: {id: id},
@@ -36,9 +36,9 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
         type: sequelize.QueryTypes.SELECT
       }).then(resultEvent => {
         res.statusCode = 200;
-        let resultEjson = resultEvent.map((e:any) => e);
-        resultUjson["events"] = resultEjson;
-        //res.send(resultUjson);
+        const resultEjson = resultEvent.map((e: any) => e);
+        resultUjson['events'] = resultEjson;
+        // res.send(resultUjson);
       }).catch(error  => {
         res.statusCode = 500;
         res.json({'msg': 'Error, there is not event list'});
@@ -49,8 +49,8 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
         type: sequelize.QueryTypes.SELECT
       }).then(resultServ => {
         res.statusCode = 200;
-        let resultSjson = resultServ.map((e:any) => e);
-        resultUjson["services"] = resultSjson;
+        const resultSjson = resultServ.map((e: any) => e);
+        resultUjson['services'] = resultSjson;
         res.send(resultUjson);
       }).catch(error  => {
         res.statusCode = 500;
