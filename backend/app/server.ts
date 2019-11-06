@@ -14,6 +14,7 @@ import {ServiceUser} from './models/ServiceUser';
 import {RegisterController} from './controllers';
 import {LoginController} from './controllers';
 import {CheckAccessController} from './controllers/checkAccess.controller';
+import {UserController} from './controllers';
 import {Role} from './models/role.model';
 import {RoleUser} from './models/RoleUser';
 import {AdminController} from './controllers/admin.controller';
@@ -32,7 +33,8 @@ function createRoles() {
   });
 }
 
-const sequelize =  new Sequelize({
+
+export const sequelize =  new Sequelize({
   database: 'app_db',
   host: 'database',
   dialect: 'mysql',
@@ -65,6 +67,7 @@ app.use('/welcome', CheckAccessController, WelcomeController);
 app.use('/api/register', RegisterController);
 app.use('/api/login', LoginController);
 app.use('/api/admin', AdminController);
+app.use('/api/user', UserController);
 
 // .sync() is not recommended for production, yes, but I use it for development!
 sequelize.sync().then(() => {
