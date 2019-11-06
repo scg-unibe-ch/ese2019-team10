@@ -14,8 +14,9 @@ import {ServiceUser} from './models/ServiceUser';
 import {RegisterController} from './controllers';
 import {LoginController} from './controllers';
 import {CheckAccessController} from './controllers/checkAccess.controller';
+import {UserController} from './controllers';
 
-const sequelize =  new Sequelize({
+export const sequelize =  new Sequelize({
   database: 'app_db',
   host: 'database',
   dialect: 'mysql',
@@ -47,6 +48,7 @@ app.use('/welcome', CheckAccessController, WelcomeController);
 // api/register endpoint
 app.use('/api/register', RegisterController);
 app.use('/api/login', LoginController);
+app.use('/api/user', UserController);
 
 // .sync() is not recommended for production, yes, but I use it for development!
 sequelize.sync().then(() => {
