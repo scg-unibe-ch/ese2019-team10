@@ -5,10 +5,12 @@ import * as jwt from 'jsonwebtoken';
 const RSA_PUBLIC_KEY: Buffer = fs.readFileSync('dev-public.key');
 
 const router: Router = Router();
-router.all('/*', (req: Request, res: Response, next: NextFunction) => {
+
+function checkAndHandleJWT(req: Request, res: Response, next: NextFunction) {
   const jwtToken: string | undefined = req.header('auth');
+
   // if auth is not set in request header, return unauthorized
-  if ( jwtToken === undefined || jwtToken === null ) {
+  if (jwtToken === undefined || jwtToken === null) {
     res.sendStatus(401);
     return;
   }
@@ -22,6 +24,10 @@ router.all('/*', (req: Request, res: Response, next: NextFunction) => {
     res.sendStatus(401);
     return;
   }
-});
+}
+
+router.get('/*', checkAndHandleJWT);
+router.put('/*', checkAndHandleJWT);
+router.post('/*', checkAndHandleJWT);
 
 export const CheckLoginController: Router = router;
