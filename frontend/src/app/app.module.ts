@@ -18,12 +18,14 @@ import {SharedComponentsModule} from './components/shared-components.module';
 
 export function jwtOptionsFactory(storage) {
   return {
+    authHeader: 'auth',
+    authPrefix: '',
+    headerName: 'auth',
+    authScheme: '',
     tokenGetter: () => {
       return storage.get('access_token');
     },
-    whitelistedDomains: ['localhost:3000'],
-    authHeader: 'auth',
-    authPrefix: ''
+    whitelistedDomains: ['localhost:3000']
   };
 }
 

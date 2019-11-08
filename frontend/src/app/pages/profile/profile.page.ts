@@ -90,42 +90,42 @@ export class ProfilePage implements OnInit {
     });
 
     this.profileForm = this.formBuilder.group({
-      firstName: new FormControl(this.user.firstName, Validators.compose([
+      firstName: new FormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
-      lastName: new FormControl(this.user.lastName, Validators.compose([
+      lastName: new FormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
-      email: new FormControl(this.user.email, Validators.compose([
+      email: new FormControl('', Validators.compose([
         Validators.required,
         // Validators.email,
         Validators.pattern('^[^ @]+@[^ @]+\.[^ @]+$'),
         Validators.maxLength(100)
       ])),
-      gender: new FormControl(this.user.gender, Validators.required),
-      birthday: new FormControl(this.user.birthday, Validators.required),
-      street: new FormControl(this.user.street, Validators.compose([
+      gender: new FormControl('', Validators.required),
+      birthday: new FormControl('', Validators.required),
+      street: new FormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
-      postalCode: new FormControl(this.user.postalCode, Validators.compose([
+      postalCode: new FormControl('', Validators.compose([
         Validators.required,
         // postal codes can have numbers, letters, spaces, and hyphens
         // Validators.pattern('^[A-Za-z0-9- ]+$'),
         Validators.pattern('^[0-9]+$'),
         Validators.maxLength(20)
       ])),
-      city: new FormControl(this.user.city, Validators.compose([
+      city: new FormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
-      country: new FormControl(this.user.country, Validators.compose([
+      country: new FormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
-      phone: new FormControl(this.user.phone, Validators.compose([
+      phone: new FormControl('', Validators.compose([
         Validators.required,
         Validators.maxLength(100)
       ])),
@@ -145,10 +145,13 @@ export class ProfilePage implements OnInit {
     this.serviceList.removeAt(0);
     this.eventList = this.profileForm.get('events') as FormArray;
     this.eventList.removeAt(0);
+
+
   }
 
   ionViewWillEnter() {
     this.loadUser();
+
   }
 
   get serviceGroup() {
@@ -196,9 +199,25 @@ export class ProfilePage implements OnInit {
   }
 
   public loadUser() {
-    this.authService.loadProfile().subscribe(user => this.user = user);
-    console.log('this.user');
-    console.log(this.user);
+    this.authService.loadProfile().subscribe(user => {
+      this.user = user;
+      console.log('this.user');
+      console.log(this.user);
+
+      /*      this.profileForm.patchValue({
+              email: this.user.email,
+            });*/
+
+      this.profileForm.patchValue(this.user);
+
+      /*      Object.keys(this.user).forEach(k => {
+              const control = this.profileForm.get(k);
+              if (control) {
+                control.setValue(this.user[k], {onlySelf: true});
+              }
+            });*/
+
+    });
   }
 
   private prepareProfileSave(): User {
