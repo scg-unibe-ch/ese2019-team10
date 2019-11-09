@@ -21,6 +21,7 @@ import {AdminService} from './services/admin.service';
 export class AppComponent implements OnInit {
   rootPage: any = 'HomePage';
   navigate: any;
+  loggedIn: any = false;
 
   todoList: TodoList = new TodoList(null, '');
   todoLists: TodoList[] = [];
@@ -92,11 +93,16 @@ export class AppComponent implements OnInit {
     this.todoLists.splice(this.todoLists.indexOf(todoList), 1);
   }*/
 
+  logout() {
+    this.authService.logout();
+  }
+
 
   sideMenu() {
     this.authService.authenticationState.subscribe(() => {
 
       if (this.authService.isAuthenticated()) {
+        this.loggedIn = true;
         this.navigate =
           [
             {
@@ -116,6 +122,7 @@ export class AppComponent implements OnInit {
             },
           ];
       } else {
+        this.loggedIn = false;
         this.navigate =
           [
             {

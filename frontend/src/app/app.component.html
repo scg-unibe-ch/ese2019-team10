@@ -7,14 +7,25 @@
       </ion-toolbar>
     </ion-header>
     <ion-content id="menu">
-      <ion-list *ngFor="let pages of navigate">
+      <ion-list>
         <ion-menu-toggle auto-hide="true">
-          <ion-item [routerLink]="pages.url" [class.active-item]="pages.active" routerDirection="forward">
+          <ion-item *ngFor="let pages of navigate" [routerLink]="pages.url" [class.active-item]="pages.active"
+                    routerDirection="forward">
             <ion-icon [name]="pages.icon" [class.active-item]="pages.active" slot="start"></ion-icon>
             {{pages.title}}
           </ion-item>
+          
+          <ion-item *ngIf="loggedIn" (click)="logout()" button="true" type="button" routerDirection="root">
+            <ion-icon name="log-out" slot="start"></ion-icon>
+            <ion-text>
+              Log Out
+            </ion-text>
+          </ion-item>
+
         </ion-menu-toggle>
       </ion-list>
+
+
     </ion-content>
   </ion-menu>
 
