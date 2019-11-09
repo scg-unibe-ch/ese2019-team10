@@ -12,6 +12,8 @@ import {Router} from '@angular/router';
 import {AlertService} from './alert.service';
 
 const TOKEN_KEY = 'access_token';
+const ID_KEY = 'user_id';
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
@@ -26,7 +28,7 @@ export class AuthService {
   public url = environment.url;
   public user = null;
   public authenticationState = new BehaviorSubject(false);
-  private id = 0;
+  private id = null;
 
   constructor(
     private http: HttpClient,
@@ -51,9 +53,15 @@ export class AuthService {
         if (!isExpired) {
           this.user = decoded;
           this.authenticationState.next(true);
+          this.storage.get(ID_KEY).then(id => {
+            this.id = id;
+          });
         } else {
           this.storage.remove(TOKEN_KEY).then(() => {
             this.authenticationState.next(false);
+            this.storage.remove(ID_KEY).then(() => {
+              this.id = null;
+            });
           });
         }
       }
@@ -68,13 +76,13 @@ export class AuthService {
     return this.http.post(this.url + 'register', credentials, httpOptions)
       .pipe(
         tap(),
-/*        catchError(e => {
-          const status = e.status;
-          if (status === 401) {
-            this.alertService.presentToast(e.msg).then();
-          }
-          throw new Error(e);
-        })*/
+        /*        catchError(e => {
+                  const status = e.status;
+                  if (status === 401) {
+                    this.alertService.presentToast(e.msg).then();
+                  }
+                  throw new Error(e);
+                })*/
       );
   }
 
@@ -84,15 +92,17 @@ export class AuthService {
         tap((res: any) => {
           this.storage.set(TOKEN_KEY, res.idToken).then(() => {
             this.user = this.helper.decodeToken(res.idToken);
+            this.storage.set(ID_KEY, res.userId).then(() => {
+            });
             this.id = res.userId;
             this.authenticationState.next(true);
           });
         }),
         catchError(e => {
-/*          const status = e.status;
-          if (status === 401) {
-            this.alertService.presentToast(e.msg).then();
-          }*/
+          /*          const status = e.status;
+                    if (status === 401) {
+                      this.alertService.presentToast(e.msg).then();
+                    }*/
           throw new Error(e);
         })
       );
@@ -126,10 +136,10 @@ export class AuthService {
 
   saveProfile(credentials) {
     return this.http.post(this.url + 'profile/save', credentials, httpOptions).pipe(
-/*      catchError(e => {
-        this.showAlert(e.error.msg);
-        throw new Error(e);
-      })*/
+      /*      catchError(e => {
+              this.showAlert(e.error.msg);
+              throw new Error(e);
+            })*/
     );
   }
 
