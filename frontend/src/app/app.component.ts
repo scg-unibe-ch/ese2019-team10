@@ -94,24 +94,51 @@ export class AppComponent implements OnInit {
 
 
   sideMenu() {
-    this.navigate =
-      [
-        {
-          title: 'Home',
-          url: '/home',
-          icon: 'home'
-        },
-        {
-          title: 'Login',
-          url: '/login',
-          icon: 'log-in'
-        },
-        {
-          title: 'Register',
-          url: '/register',
-          icon: 'person-add'
-        },
-      ];
+    this.authService.authenticationState.subscribe(() => {
+
+      if (this.authService.isAuthenticated()) {
+        this.navigate =
+          [
+            {
+              title: 'Home',
+              url: '/home',
+              icon: 'home'
+            },
+            {
+              title: 'Dashboard',
+              url: '/dashboard',
+              icon: 'apps'
+            },
+            {
+              title: 'Profile',
+              url: '/profile',
+              icon: 'person'
+            },
+          ];
+      } else {
+        this.navigate =
+          [
+            {
+              title: 'Home',
+              url: '/home',
+              icon: 'home'
+            },
+            {
+              title: 'Login',
+              url: '/login',
+              icon: 'log-in'
+            },
+            {
+              title: 'Register',
+              url: '/register',
+              icon: 'person-add'
+            },
+          ];
+      }
+
+    });
+
+
   }
 
 
