@@ -8,7 +8,7 @@ import {AlertService} from './alert.service';
   providedIn: 'root'
 })
 
-export class AuthGuardService implements CanActivate {
+export class AdminGuardService implements CanActivate {
 
   constructor(
     public authService: AuthService,
@@ -19,11 +19,11 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
-    if (this.authService.isAuthenticated()) {
+    if (this.authService.isAdmin()) {
       return true;
     } else {
-      this.router.navigate(['login'], {queryParams: {returnUrl: state.url}}).then(r => {
-        this.alertService.presentToast('You need to log in to do this.').then();
+      this.router.navigate(['dashboard'], {queryParams: {returnUrl: state.url}}).then(r => {
+        this.alertService.presentToast('You do not have the necessary authorization.').then();
       });
       return false;
     }
