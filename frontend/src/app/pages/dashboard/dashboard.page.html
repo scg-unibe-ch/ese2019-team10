@@ -7,12 +7,6 @@
 <ion-content>
   <ion-card>
 
-    <ion-row>
-      <ion-card-content>
-        <p>Welcome to your personal dashboard!</p>
-      </ion-card-content>
-    </ion-row>
-
     <ion-row class="ion-margin-top">
       <ion-col>
         <ion-item>
@@ -21,16 +15,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-top">
-      <ion-col>
-        <ion-button type="button" (click)="loadData()" color="dark" fill="outline" class="profile"
-                    expand="block">
-          <ion-icon slot="start" name="refresh" class="ion-padding-end"></ion-icon>
-          Load Data
-        </ion-button>
-      </ion-col>
-    </ion-row>
-
+    
     <ion-row class="ion-margin-top">
       <ion-col>
         <ion-button type="button" [routerLink]="['/profile']" color="dark" fill="outline" class="profile"

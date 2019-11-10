@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
-import { Title } from '@angular/platform-browser';
+import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
+
+import {AuthService} from '../../services/auth.service';
 import {AdminService} from '../../services/admin.service';
+import {Messages} from '../../models/messages.model';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -10,27 +13,39 @@ import {AdminService} from '../../services/admin.service';
 })
 export class DashboardPage implements OnInit {
   private data: any;
-  private firstName: string;
-  private lastName: string;
+  private firstName: string = null;
+  private lastName: string = null;
   private title: string;
+  public messages: Array<string> = Messages;
 
   constructor(
     private authService: AuthService,
     private adminService: AdminService,
     private titleService: Title,
-  )  { }
+  ) {
+  }
 
   ngOnInit() {
     this.title = 'Dashboard';
-    this.titleService.setTitle (this.title + ' | Event-App');
+    this.titleService.setTitle(this.title + ' | Event-App');
+  }
+
+  ionViewDidEnter() {
+    this.loadData();
+
+  }
+
+  loadMessage() {
+    const randomNumber = Math.floor(Math.random() * this.messages.length);
+    return this.messages[randomNumber];
   }
 
   loadData() {
-    this.adminService.getApprovedUsers().subscribe((res: any) => {
-      console.log(res);
-      this.firstName = res[0].firstName;
-      this.lastName = res[0].lastName;
-      this.data = 'Is your name ' + this.firstName + ' ' + this.lastName + '?';
+    this.authService.loadProfile().subscribe((user: any) => {
+      this.firstName = user.firstName;
+      this.lastName = user.lastName;
+      const message = this.loadMessage();
+      this.data = message + ', ' + this.firstName + ' ' + this.lastName + '!';
     });
   }
 

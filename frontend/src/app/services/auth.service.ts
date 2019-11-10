@@ -127,6 +127,12 @@ export class AuthService {
   logout() {
     this.storage.remove(TOKEN_KEY).then(() => {
       this.authenticationState.next(false);
+      this.storage.remove(ID_KEY).then(() => {
+        this.id = null;
+      });
+      this.storage.remove(EMAIL_KEY).then(() => {
+        this.email = null;
+      });
       this.router.navigate(['/', 'home']).then(/*nav => {}, err => {
         console.log(err); // when there's an error
       }*/);
