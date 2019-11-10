@@ -41,7 +41,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-top">
+    <ion-row *ngIf="isAdmin()" class="ion-margin-top">
       <ion-col>
         <ion-button type="button" [routerLink]="['/admin/users']" color="dark" fill="outline" class="profile"
                     expand="block">

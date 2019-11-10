@@ -13,6 +13,8 @@ import {AlertService} from './alert.service';
 
 const TOKEN_KEY = 'access_token';
 const ID_KEY = 'user_id';
+const EMAIL_KEY = 'user_email';
+
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -29,6 +31,7 @@ export class AuthService {
   public user = null;
   public authenticationState = new BehaviorSubject(false);
   private id = null;
+  private email = null;
 
   constructor(
     private http: HttpClient,
@@ -56,11 +59,17 @@ export class AuthService {
           this.storage.get(ID_KEY).then(id => {
             this.id = id;
           });
+          this.storage.get(EMAIL_KEY).then(email => {
+            this.email = email;
+          });
         } else {
           this.storage.remove(TOKEN_KEY).then(() => {
             this.authenticationState.next(false);
             this.storage.remove(ID_KEY).then(() => {
               this.id = null;
+            });
+            this.storage.remove(EMAIL_KEY).then(() => {
+              this.email = null;
             });
           });
         }
@@ -70,6 +79,10 @@ export class AuthService {
 
   isAuthenticated() {
     return this.authenticationState.value;
+  }
+
+  isAdmin() {
+    return this.email === 'admin@mail.com';
   }
 
   register(credentials) {
@@ -93,8 +106,11 @@ export class AuthService {
           this.storage.set(TOKEN_KEY, res.idToken).then(() => {
             this.user = this.helper.decodeToken(res.idToken);
             this.storage.set(ID_KEY, res.userId).then(() => {
+              this.id = res.userId;
             });
-            this.id = res.userId;
+            this.storage.set(EMAIL_KEY, credentials.email).then(() => {
+              this.email = credentials.email;
+            });
             this.authenticationState.next(true);
           });
         }),

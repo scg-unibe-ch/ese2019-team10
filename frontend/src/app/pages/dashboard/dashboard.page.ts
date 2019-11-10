@@ -38,4 +38,8 @@ export class DashboardPage implements OnInit {
     this.authService.logout();
   }
 
+  isAdmin() {
+    return this.authService.isAdmin();
+  }
+
 }
