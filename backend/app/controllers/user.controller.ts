@@ -61,7 +61,8 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
     res.json({'msg': 'Error, there is not event list'});
   });
 });
-/*router.get('/:id', async (req: Request, res: Response) => {
+
+router.put('/profile/:id', async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, undefined);
   const instance = await User.findByPk(id);
   if (instance == null) {
@@ -70,23 +71,24 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
       'msg': 'Not found'
     });
     return;
-  } else {
-    let options = {};
-    options = {
-      attributes: ['id', 'firstName', 'lastName', 'email'],
-      where: {
-        id: id
-      }
-    };
-    User.findAll(options).then(result => {
-      res.statusCode = 200;
-      res.json(result.map(e => e));
-    }).catch(error  => {
-      res.statusCode = 500;
-      res.json({'msg': 'Error'});
-    });
   }
-});*/
-
+  User.update({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    address: req.body.street
+  }, {
+    where: {
+      id: id
+    }
+  }).then(result => {
+    res.statusCode = 200;
+    res.json({'msg': 'User updated'});
+  }).catch(error  => {
+    res.statusCode = 500;
+    res.json({'msg': 'Error, user not updated'});
+    console.log(error);
+  });
+});
 
 export const UserController: Router = router;
