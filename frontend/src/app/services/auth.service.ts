@@ -123,7 +123,7 @@ export class AuthService {
   }
 
   loadProfile(): Observable<User> {
-    return this.http.get<User>(this.url + 'user/profile/' + this.id).pipe(
+    return this.http.get<User>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
       map(data => new User().deserialize(data))
     );
     /*    .pipe(
@@ -135,7 +135,7 @@ export class AuthService {
   }
 
   saveProfile(credentials) {
-    return this.http.post(this.url + 'profile/save', credentials, httpOptions).pipe(
+    return this.http.put(this.url + 'user/profile/' + this.id, credentials, httpOptions).pipe(
       /*      catchError(e => {
               this.showAlert(e.error.msg);
               throw new Error(e);

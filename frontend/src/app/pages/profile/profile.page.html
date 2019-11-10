@@ -6,11 +6,6 @@
 <ion-content class="ion-padding">
   <ion-card>
 
-    <ion-row>
-      <ion-card-content>
-        <p>Here you can edit your profile!</p>
-      </ion-card-content>
-    </ion-row>
 
     <div class="registration-form">
       <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
@@ -44,7 +39,7 @@
                 <ion-item>
                   <ion-label position="floating">Password</ion-label>
                   <ion-input type="password" name="password" formControlName="password" autocomplete="new-password"
-                             required></ion-input>
+                  ></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validationMessages.password">
@@ -60,7 +55,7 @@
                   <ion-label position="floating">Confirm password</ion-label>
                   <ion-input type="password" name="confirmPassword" formControlName="confirmPassword"
                              autocomplete="new-password"
-                             required></ion-input>
+                  ></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validationMessages.confirmPassword">
@@ -304,12 +299,12 @@
                   </ion-item>
                 </ion-list>
 
-                  <ion-item>
-                    <ion-button (click)="addEvent()" slot="end">
-                      <ion-icon slot="start" name="add"></ion-icon>
-                      Create a New Event
-                    </ion-button>
-                  </ion-item>
+                <ion-item>
+                  <ion-button (click)="addEvent()" slot="end">
+                    <ion-icon slot="start" name="add"></ion-icon>
+                    Create a New Event
+                  </ion-button>
+                </ion-item>
 
               </ion-item-group>
 

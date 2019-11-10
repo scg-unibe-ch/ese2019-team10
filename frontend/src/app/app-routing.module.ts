@@ -16,14 +16,14 @@ const routes: Routes = [
   },
   {
     path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule',
-    // canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService]
   },
   {
     path: 'admin/users', loadChildren: './admin/users/users.module#UsersPageModule',
     canActivate: [AuthGuardService]
   },
   {path: 'about', loadChildren: './pages/about/about.module#AboutPageModule'},
-  { path: '**', loadChildren: './pages/page-not-found/page-not-found.module#PageNotFoundPageModule' },
+  {path: '**', loadChildren: './pages/page-not-found/page-not-found.module#PageNotFoundPageModule'},
 ];
 
 @NgModule({
