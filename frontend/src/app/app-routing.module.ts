@@ -24,6 +24,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService, AdminGuardService]
   },
   {path: 'about', loadChildren: './pages/about/about.module#AboutPageModule'},
+  {path: 'user/profile/:id', loadChildren: './user/profile/profile.module#ProfilePageModule'},
   {path: '**', loadChildren: './pages/page-not-found/page-not-found.module#PageNotFoundPageModule'},
 ];
 

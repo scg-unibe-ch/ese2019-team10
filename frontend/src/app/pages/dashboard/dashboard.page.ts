@@ -17,6 +17,7 @@ export class DashboardPage implements OnInit {
   private lastName: string = null;
   private title: string;
   public messages: Array<string> = Messages;
+  public userId: number;
 
   constructor(
     private authService: AuthService,
@@ -32,7 +33,6 @@ export class DashboardPage implements OnInit {
 
   ionViewDidEnter() {
     this.loadData();
-
   }
 
   loadMessage() {
@@ -44,6 +44,8 @@ export class DashboardPage implements OnInit {
     this.authService.loadProfile().subscribe((user: any) => {
       this.firstName = user.firstName;
       this.lastName = user.lastName;
+      this.userId = user.id;
+      console.log(this.userId);
       const message = this.loadMessage();
       this.data = message + ', ' + this.firstName + ' ' + this.lastName + '!';
     });
