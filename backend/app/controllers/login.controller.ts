@@ -5,6 +5,7 @@ import {sha3_256} from 'js-sha3';
 import {readFileSync} from 'fs';
 
 const RSA_PRIVATE_KEY: Buffer = readFileSync('dev-private.key');
+const EXPIRY_TIME: number = 60 * 60 * 2; // expiry time in seconds
 
 const router: Router = Router();
 
@@ -41,14 +42,14 @@ router.post('/', async (req: Request, res: Response ) => {
       } else {
         const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
           algorithm: 'RS256',
-          expiresIn: 120,
+          expiresIn: EXPIRY_TIME,
           subject: userEmail
         });
 
         res.status(200).json({
           idToken: jwtBearerToken,
           userId: user.id,
-          expiresIn: 120
+          expiresIn: EXPIRY_TIME
         });
       }
     },
