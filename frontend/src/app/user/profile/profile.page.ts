@@ -90,6 +90,7 @@ export class ProfilePage implements OnInit {
       this.user = user;
       console.log('this.user: ' + userId);
       console.log(this.user);
+      this.titleService.setTitle(this.user.firstName + '\'s ' + this.title + ' | Event-App');
 
       /*      this.profileForm.patchValue({
               email: this.user.email,

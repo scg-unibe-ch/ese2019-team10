@@ -17,7 +17,7 @@ export class DashboardPage implements OnInit {
   private lastName: string = null;
   private title: string;
   public messages: Array<string> = Messages;
-  public userId: number;
+  public userId;
 
   constructor(
     private authService: AuthService,

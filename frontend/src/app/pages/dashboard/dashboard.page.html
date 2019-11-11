@@ -16,12 +16,12 @@
     </ion-row>
 
 
-    <ion-row class="ion-margin-top">
+    <ion-row *ngIf="this.userId" class="ion-margin-top">
       <ion-col>
-        <ion-button type="button" [routerLink]="['/user/profile/' + this.userId]" color="dark" fill="outline"
+        <ion-button type="button" [routerLink]="['/user/profile/', this.userId]" color="dark" fill="outline"
                     class="profile"
                     expand="block">
-          <ion-icon slot="start" name="person" class="ion-padding-end"></ion-icon>
+          <ion-icon slot="start" name="person" class="end"></ion-icon>
           View Profile
         </ion-button>
       </ion-col>
