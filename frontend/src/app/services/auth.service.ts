@@ -13,7 +13,7 @@ import {AlertService} from './alert.service';
 
 const TOKEN_KEY = 'access_token';
 const ID_KEY = 'user_id';
-const EMAIL_KEY = 'user_email';
+const ADMIN_KEY = 'is_admin';
 
 
 const httpOptions = {
@@ -31,7 +31,7 @@ export class AuthService {
   public user = null;
   public authenticationState = new BehaviorSubject(false);
   private id = null;
-  private email = null;
+  private admin = false;
 
   constructor(
     private http: HttpClient,
@@ -59,8 +59,8 @@ export class AuthService {
           this.storage.get(ID_KEY).then(id => {
             this.id = id;
           });
-          this.storage.get(EMAIL_KEY).then(email => {
-            this.email = email;
+          this.storage.get(ADMIN_KEY).then(bool => {
+            this.admin = bool;
           });
         } else {
           this.storage.remove(TOKEN_KEY).then(() => {
@@ -68,8 +68,8 @@ export class AuthService {
             this.storage.remove(ID_KEY).then(() => {
               this.id = null;
             });
-            this.storage.remove(EMAIL_KEY).then(() => {
-              this.email = null;
+            this.storage.remove(ADMIN_KEY).then(() => {
+              this.admin = false;
             });
           });
         }
@@ -82,7 +82,7 @@ export class AuthService {
   }
 
   isAdmin() {
-    return this.email === 'admin@mail.com';
+    return this.admin;
   }
 
   register(credentials) {
@@ -108,8 +108,8 @@ export class AuthService {
             this.storage.set(ID_KEY, res.userId).then(() => {
               this.id = res.userId;
             });
-            this.storage.set(EMAIL_KEY, credentials.email).then(() => {
-              this.email = credentials.email;
+            this.storage.set(ADMIN_KEY, res.isAdmin).then(() => {
+              this.admin = res.isAdmin;
             });
             this.authenticationState.next(true);
           });
@@ -130,8 +130,8 @@ export class AuthService {
       this.storage.remove(ID_KEY).then(() => {
         this.id = null;
       });
-      this.storage.remove(EMAIL_KEY).then(() => {
-        this.email = null;
+      this.storage.remove(ADMIN_KEY).then(() => {
+        this.admin = false;
       });
       this.router.navigate(['/', 'home']).then(/*nav => {}, err => {
         console.log(err); // when there's an error
