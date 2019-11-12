@@ -12,7 +12,6 @@ const router: Router = Router();
 
 router.post('/', async (req: Request, res: Response ) => {
   const userEmail: string = req.body.email.toLowerCase();
-  const userPassword = req.body.password;
 
   // search for a user with provided email and compare password hashes
   User.findOne( { where: {email: userEmail}, include: [Role] } )
@@ -41,8 +40,9 @@ router.post('/', async (req: Request, res: Response ) => {
           msg: 'Wrong user/password combination.'
         }); // send unauthorized
       } else {
+        const roleIdList = user.role.map(role => role.id);
         const jwtBearerToken = jwt.sign({
-            roles: user.role.map(role => role.id),
+            roles: roleIdList,
             id: user.id
           },
           RSA_PRIVATE_KEY, {
@@ -54,6 +54,7 @@ router.post('/', async (req: Request, res: Response ) => {
         res.status(200).json({
           idToken: jwtBearerToken,
           userId: user.id,
+          isAdmin: roleIdList.includes(1),
           expiresIn: EXPIRY_TIME
         });
       }
