@@ -3,6 +3,8 @@
 
 _Biweekly report about biggest challenges and risks, and learning outcomes_
 
+---
+
 Since the last report we had various mishaps and successes. 
 
 We improved our modelling: On the backend, a role model was created which replaced the previous booleans of isAdmin, isServiceProvider and isEventManager. A user can have none, any or all roles; the roles belong to many users; and the server creates these roles at startup. On the frontend, there are now user models on the login, registration, admin, and profile pages. There are also models for the validation messages and some welcome messages. All these models make the code more flexible, since they are reusable and we don't need to repeat ourselves.
