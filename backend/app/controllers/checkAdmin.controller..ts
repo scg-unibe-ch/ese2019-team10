@@ -7,25 +7,14 @@ const router: Router = Router();
    method of the checkLogin.controller.ts. In most cases, checkLogin.controller.ts will have
     to be put before this controller in the routing chain.*/
 router.all('/*', ( req: Request, res: Response, next: NextFunction ) => {
-  if ( ! res.locals.jwtPayload.sub ) {
+  if ( ! res.locals.jwtPayload.roles) {
     throw Error('Trying to access user data for a user that is not logged in');
+  } else if (res.locals.jwtPayload.roles.includes(1)) {
+    next();
+  } else {
+    res.statusCode = 401;
+    res.json({'msg': 'You are not authorized to do this!'});
   }
-  const userEmail: string = res.locals.jwtPayload.sub;
-  console.log(userEmail);
-
-  User.findOne( {where : {'email': userEmail}}).then( user => {
-    if ( user !== null ) {
-      // check if user has role 1 (admin), go to next controller if yes, return if no
-      user.$has('role', 1).then(hasAdminRole => {
-        if (hasAdminRole) {
-          next();
-        } else {
-          res.statusCode = 401;
-          res.json({'msg': 'You are not authorized to do this!'});
-        }
-      });
-    }
-  });
 });
 
 export const CheckAdminController: Router = router;

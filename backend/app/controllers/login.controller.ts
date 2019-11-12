@@ -3,6 +3,7 @@ import {User} from '../models/user.model';
 import * as jwt from 'jsonwebtoken';
 import {sha3_256} from 'js-sha3';
 import {readFileSync} from 'fs';
+import {Role} from '../models/role.model';
 
 const RSA_PRIVATE_KEY: Buffer = readFileSync('dev-private.key');
 const EXPIRY_TIME: number = 60 * 60 * 2; // jwt expiry time in seconds
@@ -14,7 +15,7 @@ router.post('/', async (req: Request, res: Response ) => {
   const userPassword = req.body.password;
 
   // search for a user with provided email and compare password hashes
-  User.findOne( { where: {email: userEmail} } )
+  User.findOne( { where: {email: userEmail}, include: [Role] } )
     .then( user => {
       const providedPasswordHash: string = sha3_256(req.body.password);
 
@@ -40,11 +41,15 @@ router.post('/', async (req: Request, res: Response ) => {
           msg: 'Wrong user/password combination.'
         }); // send unauthorized
       } else {
-        const jwtBearerToken = jwt.sign({}, RSA_PRIVATE_KEY, {
-          algorithm: 'RS256',
-          expiresIn: EXPIRY_TIME,
-          subject: userEmail
-        });
+        const jwtBearerToken = jwt.sign({
+            roles: user.role.map(role => role.id),
+            id: user.id
+          },
+          RSA_PRIVATE_KEY, {
+            algorithm: 'RS256',
+            expiresIn: EXPIRY_TIME,
+            subject: userEmail
+          });
 
         res.status(200).json({
           idToken: jwtBearerToken,
