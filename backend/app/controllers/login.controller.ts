@@ -28,16 +28,14 @@ router.post('/', async (req: Request, res: Response ) => {
 
       // if email and password match and user is approved, return bearer token, otherwise unauthorized
       if ( ! user.approved ) {
-        res.statusMessage = 'Account is not approved yet.';
         res.statusCode = 401;
         res.send({
           msg: 'Account is not approved yet.'
         }); // send unauthorized
       } else if ( ! passwordCorrect ) {
-        res.statusMessage = 'Wrong username/password combination.';
         res.statusCode = 401;
         res.send({
-          msg: 'Wrong user/password combination.'
+          msg: 'Wrong username/password combination.'
         }); // send unauthorized
       } else {
         const roleIdList = user.role.map(role => role.id);
