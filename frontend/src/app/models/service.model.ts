@@ -5,6 +5,8 @@ export class Service implements Deserializable {
   public name: string;
   public category: string;
   public description: string;
+  public date: string;
+  public place: string;
 
   deserialize(input: any): this {
     Object.assign(this, input);

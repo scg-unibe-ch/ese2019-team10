@@ -13,6 +13,7 @@ export class User implements Deserializable {
   public city: string;
   public postalCode: number;
   public country: string;
+  public isAdmin: boolean;
   public isServiceProvider: boolean;
   public isEventManager: boolean;
 
