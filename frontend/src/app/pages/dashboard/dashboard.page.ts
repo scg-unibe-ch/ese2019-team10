@@ -17,7 +17,7 @@ export class DashboardPage implements OnInit {
   private lastName: string = null;
   private title: string;
   public messages: Array<string> = Messages;
-  public userId;
+  public userId = undefined;
 
   constructor(
     private authService: AuthService,
@@ -29,6 +29,10 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
     this.title = 'Dashboard';
     this.titleService.setTitle(this.title + ' | Event-App');
+  }
+
+  ionViewWillEnter() {
+    this.userId = null;
   }
 
   ionViewDidEnter() {
