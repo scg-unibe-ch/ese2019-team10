@@ -7,6 +7,9 @@ const router: Router = Router();
    method of the checkLogin.controller.ts. In most cases, checkLogin.controller.ts will have
     to be put before this controller in the routing chain.*/
 router.all('/*', ( req: Request, res: Response, next: NextFunction ) => {
+  if ( ! res.locals.jwtPayload.sub ) {
+    throw Error('Trying to access user data for a user that is not logged in');
+  }
   const userEmail: string = res.locals.jwtPayload.sub;
   console.log(userEmail);
 

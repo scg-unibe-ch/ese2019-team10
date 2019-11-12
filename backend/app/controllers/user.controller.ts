@@ -8,7 +8,7 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, undefined);
   let resultUjson: any;
 
-  // check if user is allowed to see info, i.e. if she has the right id or she is admin
+  // check if the user is logged in and is allowed to see info, i.e. if she has the right id or she is admin
   const loggedInUser = await User.findOne({where: {'email': res.locals.jwtPayload.sub}});
   if (loggedInUser === null || (!await loggedInUser.$has('role', 1) && loggedInUser.id !== id)) {
       res.statusCode = 401;

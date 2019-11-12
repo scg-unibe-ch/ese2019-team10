@@ -33,7 +33,9 @@ function createRoles() {
   });
 }
 
-// create an admin-account
+/**
+ * Create an admin-account.
+ */
 function createAdmin() {
   User.findOne({where: {'email': 'admin@mail.com'}}).then(result => {
     if (result === null) {

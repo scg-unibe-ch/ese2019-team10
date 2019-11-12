@@ -5,7 +5,7 @@ import {sha3_256} from 'js-sha3';
 import {readFileSync} from 'fs';
 
 const RSA_PRIVATE_KEY: Buffer = readFileSync('dev-private.key');
-const EXPIRY_TIME: number = 60 * 60 * 2; // expiry time in seconds
+const EXPIRY_TIME: number = 60 * 60 * 2; // jwt expiry time in seconds
 
 const router: Router = Router();
 
@@ -24,7 +24,7 @@ router.post('/', async (req: Request, res: Response ) => {
         return;
       }
 
-      const pwCompareResult: number = user.passwordHash.localeCompare(providedPasswordHash);
+      const passwordCorrect: boolean = (user.passwordHash.localeCompare(providedPasswordHash) === 0);
 
       // if email and password match and user is approved, return bearer token, otherwise unauthorized
       if ( ! user.approved ) {
@@ -33,7 +33,7 @@ router.post('/', async (req: Request, res: Response ) => {
         res.send({
           msg: 'Account is not approved yet.'
         }); // send unauthorized
-      } else if ( pwCompareResult !== 0 ) {
+      } else if ( ! passwordCorrect ) {
         res.statusMessage = 'Wrong username/password combination.';
         res.statusCode = 401;
         res.send({
