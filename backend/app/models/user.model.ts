@@ -17,8 +17,8 @@ export class User extends Model<User> {
   @Column
   public address!: string;
 
-  @HasOne(() => City, 'id')
-  public cityId!: number;
+  /* @HasOne(() => City, 'id')
+  public cityId!: number;*/
 
   @Column
   public passwordHash!: string;
@@ -28,6 +28,21 @@ export class User extends Model<User> {
 
   @Column
   public email!: string;
+
+  @Column
+  public birthday!: string;
+
+  @Column
+  public gender!: string;
+
+  @Column
+  public city!: string;
+
+  @Column
+  public postalCode!: string;
+
+  @Column
+  public country!: string;
 
   @BelongsToMany(() => Role, () => RoleUser)
   public role!: Role[];
@@ -45,6 +60,11 @@ export class User extends Model<User> {
     this.lastName = user_data['lastName'];
     this.email = user_data['email'];
     this.address = user_data['street'];
+    this.birthday = user_data['birthday'];
+    this.gender = user_data['gender'];
+    this.city = user_data['city'];
+    this.postalCode = user_data['postalCode'];
+    this.country = user_data['country'];
     this.passwordHash = sha3Hash;
     this.approved = false;
   }
