@@ -15,7 +15,7 @@
 
               <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
                 <ion-label>
-                  <ion-icon class="form-icon" slot="start" name="mail"></ion-icon>
+                  <ion-icon class="divider-icon" slot="start" name="mail"></ion-icon>
                   Account Information
                 </ion-label>
               </ion-item-divider>
@@ -81,7 +81,7 @@
 
               <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
                 <ion-label>
-                  <ion-icon class="form-icon" slot="start" name="person"></ion-icon>
+                  <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
                   Personal Information
                 </ion-label>
               </ion-item-divider>
@@ -165,7 +165,7 @@
 
               <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
                 <ion-label>
-                  <ion-icon class="form-icon" slot="start" name="pin"></ion-icon>
+                  <ion-icon class="divider-icon" slot="start" name="pin"></ion-icon>
                   Address
                 </ion-label>
               </ion-item-divider>
@@ -234,7 +234,7 @@
 
               <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
                 <ion-label>
-                  <ion-icon class="form-icon" slot="start" name="clipboard"></ion-icon>
+                  <ion-icon class="divider-icon" slot="start" name="clipboard"></ion-icon>
                   App Usage
                 </ion-label>
               </ion-item-divider>
@@ -264,10 +264,17 @@
                   </ion-item>
                 </ion-list>
 
-                <ion-item>
+                <ion-item lines="none">
                   <ion-button (click)="addService()" slot="end">
-                    <ion-icon slot="start" name="add"></ion-icon>
+                    <ion-icon class="button-icon" slot="start" name="add"></ion-icon>
                     Create a New Service
+                  </ion-button>
+                </ion-item>
+
+                <ion-item lines="none">
+                  <ion-button [routerLink]="['/profile/services']" slot="end">
+                    <ion-icon class="button-icon" slot="start" name="create"></ion-icon>
+                    Edit Services
                   </ion-button>
                 </ion-item>
 
@@ -299,10 +306,17 @@
                   </ion-item>
                 </ion-list>
 
-                <ion-item>
+                <ion-item lines="none">
                   <ion-button (click)="addEvent()" slot="end">
-                    <ion-icon slot="start" name="add"></ion-icon>
+                    <ion-icon class="button-icon" slot="start" name="add"></ion-icon>
                     Create a New Event
+                  </ion-button>
+                </ion-item>
+
+                <ion-item lines="none">
+                  <ion-button [routerLink]="['/profile/events']" slot="end">
+                    <ion-icon class="button-icon" slot="start" name="create"></ion-icon>
+                    Edit Events
                   </ion-button>
                 </ion-item>
 
