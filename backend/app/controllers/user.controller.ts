@@ -1,9 +1,11 @@
 import {Router, Request, Response} from 'express';
 import {User} from '../models/user.model';
 import {Event} from '../models/event.model';
+import {Service} from '../models/service.model';
 const router: Router = Router();
 import {sequelize} from '../server';
 
+// Get user profile
 router.get('/profile/:id', async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, undefined);
   let resultUjson: any;
@@ -16,7 +18,8 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
 
   User.findOne({
     where: {id: id},
-    attributes: ['id', 'firstName', 'lastName', 'address', 'email']
+    attributes: ['id', 'firstName', 'lastName', 'address', 'email',
+      'birthday', 'gender', 'city', 'postalCode', 'country']
   }).then(resultUser => {
     if (resultUser === null) {
       res.statusCode = 404;
@@ -60,6 +63,7 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
   });
 });
 
+// Edit user profile
 router.put('/profile/:id', async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, undefined);
   const instance = await User.findByPk(id);
@@ -74,7 +78,13 @@ router.put('/profile/:id', async (req: Request, res: Response) => {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
-    address: req.body.street
+    address: req.body.street,
+    birthday: req.body.birthday,
+    phone: req.body.phone,
+    gender: req.body.gender,
+    city: req.body.city,
+    postalCode: req.body.postalCode,
+    country: req.body.country
   }, {
     where: {
       id: id
@@ -87,6 +97,31 @@ router.put('/profile/:id', async (req: Request, res: Response) => {
     res.json({'msg': 'Error, user not updated'});
     console.log(error);
   });
+});
+
+// Function to create new service
+router.post('/service', async (req: Request, res: Response) => {
+  // search for user with requested email
+  const id = parseInt(req.body.userId, undefined);
+  const instance = await User.findByPk(id);
+  if (instance == null) {
+    res.statusCode = 404;
+    res.json({
+      'msg': 'User not found'
+    });
+    return;
+  } else {
+      const instance = new Service();
+      instance.post_(req.body);
+      instance.save().then(result => {
+        res.statusCode = 201;
+        res.json({'msg': 'Service created'});
+      }).catch(error  => {
+        res.statusCode = 500;
+        console.log(error);
+        res.json({'msg': 'Service was not created'});
+      });
+    }
 });
 
 export const UserController: Router = router;

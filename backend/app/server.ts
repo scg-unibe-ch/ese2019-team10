@@ -9,8 +9,9 @@ import {User} from './models/user.model';
 import {Event} from './models/event.model';
 import {City} from './models/city.model';
 import {Country} from './models/country.model';
+import {Category} from './models/service.model';
 import {EventUser} from './models/EventUser';
-import {ServiceUser} from './models/ServiceUser';
+import {EventService} from './models/EventService';
 import {RegisterController} from './controllers';
 import {LoginController} from './controllers';
 import {CheckLoginController} from './controllers/checkLogin.controller';
@@ -66,6 +67,19 @@ function createAdmin() {
   });
 }
 
+/**
+ * Create required categories if they don't exist yet
+ */
+function createCategories() {
+  // For each string in this array, a role with this name will exist in the table
+  const categoriesArray: string[] = ['Professional', 'Venue', 'Objects', 'Consumables'];
+
+  categoriesArray.forEach((categorieName) => {
+    const instance: Category = new Category();
+    instance.createIfNotExits(categorieName);
+  });
+}
+
 export const sequelize =  new Sequelize({
   database: 'app_db',
   host: 'database',
@@ -78,7 +92,8 @@ export const sequelize =  new Sequelize({
     collate: 'utf8_unicode_ci'
   }
 });
-sequelize.addModels([Service, User, Event, City, Country, ServiceUser, EventUser, Role, RoleUser]);
+sequelize.addModels([Service, User, Event, City, Country,
+  EventUser, Role, RoleUser, EventService, Category]);
 
 // create a new express application instance
 const app: express.Application = express();
@@ -106,6 +121,7 @@ sequelize.sync().then(() => {
 // start serving the application on the given port
   createRoles();
   createAdmin();
+  createCategories();
   app.listen(port, () => {
     // success callback, log something to console as soon as the application has started
     console.log(`Listening at http://localhost:${port}/`);
