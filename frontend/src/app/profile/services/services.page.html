@@ -8,228 +8,10 @@
 
 
     <div class="registration-form">
-      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
         <ion-row>
           <ion-col>
             <ion-list inset>
-
-              <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
-                <ion-label>
-                  <ion-icon class="form-icon" slot="start" name="mail"></ion-icon>
-                  Account Information
-                </ion-label>
-              </ion-item-divider>
-
-              <ion-item>
-                <ion-label position="floating">E-Mail</ion-label>
-                <ion-input type="email" name="email" formControlName="email" autocomplete="email" required></ion-input>
-              </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of validationMessages.email">
-                  <div class="error-message"
-                       *ngIf="profileForm.get('email').hasError(validation.type) && (profileForm.get('email').dirty || profileForm.get('email').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-
-              <div formGroupName="matchingPasswords">
-
-                <ion-item>
-                  <ion-label position="floating">Password</ion-label>
-                  <ion-input type="password" name="password" formControlName="password" autocomplete="new-password"
-                  ></ion-input>
-                </ion-item>
-                <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validationMessages.password">
-                    <div class="error-message"
-                         *ngIf="profileForm.get('matchingPasswords').get('password').hasError(validation.type) && (profileForm.get('matchingPasswords').get('password').dirty || profileForm.get('matchingPasswords').get('password').touched)">
-                      <ion-icon name="information-circle-outline"></ion-icon>
-                      {{ validation.message }}
-                    </div>
-                  </ng-container>
-                </div>
-
-                <ion-item>
-                  <ion-label position="floating">Confirm password</ion-label>
-                  <ion-input type="password" name="confirmPassword" formControlName="confirmPassword"
-                             autocomplete="new-password"
-                  ></ion-input>
-                </ion-item>
-                <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validationMessages.confirmPassword">
-                    <div class="error-message"
-                         *ngIf="profileForm.get('matchingPasswords').get('confirmPassword').hasError(validation.type) && (profileForm.get('matchingPasswords').get('confirmPassword').dirty || profileForm.get('matchingPasswords').get('confirmPassword').touched)">
-                      <ion-icon name="information-circle-outline"></ion-icon>
-                      {{ validation.message }}
-                    </div>
-                  </ng-container>
-                </div>
-
-              </div>
-
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of validationMessages.matchingPasswords">
-                  <div class="error-message"
-                       *ngIf="profileForm.get('matchingPasswords').hasError(validation.type) && (profileForm.get('matchingPasswords').get('confirmPassword').dirty || profileForm.get('matchingPasswords').get('confirmPassword').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-
-              <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
-                <ion-label>
-                  <ion-icon class="form-icon" slot="start" name="person"></ion-icon>
-                  Personal Information
-                </ion-label>
-              </ion-item-divider>
-
-              <ion-item>
-                <ion-label position="floating">First Name</ion-label>
-                <ion-input type="text" name="firstName" formControlName="firstName" autocomplete="given-name"
-                           required></ion-input>
-              </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of validationMessages.firstName">
-                  <div class="error-message"
-                       *ngIf="profileForm.get('firstName').hasError(validation.type) && (profileForm.get('firstName').dirty || profileForm.get('firstName').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-
-              <ion-item>
-                <ion-label position="floating">Last Name</ion-label>
-                <ion-input type="text" name="lastName" formControlName="lastName" autocomplete="family-name"
-                           required></ion-input>
-              </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of validationMessages.lastName">
-                  <div class="error-message"
-                       *ngIf="profileForm.get('lastName').hasError(validation.type) && (profileForm.get('lastName').dirty || profileForm.get('lastName').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-
-              <ion-item>
-                <ion-label position="floating">Gender</ion-label>
-                <ion-select name="gender" formControlName="gender" cancelText="Cancel" okText="OK">
-                  <ion-select-option *ngFor="let gender of genders" [value]="gender">{{gender}}</ion-select-option>
-                </ion-select>
-              </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of validationMessages.gender">
-                  <div class="error-message"
-                       *ngIf="profileForm.get('gender').hasError(validation.type) && (profileForm.get('gender').dirty || profileForm.get('gender').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-
-              <ion-item>
-                <ion-label position="floating">Birthday</ion-label>
-                <ion-datetime displayFormat="DD/MM/YYYY" formControlName="birthday" pickerFormat="DD MMMM YYYY"
-                              min="1900"
-                              max="{{year}}-{{month}}-{{day}}">
-                </ion-datetime>
-              </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of validationMessages.birthday">
-                  <div class="error-message"
-                       *ngIf="profileForm.get('birthday').hasError(validation.type) && (profileForm.get('birthday').dirty || profileForm.get('birthday').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-
-              <ion-item>
-                <ion-label position="floating">Phone</ion-label>
-                <ion-input type="tel" name="phone" formControlName="phone" autocomplete="tel" required></ion-input>
-              </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of validationMessages.phone">
-                  <div class="error-message"
-                       *ngIf="profileForm.get('phone').hasError(validation.type) && (profileForm.get('phone').dirty || profileForm.get('phone').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-
-              <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
-                <ion-label>
-                  <ion-icon class="form-icon" slot="start" name="pin"></ion-icon>
-                  Address
-                </ion-label>
-              </ion-item-divider>
-
-              <ion-item>
-                <ion-label position="floating">Street</ion-label>
-                <ion-input type="text" name="street" formControlName="street" autocomplete="street-address"
-                           required></ion-input>
-              </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of validationMessages.street">
-                  <div class="error-message"
-                       *ngIf="profileForm.get('street').hasError(validation.type) && (profileForm.get('street').dirty || profileForm.get('street').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-
-              <ion-item>
-                <ion-label position="floating">Postal Code</ion-label>
-                <ion-input type="text" name="postalCode" formControlName="postalCode" autocomplete="postal-code"
-                           required></ion-input>
-              </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of validationMessages.postalCode">
-                  <div class="error-message"
-                       *ngIf="profileForm.get('postalCode').hasError(validation.type) && (profileForm.get('postalCode').dirty || profileForm.get('postalCode').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-
-              <ion-item>
-                <ion-label position="floating">City</ion-label>
-                <ion-input type="text" name="city" formControlName="city" autocomplete="address-level2"
-                           required></ion-input>
-              </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of validationMessages.city">
-                  <div class="error-message"
-                       *ngIf="profileForm.get('city').hasError(validation.type) && (profileForm.get('city').dirty || profileForm.get('city').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-
-              <ion-item>
-                <ion-label position="floating">Country</ion-label>
-                <ion-select name="country" formControlName="country" cancelText="Cancel" okText="OK">
-                  <ion-select-option *ngFor="let country of countries" [value]="country">{{country}}</ion-select-option>
-                </ion-select>
-              </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of validationMessages.country">
-                  <div class="error-message"
-                       *ngIf="profileForm.get('country').hasError(validation.type) && (profileForm.get('country').dirty || profileForm.get('country').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
 
 
               <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
@@ -244,74 +26,72 @@
                 <ion-checkbox name="isServiceProvider" formControlName="isServiceProvider"></ion-checkbox>
               </ion-item>
 
-              <ion-item-group *ngIf="profileForm.value.isServiceProvider" formArrayName="services">
+              <ion-item-group *ngIf="serviceForm.value.isServiceProvider" formArrayName="services">
 
-                <ion-list>
-                  <ion-item *ngFor="let service of serviceGroup.controls; index as ix">
-                    <div [formGroupName]="ix" class="row">
+                <ion-list *ngFor="let service of serviceGroup.controls; index as ix" inset>
+
+                  <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+                  </ion-item-divider>
+
+                  <ion-item-group [formGroupName]="ix">
+                    <div class="row">
                       <ion-item>
-                        <ion-label position="floating">Service Name</ion-label>
-                        <ion-input type="text" name="serviceName" formControlName="serviceName"></ion-input>
+                        <ion-label position="floating">Name</ion-label>
+                        <ion-input type="text" name="name" formControlName="name"></ion-input>
                       </ion-item>
                       <ion-item>
-                        <ion-label position="floating">Service Category</ion-label>
-                        <ion-input type="text" name="serviceCategory" formControlName="serviceCategory"></ion-input>
+                        <ion-label position="floating">Category</ion-label>
+                        <ion-input type="text" name="category" formControlName="category"></ion-input>
                       </ion-item>
+                      <ion-item>
+                        <ion-label position="floating">Availability</ion-label>
+                        <ion-input type="text" name="availability" formControlName="availability"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label position="floating">Place</ion-label>
+                        <ion-input type="text" name="place" formControlName="place"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label position="floating">Price</ion-label>
+                        <ion-input type="text" name="price" formControlName="price"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label position="floating">Quantity</ion-label>
+                        <ion-input type="text" name="quantity" formControlName="quantity"></ion-input>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label position="floating">Description</ion-label>
+                        <ion-input type="text" name="description" formControlName="description"></ion-input>
+                      </ion-item>
+
                     </div>
-                    <ion-button (click)="deleteService(ix)" slot="end">
-                      <ion-icon name="close"></ion-icon>
+
+
+                    <ion-button (click)="deleteService(ix)" slot="end" class="ion-margin-top">
+                      <ion-icon slot="start" name="close"></ion-icon>
+                      Delete this service
                     </ion-button>
-                  </ion-item>
+
+
+                  </ion-item-group>
+
+
                 </ion-list>
 
-                <ion-item>
-                  <ion-button (click)="addService()" slot="end">
+                <div class="ion-text-end">
+                  <ion-button (click)="addService()" slot="end" class="ion-margin-top">
                     <ion-icon slot="start" name="add"></ion-icon>
                     Create a New Service
                   </ion-button>
-                </ion-item>
+                </div>
 
               </ion-item-group>
 
-
-              <ion-item>
-                <ion-label>I want to plan an event</ion-label>
-                <ion-checkbox name="isEventManager" formControlName="isEventManager"></ion-checkbox>
-              </ion-item>
-
-              <ion-item-group *ngIf="profileForm.value.isEventManager" formArrayName="events">
-
-                <ion-list>
-                  <ion-item *ngFor="let event of eventGroup.controls; index as ix">
-                    <div [formGroupName]="ix" class="row">
-                      <ion-item>
-                        <ion-label position="floating">Event Name</ion-label>
-                        <ion-input type="text" name="eventName" formControlName="eventName"></ion-input>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label position="floating">Event Category</ion-label>
-                        <ion-input type="text" name="eventCategory" formControlName="eventCategory"></ion-input>
-                      </ion-item>
-                    </div>
-                    <ion-button (click)="deleteEvent(ix)" slot="end">
-                      <ion-icon name="close"></ion-icon>
-                    </ion-button>
-                  </ion-item>
-                </ion-list>
-
-                <ion-item>
-                  <ion-button (click)="addEvent()" slot="end">
-                    <ion-icon slot="start" name="add"></ion-icon>
-                    Create a New Event
-                  </ion-button>
-                </ion-item>
-
-              </ion-item-group>
 
               <ion-row class="ion-margin-top">
-                <ion-button class="submit-btn" expand="full" type="submit" [disabled]="!profileForm.valid">
+                <ion-button class="submit-btn" expand="full" type="submit" [disabled]="!serviceForm.valid">
                   <ion-icon slot="start" name="person-add"></ion-icon>
-                  Save your profile
+                  Save your services
                 </ion-button>
               </ion-row>
 
