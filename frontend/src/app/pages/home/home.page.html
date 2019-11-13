@@ -12,7 +12,7 @@
       <ion-row>
         <ion-card-title>
           <h2>
-            <ion-text color="light">Welcome!</ion-text>
+            <ion-text>Welcome!</ion-text>
           </h2>
         </ion-card-title>
       </ion-row>
@@ -28,7 +28,7 @@
       <ion-grid>
       <ion-row class="ion-margin-top">
         <ion-col>
-        <ion-button type="button" [routerLink]="['/about']" color="light" fill="outline" class="about" expand="block">
+          <ion-button [routerLink]="['/about']" class="about" expand="block" fill="outline" type="button">
           <ion-icon slot="start" name="information-circle-outline" class="ion-padding-end"></ion-icon>
           <ion-text slot="end" class="">About</ion-text>
         </ion-button>
@@ -37,7 +37,7 @@
 
       <ion-row class="ion-margin-top">
         <ion-col>
-        <ion-button type="button" [routerLink]="['/login']" color="light" fill="outline" class="login" expand="block">
+          <ion-button [routerLink]="['/login']" class="login" expand="block" fill="outline" type="button">
           <ion-icon slot="start" name="log-in" class="ion-padding-end"></ion-icon>
           Log in
         </ion-button>
@@ -46,7 +46,7 @@
 
       <ion-row class="ion-margin-top">
         <ion-col>
-        <ion-button type="button" [routerLink]="['/register']" color="light" fill="outline" class="register" expand="block">
+          <ion-button [routerLink]="['/register']" class="register" expand="block" fill="outline" type="button">
           <ion-icon slot="start" name="person-add" class="ion-padding-end"></ion-icon>
           Register
         </ion-button>
@@ -55,6 +55,9 @@
       </ion-grid>
 
     </ion-card>
+    <ion-button (click)="changeTheme('autumn')">Herbst</ion-button>
+    <ion-button (click)="changeTheme('night')">Dark</ion-button>
+    <ion-button (click)="changeTheme('neon')">Neon</ion-button>
 
   </div>
 </ion-content>

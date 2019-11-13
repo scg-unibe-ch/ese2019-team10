@@ -6,11 +6,7 @@
 <ion-content class="ion-padding">
 
 
-    <ion-row>
-      <ion-card-content>
-        <p>Please register to be able to plan an event or offer your services.</p>
-      </ion-card-content>
-    </ion-row>
+
 
     <div class="registration-form">
       <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
@@ -183,7 +179,7 @@
 
 
               <ion-button class="terms ion-text-capitalize" type="button" routerDirection="forward" target="_blank"
-                          href="/terms" color="medium" fill="outline" expand="block">
+                          expand="block" fill="outline" href="/terms">
               <span class="ion-text-left">Read the terms
               <ion-icon class="left-margin" name="open"></ion-icon></span>
               </ion-button>
@@ -205,7 +201,7 @@
 
               <ion-row class="ion-margin-top">
                 <ion-button class="submit-btn" expand="full" type="submit" [disabled]="!registrationForm.valid"
-                            color="tertiary">
+                >
                   <ion-icon slot="start" name="person-add"></ion-icon>
                   Register
                 </ion-button>
