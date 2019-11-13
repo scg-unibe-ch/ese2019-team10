@@ -132,7 +132,7 @@ function CSSTextGenerator(colors) {
     --ion-color-light-tint: ${Color(light).lighten(tintRatio)};`;
 }
 
-function contrast(color, ratio = 1.5) {
+function contrast(color, ratio = 0.8) {
   color = Color(color);
   return color.isDark() ? color.lighten(ratio) : color.darken(ratio);
 }
