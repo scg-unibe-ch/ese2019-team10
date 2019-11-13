@@ -21,7 +21,7 @@
         <ion-button type="button" [routerLink]="['/user/profile/', this.userId]" color="dark" fill="outline"
                     class="profile"
                     expand="block">
-          <ion-icon slot="start" name="person" class="end"></ion-icon>
+          <ion-icon slot="start" name="person" class="button-icon"></ion-icon>
           View Profile
         </ion-button>
       </ion-col>
@@ -31,7 +31,7 @@
       <ion-col>
         <ion-button type="button" [routerLink]="['/profile']" color="dark" fill="outline" class="profile"
                     expand="block">
-          <ion-icon slot="start" name="create" class="ion-padding-end"></ion-icon>
+          <ion-icon slot="start" name="create" class="button-icon"></ion-icon>
           Edit Profile
         </ion-button>
       </ion-col>
@@ -41,7 +41,7 @@
       <ion-col>
         <ion-button type="button" [routerLink]="['/admin/users']" color="dark" fill="outline" class="profile"
                     expand="block">
-          <ion-icon slot="start" name="person" class="ion-padding-end"></ion-icon>
+          <ion-icon slot="start" name="person" class="button-icon"></ion-icon>
           User Admin
         </ion-button>
       </ion-col>
@@ -50,7 +50,7 @@
     <ion-row class="ion-margin-top">
       <ion-col>
         <ion-button type="button" (click)="logout()" color="dark" fill="outline" class="profile" expand="block">
-          <ion-icon slot="start" name="log-out" class="ion-padding-end"></ion-icon>
+          <ion-icon slot="start" name="log-out" class="button-icon"></ion-icon>
           Logout
         </ion-button>
       </ion-col>
