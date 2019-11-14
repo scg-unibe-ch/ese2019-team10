@@ -246,7 +246,7 @@
 
               <ion-item-group *ngIf="profileForm.value.isServiceProvider" formArrayName="services">
 
-                <ion-list>
+<!--                <ion-list>
                   <ion-item *ngFor="let service of serviceGroup.controls; index as ix">
                     <div [formGroupName]="ix" class="row">
                       <ion-item>
@@ -269,7 +269,7 @@
                     <ion-icon class="button-icon" slot="start" name="add"></ion-icon>
                     Create a New Service
                   </ion-button>
-                </ion-item>
+                </ion-item>-->
 
                 <ion-item lines="none">
                   <ion-button [routerLink]="['/profile/services']" slot="end">
@@ -288,7 +288,7 @@
 
               <ion-item-group *ngIf="profileForm.value.isEventManager" formArrayName="events">
 
-                <ion-list>
+                <!--<ion-list>
                   <ion-item *ngFor="let event of eventGroup.controls; index as ix">
                     <div [formGroupName]="ix" class="row">
                       <ion-item>
@@ -311,7 +311,7 @@
                     <ion-icon class="button-icon" slot="start" name="add"></ion-icon>
                     Create a New Event
                   </ion-button>
-                </ion-item>
+                </ion-item>-->
 
                 <ion-item lines="none">
                   <ion-button [routerLink]="['/profile/events']" slot="end">
