@@ -10,6 +10,8 @@ import {AlertService} from 'src/app/services/alert.service';
 import {ValidationMessages} from '../../models/validation-messages.model';
 import {User} from '../../models/user.model';
 import {Observable} from 'rxjs';
+import {appConstants} from '../../constants/app.constants';
+
 
 // import {Service} from '../../models/service.model';
 
@@ -57,7 +59,7 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this.title = 'Profile';
-    this.titleService.setTitle(this.title + ' | Event-App');
+    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
     this.currentTime = new Date();
     this.day = String(this.currentTime.getDate()).padStart(2, '0');
     this.month = String(this.currentTime.getMonth() + 1).padStart(2, '0');

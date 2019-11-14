@@ -9,6 +9,8 @@ import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
 import {ValidationMessages} from '../../models/validation-messages.model';
 import {User} from '../../models/user.model';
+import {appConstants} from '../../constants/app.constants';
+
 
 @Component({
   selector: 'app-register',
@@ -34,7 +36,7 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() {
     this.title = 'Register';
-    this.titleService.setTitle(this.title + ' | Event-App');
+    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
 
 
     this.matchingPasswordsGroup = new FormGroup({

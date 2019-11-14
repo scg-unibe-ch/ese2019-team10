@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
+import {appConstants} from '../../constants/app.constants';
+
+
 @Component({
   selector: 'app-terms',
   templateUrl: './terms.page.html',
@@ -15,7 +18,7 @@ export class TermsPage implements OnInit {
 
   ngOnInit() {
     this.title = 'Terms & Conditions';
-    this.titleService.setTitle (this.title + ' | Event-App');
+    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
 
   }
 

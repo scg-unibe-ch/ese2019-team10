@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
+
 import {ThemeService} from '../../theme.service';
+import {appConstants} from '../../constants/app.constants';
+
 
 const themes = {
   autumn: {
@@ -34,12 +37,13 @@ const themes = {
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
+
 export class HomePage implements OnInit {
   private title: string;
 
   constructor(
     private titleService: Title,
-    private theme: ThemeService
+    private theme: ThemeService,
   ) { }
 
   changeTheme(name) {
@@ -48,7 +52,7 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.title = 'Home';
-    this.titleService.setTitle (this.title + ' | Event-App');
+    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
   }
 
 }

@@ -2,6 +2,7 @@ import {Router, Request, Response} from 'express';
 import {User} from '../models/user.model';
 import {Event} from '../models/event.model';
 import {Service} from '../models/service.model';
+
 const router: Router = Router();
 import {sequelize} from '../server';
 
@@ -10,11 +11,11 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, undefined);
   let resultUjson: any;
 
-  if (res.locals.jwtPayload === null || ( !res.locals.jwtPayload.roles.includes(1) && res.locals.jwtPayload.id !== id )) {
-      res.statusCode = 401;
-      res.json({'msg': 'You are not allowed to do this'});
-      return;
-    }
+  if (res.locals.jwtPayload === null || (!res.locals.jwtPayload.roles.includes(1) && res.locals.jwtPayload.id !== id)) {
+    res.statusCode = 401;
+    res.json({'msg': 'You are not allowed to do this'});
+    return;
+  }
 
   User.findOne({
     where: {id: id},
@@ -39,7 +40,7 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
         const resultEjson = resultEvent.map((e: any) => e);
         resultUjson['events'] = resultEjson;
         // res.send(resultUjson);
-      }).catch(error  => {
+      }).catch(error => {
         res.statusCode = 500;
         res.json({'msg': 'Error, there is not event list'});
       });
@@ -52,12 +53,12 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
         const resultSjson = resultServ.map((e: any) => e);
         resultUjson['services'] = resultSjson;
         res.send(resultUjson);
-      }).catch(error  => {
+      }).catch(error => {
         res.statusCode = 500;
         res.json({'msg': 'Error, there is not services list'});
       });
     }
-  }).catch(error  => {
+  }).catch(error => {
     res.statusCode = 500;
     res.json({'msg': 'Error, there is not event list'});
   });
@@ -92,7 +93,7 @@ router.put('/profile/:id', async (req: Request, res: Response) => {
   }).then(result => {
     res.statusCode = 200;
     res.json({'msg': 'User updated'});
-  }).catch(error  => {
+  }).catch(error => {
     res.statusCode = 500;
     res.json({'msg': 'Error, user not updated'});
     console.log(error);
@@ -111,17 +112,17 @@ router.post('/service', async (req: Request, res: Response) => {
     });
     return;
   } else {
-      const instance = new Service();
-      instance.post_(req.body);
-      instance.save().then(result => {
-        res.statusCode = 201;
-        res.json({'msg': 'Service created'});
-      }).catch(error  => {
-        res.statusCode = 500;
-        console.log(error);
-        res.json({'msg': 'Service was not created'});
-      });
-    }
+    const serviceInstance = new Service();
+    serviceInstance.post_(req.body);
+    serviceInstance.save().then(result => {
+      res.statusCode = 201;
+      res.json({'msg': 'Service created'});
+    }).catch(error => {
+      res.statusCode = 500;
+      console.log(error);
+      res.json({'msg': 'Service was not created'});
+    });
+  }
 });
 
 export const UserController: Router = router;

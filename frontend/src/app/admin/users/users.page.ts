@@ -5,6 +5,8 @@ import {AuthService} from '../../services/auth.service';
 import {AlertService} from '../../services/alert.service';
 import {AdminService} from '../../services/admin.service';
 import {User} from '../../models/user.model';
+import {appConstants} from '../../constants/app.constants';
+
 
 @Component({
   selector: 'app-users',
@@ -33,7 +35,7 @@ export class UsersPage implements OnInit {
     this.loadedAU = false;
     this.loadedUU = false;
     this.title = 'User Administration';
-    this.titleService.setTitle(this.title + ' | Event-App');
+    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
   }
 
   nameSort(a, b) {

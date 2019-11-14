@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 
+import {appConstants} from '../../constants/app.constants';
+
 
 @Component({
   selector: 'app-page-not-found',
@@ -17,7 +19,7 @@ export class PageNotFoundPage implements OnInit {
 
   ngOnInit() {
     this.title = 'Page Not Found';
-    this.titleService.setTitle(this.title + ' | Event-App');
+    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
 
   }
 

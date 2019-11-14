@@ -9,6 +9,8 @@ import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
 import {ValidationMessages} from '../../models/validation-messages.model';
 import {User} from '../../models/user.model';
+import {appConstants} from '../../constants/app.constants';
+
 
 @Component({
   selector: 'app-login',
@@ -36,7 +38,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.title = 'Login';
-    this.titleService.setTitle(this.title + ' | Event-App');
+    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
 
     this.route.queryParams.subscribe(params => this.returnUrl = params.returnUrl || '/dashboard');
 

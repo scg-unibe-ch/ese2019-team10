@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
+import {appConstants} from '../../constants/app.constants';
+
 @Component({
   selector: 'app-about',
   templateUrl: './about.page.html',
@@ -15,7 +17,7 @@ export class AboutPage implements OnInit {
 
   ngOnInit() {
     this.title = 'About';
-    this.titleService.setTitle (this.title + ' | Event-App');
+    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
   }
 
 }

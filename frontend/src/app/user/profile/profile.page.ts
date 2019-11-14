@@ -9,6 +9,8 @@ import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
 import {User} from '../../models/user.model';
 import {Observable} from 'rxjs';
+import {appConstants} from '../../constants/app.constants';
+
 
 // import {Service} from '../../models/service.model';
 
@@ -56,7 +58,7 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this.title = 'Profile';
-    this.titleService.setTitle(this.title + ' | Event-App');
+    this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
     this.currentTime = new Date();
     this.day = String(this.currentTime.getDate()).padStart(2, '0');
     this.month = String(this.currentTime.getMonth() + 1).padStart(2, '0');
@@ -90,7 +92,7 @@ export class ProfilePage implements OnInit {
       this.user = user;
       console.log('this.user: ' + userId);
       console.log(this.user);
-      this.titleService.setTitle(this.user.firstName + '\'s ' + this.title + ' | Event-App');
+      this.titleService.setTitle(this.user.firstName + '\'s ' + this.title + appConstants.APPENDED_TITLE);
 
       /*      this.profileForm.patchValue({
               email: this.user.email,

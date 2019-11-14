@@ -4,6 +4,7 @@ import {Title} from '@angular/platform-browser';
 import {AuthService} from '../../services/auth.service';
 import {AdminService} from '../../services/admin.service';
 import {Messages} from '../../models/messages.model';
+import {appConstants} from '../../constants/app.constants';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class DashboardPage implements OnInit {
 
   ngOnInit() {
     this.title = 'Dashboard';
-    this.titleService.setTitle(this.title + ' | Event-App');
+    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
   }
 
   ionViewWillEnter() {
