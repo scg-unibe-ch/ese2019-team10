@@ -21,12 +21,8 @@
                 </ion-label>
               </ion-item-divider>
 
-              <ion-item>
-                <ion-label>I want to provide a service</ion-label>
-                <ion-checkbox name="isServiceProvider" formControlName="isServiceProvider"></ion-checkbox>
-              </ion-item>
 
-              <ion-item-group *ngIf="serviceForm.value.isServiceProvider" formArrayName="services">
+              <ion-item-group  formArrayName="services">
 
                 <ion-list *ngFor="let service of serviceGroup.controls; index as ix" inset>
 
@@ -69,31 +65,30 @@
 
                     <ion-button (click)="deleteService(ix)" slot="end" class="ion-margin-top">
                       <ion-icon slot="start" name="close"></ion-icon>
-                      Delete this service
+                      Delete Service
                     </ion-button>
 
+                    <div class="ion-text-end">
+                    <ion-button class="submit-btn"  type="submit" [disabled]="!serviceForm.valid">
+                      <ion-icon slot="start" name="save"></ion-icon>
+                      Save Service
+                    </ion-button>
+                    </div>
 
                   </ion-item-group>
-
-
                 </ion-list>
 
                 <div class="ion-text-end">
                   <ion-button (click)="addService()" slot="end" class="ion-margin-top">
                     <ion-icon slot="start" name="add"></ion-icon>
-                    Create a New Service
+                    Add Service
                   </ion-button>
                 </div>
 
               </ion-item-group>
 
 
-              <ion-row class="ion-margin-top">
-                <ion-button class="submit-btn" expand="full" type="submit" [disabled]="!serviceForm.valid">
-                  <ion-icon slot="start" name="person-add"></ion-icon>
-                  Save your services
-                </ion-button>
-              </ion-row>
+
 
             </ion-list>
           </ion-col>
