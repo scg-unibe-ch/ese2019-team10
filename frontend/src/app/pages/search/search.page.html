@@ -1,0 +1,36 @@
+<ion-header>
+  <app-header [title]="title">
+  </app-header>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card>
+
+    <div class="input-outer-padding">
+      <div class="input-inner-padding">
+        <ion-searchbar #mainSearch id="search-field" class="input-field ion-no-padding ion-no-margin"
+                       placeholder="Search..." autocomplete="on" color="dark" inputmode="search"
+                       type="search"
+                       showCancelButton="focus" (keyup.enter)="search(mainSearch.value)" animated>
+        </ion-searchbar>
+      </div>
+      <ion-button class="search-confirm ion-no-margin" id="search-button" color="secondary"
+                  (click)="search(mainSearch.value)">
+        <ion-icon name="search" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+
+
+    <ion-card-content class="ion-margin-top">
+      <ion-text color="secondary">
+        <h1 id="results"></h1>
+      </ion-text>
+
+    </ion-card-content>
+
+  </ion-card>
+
+
+</ion-content>

@@ -120,6 +120,11 @@ export class AppComponent implements OnInit {
               url: '/profile',
               icon: 'person'
             },
+            {
+              title: 'Search',
+              url: '/search',
+              icon: 'search'
+            },
           ];
       } else {
         this.loggedIn = false;

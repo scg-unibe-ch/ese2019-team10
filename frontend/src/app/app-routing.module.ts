@@ -12,6 +12,7 @@ const routes: Routes = [
   {path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule'},
   {path: 'registered', loadChildren: './pages/registered/registered.module#RegisteredPageModule'},
   {path: 'terms', loadChildren: './pages/terms/terms.module#TermsPageModule'},
+  { path: 'search', loadChildren: './pages/search/search.module#SearchPageModule' },
   {
     path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule',
     canActivate: [AuthGuardService]
