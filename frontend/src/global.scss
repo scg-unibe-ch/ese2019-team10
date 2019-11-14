@@ -25,6 +25,15 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@import url('https://fonts.googleapis.com/css?family=Merriweather|Merriweather+Sans&display=swap');
+
+* {
+  font-family: 'Merriweather Sans', 'Roboto', sans-serif;
+}
+
+ion-text {
+  font-family: 'Merriweather', serif;
+}
 
 .button-icon {
   margin-right: 9px;
