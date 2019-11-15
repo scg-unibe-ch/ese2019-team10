@@ -166,12 +166,20 @@ export class AuthService {
   }
 
 
-  showAlert(msg) {
+  search(term) {
+    return this.http.get(this.url + 'search', term).pipe(
+      // map((users: any[]) => users.map((user) => new User().deserialize(user)))
+    );
+  }
+
+
+/*  showAlert(msg) {
     const alert = this.alertController.create({
       message: msg,
       header: 'Error',
       buttons: ['OK']
     });
     alert.then(a => a.present());
-  }
+  }*/
+
 }
