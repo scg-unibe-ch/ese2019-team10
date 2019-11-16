@@ -41,6 +41,7 @@ export class ServicesPage implements OnInit {
   private savedServices: FormGroup;
   private showNewServiceForm: boolean;
   private newServiceForm: FormGroup;
+  private savedServiceForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -82,6 +83,16 @@ export class ServicesPage implements OnInit {
     });
 
     this.newServiceForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      category: ['', Validators.required],
+      description: ['', Validators.required],
+      price: ['', Validators.required],
+      place: ['', Validators.required],
+      availability: ['', Validators.required],
+      quantity: ['', Validators.required],
+    });
+
+    this.savedServiceForm = this.formBuilder.group({
       name: ['', Validators.required],
       category: ['', Validators.required],
       description: ['', Validators.required],

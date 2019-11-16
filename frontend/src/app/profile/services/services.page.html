@@ -33,7 +33,7 @@
           </ion-button>
         </ng-template>
 
-        <ion-item-group *ngIf=service.show>
+        <ion-item-group [formGroup]="savedServiceForm" *ngIf=service.show>
           <div class="row">
             <ion-item>
               <ion-label position="floating">Name</ion-label>
@@ -73,7 +73,7 @@
           </ion-button>
 
           <div class="ion-text-end">
-            <ion-button class="submit-btn" type="submit" [disabled]="!savedServices.valid">
+            <ion-button class="submit-btn" type="submit" [disabled]="!savedServiceForm.valid">
               <ion-icon slot="start" name="save"></ion-icon>
               Save Service
             </ion-button>
