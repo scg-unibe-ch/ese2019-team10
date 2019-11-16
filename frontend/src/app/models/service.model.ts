@@ -9,6 +9,7 @@ export class Service implements Deserializable {
   public availability: string;
   public place: string;
   public quantity: string;
+  show: boolean;
 
   deserialize(input: any): this {
     Object.assign(this, input);

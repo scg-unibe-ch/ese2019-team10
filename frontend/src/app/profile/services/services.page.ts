@@ -1,10 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Validators, FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
 import {Router, NavigationEnd} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {tap} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
-
 
 import {PasswordValidator} from '../../validators/password.validator';
 import {AuthService} from '../../services/auth.service';
@@ -37,6 +36,11 @@ export class ServicesPage implements OnInit {
   public events: Event[];
   public serviceList: FormArray;
   public eventList: FormArray;
+  public loadedServices: boolean;
+  data;
+  private savedServices: FormGroup;
+  private showNewServiceForm: boolean;
+  private newServiceForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,9 +51,10 @@ export class ServicesPage implements OnInit {
   ) {
   }
 
+
   ngOnInit() {
     this.title = 'Services';
-    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
+    this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
 
     this.currentTime = new Date();
     this.day = String(this.currentTime.getDate()).padStart(2, '0');
@@ -57,7 +62,14 @@ export class ServicesPage implements OnInit {
     this.year = this.currentTime.getFullYear();
     this.services = [];
     this.user = new User().deserialize({});
+    this.data = [];
 
+    this.loadedServices = false;
+    this.showNewServiceForm = false;
+
+    this.savedServices = this.formBuilder.group({
+      services: this.formBuilder.array([this.createService()]),
+    });
 
     this.serviceForm = this.formBuilder.group({
 
@@ -69,15 +81,51 @@ export class ServicesPage implements OnInit {
 
     });
 
-    this.serviceList = this.serviceForm.get('services') as FormArray;
-    this.serviceList.removeAt(0);
+    this.newServiceForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      category: ['', Validators.required],
+      description: ['', Validators.required],
+      price: ['', Validators.required],
+      place: ['', Validators.required],
+      availability: ['', Validators.required],
+      quantity: ['', Validators.required],
+    });
 
+    this.serviceList = this.serviceForm.get('services') as FormArray;
+    this.serviceList = this.savedServices.get('services') as FormArray;
+
+    // this.serviceList.removeAt(0);
 
 
   }
 
   ionViewWillEnter() {
-    this.loadUser();
+    this.loadServices();
+    this.data = [
+      {
+        category: 'food',
+        name: 'appetisers',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        price: '250CHF',
+        availability: 'Saturday and Sunday, from 8am to 12pm',
+        place: 'Zurich',
+        quantity: '5 plates of appetisers',
+        id: 3,
+        show: false,
+      },
+      {
+        category: 'food',
+        name: 'assorted cheese',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        price: '250CHF',
+        availability: 'Saturday and Sunday, from 8am to 12pm',
+        place: 'Zurich',
+        quantity: '5 plates of appetisers',
+        id: 66,
+        show: false,
+      }
+    ];
+    this.savedServices.patchValue(this.data);
 
   }
 
@@ -95,9 +143,37 @@ export class ServicesPage implements OnInit {
       place: ['', Validators.required],
       availability: ['', Validators.required],
       quantity: ['', Validators.required],
+      show: [false],
     });
   }
 
+  public addNewService() {
+    this.showNewServiceForm = true;
+  }
+
+  public deleteNewService(): void {
+    this.showNewServiceForm = false;
+    this.newServiceForm.reset();
+  }
+
+  private prepareNewServiceSave(): Service {
+    const form = this.newServiceForm.value;
+    return new Service().deserialize(form);
+  }
+
+
+  saveNewService() {
+    const newService = this.prepareNewServiceSave();
+    console.log(newService);
+
+    this.authService.saveNewService(newService).subscribe(
+      (data: any) => {
+        console.log(data.msg);
+
+        this.alertService.presentToast(data.msg).then();
+      },
+    );
+  }
 
 
   public addService() {
@@ -112,18 +188,17 @@ export class ServicesPage implements OnInit {
   }
 
 
-
-  public loadUser() {
-    this.authService.loadProfile().subscribe(user => {
-      this.user = user;
-      console.log('this.user');
-      console.log(this.user);
+  public loadServices() {
+    this.authService.loadServices().subscribe(services => {
+      this.services = services;
+      console.log(this.services);
+      this.loadedServices = true;
 
       /*      this.serviceForm.patchValue({
               email: this.user.email,
             });*/
 
-      this.serviceForm.patchValue(this.user);
+      // this.serviceForm.patchValue(this.user);
 
       /*      Object.keys(this.user).forEach(k => {
               const control = this.serviceForm.get(k);
@@ -135,30 +210,34 @@ export class ServicesPage implements OnInit {
     });
   }
 
-  private prepareProfileSave(): User {
-    const form = this.serviceForm.value;
+  public showService(index: number): void {
+    // this.services.splice(index, 1);
+    this.data[index].show = true;
+  }
 
-    return new User().deserialize(form);
+  public hideService(index: number): void {
+    // this.services.splice(index, 1);
+    this.data[index].show = false;
+  }
+
+
+
+  private prepareServiceSave(): Service {
+    const form = this.newServiceForm.value;
+    return new Service().deserialize(form);
   }
 
   onSubmit() {
-    const saveUser = this.prepareProfileSave();
-    console.log(saveUser);
+    const saveService = this.prepareServiceSave();
+    console.log(saveService);
 
-    this.authService.saveProfile(saveUser).subscribe(
+    this.authService.saveProfile(saveService).subscribe(
       (data: any) => {
-        console.log(data.msg);
-
-        this.alertService.presentToast(data.msg).then(r => {
-          console.log(r);
-        }, err => {
-          console.log(err);
-        });
-      },
-      error => {
-        console.log(error);
-      },
-      () => {
+        console.log(data);
+        this.alertService.presentToast(data.msg).then();
+/*        if (data.status === 201) {
+          this.ionViewWillEnter();
+        }*/
       }
     );
   }
