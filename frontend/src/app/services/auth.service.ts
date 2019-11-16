@@ -10,6 +10,7 @@ import {environment} from '../../environments/environment';
 import {User} from '../models/user.model';
 import {Router} from '@angular/router';
 import {AlertService} from './alert.service';
+import {Service} from '../models/service.model';
 
 const TOKEN_KEY = 'access_token';
 const ID_KEY = 'user_id';
@@ -165,6 +166,60 @@ export class AuthService {
     );
   }
 
+  getUserProfile(): Observable<User> {
+    return this.http.get<User>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
+      map(data => new User().deserialize(data))
+    );
+  }
+
+
+  loadServices(): Observable<void> {
+    return this.http.get<Array<Service>>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
+      map(data => console.log(data))
+    );
+  }
+
+  saveService() {
+    return this.http.put(this.url + 'user/profile/' + this.id, httpOptions).pipe(
+      map(data => console.log(data))
+    );
+  }
+
+  saveNewService() {
+    return this.http.post(this.url + 'user/profile/service' + this.id, httpOptions).pipe(
+      map(data => console.log(data))
+    );
+  }
+
+  deleteService(): Observable<void> {
+    return this.http.delete(this.url + 'user/profile/' + this.id, httpOptions).pipe(
+      map(data => console.log(data))
+    );
+  }
+
+  loadEvents(): Observable<void> {
+    return this.http.get<Array<Service>>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
+      map(data => console.log(data))
+    );
+  }
+
+  saveEvent() {
+    return this.http.put(this.url + 'user/profile/' + this.id, httpOptions).pipe(
+      map(data => console.log(data))
+    );
+  }
+
+  saveNewEvent() {
+    return this.http.post(this.url + 'user/profile/service' + this.id, httpOptions).pipe(
+      map(data => console.log(data))
+    );
+  }
+
+  deleteEvent(): Observable<void> {
+    return this.http.delete(this.url + 'user/profile/' + this.id, httpOptions).pipe(
+      map(data => console.log(data))
+    );
+  }
 
   search(term) {
     return this.http.get(this.url + 'search', term).pipe(
@@ -173,13 +228,13 @@ export class AuthService {
   }
 
 
-/*  showAlert(msg) {
-    const alert = this.alertController.create({
-      message: msg,
-      header: 'Error',
-      buttons: ['OK']
-    });
-    alert.then(a => a.present());
-  }*/
+  /*  showAlert(msg) {
+      const alert = this.alertController.create({
+        message: msg,
+        header: 'Error',
+        buttons: ['OK']
+      });
+      alert.then(a => a.present());
+    }*/
 
 }
