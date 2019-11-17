@@ -244,7 +244,7 @@
                 <ion-checkbox name="isServiceProvider" formControlName="isServiceProvider"></ion-checkbox>
               </ion-item>
 
-              <ion-item-group *ngIf="profileForm.value.isServiceProvider" formArrayName="services">
+              <ion-item-group *ngIf="profileForm.value.isServiceProvider">
 
 <!--                <ion-list>
                   <ion-item *ngFor="let service of serviceGroup.controls; index as ix">
@@ -286,7 +286,7 @@
                 <ion-checkbox name="isEventManager" formControlName="isEventManager"></ion-checkbox>
               </ion-item>
 
-              <ion-item-group *ngIf="profileForm.value.isEventManager" formArrayName="events">
+              <ion-item-group *ngIf="profileForm.value.isEventManager">
 
                 <!--<ion-list>
                   <ion-item *ngFor="let event of eventGroup.controls; index as ix">
@@ -324,7 +324,7 @@
 
               <ion-row class="ion-margin-top">
                 <ion-button class="submit-btn" expand="full" type="submit" [disabled]="!profileForm.valid">
-                  <ion-icon slot="start" name="person-add"></ion-icon>
+                  <ion-icon slot="start" name="save"></ion-icon>
                   Save your profile
                 </ion-button>
               </ion-row>
