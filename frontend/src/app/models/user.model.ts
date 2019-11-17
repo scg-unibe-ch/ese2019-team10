@@ -1,4 +1,7 @@
 import {Deserializable} from './deserializable.model';
+import {Service} from './service.model';
+import {Event} from './event.model';
+
 
 export class User implements Deserializable {
   public email: string;
@@ -16,6 +19,9 @@ export class User implements Deserializable {
   public isAdmin: boolean;
   public isServiceProvider: boolean;
   public isEventManager: boolean;
+  public services: Service[];
+  public events: Event[];
+
 
   deserialize(input: any): this {
     Object.assign(this, input);

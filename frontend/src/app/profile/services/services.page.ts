@@ -32,7 +32,7 @@ export class ServicesPage implements OnInit {
   public currentTime = null;
   public validationMessages = ValidationMessages;
   public user: User;
-  public services: Service[];
+  public services: any;
   public events: Event[];
   public serviceList: FormArray;
   public eventList: FormArray;
@@ -42,6 +42,7 @@ export class ServicesPage implements OnInit {
   private showNewServiceForm: boolean;
   private newServiceForm: FormGroup;
   private savedServicesForm: FormGroup;
+  helperArray: Array<boolean>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,7 +50,7 @@ export class ServicesPage implements OnInit {
     private authService: AuthService,
     private alertService: AlertService,
     private titleService: Title,
-    private ref: ChangeDetectorRef,
+    // private ref: ChangeDetectorRef,
   ) {
   }
 
@@ -57,32 +58,73 @@ export class ServicesPage implements OnInit {
   ngOnInit() {
     this.title = 'Services';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
+    this.initialize();
+    /* this.currentTime = new Date();
+     this.day = String(this.currentTime.getDate()).padStart(2, '0');
+     this.month = String(this.currentTime.getMonth() + 1).padStart(2, '0');
+     this.year = this.currentTime.getFullYear();*/
+    /*    this.serviceForm = this.formBuilder.group({
+          isServiceProvider: new FormControl(false),
+          serviceName: new FormControl(''),
+          serviceCategory: new FormControl(''),
+          services: this.formBuilder.array([this.createService()]),
+        });*/
+    /*    this.savedServicesForm = this.formBuilder.group({
+          name: ['', Validators.required],
+          category: ['', Validators.required],
+          description: ['', Validators.required],
+          price: ['', Validators.required],
+          place: ['', Validators.required],
+          availability: ['', Validators.required],
+          quantity: ['', Validators.required],
+        });*/
+    // this.serviceList = this.serviceForm.get('services') as FormArray;
+    // this.serviceList.removeAt(0);
+  }
 
-    this.currentTime = new Date();
-    this.day = String(this.currentTime.getDate()).padStart(2, '0');
-    this.month = String(this.currentTime.getMonth() + 1).padStart(2, '0');
-    this.year = this.currentTime.getFullYear();
+  ionViewWillEnter() {
+    this.initialize();
+    this.loadServices();
+    /*    this.data = [
+          {
+            category: 'food',
+            name: 'appetisers',
+            description: 'Lorem ipsum dolor sit amet.',
+            price: '250CHF',
+            availability: 'Saturday and Sunday, from 8am to 12pm',
+            place: 'Zurich',
+            quantity: '5 plates of appetisers',
+            id: 3,
+            show: false,
+          },
+          {
+            category: 'food',
+            name: 'assorted cheese',
+            description: 'Lorem ipsum dolor sit amet',
+            price: '250CHF',
+            availability: 'Saturday and Sunday, from 8am to 12pm',
+            place: 'Zurich',
+            quantity: '5 plates of appetisers',
+            id: 66,
+            show: false,
+          }
+        ];
+        for (const service of this.data) {
+          console.log(service);
+          this.addService(service);
+        }
+        this.serviceList.patchValue(this.data);*/
+  }
+
+  initialize() {
     this.services = [];
+    this.helperArray = [];
     this.user = new User().deserialize({});
-    this.data = [];
-
     this.loadedServices = false;
     this.showNewServiceForm = false;
-
     this.savedServices = this.formBuilder.group({
       services: this.formBuilder.array([]),
     });
-
-    this.serviceForm = this.formBuilder.group({
-
-      isServiceProvider: new FormControl(false),
-      serviceName: new FormControl(''),
-      serviceCategory: new FormControl(''),
-
-      services: this.formBuilder.array([this.createService()]),
-
-    });
-
     this.newServiceForm = this.formBuilder.group({
       name: ['', Validators.required],
       category: ['', Validators.required],
@@ -92,59 +134,7 @@ export class ServicesPage implements OnInit {
       availability: ['', Validators.required],
       quantity: ['', Validators.required],
     });
-
-    this.savedServicesForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      category: ['', Validators.required],
-      description: ['', Validators.required],
-      price: ['', Validators.required],
-      place: ['', Validators.required],
-      availability: ['', Validators.required],
-      quantity: ['', Validators.required],
-    });
-
-    // this.serviceList = this.serviceForm.get('services') as FormArray;
     this.serviceList = this.savedServices.get('services') as FormArray;
-
-    // this.serviceList.removeAt(0);
-
-
-  }
-
-  ionViewWillEnter() {
-    this.loadServices();
-    this.data = [
-      {
-        category: 'food',
-        name: 'appetisers',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        price: '250CHF',
-        availability: 'Saturday and Sunday, from 8am to 12pm',
-        place: 'Zurich',
-        quantity: '5 plates of appetisers',
-        id: 3,
-        show: false,
-      },
-      {
-        category: 'food',
-        name: 'assorted cheese',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        price: '250CHF',
-        availability: 'Saturday and Sunday, from 8am to 12pm',
-        place: 'Zurich',
-        quantity: '5 plates of appetisers',
-        id: 66,
-        show: false,
-      }
-    ];
-
-    for (const service of this.data) {
-      console.log(service);
-      this.addService(service);
-    }
-
-    this.serviceList.patchValue(this.data);
-
   }
 
   getProperty(index, property) {
@@ -155,10 +145,14 @@ export class ServicesPage implements OnInit {
     return (this.savedServices.get('services') as FormArray).controls;
   }
 
+  getValidity(index) {
+    return (this.savedServices.get('services') as FormArray).controls[index].valid;
+  }
+
 
   createService(): FormGroup {
     return this.formBuilder.group({
-      id: ['', Validators.required],
+      id: [''],
       name: ['', Validators.required],
       category: ['', Validators.required],
       description: ['', Validators.required],
@@ -166,7 +160,6 @@ export class ServicesPage implements OnInit {
       place: ['', Validators.required],
       availability: ['', Validators.required],
       quantity: ['', Validators.required],
-      show: [false],
     });
   }
 
@@ -191,18 +184,21 @@ export class ServicesPage implements OnInit {
 
     this.authService.saveNewService(newService).subscribe(
       (data: any) => {
-        console.log(data.msg);
-
+        if (data.msg === 'Service created') {
+          this.deleteNewService();
+          this.initialize();
+          this.loadServices();
+        }
         this.alertService.presentToast(data.msg).then();
       },
     );
   }
 
 
-  public addService(service) {
+  public addService() {
     // this.services.push({name: this.serviceForm.value.serviceName, category: this.serviceForm.value.serviceCategory});
     this.serviceList.push(this.createService());
-    console.log(this.savedServices.value);
+    // console.log(this.savedServices.value);
   }
 
   public deleteService(index: number): void {
@@ -210,14 +206,19 @@ export class ServicesPage implements OnInit {
     this.serviceList.removeAt(index);
     const id = this.getProperty(index, 'id');
     this.authService.deleteService(id).subscribe(() => {
-
     });
   }
 
 
   public loadServices() {
-    this.authService.loadServices().subscribe(services => {
-      this.services = services;
+    this.authService.loadServices().subscribe(user => {
+      this.services = user.services;
+      for (const service of this.services) {
+        // console.log(service);
+        this.addService();
+        this.helperArray.push(false);
+      }
+      this.serviceList.patchValue(this.services);
       console.log(this.services);
       this.loadedServices = true;
 
@@ -239,36 +240,32 @@ export class ServicesPage implements OnInit {
 
   public showService(index: number): void {
     // this.services.splice(index, 1);
-    this.data[index].show = true;
-    this.getControls()[index].value.show = true;
-    this.ref.detectChanges();
+    this.helperArray[index] = true;
+    // this.ref.detectChanges();
   }
 
   public hideService(index: number): void {
     // this.services.splice(index, 1);
-    this.data[index].show = false;
-    this.getControls()[index].value.show = false;
-    this.ref.detectChanges();
+    this.helperArray[index] = false;
+    // this.ref.detectChanges();
   }
 
 
-  private prepareServiceSave(): Service {
-    const form = this.newServiceForm.value;
+  private prepareServiceSave(index): Service {
+    const form = this.savedServices.value.services[index];
     return new Service().deserialize(form);
   }
 
-  onSubmit() {
-    const saveService = this.prepareServiceSave();
+  saveService(index) {
+    const saveService = this.prepareServiceSave(index);
     console.log(saveService);
 
-    this.authService.saveProfile(saveService).subscribe(
+    this.authService.saveService(saveService).subscribe(
       (data: any) => {
-        console.log(data);
+        console.log(data.msg);
+
         this.alertService.presentToast(data.msg).then();
-        /*        if (data.status === 201) {
-                  this.ionViewWillEnter();
-                }*/
-      }
+      },
     );
   }
 

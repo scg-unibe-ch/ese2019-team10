@@ -173,16 +173,20 @@ export class AuthService {
   }
 
 
-  loadServices(): Observable<Service[]> {
-    return this.http.get<Service[]>(this.url + 'user/profile/get' + this.id, httpOptions).pipe(
-      map((services: any[]) => services.map((service) => new Service().deserialize(service)))
-    );
+  loadServices(): Observable<User> {
+    /*    return this.http.get<Service[]>(this.url + 'user/profile/get' + this.id, httpOptions).pipe(
+          map((services: any[]) => services.map((service) => new Service().deserialize(service)))
+        );*/
+    return this.loadProfile();
   }
 
-  saveService() {
-    return this.http.put(this.url + 'user/profile/' + this.id, httpOptions).pipe(
+  saveService(service) {
+    service.userId = this.id;
+    console.log(service);
+    return this.http.put(this.url + 'user/service/', service, httpOptions);
+/*      .pipe(
       map(data => console.log(data))
-    );
+    );*/
   }
 
   saveNewService(service) {
@@ -195,7 +199,7 @@ export class AuthService {
   }
 
   deleteService(id): Observable<void> {
-    return this.http.delete(this.url + 'user/profile/' + id, httpOptions).pipe(
+    return this.http.delete(this.url + 'user/service/' + id, httpOptions).pipe(
       map(data => console.log(data))
     );
   }

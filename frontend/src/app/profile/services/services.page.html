@@ -14,14 +14,14 @@
       </ion-label>
     </ion-item-divider>
 
-    <form class="services-form" [formGroup]="savedServices" (ngSubmit)="onSubmit()">
+    <form class="services-form" [formGroup]="savedServices">
 
       <ion-item-group formArrayName="services">
 
 
-        <ion-list *ngFor="let service of getControls(); index as ix" inset>
+        <ion-list *ngFor="let service of getControls(); index as ix" inset >
 
-          <ion-button *ngIf="!getProperty(ix, 'show'); else hideThisService" class="submit-btn ion-no-margin"
+          <ion-button *ngIf="!this.helperArray[ix]; else hideThisService" class="submit-btn ion-no-margin"
                       expand="full"
                       type="button"
                       (click)="showService(ix)" color="dark">
@@ -36,7 +36,7 @@
             </ion-button>
           </ng-template>
 
-          <ion-item-group [formGroupName]="ix" [hidden]="!getProperty(ix, 'show')">
+          <ion-item-group [formGroupName]="ix" [hidden]="!this.helperArray[ix]" >
             <div class="row">
 
               <ion-item>
@@ -77,7 +77,7 @@
             </ion-button>
 
             <div class="ion-text-end">
-              <ion-button class="submit-btn" type="submit" [disabled]="!savedServices.valid">
+              <ion-button (click)="saveService(ix)"  class="submit-btn" type="submit" [disabled]="!getValidity(ix)">
                 <ion-icon slot="start" name="save"></ion-icon>
                 Save Service
               </ion-button>
