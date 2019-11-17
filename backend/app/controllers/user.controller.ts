@@ -3,13 +3,14 @@ import {User} from '../models/user.model';
 import {Event} from '../models/event.model';
 import {Role} from '../models/role.model';
 import {Service, Category} from '../models/service.model';
+
 const router: Router = Router();
 import {sequelize} from '../server';
 
 // Get user profile
 router.get('/profile/:id', async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, undefined);
-  if (res.locals.jwtPayload === null || ( !res.locals.jwtPayload.roles.includes(1) && res.locals.jwtPayload.id !== id )) {
+  if (res.locals.jwtPayload === null || (!res.locals.jwtPayload.roles.includes(1) && res.locals.jwtPayload.id !== id)) {
     res.statusCode = 401;
     res.json({'msg': 'You are not allowed to do this'});
     return;
@@ -33,37 +34,37 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
       attributes: ['id', 'name', 'description', 'date', 'place'],
       as: 'events',
     },
-    {
-      model: Service,
-      attributes: ['id', 'name', 'description', 'price', 'available','quantity',
-        'availability', 'place'],
-      as: 'services',
-      include: [{
-        model: Category,
-        required: false
-      }],
-    },
-    {
-      model: Role,
-      attributes: ['id', 'name'],
-      as: 'role',
-    }
+      {
+        model: Service,
+        attributes: ['id', 'name', 'description', 'price', 'available', 'quantity',
+          'availability', 'place'],
+        as: 'services',
+        include: [{
+          model: Category,
+          required: false
+        }],
+      },
+      {
+        model: Role,
+        attributes: ['id', 'name'],
+        as: 'role',
+      }
     ]
   }).then(result => {
     res.statusCode = 200;
-    var newResult = JSON.parse(JSON.stringify(result));
+    const newResult = JSON.parse(JSON.stringify(result));
     res.json(addRole(newResult));
-  }).catch(error  => {
+  }).catch(error => {
     res.statusCode = 500;
     res.json({'msg': 'Error with user profile'});
   });
 });
 
-function addRole(newUser:any){
-  let roleArray = newUser[0].role;
+function addRole(newUser: any) {
+  const roleArray = newUser[0].role;
 
-  for (let r of roleArray){
-    switch(r.name){
+  for (const r of roleArray) {
+    switch (r.name) {
       case 'Admin': {
         newUser[0].isAdmin = true;
         break;
@@ -81,6 +82,7 @@ function addRole(newUser:any){
   delete newUser[0].role;
   return newUser;
 }
+
 // Edit user profile
 router.put('/profile/:id', async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, undefined);
@@ -154,17 +156,17 @@ router.post('/event', async (req: Request, res: Response) => {
     });
     return;
   } else {
-      const instance = new Event();
-      instance.post_(req.body);
-      instance.save().then(result => {
-        res.statusCode = 201;
-        res.json({'msg': 'Event created'});
-      }).catch(error  => {
-        res.statusCode = 500;
-        console.log(error);
-        res.json({'msg': 'Event was not created'});
-      });
-    }
+    const eventInstance = new Event();
+    eventInstance.post_(req.body);
+    eventInstance.save().then(result => {
+      res.statusCode = 201;
+      res.json({'msg': 'Event created'});
+    }).catch(error => {
+      res.statusCode = 500;
+      console.log(error);
+      res.json({'msg': 'Event was not created'});
+    });
+  }
 });
 
 export const UserController: Router = router;
