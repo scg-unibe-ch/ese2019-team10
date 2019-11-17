@@ -16,20 +16,31 @@ export class Event extends Model<Event> {
   @Column
   public date!: string;
 
+  @Column
+  public place!: string;
+
   @BelongsToMany(() => Service, () => EventService)
   public service!: Service[];
 
   @BelongsTo(() => User)
-  public userId!: User[];
+  public user!: User[];
 
   @ForeignKey(() => User)
   @Column
-  public uId!: number;
+  public userId!: number;
 
-  @BelongsTo(() => City)
+  /*@BelongsTo(() => City)
   public cityId!: City;
 
   @ForeignKey(() => City)
   @Column
-  public cId!: number;
+  public cId!: number;*/
+
+  post_(event_data: any): void {
+    this.name = event_data['name'];
+    this.description = event_data['description'];
+    this.date = event_data['date'];
+    this.place = event_data['place'];
+    this.userId = event_data['userId'];
+  }
 }

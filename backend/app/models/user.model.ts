@@ -15,7 +15,7 @@ export class User extends Model<User> {
   public lastName!: string;
 
   @Column
-  public address!: string;
+  public street!: string;
 
   /* @HasOne(() => City, 'id')
   public cityId!: number;*/
@@ -28,6 +28,9 @@ export class User extends Model<User> {
 
   @Column
   public email!: string;
+
+  @Column
+  public phone!: string;
 
   @Column
   public birthday!: string;
@@ -47,10 +50,10 @@ export class User extends Model<User> {
   @BelongsToMany(() => Role, () => RoleUser)
   public role!: Role[];
 
-  @HasMany(() => Service, 'id')
+  @HasMany(() => Service)
   public services!: Service[];
 
-  @HasMany(() => Event, 'id')
+  @HasMany(() => Event)
   public events!: Event[];
 
   post_(user_data: any): void {
@@ -59,7 +62,8 @@ export class User extends Model<User> {
     this.firstName = user_data['firstName'];
     this.lastName = user_data['lastName'];
     this.email = user_data['email'];
-    this.address = user_data['street'];
+    this.phone = user_data['phone'];
+    this.street = user_data['street'];
     this.birthday = user_data['birthday'];
     this.gender = user_data['gender'];
     this.city = user_data['city'];
