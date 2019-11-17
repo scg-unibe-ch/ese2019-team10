@@ -16,13 +16,35 @@
     </ion-row>
 
 
-    <ion-row *ngIf="this.userId" class="ion-margin-top">
+    <ion-row *ngIf="this.user.id" class="ion-margin-top">
       <ion-col>
-        <ion-button type="button" [routerLink]="['/user/profile/', this.userId]" color="dark" fill="outline"
+        <ion-button type="button" [routerLink]="['/user/profile/', this.user.id]" color="dark" fill="outline"
                     class="profile"
                     expand="block">
           <ion-icon slot="start" name="person" class="button-icon"></ion-icon>
           View Profile
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="true" class="ion-margin-top">
+      <ion-col>
+        <ion-button type="button" [routerLink]="['/profile/', 'services']" color="dark" fill="outline"
+                    class="profile"
+                    expand="block">
+          <ion-icon slot="start" name="person" class="button-icon"></ion-icon>
+          Manage Services
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="true" class="ion-margin-top">
+      <ion-col>
+        <ion-button type="button" [routerLink]="['/profile/', 'events']" color="dark" fill="outline"
+                    class="profile"
+                    expand="block">
+          <ion-icon slot="start" name="person" class="button-icon"></ion-icon>
+          Manage Events
         </ion-button>
       </ion-col>
     </ion-row>
@@ -37,7 +59,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="isAdmin()" class="ion-margin-top">
+    <ion-row *ngIf="this.user.isAdmin" class="ion-margin-top">
       <ion-col>
         <ion-button type="button" [routerLink]="['/admin/users']" color="dark" fill="outline" class="profile"
                     expand="block">
