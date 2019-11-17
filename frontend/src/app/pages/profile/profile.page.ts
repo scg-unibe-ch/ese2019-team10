@@ -132,20 +132,21 @@ export class ProfilePage implements OnInit {
       ])),
       matchingPasswords: this.matchingPasswordsGroup,
       isServiceProvider: new FormControl(false),
-      serviceName: new FormControl(''),
-      serviceCategory: new FormControl(''),
       isEventManager: new FormControl(false),
+
+/*      serviceName: new FormControl(''),
+      serviceCategory: new FormControl(''),
       eventName: new FormControl(''),
       eventCategory: new FormControl(''),
       services: this.formBuilder.array([this.createService()]),
-      events: this.formBuilder.array([this.createEvent()]),
+      events: this.formBuilder.array([this.createEvent()]),*/
 
     });
 
-    this.serviceList = this.profileForm.get('services') as FormArray;
+/*    this.serviceList = this.profileForm.get('services') as FormArray;
     this.serviceList.removeAt(0);
     this.eventList = this.profileForm.get('events') as FormArray;
-    this.eventList.removeAt(0);
+    this.eventList.removeAt(0);*/
 
 
   }
