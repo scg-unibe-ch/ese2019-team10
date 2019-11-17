@@ -10,7 +10,7 @@ export class Category extends Model<Category> {
   public name!: string;
 
   @HasMany(() => Service)
-  public serviceId!: Service[];
+  public services!: Service[];
 
   /**
    * Create new category with given name to the Category table if there is no category with that name yet.
@@ -62,7 +62,7 @@ export class Service extends Model<Service> {
   public event!: Event[];
 
   @BelongsTo(() => Category)
-  public categorie!: Category;
+  public category!: Category;
 
   @ForeignKey(() => Category)
   @Column
