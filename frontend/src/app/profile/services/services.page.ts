@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {Validators, FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
 import {Router, NavigationEnd} from '@angular/router';
 import {Title} from '@angular/platform-browser';
@@ -41,7 +41,7 @@ export class ServicesPage implements OnInit {
   private savedServices: FormGroup;
   private showNewServiceForm: boolean;
   private newServiceForm: FormGroup;
-  private savedServiceForm: FormGroup;
+  private savedServicesForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,6 +49,7 @@ export class ServicesPage implements OnInit {
     private authService: AuthService,
     private alertService: AlertService,
     private titleService: Title,
+    private ref: ChangeDetectorRef,
   ) {
   }
 
@@ -69,7 +70,7 @@ export class ServicesPage implements OnInit {
     this.showNewServiceForm = false;
 
     this.savedServices = this.formBuilder.group({
-      services: this.formBuilder.array([this.createService()]),
+      services: this.formBuilder.array([]),
     });
 
     this.serviceForm = this.formBuilder.group({
@@ -92,7 +93,7 @@ export class ServicesPage implements OnInit {
       quantity: ['', Validators.required],
     });
 
-    this.savedServiceForm = this.formBuilder.group({
+    this.savedServicesForm = this.formBuilder.group({
       name: ['', Validators.required],
       category: ['', Validators.required],
       description: ['', Validators.required],
@@ -102,7 +103,7 @@ export class ServicesPage implements OnInit {
       quantity: ['', Validators.required],
     });
 
-    this.serviceList = this.serviceForm.get('services') as FormArray;
+    // this.serviceList = this.serviceForm.get('services') as FormArray;
     this.serviceList = this.savedServices.get('services') as FormArray;
 
     // this.serviceList.removeAt(0);
@@ -136,17 +137,28 @@ export class ServicesPage implements OnInit {
         show: false,
       }
     ];
-    this.savedServices.patchValue(this.data);
+
+    for (const service of this.data) {
+      console.log(service);
+      this.addService(service);
+    }
+
+    this.serviceList.patchValue(this.data);
 
   }
 
-  get serviceGroup() {
-    return this.serviceForm.get('services') as FormArray;
+  getProperty(index, property) {
+    return this.getControls()[index].value[property];
+  }
+
+  getControls() {
+    return (this.savedServices.get('services') as FormArray).controls;
   }
 
 
   createService(): FormGroup {
     return this.formBuilder.group({
+      id: ['', Validators.required],
       name: ['', Validators.required],
       category: ['', Validators.required],
       description: ['', Validators.required],
@@ -187,15 +199,19 @@ export class ServicesPage implements OnInit {
   }
 
 
-  public addService() {
+  public addService(service) {
     // this.services.push({name: this.serviceForm.value.serviceName, category: this.serviceForm.value.serviceCategory});
     this.serviceList.push(this.createService());
-    console.log(this.serviceForm.value);
+    console.log(this.savedServices.value);
   }
 
   public deleteService(index: number): void {
     // this.services.splice(index, 1);
     this.serviceList.removeAt(index);
+    const id = this.getProperty(index, 'id');
+    this.authService.deleteService(id).subscribe(() => {
+
+    });
   }
 
 
@@ -224,13 +240,16 @@ export class ServicesPage implements OnInit {
   public showService(index: number): void {
     // this.services.splice(index, 1);
     this.data[index].show = true;
+    this.getControls()[index].value.show = true;
+    this.ref.detectChanges();
   }
 
   public hideService(index: number): void {
     // this.services.splice(index, 1);
     this.data[index].show = false;
+    this.getControls()[index].value.show = false;
+    this.ref.detectChanges();
   }
-
 
 
   private prepareServiceSave(): Service {
@@ -246,9 +265,9 @@ export class ServicesPage implements OnInit {
       (data: any) => {
         console.log(data);
         this.alertService.presentToast(data.msg).then();
-/*        if (data.status === 201) {
-          this.ionViewWillEnter();
-        }*/
+        /*        if (data.status === 201) {
+                  this.ionViewWillEnter();
+                }*/
       }
     );
   }

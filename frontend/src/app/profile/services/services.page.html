@@ -14,77 +14,84 @@
       </ion-label>
     </ion-item-divider>
 
+    <form class="services-form" [formGroup]="savedServices" (ngSubmit)="onSubmit()">
 
-    <ion-list *ngFor="let service of data index as ix" inset>
+      <ion-item-group formArrayName="services">
 
-      <form class="services-form" (ngSubmit)="onSubmit()">
 
-        <ion-button *ngIf="!service.show; else hideThisService" class="submit-btn ion-no-margin" expand="full"
-                    type="button"
-                    (click)="showService(ix)" color="dark">
-          <ion-icon slot="start" name="arrow-dropdown"></ion-icon>
-          Show {{service.name}}
-        </ion-button>
-        <ng-template #hideThisService>
-          <ion-button class="submit-btn ion-no-margin" expand="full" type="button" (click)="hideService(ix)"
-                      color="dark">
-            <ion-icon slot="start" name="arrow-dropup"></ion-icon>
-            Hide {{service.name}}
+        <ion-list *ngFor="let service of getControls(); index as ix" inset>
+
+          <ion-button *ngIf="!getProperty(ix, 'show'); else hideThisService" class="submit-btn ion-no-margin"
+                      expand="full"
+                      type="button"
+                      (click)="showService(ix)" color="dark">
+            <ion-icon slot="start" name="arrow-dropdown"></ion-icon>
+            Show {{getProperty(ix, 'name')}}
           </ion-button>
-        </ng-template>
-
-        <ion-item-group [formGroup]="savedServiceForm" *ngIf=service.show>
-          <div class="row">
-            <ion-item>
-              <ion-label position="floating">Name</ion-label>
-              <ion-input type="text" name="name" formControlName="name"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Category</ion-label>
-              <ion-input type="text" name="category" formControlName="category"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Availability</ion-label>
-              <ion-input type="text" name="availability" formControlName="availability"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Place</ion-label>
-              <ion-input type="text" name="place" formControlName="place"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Price</ion-label>
-              <ion-input type="text" name="price" formControlName="price"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Quantity</ion-label>
-              <ion-input type="text" name="quantity" formControlName="quantity"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating">Description</ion-label>
-              <ion-input type="text" name="description" formControlName="description"></ion-input>
-            </ion-item>
-
-          </div>
-
-
-          <ion-button (click)="deleteService(ix)" slot="end" class="ion-margin-top">
-            <ion-icon slot="start" name="close"></ion-icon>
-            Delete Service
-          </ion-button>
-
-          <div class="ion-text-end">
-            <ion-button class="submit-btn" type="submit" [disabled]="!savedServiceForm.valid">
-              <ion-icon slot="start" name="save"></ion-icon>
-              Save Service
+          <ng-template #hideThisService>
+            <ion-button class="submit-btn ion-no-margin" expand="full" type="button" (click)="hideService(ix)"
+                        color="dark">
+              <ion-icon slot="start" name="arrow-dropup"></ion-icon>
+              Hide {{getProperty(ix, 'name')}}
             </ion-button>
-          </div>
+          </ng-template>
+
+          <ion-item-group [formGroupName]="ix" [hidden]="!getProperty(ix, 'show')">
+            <div class="row">
+
+              <ion-item>
+                <ion-label position="floating">Name</ion-label>
+                <ion-input type="text" name="name" formControlName="name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Category</ion-label>
+                <ion-input type="text" name="category" formControlName="category"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Availability</ion-label>
+                <ion-input type="text" name="availability" formControlName="availability"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Place</ion-label>
+                <ion-input type="text" name="place" formControlName="place"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Price</ion-label>
+                <ion-input type="text" name="price" formControlName="price"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Quantity</ion-label>
+                <ion-input type="text" name="quantity" formControlName="quantity"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Description</ion-label>
+                <ion-input type="text" name="description" formControlName="description"></ion-input>
+              </ion-item>
+
+            </div>
 
 
-        </ion-item-group>
+            <ion-button (click)="deleteService(ix)" slot="end" class="ion-margin-top">
+              <ion-icon slot="start" name="close"></ion-icon>
+              Delete Service
+            </ion-button>
 
-      </form>
+            <div class="ion-text-end">
+              <ion-button class="submit-btn" type="submit" [disabled]="!savedServices.valid">
+                <ion-icon slot="start" name="save"></ion-icon>
+                Save Service
+              </ion-button>
+            </div>
 
-    </ion-list>
+          </ion-item-group>
+
+
+        </ion-list>
+
+      </ion-item-group>
+
+    </form>
+
 
   </ion-card>
 
@@ -155,7 +162,7 @@
     </form>
 
 
-    <div *ngIf="!showNewServiceForm" >
+    <div *ngIf="!showNewServiceForm">
       <ion-button (click)="addNewService()" slot="end" class="submit-btn ion-no-margin" expand="full"
                   type="button">
         <ion-icon slot="start" name="add"></ion-icon>
