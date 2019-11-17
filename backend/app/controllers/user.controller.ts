@@ -62,6 +62,9 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
 
 function addRole(newUser: any) {
   const roleArray = newUser[0].role;
+  newUser[0].isAdmin = false;
+  newUser[0].isServiceProvider = false;
+  newUser[0].isEventManager = false;
 
   for (const r of roleArray) {
     switch (r.name) {
