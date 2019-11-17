@@ -7,7 +7,7 @@ export class Role extends Model<Role> {
   @Column
   public name!: string;
 
-  @BelongsToMany( () => User, () => RoleUser, 'id')
+  @BelongsToMany( () => User, () => RoleUser)
   public users!: User[];
 
   /**
