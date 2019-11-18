@@ -28,19 +28,25 @@ export class SearchPage implements OnInit {
   }
 
   search(term) {
+
     document.getElementById('results').textContent = term;
 
-    const searchObject = {
-      searchTerm: term,
-    };
+    if (term.length > 0) {
 
-    console.log(searchObject);
+      const searchObject = {
+        searchTerm: term,
+      };
 
-    this.authService.search(searchObject).subscribe((result: any) => {
-      this.searchResult = result;
-      this.foundResult = true;
-      console.log(result);
-    });
+      console.log(searchObject);
+
+      this.authService.search(searchObject).subscribe((result: any) => {
+        this.searchResult = result;
+        this.foundResult = true;
+        console.log(result);
+      });
+
+    }
+
 
   }
 
