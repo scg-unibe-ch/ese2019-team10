@@ -43,30 +43,99 @@
                 <ion-label position="floating">Name</ion-label>
                 <ion-input type="text" name="name" formControlName="name"></ion-input>
               </ion-item>
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.name">
+                  <div class="error-message"
+                       *ngIf=" getControls()[ix].get('name').hasError(validation.type) && (getControls()[ix].get('name').dirty || getControls()[ix].get('name').touched)">
+                    <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+
               <ion-item>
                 <ion-label position="floating">Category</ion-label>
                 <ion-input type="text" name="category" formControlName="category"></ion-input>
               </ion-item>
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.category">
+                  <div class="error-message"
+                       *ngIf=" getControls()[ix].get('category').hasError(validation.type) && (getControls()[ix].get('category').dirty || getControls()[ix].get('category').touched)">
+                    <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+
               <ion-item>
                 <ion-label position="floating">Availability</ion-label>
                 <ion-input type="text" name="availability" formControlName="availability"></ion-input>
               </ion-item>
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.availability">
+                  <div class="error-message"
+                       *ngIf=" getControls()[ix].get('availability').hasError(validation.type) && (getControls()[ix].get('availability').dirty || getControls()[ix].get('availability').touched)">
+                    <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+
               <ion-item>
                 <ion-label position="floating">Place</ion-label>
                 <ion-input type="text" name="place" formControlName="place"></ion-input>
               </ion-item>
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.place">
+                  <div class="error-message"
+                       *ngIf=" getControls()[ix].get('place').hasError(validation.type) && (getControls()[ix].get('place').dirty || getControls()[ix].get('place').touched)">
+                    <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+
               <ion-item>
                 <ion-label position="floating">Price</ion-label>
                 <ion-input type="text" name="price" formControlName="price"></ion-input>
               </ion-item>
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.price">
+                  <div class="error-message"
+                       *ngIf=" getControls()[ix].get('price').hasError(validation.type) && (getControls()[ix].get('price').dirty || getControls()[ix].get('price').touched)">
+                    <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+
               <ion-item>
                 <ion-label position="floating">Quantity</ion-label>
                 <ion-input type="text" name="quantity" formControlName="quantity"></ion-input>
               </ion-item>
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.quantity">
+                  <div class="error-message"
+                       *ngIf=" getControls()[ix].get('quantity').hasError(validation.type) && (getControls()[ix].get('quantity').dirty || getControls()[ix].get('quantity').touched)">
+                    <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+
               <ion-item>
                 <ion-label position="floating">Description</ion-label>
                 <ion-textarea type="text" name="description" formControlName="description" spellcheck wrap="soft" autoGrow></ion-textarea>
               </ion-item>
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.description">
+                  <div class="error-message"
+                       *ngIf=" getControls()[ix].get('description').hasError(validation.type) && (getControls()[ix].get('description').dirty || getControls()[ix].get('description').touched)">
+                    <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
 
             </div>
 

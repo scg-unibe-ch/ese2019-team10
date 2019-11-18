@@ -12,6 +12,7 @@ import {ValidationMessages} from '../../models/validation-messages.model';
 import {User} from '../../models/user.model';
 import {Service} from '../../models/service.model';
 import {appConstants} from '../../constants/app.constants';
+import {ServiceValidation} from '../../constants/service-validation.constants';
 
 
 @Component({
@@ -31,6 +32,8 @@ export class ServicesPage implements OnInit {
   public year = null;
   public currentTime = null;
   public validationMessages = ValidationMessages;
+  public serviceValidation = ServiceValidation;
+
   public user: User;
   public services: any;
   public events: Event[];
@@ -153,13 +156,34 @@ export class ServicesPage implements OnInit {
   createService(): FormGroup {
     return this.formBuilder.group({
       id: [''],
-      name: ['', Validators.required],
-      category: ['', Validators.required],
-      description: ['', Validators.required],
-      price: ['', Validators.required],
-      place: ['', Validators.required],
-      availability: ['', Validators.required],
-      quantity: ['', Validators.required],
+      name: ['', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])],
+      category: ['', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])],
+      description: ['', Validators.compose([
+        Validators.required,
+        Validators.maxLength(1000)
+      ])],
+      price: ['', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])],
+      place: ['', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])],
+      availability: ['', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])],
+      quantity: ['', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])],
     });
   }
 
