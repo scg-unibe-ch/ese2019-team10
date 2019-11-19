@@ -184,9 +184,9 @@ export class AuthService {
     service.userId = this.id;
     console.log(service);
     return this.http.put(this.url + 'user/service/', service, httpOptions);
-/*      .pipe(
-      map(data => console.log(data))
-    );*/
+    /*      .pipe(
+          map(data => console.log(data))
+        );*/
   }
 
   saveNewService(service) {
@@ -204,26 +204,33 @@ export class AuthService {
     );
   }
 
-  loadEvents(): Observable<void> {
-    return this.http.get<Array<Service>>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
+  loadEvents(): Observable<User> {
+    /*return this.http.get<Array<Service>>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
       map(data => console.log(data))
-    );
+    );*/
+    return this.loadProfile();
   }
 
-  saveEvent() {
-    return this.http.put(this.url + 'user/profile/' + this.id, httpOptions).pipe(
-      map(data => console.log(data))
-    );
+  saveEvent(event) {
+    event.userId = this.id;
+    // console.log(event);
+    return this.http.put(this.url + 'user/event/', event, httpOptions);
+    /*      .pipe(
+          map(data => console.log(data))
+        );*/
   }
 
-  saveNewEvent() {
-    return this.http.post(this.url + 'user/profile/service' + this.id, httpOptions).pipe(
-      map(data => console.log(data))
-    );
+  saveNewEvent(event) {
+    event.userId = this.id;
+    // console.log(event);
+    return this.http.post(this.url + 'user/event', event, httpOptions);
+    /*    .pipe(
+          map(data => console.log(data))
+        );*/
   }
 
-  deleteEvent(): Observable<void> {
-    return this.http.delete(this.url + 'user/profile/' + this.id, httpOptions).pipe(
+  deleteEvent(id): Observable<void> {
+    return this.http.delete(this.url + 'user/event/' + id, httpOptions).pipe(
       map(data => console.log(data))
     );
   }
