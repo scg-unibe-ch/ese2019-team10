@@ -23,6 +23,27 @@
     </div>
 
 
+    <ion-item>
+      <ion-label>Specify a search category</ion-label>
+      <ion-select [(ngModel)]="searchCategory"  value="Category" interface="alert" ok-text="OK" cancel-text="Cancel">
+        <ion-select-option value="everything" selected>Everything</ion-select-option>
+        <ion-select-option value="services">Services</ion-select-option>
+        <ion-select-option value="serviceName">Service Name</ion-select-option>
+        <ion-select-option value="serviceCategory">Service Category</ion-select-option>
+        <ion-select-option value="serviceDescription">Service Description</ion-select-option>
+        <ion-select-option value="servicePrice">Service Price</ion-select-option>
+        <ion-select-option value="serviceAvailability">Service Availability</ion-select-option>
+        <ion-select-option value="servicePlace">Service Place</ion-select-option>
+        <ion-select-option value="serviceQuantity">Service Quantity</ion-select-option>
+        <ion-select-option value="events">Events</ion-select-option>
+        <ion-select-option value="eventName">Event Name</ion-select-option>
+        <ion-select-option value="eventDescription">Event Description</ion-select-option>
+        <ion-select-option value="eventDate">Event Date</ion-select-option>
+        <ion-select-option value="eventPlace">Event Place</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
     <ion-card-content class="ion-margin-top">
       <ion-text color="secondary">
         <h1 id="results"></h1>

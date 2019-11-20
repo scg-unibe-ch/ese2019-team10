@@ -16,6 +16,7 @@ export class SearchPage implements OnInit {
   foundUsers: boolean;
   foundServices: boolean;
   foundEvents: boolean;
+  searchCategory: any;
 
   constructor(
     private titleService: Title,
@@ -30,6 +31,7 @@ export class SearchPage implements OnInit {
     this.foundUsers = false;
     this.foundServices = false;
     this.foundEvents = false;
+    this.searchCategory = 'everything';
 
   }
 
@@ -40,6 +42,7 @@ export class SearchPage implements OnInit {
     if (term.length > 0) {
 
       const searchObject = {
+        searchCategory: this.searchCategory,
         searchTerm: term,
       };
 
