@@ -68,6 +68,20 @@
               </div>
 
               <ion-item>
+                <ion-label>Available</ion-label>
+                <ion-toggle slot="start" name="available" formControlName="available" color="dark"></ion-toggle>
+              </ion-item>
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.available">
+                  <div class="error-message"
+                       *ngIf=" getControls()[ix].get('available').hasError(validation.type) && (getControls()[ix].get('available').dirty || getControls()[ix].get('available').touched)">
+                    <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                    {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+
+              <ion-item>
                 <ion-label position="floating">Availability</ion-label>
                 <ion-input type="text" name="availability" formControlName="availability"></ion-input>
               </ion-item>
@@ -188,6 +202,10 @@
             <ion-item>
               <ion-label position="floating">Category</ion-label>
               <ion-input type="text" name="category" formControlName="category"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Available</ion-label>
+              <ion-toggle slot="start" name="available" formControlName="available" color="dark" checked></ion-toggle>
             </ion-item>
             <ion-item>
               <ion-label position="floating">Availability</ion-label>

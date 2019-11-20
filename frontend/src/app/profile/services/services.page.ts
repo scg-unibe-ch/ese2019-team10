@@ -134,6 +134,7 @@ export class ServicesPage implements OnInit {
       description: ['', Validators.required],
       price: ['', Validators.required],
       place: ['', Validators.required],
+      available: ['', Validators.required],
       availability: ['', Validators.required],
       quantity: ['', Validators.required],
     });
@@ -179,6 +180,9 @@ export class ServicesPage implements OnInit {
       availability: ['', Validators.compose([
         Validators.required,
         Validators.maxLength(100)
+      ])],
+      available: [true , Validators.compose([
+        Validators.required
       ])],
       quantity: ['', Validators.compose([
         Validators.required,
@@ -229,7 +233,10 @@ export class ServicesPage implements OnInit {
     // this.services.splice(index, 1);
     this.serviceList.removeAt(index);
     const id = this.getProperty(index, 'id');
-    this.authService.deleteService(id).subscribe(() => {
+    const service = {
+      serviceId: id,
+    };
+    this.authService.deleteService(service).subscribe(() => {
     });
   }
 

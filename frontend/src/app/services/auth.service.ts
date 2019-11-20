@@ -198,10 +198,13 @@ export class AuthService {
         );*/
   }
 
-  deleteService(id): Observable<void> {
-    return this.http.delete(this.url + 'user/service/' + id, httpOptions).pipe(
+  deleteService(service) {
+    service.userId = this.id;
+    console.log(service);
+    return this.http.delete(this.url + 'user/service/', service);
+/*    .pipe(
       map(data => console.log(data))
-    );
+    );*/
   }
 
   loadEvents(): Observable<User> {
@@ -229,10 +232,13 @@ export class AuthService {
         );*/
   }
 
-  deleteEvent(id): Observable<void> {
-    return this.http.delete(this.url + 'user/event/' + id, httpOptions).pipe(
-      map(data => console.log(data))
-    );
+  deleteEvent(event) {
+    event.userId = this.id;
+    console.log(event);
+    return this.http.delete(this.url + 'user/event/', event);
+    /*    .pipe(
+          map(data => console.log(data))
+        );*/
   }
 
   search(term) {

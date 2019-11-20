@@ -10,6 +10,7 @@ export class Service implements Deserializable {
   public place: string;
   public quantity: string;
   show: boolean;
+  available: boolean;
 
   deserialize(input: any): this {
     Object.assign(this, input);

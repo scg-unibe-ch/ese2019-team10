@@ -7,6 +7,10 @@ export const ServiceValidation = {
     {type: 'required', message: 'Your service should have a category.'},
     {type: 'maxlength', message: 'Your service\'s category should be less than 100 characters long.'},
   ],
+  available: [
+    {type: 'required', message: 'Your service should have an availability.'},
+    {type: 'maxlength', message: 'Your service\'s availability should be less than 100 characters long.'},
+  ],
   availability: [
     {type: 'required', message: 'Your service should have an availability.'},
     {type: 'maxlength', message: 'Your service\'s availability should be less than 100 characters long.'},
