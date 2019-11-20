@@ -13,6 +13,9 @@ export class SearchPage implements OnInit {
   private title: string;
   private searchResult: any;
   private foundResult: boolean;
+  foundUsers: boolean;
+  foundServices: boolean;
+  foundEvents: boolean;
 
   constructor(
     private titleService: Title,
@@ -24,6 +27,9 @@ export class SearchPage implements OnInit {
     this.title = 'Search';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
     this.foundResult = false;
+    this.foundUsers = false;
+    this.foundServices = false;
+    this.foundEvents = false;
 
   }
 
