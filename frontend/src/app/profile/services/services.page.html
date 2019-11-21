@@ -203,6 +203,16 @@
               <ion-label position="floating">Name</ion-label>
               <ion-input type="text" name="name" formControlName="name"></ion-input>
             </ion-item>
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.name">
+                <div class="error-message"
+                     *ngIf="newServiceForm.get('name').hasError(validation.type) && (newServiceForm.get('name').dirty || newServiceForm.get('name').touched)">
+                  <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+
             <ion-item>
               <ion-label position="floating">Category</ion-label>
               <ion-select interface="popover" name="categoryId" formControlName="categoryId">
@@ -210,30 +220,100 @@
                                    [value]="category.key">{{category.value}}</ion-select-option>
               </ion-select>
             </ion-item>
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.category">
+                <div class="error-message"
+                     *ngIf="newServiceForm.get('categoryId').hasError(validation.type) && (newServiceForm.get('categoryId').dirty || newServiceForm.get('categoryId').touched)">
+                  <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+
             <ion-item>
               <ion-label>Available</ion-label>
               <ion-toggle slot="start" name="available" formControlName="available" color="dark" checked></ion-toggle>
             </ion-item>
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.available">
+                <div class="error-message"
+                     *ngIf="newServiceForm.get('available').hasError(validation.type) && (newServiceForm.get('available').dirty || newServiceForm.get('available').touched)">
+                  <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+
             <ion-item>
               <ion-label position="floating">Availability</ion-label>
               <ion-input type="text" name="availability" formControlName="availability"></ion-input>
             </ion-item>
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.availability">
+                <div class="error-message"
+                     *ngIf="newServiceForm.get('availability').hasError(validation.type) && (newServiceForm.get('availability').dirty || newServiceForm.get('availability').touched)">
+                  <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+
             <ion-item>
               <ion-label position="floating">Place</ion-label>
               <ion-input type="text" name="place" formControlName="place"></ion-input>
             </ion-item>
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.place">
+                <div class="error-message"
+                     *ngIf="newServiceForm.get('place').hasError(validation.type) && (newServiceForm.get('place').dirty || newServiceForm.get('place').touched)">
+                  <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+
             <ion-item>
               <ion-label position="floating">Price</ion-label>
               <ion-input type="text" name="price" formControlName="price"></ion-input>
             </ion-item>
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.price">
+                <div class="error-message"
+                     *ngIf="newServiceForm.get('price').hasError(validation.type) && (newServiceForm.get('price').dirty || newServiceForm.get('price').touched)">
+                  <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+
             <ion-item>
               <ion-label position="floating">Quantity</ion-label>
               <ion-input type="text" name="quantity" formControlName="quantity"></ion-input>
             </ion-item>
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.quantity">
+                <div class="error-message"
+                     *ngIf="newServiceForm.get('quantity').hasError(validation.type) && (newServiceForm.get('quantity').dirty || newServiceForm.get('quantity').touched)">
+                  <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+
             <ion-item>
               <ion-label position="floating">Description</ion-label>
               <ion-input type="text" name="description" formControlName="description"></ion-input>
             </ion-item>
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.description">
+                <div class="error-message"
+                     *ngIf="newServiceForm.get('description').hasError(validation.type) && (newServiceForm.get('description').dirty || newServiceForm.get('description').touched)">
+                  <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+
 
           </div>
 
