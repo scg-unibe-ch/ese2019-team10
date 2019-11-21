@@ -4,12 +4,12 @@ import {Router, NavigationEnd, ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {tap} from 'rxjs/operators';
 
-import {PasswordValidator} from '../../validators/password.validator';
-import {AuthService} from '../../services/auth.service';
+import {PasswordValidator} from '../../../validators/password.validator';
+import {AuthService} from '../../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
-import {User} from '../../models/user.model';
+import {User} from '../../../models/user.model';
 import {Observable} from 'rxjs';
-import {appConstants} from '../../constants/app.constants';
+import {appConstants} from '../../../constants/app.constants';
 
 
 // import {Service} from '../../models/service.model';

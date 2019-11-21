@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule'},
   {path: 'registered', loadChildren: './pages/registered/registered.module#RegisteredPageModule'},
   {path: 'terms', loadChildren: './pages/terms/terms.module#TermsPageModule'},
-  { path: 'search', loadChildren: './pages/search/search.module#SearchPageModule' },
+  {path: 'search', loadChildren: './pages/search/search.module#SearchPageModule'},
   {
     path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule',
     canActivate: [AuthGuardService]
@@ -30,7 +30,15 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'user/profile/:id', loadChildren: './user/profile/profile.module#ProfilePageModule',
+    path: 'user/profile/:id', loadChildren: './pages/user/profile/profile.module#ProfilePageModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'user/service', loadChildren: './pages/user/service/service.module#ServicePageModule',
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'user/event', loadChildren: './pages/user/event/event.module#EventPageModule',
     canActivate: [AuthGuardService]
   },
   {
@@ -38,8 +46,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService, AdminGuardService]
   },
   {path: '**', loadChildren: './pages/page-not-found/page-not-found.module#PageNotFoundPageModule'},
-  { path: 'service', loadChildren: './pages/user/service/service.module#ServicePageModule' },
-  { path: 'event', loadChildren: './pages/user/event/event.module#EventPageModule' },
+
 ];
 
 @NgModule({
