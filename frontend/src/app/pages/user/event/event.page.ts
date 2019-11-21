@@ -18,7 +18,7 @@ import {Event} from '../../../models/event.model';
 })
 export class EventPage implements OnInit {
   public title: string;
-  public user: User;
+  public event: Event;
 
 
   constructor(
@@ -34,24 +34,25 @@ export class EventPage implements OnInit {
   ngOnInit() {
     this.title = 'Event';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
-    this.user = new User().deserialize({});
+    this.event = new Event().deserialize({});
 
 
   }
 
   ionViewWillEnter() {
-    const userId = this.route.snapshot.paramMap.get('id');
-    this.loadUser(userId);
+    const userId = this.route.snapshot.paramMap.get('userId');
+    const eventId = this.route.snapshot.paramMap.get('eventId');
+    this.loadEvent(userId, eventId);
 
   }
 
 
-  public loadUser(userId) {
-    this.authService.loadProfile().subscribe(user => {
-      this.user = user;
+  public loadEvent(userId, eventId) {
+    this.authService.loadEvent(userId, eventId).subscribe(event => {
+      this.event = event;
       console.log('this.user: ' + userId);
-      console.log(this.user);
-      this.titleService.setTitle(this.user.firstName + '\'s ' + this.title + appConstants.APPENDED_TITLE);
+      console.log(this.event);
+      this.titleService.setTitle(this.event.name + '\'s ' + this.title + appConstants.APPENDED_TITLE);
 
       /*      this.profileForm.patchValue({
               email: this.user.email,

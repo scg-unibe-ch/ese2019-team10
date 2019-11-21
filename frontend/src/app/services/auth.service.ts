@@ -11,6 +11,8 @@ import {User} from '../models/user.model';
 import {Router} from '@angular/router';
 import {AlertService} from './alert.service';
 import {Service} from '../models/service.model';
+import {Event} from '../models/event.model';
+
 
 const TOKEN_KEY = 'access_token';
 const ID_KEY = 'user_id';
@@ -212,6 +214,27 @@ export class AuthService {
       map(data => console.log(data))
     );*/
     return this.loadProfile();
+  }
+
+  loadEvent(userId, eventId): Observable<Event> {
+    return this.http.get<Event>(this.url + 'user/event/' + userId + '/' + eventId, httpOptions).pipe(
+      map(data => new Event().deserialize(data))
+    );
+  }
+
+  loadService(userId, serviceId): Observable<Service> {
+    return this.http.get<Service>(this.url + 'user/service/' + userId + '/' + serviceId, httpOptions).pipe(
+      map(data => new Service().deserialize(data))
+    );
+  }
+
+  bookService(service) {
+    service.bookerId = this.id;
+    // console.log(service);
+    return this.http.post(this.url + 'user/service/book', service, httpOptions);
+    /*    .pipe(
+          map(data => console.log(data))
+        );*/
   }
 
   saveEvent(event) {

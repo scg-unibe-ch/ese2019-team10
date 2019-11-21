@@ -18,8 +18,9 @@ import {Service} from '../../../models/service.model';
 })
 export class ServicePage implements OnInit {
   public title: string;
-  public user: User;
-
+  public service: Service;
+userId: number;
+serviceId: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,24 +35,49 @@ export class ServicePage implements OnInit {
   ngOnInit() {
     this.title = 'Service';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
-    this.user = new User().deserialize({});
+    this.service = new Service().deserialize({});
 
 
   }
 
   ionViewWillEnter() {
-    const userId = this.route.snapshot.paramMap.get('id');
-    this.loadUser(userId);
+    this.userId = Number(this.route.snapshot.paramMap.get('userId'));
+    this.serviceId = Number(this.route.snapshot.paramMap.get('serviceId'));
+
+    this.loadService(this.userId, this.serviceId);
 
   }
 
 
-  public loadUser(userId) {
-    this.authService.loadProfile().subscribe(user => {
-      this.user = user;
+  public loadService(userId, serviceId) {
+    this.authService.loadService(userId, serviceId).subscribe(service => {
+      this.service = service;
       console.log('this.user: ' + userId);
-      console.log(this.user);
-      this.titleService.setTitle(this.user.firstName + '\'s ' + this.title + appConstants.APPENDED_TITLE);
+      console.log(this.service);
+      this.titleService.setTitle(this.service.name + '\'s ' + this.title + appConstants.APPENDED_TITLE);
+
+      /*      this.profileForm.patchValue({
+              email: this.user.email,
+            });*/
+
+
+      /*      Object.keys(this.user).forEach(k => {
+              const control = this.profileForm.get(k);
+              if (control) {
+                control.setValue(this.user[k], {onlySelf: true});
+              }
+            });*/
+
+    });
+  }
+
+  public bookService() {
+    const service = {
+      userId: this.userId,
+      serviceId: this.service.id,
+    };
+    this.authService.bookService(service).subscribe(res => {
+
 
       /*      this.profileForm.patchValue({
               email: this.user.email,

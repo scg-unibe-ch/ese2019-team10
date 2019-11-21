@@ -34,11 +34,11 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'user/service', loadChildren: './pages/user/service/service.module#ServicePageModule',
+    path: 'user/:userId/service/:serviceId', loadChildren: './pages/user/service/service.module#ServicePageModule',
     canActivate: [AuthGuardService]
   },
   {
-    path: 'user/event', loadChildren: './pages/user/event/event.module#EventPageModule',
+    path: 'user/:userId/event/:eventId', loadChildren: './pages/user/event/event.module#EventPageModule',
     canActivate: [AuthGuardService]
   },
   {

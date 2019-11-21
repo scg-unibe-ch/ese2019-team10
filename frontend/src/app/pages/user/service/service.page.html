@@ -14,80 +14,54 @@
           <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
             <ion-label>
               <ion-icon class="divider-icon" slot="start" name="mail"></ion-icon>
-              Account Information
+              Service Information
             </ion-label>
           </ion-item-divider>
 
           <ion-item>
-            <ion-note slot="start">E-Mail</ion-note>
-            <ion-label>{{user.email}}</ion-label>
+            <ion-note slot="start">Name</ion-note>
+            <ion-label>{{service.name}}</ion-label>
           </ion-item>
 
-
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
-            <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
-              Personal Information
-            </ion-label>
-          </ion-item-divider>
-
           <ion-item>
-            <ion-note slot="start">First Name</ion-note>
-            <ion-label>{{user.firstName}}</ion-label>
+            <ion-note slot="start">Category</ion-note>
+            <ion-label>{{service.category}}</ion-label>
           </ion-item>
 
 
           <ion-item>
-            <ion-note slot="start">Last Name</ion-note>
-            <ion-label>{{user.lastName}}</ion-label>
+            <ion-note slot="start">Description</ion-note>
+            <ion-label>{{service.description}}</ion-label>
           </ion-item>
 
 
           <ion-item>
-            <ion-note slot="start">Gender</ion-note>
-            <ion-label>{{user.gender}}</ion-label>
+            <ion-note slot="start">Price</ion-note>
+            <ion-label>{{service.price}}</ion-label>
           </ion-item>
 
           <ion-item>
-            <ion-note slot="start">Birthday</ion-note>
-            <ion-label>{{user.birthday | date: 'd MMMM y'}}</ion-label>
+            <ion-note slot="start">Availability</ion-note>
+            <ion-label>{{service.availability}}</ion-label>
           </ion-item>
 
           <ion-item>
-            <ion-note slot="start">Phone</ion-note>
-            <ion-label>{{user.phone}}</ion-label>
+            <ion-note slot="start">Place</ion-note>
+            <ion-label>{{service.place}}</ion-label>
           </ion-item>
-
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
-            <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="pin"></ion-icon>
-              Address
-            </ion-label>
-          </ion-item-divider>
 
           <ion-item>
-            <ion-note slot="start">Street</ion-note>
-            <ion-label>{{user.street}}</ion-label>
+            <ion-note slot="start">Quantity</ion-note>
+            <ion-label>{{service.quantity}}</ion-label>
           </ion-item>
 
-
-          <ion-item>
-            <ion-note slot="start">Postal Code</ion-note>
-            <ion-label>{{user.postalCode}}</ion-label>
-          </ion-item>
-
-
-          <ion-item>
-            <ion-note slot="start">City</ion-note>
-            <ion-label>{{user.city}}</ion-label>
-          </ion-item>
-
-
-          <ion-item>
-            <ion-note slot="start">Country</ion-note>
-            <ion-label>{{user.country}}</ion-label>
-          </ion-item>
-
+          <ion-row class="ion-margin-top">
+            <ion-button  class="submit-btn" expand="full" type="button"
+            (click)="bookService()">
+              <ion-icon name="cart" slot="start"></ion-icon>
+              Book this Service
+            </ion-button>
+          </ion-row>
 
         </ion-list>
       </ion-col>
