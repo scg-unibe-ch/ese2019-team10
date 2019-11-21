@@ -38,6 +38,8 @@ const routes: Routes = [
     canActivate: [AuthGuardService, AdminGuardService]
   },
   {path: '**', loadChildren: './pages/page-not-found/page-not-found.module#PageNotFoundPageModule'},
+  { path: 'service', loadChildren: './pages/user/service/service.module#ServicePageModule' },
+  { path: 'event', loadChildren: './pages/user/event/event.module#EventPageModule' },
 ];
 
 @NgModule({

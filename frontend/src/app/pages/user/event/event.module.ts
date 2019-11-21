@@ -5,13 +5,14 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {IonicModule} from '@ionic/angular';
 
-import {ProfilePage} from './profile.page';
-import {SharedComponentsModule} from '../../components/shared-components.module';
+import {EventPage} from './event.page';
+import {SharedComponentsModule} from '../../../components/shared-components.module';
+
 
 const routes: Routes = [
   {
     path: '',
-    component: ProfilePage
+    component: EventPage
   }
 ];
 
@@ -24,7 +25,7 @@ const routes: Routes = [
     SharedComponentsModule,
     ReactiveFormsModule
   ],
-  declarations: [ProfilePage]
+  declarations: [EventPage]
 })
-export class ProfilePageModule {
+export class EventPageModule {
 }
