@@ -19,7 +19,7 @@
       <ion-item-group formArrayName="services">
 
 
-        <ion-list *ngFor="let service of getControls(); index as ix" inset >
+        <ion-list *ngFor="let service of getControls(); index as ix" inset>
 
           <ion-button *ngIf="!this.helperArray[ix]; else hideThisService" class="submit-btn ion-no-margin"
                       expand="full"
@@ -36,7 +36,7 @@
             </ion-button>
           </ng-template>
 
-          <ion-item-group [formGroupName]="ix" [hidden]="!this.helperArray[ix]" >
+          <ion-item-group [formGroupName]="ix" [hidden]="!this.helperArray[ix]">
             <div class="row">
 
               <ion-item>
@@ -55,12 +55,15 @@
 
               <ion-item>
                 <ion-label position="floating">Category</ion-label>
-                <ion-input type="text" name="category" formControlName="category"></ion-input>
+                <ion-select interface="popover" name="categoryId" formControlName="categoryId">
+                  <ion-select-option *ngFor="let category of categories"
+                                     [value]="category.key">{{category.value}}</ion-select-option>
+                </ion-select>
               </ion-item>
               <div class="validation-errors ion-text-wrap">
                 <ng-container *ngFor="let validation of serviceValidation.category">
                   <div class="error-message"
-                       *ngIf=" getControls()[ix].get('category').hasError(validation.type) && (getControls()[ix].get('category').dirty || getControls()[ix].get('category').touched)">
+                       *ngIf=" getControls()[ix].get('categoryId').hasError(validation.type) && (getControls()[ix].get('categoryId').dirty || getControls()[ix].get('categoryId').touched)">
                     <ion-icon name="information-circle-outline" slot="start"></ion-icon>
                     {{ validation.message }}
                   </div>
@@ -139,7 +142,8 @@
 
               <ion-item>
                 <ion-label position="floating">Description</ion-label>
-                <ion-textarea type="text" name="description" formControlName="description" spellcheck wrap="soft" autoGrow></ion-textarea>
+                <ion-textarea type="text" name="description" formControlName="description" spellcheck wrap="soft"
+                              autoGrow></ion-textarea>
               </ion-item>
               <div class="validation-errors ion-text-wrap">
                 <ng-container *ngFor="let validation of serviceValidation.description">
@@ -160,7 +164,7 @@
             </ion-button>
 
             <div class="ion-text-end">
-              <ion-button (click)="saveService(ix)"  class="submit-btn" type="submit" [disabled]="!getValidity(ix)">
+              <ion-button (click)="saveService(ix)" class="submit-btn" type="submit" [disabled]="!getValidity(ix)">
                 <ion-icon slot="start" name="save"></ion-icon>
                 Save Service
               </ion-button>
@@ -201,7 +205,10 @@
             </ion-item>
             <ion-item>
               <ion-label position="floating">Category</ion-label>
-              <ion-input type="text" name="category" formControlName="category"></ion-input>
+              <ion-select interface="popover" name="categoryId" formControlName="categoryId">
+                <ion-select-option *ngFor="let category of categories"
+                                   [value]="category.key">{{category.value}}</ion-select-option>
+              </ion-select>
             </ion-item>
             <ion-item>
               <ion-label>Available</ion-label>

@@ -13,6 +13,7 @@ import {User} from '../../models/user.model';
 import {Service} from '../../models/service.model';
 import {appConstants} from '../../constants/app.constants';
 import {ServiceValidation} from '../../constants/service-validation.constants';
+import {KeyValuePair} from '../../models/key-value-pair.model';
 
 
 @Component({
@@ -33,9 +34,10 @@ export class ServicesPage implements OnInit {
   public currentTime = null;
   public validationMessages = ValidationMessages;
   public serviceValidation = ServiceValidation;
+  public categories: KeyValuePair[];
 
   public user: User;
-  public services: any;
+  public services: Service[];
   public events: Event[];
   public serviceList: FormArray;
   public eventList: FormArray;
@@ -46,6 +48,7 @@ export class ServicesPage implements OnInit {
   private newServiceForm: FormGroup;
   private savedServicesForm: FormGroup;
   helperArray: Array<boolean>;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -61,6 +64,15 @@ export class ServicesPage implements OnInit {
   ngOnInit() {
     this.title = 'Services';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
+
+
+    this.categories = [
+      {key: 1, value: 'Venue'},
+      {key: 2, value: 'Objects'},
+      {key: 3, value: 'Consumables'},
+      {key: 4, value: 'Professional'},
+    ];
+
     this.initialize();
     /* this.currentTime = new Date();
      this.day = String(this.currentTime.getDate()).padStart(2, '0');
@@ -84,6 +96,7 @@ export class ServicesPage implements OnInit {
     // this.serviceList = this.serviceForm.get('services') as FormArray;
     // this.serviceList.removeAt(0);
   }
+
 
   ionViewWillEnter() {
     this.initialize();
@@ -130,11 +143,11 @@ export class ServicesPage implements OnInit {
     });
     this.newServiceForm = this.formBuilder.group({
       name: ['', Validators.required],
-      category: ['', Validators.required],
+      categoryId: ['', Validators.required],
       description: ['', Validators.required],
       price: ['', Validators.required],
       place: ['', Validators.required],
-      available: ['', Validators.required],
+      available: [true],
       availability: ['', Validators.required],
       quantity: ['', Validators.required],
     });
@@ -161,9 +174,8 @@ export class ServicesPage implements OnInit {
         Validators.required,
         Validators.maxLength(100)
       ])],
-      category: ['', Validators.compose([
+      categoryId: ['', Validators.compose([
         Validators.required,
-        Validators.maxLength(100)
       ])],
       description: ['', Validators.compose([
         Validators.required,
@@ -181,9 +193,7 @@ export class ServicesPage implements OnInit {
         Validators.required,
         Validators.maxLength(100)
       ])],
-      available: [true , Validators.compose([
-        Validators.required
-      ])],
+      available: [true],
       quantity: ['', Validators.compose([
         Validators.required,
         Validators.maxLength(100)
@@ -246,6 +256,9 @@ export class ServicesPage implements OnInit {
       this.services = user.services;
       for (const service of this.services) {
         // console.log(service);
+        if (service.category) {
+          service.categoryId = service.category.id;
+        }
         this.addService();
         this.helperArray.push(false);
       }
