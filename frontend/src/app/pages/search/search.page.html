@@ -43,12 +43,68 @@
       </ion-select>
     </ion-item>
 
+    
+    <ion-card-content *ngIf="searched">
+      <ion-list *ngIf="foundResult; else noResultsFound">
+        <ion-list-header>
+          These results were found:
+        </ion-list-header>
 
-    <ion-card-content class="ion-margin-top">
-      <ion-text color="secondary">
-        <h1 id="results"></h1>
-      </ion-text>
+        <ion-list *ngIf="foundServices">
 
+        <ion-item *ngFor="let service of services">
+          <ion-avatar slot="start">
+            <img src="../../../assets/verified_user-24px.svg" alt="verified avatar">
+          </ion-avatar>
+          <ion-label>
+            <h2>{{service.name}}</h2>
+            <h3>{{service.description}}</h3>
+            <p>{{'ID: ' + service.id}}</p>
+          </ion-label>
+          <ion-icon slot="end" name="checkmark" color="success"></ion-icon>
+        </ion-item>
+
+        </ion-list>
+
+        <ion-list *ngIf="foundEvents">
+
+          <ion-item *ngFor="let event of events">
+            <ion-avatar slot="start">
+              <img src="../../../assets/verified_user-24px.svg" alt="verified avatar">
+            </ion-avatar>
+            <ion-label>
+              <h2>{{event.name}}</h2>
+              <h3>{{event.description}}</h3>
+              <p>{{'ID: ' + event.id}}</p>
+            </ion-label>
+            <ion-icon slot="end" name="checkmark" color="success"></ion-icon>
+          </ion-item>
+
+        </ion-list>
+
+        <ion-list *ngIf="foundUsers">
+
+          <ion-item *ngFor="let user of users">
+            <ion-avatar slot="start">
+              <img src="../../../assets/verified_user-24px.svg" alt="verified avatar">
+            </ion-avatar>
+            <ion-label>
+              <h2>{{user.getFullName()}}</h2>
+              <h3>{{user.email}}</h3>
+              <p>{{'ID: ' + user.id}}</p>
+            </ion-label>
+            <ion-icon slot="end" name="checkmark" color="success"></ion-icon>
+          </ion-item>
+
+        </ion-list>
+
+      </ion-list>
+
+      <ng-template #noResultsFound>
+        <ion-list-header>
+          This search found no results. Please try again.
+        </ion-list-header>
+      </ng-template>
     </ion-card-content>
 
   </ion-card>
