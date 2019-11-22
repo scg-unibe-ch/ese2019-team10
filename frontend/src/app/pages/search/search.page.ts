@@ -6,6 +6,7 @@ import {AuthService} from '../../services/auth.service';
 import {Service} from '../../models/service.model';
 import {Event} from '../../models/event.model';
 import {User} from '../../models/user.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -29,6 +30,7 @@ export class SearchPage implements OnInit {
   constructor(
     private titleService: Title,
     private authService: AuthService,
+    private router: Router,
   ) {
   }
 
@@ -79,8 +81,24 @@ export class SearchPage implements OnInit {
       });
 
     }
+  }
 
+  goToService(service) {
+    this.router.navigate(['/', 'user/', service.userId, '/service/', service.id]).then(/*nav => {}, err => {
+        console.log(err); // when there's an error
+      }*/);
 
   }
 
+  goToEvent(event) {
+    this.router.navigate(['/', 'user/', event.userId, '/event/', event.id]).then(/*nav => {}, err => {
+        console.log(err); // when there's an error
+      }*/);
+  }
+
+  goToUser(user) {
+    this.router.navigate(['/', 'user/profile/', user.id]).then(/*nav => {}, err => {
+        console.log(err); // when there's an error
+      }*/);
+  }
 }

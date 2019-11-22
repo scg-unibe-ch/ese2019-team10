@@ -43,7 +43,7 @@
       </ion-select>
     </ion-item>
 
-    
+
     <ion-card-content *ngIf="searched">
       <ion-list *ngIf="foundResult; else noResultsFound">
         <ion-list-header>
@@ -62,6 +62,11 @@
             <p>{{'ID: ' + service.id}}</p>
           </ion-label>
           <ion-icon slot="end" name="checkmark" color="success"></ion-icon>
+          <ion-button class="search-confirm ion-no-margin" color="secondary"
+                      (click)="goToService(service)">
+            <ion-icon name="share-alt" slot="start"></ion-icon>
+            View Service
+          </ion-button>
         </ion-item>
 
         </ion-list>
@@ -78,6 +83,11 @@
               <p>{{'ID: ' + event.id}}</p>
             </ion-label>
             <ion-icon slot="end" name="checkmark" color="success"></ion-icon>
+            <ion-button class="search-confirm ion-no-margin" color="secondary"
+                        (click)="goToEvent(event)">
+              <ion-icon name="share-alt" slot="start"></ion-icon>
+              View Service
+            </ion-button>
           </ion-item>
 
         </ion-list>
@@ -94,6 +104,11 @@
               <p>{{'ID: ' + user.id}}</p>
             </ion-label>
             <ion-icon slot="end" name="checkmark" color="success"></ion-icon>
+            <ion-button class="search-confirm ion-no-margin" color="secondary"
+                        (click)="goToUser(user)">
+              <ion-icon name="share-alt" slot="start"></ion-icon>
+              View Service
+            </ion-button>
           </ion-item>
 
         </ion-list>
