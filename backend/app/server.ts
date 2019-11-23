@@ -83,7 +83,7 @@ function createCategories() {
 export const sequelize =  new Sequelize({
   database: 'app_db',
   host: 'database',
-  dialect: 'mysql',
+  dialect: 'postgres',
   username: 'root',
   password: 'admin',
   define: {
