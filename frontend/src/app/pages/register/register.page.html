@@ -201,21 +201,27 @@
 
               <ion-item-divider class="ion-margin-top" sticky="true">
                 <ion-label>
-                  <ion-icon class="form-icon" name="clipboard" slot="start"></ion-icon>
-                  Terms & Conditions
+                  <ion-icon class="form-icon" name="book" slot="start"></ion-icon>
+                  Legal Matters
                 </ion-label>
               </ion-item-divider>
 
 
-              <ion-button class="terms ion-text-capitalize" expand="block" fill="outline" href="/terms"
+              <ion-button class="terms ion-text-capitalize" expand="block" fill="outline" href="/terms-conditions"
                           routerDirection="forward" target="_blank" type="button">
-              <span class="ion-text-left">Read the terms
+              <span class="ion-text-left">Terms & Conditions
+              <ion-icon class="left-margin" name="open"></ion-icon></span>
+              </ion-button>
+
+              <ion-button class="terms ion-text-capitalize" expand="block" fill="outline" href="/privacy-policy"
+                          routerDirection="forward" target="_blank" type="button">
+              <span class="ion-text-left">Privacy Policy
               <ion-icon class="left-margin" name="open"></ion-icon></span>
               </ion-button>
 
 
               <ion-item>
-                <ion-label>I accept</ion-label>
+                <ion-label>I have read and agree to the terms and conditions and privacy policy.</ion-label>
                 <ion-checkbox formControlName="terms" name="terms"></ion-checkbox>
               </ion-item>
 
