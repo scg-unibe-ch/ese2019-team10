@@ -23,15 +23,16 @@ services:
       POSTGRES_DB: app_db
     volumes:
       - ../ese-db-volume:/var/lib/postgresql/data
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+  pgadmin:
+    image: dpage/pgadmin4
     restart: always
     networks:
       - dev-net
     ports:
       - "8081:80"
     environment:
-      - PMA_HOST=app-database
+      - PGADMIN_DEFAULT_EMAIL=pgadmin@mail.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
   frontend-webserver:
     build: frontend/
     networks:
