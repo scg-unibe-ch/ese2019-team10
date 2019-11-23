@@ -22,7 +22,7 @@ services:
       POSTGRES_USER: root
       POSTGRES_DB: app_db
     volumes:
-      - ../ese-db-volume:/var/lib/mysql
+      - ../ese-db-volume:/var/lib/postgresql/data
   pgadmin:
     image: dpage/pgadmin4
     restart: always
