@@ -8,6 +8,7 @@ const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', loadChildren: './pages/home/home.module#HomePageModule'},
   {path: 'about', loadChildren: './pages/about/about.module#AboutPageModule'},
+  {path: 'faq', loadChildren: './pages/faq/faq.module#FaqPageModule'},
   {path: 'login', loadChildren: './pages/login/login.module#LoginPageModule'},
   {path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule'},
   {path: 'registered', loadChildren: './pages/registered/registered.module#RegisteredPageModule'},
