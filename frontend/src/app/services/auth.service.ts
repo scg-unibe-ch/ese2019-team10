@@ -209,7 +209,7 @@ export class AuthService {
   }
 
   loadEvent(userId, eventId): Observable<Event> {
-    return this.http.get<Event>(this.url + 'user/event/' + userId + '/' + eventId, httpOptions).pipe(
+    return this.http.get<Event>(this.url + 'user/event/' + eventId, httpOptions).pipe(
       map(data => new Event().deserialize(data))
     );
   }

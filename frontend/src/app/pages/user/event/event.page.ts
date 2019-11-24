@@ -19,6 +19,9 @@ import {Event} from '../../../models/event.model';
 export class EventPage implements OnInit {
   public title: string;
   public event: Event;
+  private eventManager: User;
+  private managerName: string;
+  private managerId: number;
 
 
   constructor(
@@ -46,6 +49,14 @@ export class EventPage implements OnInit {
 
   }
 
+  public loadUser(userId) {
+    this.authService.loadUser(userId).subscribe(user => {
+      this.eventManager = user;
+      this.managerName = user.getFullName();
+      this.managerId = user.id;
+    });
+  }
+
 
   public loadEvent(userId, eventId) {
     this.authService.loadEvent(userId, eventId).subscribe(event => {
@@ -53,6 +64,8 @@ export class EventPage implements OnInit {
       console.log('this.user: ' + userId);
       console.log(this.event);
       this.titleService.setTitle(this.event.name + '\'s ' + this.title + appConstants.APPENDED_TITLE);
+
+      this.loadUser(userId);
 
       /*      this.profileForm.patchValue({
               email: this.user.email,

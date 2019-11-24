@@ -19,6 +19,14 @@
           </ion-item-divider>
 
           <ion-item>
+            <ion-note slot="start">Event Manager</ion-note>
+            <ion-label><a href="/user/profile/{{managerId}}">
+              {{managerName}}
+            </a>
+            </ion-label>
+          </ion-item>
+
+          <ion-item>
             <ion-note slot="start">Name</ion-note>
             <ion-label>{{event.name}}</ion-label>
           </ion-item>
