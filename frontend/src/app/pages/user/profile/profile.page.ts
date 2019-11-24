@@ -88,7 +88,7 @@ export class ProfilePage implements OnInit {
 
 
   public loadUser(userId) {
-    this.authService.loadProfile().subscribe(user => {
+    this.authService.loadUser(userId).subscribe(user => {
       this.user = user;
       console.log('this.user: ' + userId);
       console.log(this.user);
