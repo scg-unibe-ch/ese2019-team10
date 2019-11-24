@@ -7,7 +7,6 @@ import {EventService} from '../models/EventService';
 import {RoleUser} from '../models/RoleUser';
 
 const router: Router = Router();
-import {sequelize} from '../server';
 
 // Get user profile
 router.get('/profile/:id', async (req: Request, res: Response) => {
@@ -161,12 +160,12 @@ router.put('/profile/:id', async (req: Request, res: Response) => {
   }).then(result => {
     res.statusCode = 200;
     // Add or update RoleUser
-    if(req.body.isServiceProvider){
+    if (req.body.isServiceProvider) {
         addRoleUser(id, 1);
     } else {
       delRoleUser(id, 1);
     }
-    if(req.body.isEventManager){
+    if (req.body.isEventManager) {
         addRoleUser(id, 3);
     } else {
       delRoleUser(id, 3);
@@ -179,7 +178,7 @@ router.put('/profile/:id', async (req: Request, res: Response) => {
   });
 });
 
-function addRoleUser(userId: number, roleId: number){
+function addRoleUser(userId: number, roleId: number) {
   RoleUser.findOrCreate({
     where:
     {
@@ -193,7 +192,7 @@ function addRoleUser(userId: number, roleId: number){
     });
 }
 
-function delRoleUser(userId: number, roleId: number){
+function delRoleUser(userId: number, roleId: number) {
   RoleUser.destroy({
     where: {
       userId: userId,
