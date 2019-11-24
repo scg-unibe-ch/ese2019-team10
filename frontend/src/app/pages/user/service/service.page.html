@@ -19,13 +19,21 @@
           </ion-item-divider>
 
           <ion-item>
+            <ion-note slot="start">Service Provider</ion-note>
+            <ion-label><a href="/user/profile/{{providerId}}">
+              {{providerName}}
+            </a>
+              </ion-label>
+          </ion-item>
+
+          <ion-item>
             <ion-note slot="start">Name</ion-note>
             <ion-label>{{service.name}}</ion-label>
           </ion-item>
 
           <ion-item>
             <ion-note slot="start">Category</ion-note>
-            <ion-label>{{service.category}}</ion-label>
+            <ion-label>{{service.categoryName}}</ion-label>
           </ion-item>
 
 
@@ -55,12 +63,59 @@
             <ion-label>{{service.quantity}}</ion-label>
           </ion-item>
 
-          <ion-row class="ion-margin-top">
-            <ion-button  class="submit-btn" expand="full" type="button"
-            (click)="bookService()">
-              <ion-icon name="basket" slot="start"></ion-icon>
-              Book this Service
-            </ion-button>
+          <ion-row *ngIf="viewerIsEventManager" class="ion-margin-top">
+
+            <form *ngIf="eventsLoaded" [formGroup]="bookingForm" (ngSubmit)="bookService()">
+              <ion-row>
+                <ion-col>
+                  <ion-list inset>
+
+                    <ion-item>
+                      <ion-label position="floating">Message</ion-label>
+                      <ion-input formControlName="message" name="message"
+                                 type="text"></ion-input>
+                    </ion-item>
+                    <div class="validation-errors">
+                      <ng-container *ngFor="let validation of bookingMessages.message">
+                        <div class="error-message"
+                             *ngIf="bookingForm.get('message').hasError(validation.type) && (bookingForm.get('message').dirty || bookingForm.get('message').touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon>
+                          {{ validation.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+
+                    <ion-item>
+                      <ion-label position="floating">Event</ion-label>
+                      <ion-select interface="popover" name="eventId" formControlName="eventId">
+                        <ion-select-option *ngFor="let event of events"
+                                           [value]="event.key">{{event.value}}</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                    <div class="validation-errors">
+                      <ng-container *ngFor="let validation of bookingMessages.events">
+                        <div class="error-message"
+                             *ngIf="bookingForm.get('eventId').hasError(validation.type) && (bookingForm.get('eventId').dirty || bookingForm.get('eventId').touched)">
+                          <ion-icon name="information-circle-outline"></ion-icon>
+                          {{ validation.message }}
+                        </div>
+                      </ng-container>
+                    </div>
+
+                      <ion-button  class="submit-btn" expand="full" type="submit"
+                                   [disabled]="!bookingForm.valid">
+                        <ion-icon name="basket" slot="start"></ion-icon>
+                        Book this Service
+                      </ion-button>
+
+                  </ion-list>
+                </ion-col>
+              </ion-row>
+
+            </form>
+
+
+
           </ion-row>
 
         </ion-list>

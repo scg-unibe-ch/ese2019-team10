@@ -8,6 +8,7 @@ export class Service implements Deserializable {
     id,
     name
   };
+  public categoryName: string;
   public categoryId: number;
   public description: string;
   public price: string;

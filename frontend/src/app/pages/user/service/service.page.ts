@@ -10,6 +10,10 @@ import {User} from '../../../models/user.model';
 import {Observable} from 'rxjs';
 import {appConstants} from '../../../constants/app.constants';
 import {Service} from '../../../models/service.model';
+import {Event} from '../../../models/event.model';
+import {ValidationMessages} from '../../../models/validation-messages.model';
+import {BookingValidation} from '../../../constants/booking-validation.constants';
+import {KeyValuePair} from '../../../models/key-value-pair.model';
 
 @Component({
   selector: 'app-service',
@@ -19,8 +23,18 @@ import {Service} from '../../../models/service.model';
 export class ServicePage implements OnInit {
   public title: string;
   public service: Service;
-userId: number;
-serviceId: number;
+  userId: number;
+  serviceId: number;
+  private bookingForm: FormGroup;
+  private bookingMessages = BookingValidation;
+  private viewer: User;
+  private viewerIsEventManager: boolean;
+  public events: KeyValuePair[];
+  private eventsLoaded: boolean;
+  private serviceProvider: User;
+  private providerName: string;
+  private providerId: number;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,7 +42,7 @@ serviceId: number;
     private authService: AuthService,
     private alertService: AlertService,
     private titleService: Title,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
   }
 
@@ -36,6 +50,17 @@ serviceId: number;
     this.title = 'Service';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
     this.service = new Service().deserialize({});
+    this.service.categoryName = '';
+    this.eventsLoaded = false;
+    this.viewerIsEventManager = false;
+    this.events = [];
+
+    this.bookingForm = this.formBuilder.group({
+      message: new FormControl('', Validators.compose([
+        Validators.maxLength(1000)
+      ])),
+      eventId: ['', Validators.required],
+    });
 
 
   }
@@ -43,18 +68,35 @@ serviceId: number;
   ionViewWillEnter() {
     this.userId = Number(this.route.snapshot.paramMap.get('userId'));
     this.serviceId = Number(this.route.snapshot.paramMap.get('serviceId'));
-
+    this.viewerIsEventManager = false;
+    this.eventsLoaded = false;
     this.loadService(this.userId, this.serviceId);
 
+    this.checkViewerStatus();
+
+
+  }
+
+
+  public loadUser(userId) {
+    this.authService.loadUser(userId).subscribe(user => {
+      this.serviceProvider = user;
+      this.providerName = user.getFullName();
+      this.providerId = user.id;
+    });
   }
 
 
   public loadService(userId, serviceId) {
     this.authService.loadService(userId, serviceId).subscribe(service => {
       this.service = service;
+      this.service.categoryName = service.category.name;
       console.log('this.user: ' + userId);
       console.log(this.service);
       this.titleService.setTitle(this.service.name + '\'s ' + this.title + appConstants.APPENDED_TITLE);
+
+      this.loadUser(userId);
+
 
       /*      this.profileForm.patchValue({
               email: this.user.email,
@@ -69,6 +111,18 @@ serviceId: number;
             });*/
 
     });
+  }
+
+
+  public loadEvents() {
+    if (this.viewer.events.length > 0) {
+      for (const event of this.viewer.events) {
+        this.events.push(
+          {key: event.id, value: event.name},
+        );
+      }
+      this.eventsLoaded = true;
+    }
   }
 
   public bookService() {
@@ -95,4 +149,15 @@ serviceId: number;
   }
 
 
+  checkViewerStatus() {
+    this.authService.loadProfile().subscribe(user => {
+        this.viewer = user;
+        this.viewerIsEventManager = user.isEventManager;
+        if (this.viewerIsEventManager) {
+          this.loadEvents();
+        }
+        return user.isEventManager;
+      },
+    );
+  }
 }

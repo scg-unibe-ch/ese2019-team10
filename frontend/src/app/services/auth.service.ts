@@ -147,16 +147,18 @@ export class AuthService {
     );
   }
 
+  loadUser(id): Observable<User> {
+    return this.http.get<User>(this.url + 'user/profile/' + id, httpOptions).pipe(
+      map(data => new User().deserialize(data[0]))
+    );
+  }
+
   saveProfile(credentials) {
     return this.http.put(this.url + 'user/profile/' + this.id, credentials, httpOptions).pipe(
     );
   }
 
-  getUserProfile(): Observable<User> {
-    return this.http.get<User>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
-      map(data => new User().deserialize(data))
-    );
-  }
+
 
 
   saveService(service) {
@@ -213,7 +215,7 @@ export class AuthService {
   }
 
   loadService(userId, serviceId): Observable<Service> {
-    return this.http.get<Service>(this.url + 'user/service/' + userId + '/' + serviceId, httpOptions).pipe(
+    return this.http.get<Service>(this.url + 'user/service/' + serviceId, httpOptions).pipe(
       map(data => new Service().deserialize(data))
     );
   }
@@ -232,4 +234,7 @@ export class AuthService {
   }
 
 
+  isEventManager() {
+    return this.loadProfile();
+  }
 }
