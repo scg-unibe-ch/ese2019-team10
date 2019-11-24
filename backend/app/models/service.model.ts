@@ -41,7 +41,7 @@ export class Service extends Model<Service> {
   public description!: string;
 
   @Column
-  public price!: number;
+  public price!: string;
 
   /*@Column
   public address!: string;*/
@@ -86,7 +86,7 @@ export class Service extends Model<Service> {
     this.name = service_data['name'];
     this.description = service_data['description'];
     this.price = service_data['price'];
-    this.place = service_data['address'];
+    this.place = service_data['place'];
     this.available = service_data['available'];
     this.quantity = service_data['quantity'];
     this.availability = service_data['availability'];

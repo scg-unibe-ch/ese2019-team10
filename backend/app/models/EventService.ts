@@ -23,4 +23,13 @@ export class EventService extends Model<EventService> {
   @ForeignKey(() => Service)
   @Column
   public serviceId!: number;
+
+  post_(event_data: any): void {
+    this.startDate = event_data['startDate'];
+    this.endDate = event_data['endDate'];
+    this.startTime = event_data['startTime'];
+    this.endTime = event_data['endTime'];
+    this.eventId = event_data['eventId'];
+    this.serviceId = event_data['serviceId'];
+  }
 }
