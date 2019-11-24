@@ -248,6 +248,8 @@ export class ServicesPage implements OnInit {
       serviceId: id,
     };
     this.authService.deleteService(service).subscribe(() => {
+      this.initialize();
+      this.loadServices();
     });
   }
 
@@ -255,17 +257,21 @@ export class ServicesPage implements OnInit {
   public loadServices() {
     this.authService.loadServices().subscribe(user => {
       this.services = user.services;
-      for (const service of this.services) {
-        // console.log(service);
-        if (service.category) {
-          service.categoryId = service.category.id;
+      if (this.services.length > 0) {
+        for (const service of this.services) {
+          // console.log(service);
+          if (service.category) {
+            service.categoryId = service.category.id;
+          }
+          this.addService();
+          this.helperArray.push(false);
         }
-        this.addService();
-        this.helperArray.push(false);
+        this.serviceList.patchValue(this.services);
+        console.log(this.services);
+        this.loadedServices = true;
+
       }
-      this.serviceList.patchValue(this.services);
-      console.log(this.services);
-      this.loadedServices = true;
+
 
       /*      this.serviceForm.patchValue({
               email: this.user.email,

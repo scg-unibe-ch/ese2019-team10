@@ -229,6 +229,8 @@ export class EventsPage implements OnInit {
       eventId: id,
     };
     this.authService.deleteEvent(event).subscribe(() => {
+      this.initialize();
+      this.loadEvents();
     });
   }
 
@@ -236,17 +238,20 @@ export class EventsPage implements OnInit {
   public loadEvents() {
     this.authService.loadEvents().subscribe(user => {
       this.events = user.events;
-      for (const event of this.events) {
-        // console.log(event);
-        if (event.category) {
-          event.categoryId = event.category.id;
+      if (this.events.length > 0) {
+        for (const event of this.events) {
+          // console.log(event);
+          if (event.category) {
+            event.categoryId = event.category.id;
+          }
+          this.addEvent();
+          this.helperArray.push(false);
         }
-        this.addEvent();
-        this.helperArray.push(false);
+        this.eventList.patchValue(this.events);
+        console.log(this.events);
+        this.loadedEvents = true;
       }
-      this.eventList.patchValue(this.events);
-      console.log(this.events);
-      this.loadedEvents = true;
+
 
       /*      this.eventForm.patchValue({
               email: this.user.email,
