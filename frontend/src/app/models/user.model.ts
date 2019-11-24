@@ -7,6 +7,7 @@ export class User implements Deserializable {
   public email: string;
   public password: string;
   public id: number;
+  public userId: number;
   public firstName: string;
   public lastName: string;
   public gender: string;

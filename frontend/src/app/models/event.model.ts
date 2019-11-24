@@ -2,6 +2,7 @@ import {Deserializable} from './deserializable.model';
 
 export class Event implements Deserializable {
   public id: number;
+  public eventId: number;
   public name: string;
   public category: {
     id,

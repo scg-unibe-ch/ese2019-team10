@@ -185,7 +185,7 @@ export class AuthService {
   saveService(service) {
     service.userId = this.id;
     console.log(service);
-    return this.http.put(this.url + 'user/service/', service, httpOptions);
+    return this.http.put(this.url + 'user/service/' + service.id, service, httpOptions);
     /*      .pipe(
           map(data => console.log(data))
         );*/

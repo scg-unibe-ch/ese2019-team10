@@ -170,6 +170,7 @@ export class ServicesPage implements OnInit {
   createService(): FormGroup {
     return this.formBuilder.group({
       id: [''],
+      serviceId: [''],
       name: ['', Validators.compose([
         Validators.required,
         Validators.maxLength(100)
