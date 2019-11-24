@@ -136,14 +136,8 @@ export class AuthService {
       this.storage.remove(ADMIN_KEY).then(() => {
         this.admin = false;
       });
-      this.router.navigate(['/', 'home']).then(/*nav => {}, err => {
-        console.log(err); // when there's an error
-      }*/);
-      this.alertService.presentToast('You have logged out. See you soon!').then(/*r => {
-        console.log(r);
-      }, err => {
-        console.log(err);
-      }*/);
+      this.router.navigate(['/', 'home']).then();
+      this.alertService.presentToast('You have logged out. See you soon!').then();
     });
   }
 
@@ -151,20 +145,10 @@ export class AuthService {
     return this.http.get<User>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
       map(data => new User().deserialize(data[0]))
     );
-    /*    .pipe(
-          catchError(e => {
-            this.showAlert(e.error.msg);
-            throw new Error(e);
-          })
-        );*/
   }
 
   saveProfile(credentials) {
     return this.http.put(this.url + 'user/profile/' + this.id, credentials, httpOptions).pipe(
-      /*      catchError(e => {
-              this.showAlert(e.error.msg);
-              throw new Error(e);
-            })*/
     );
   }
 
@@ -175,38 +159,44 @@ export class AuthService {
   }
 
 
-  loadServices(): Observable<User> {
-    /*    return this.http.get<Service[]>(this.url + 'user/profile/get' + this.id, httpOptions).pipe(
-          map((services: any[]) => services.map((service) => new Service().deserialize(service)))
-        );*/
-    return this.loadProfile();
-  }
-
   saveService(service) {
     service.userId = this.id;
-    console.log(service);
     return this.http.put(this.url + 'user/service/' + service.id, service, httpOptions);
-    /*      .pipe(
-          map(data => console.log(data))
-        );*/
+  }
+
+  saveEvent(event) {
+    event.userId = this.id;
+    return this.http.put(this.url + 'user/event/' + event.id, event, httpOptions);
   }
 
   saveNewService(service) {
     service.userId = this.id;
-    console.log(service);
     return this.http.post(this.url + 'user/service', service, httpOptions);
-    /*    .pipe(
-          map(data => console.log(data))
-        );*/
+  }
+
+  saveNewEvent(event) {
+    event.userId = this.id;
+    return this.http.post(this.url + 'user/event', event, httpOptions);
   }
 
   deleteService(service) {
     service.userId = this.id;
     console.log(service);
     return this.http.delete(this.url + 'user/service/', service);
-/*    .pipe(
-      map(data => console.log(data))
-    );*/
+  }
+
+  deleteEvent(event) {
+    event.userId = this.id;
+    console.log(event);
+    return this.http.delete(this.url + 'user/event/', event);
+  }
+
+
+  loadServices(): Observable<User> {
+    /*    return this.http.get<Service[]>(this.url + 'user/profile/get' + this.id, httpOptions).pipe(
+          map((services: any[]) => services.map((service) => new Service().deserialize(service)))
+        );*/
+    return this.loadProfile();
   }
 
   loadEvents(): Observable<User> {
@@ -232,37 +222,8 @@ export class AuthService {
     service.bookerId = this.id;
     // console.log(service);
     return this.http.post(this.url + 'user/service/book', service, httpOptions);
-    /*    .pipe(
-          map(data => console.log(data))
-        );*/
   }
 
-  saveEvent(event) {
-    event.userId = this.id;
-    // console.log(event);
-    return this.http.put(this.url + 'user/event/', event, httpOptions);
-    /*      .pipe(
-          map(data => console.log(data))
-        );*/
-  }
-
-  saveNewEvent(event) {
-    event.userId = this.id;
-    // console.log(event);
-    return this.http.post(this.url + 'user/event', event, httpOptions);
-    /*    .pipe(
-          map(data => console.log(data))
-        );*/
-  }
-
-  deleteEvent(event) {
-    event.userId = this.id;
-    console.log(event);
-    return this.http.delete(this.url + 'user/event/', event);
-    /*    .pipe(
-          map(data => console.log(data))
-        );*/
-  }
 
   search(term) {
     return this.http.get(this.url + 'search', term).pipe(
@@ -270,14 +231,5 @@ export class AuthService {
     );
   }
 
-
-  /*  showAlert(msg) {
-      const alert = this.alertController.create({
-        message: msg,
-        header: 'Error',
-        buttons: ['OK']
-      });
-      alert.then(a => a.present());
-    }*/
 
 }
