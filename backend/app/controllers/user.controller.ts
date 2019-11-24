@@ -11,11 +11,11 @@ const router: Router = Router();
 // Get user profile
 router.get('/profile/:id', async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, undefined);
-  if (res.locals.jwtPayload === null || (!res.locals.jwtPayload.roles.includes(1) && res.locals.jwtPayload.id !== id)) {
+  /*if (res.locals.jwtPayload === null || (!res.locals.jwtPayload.roles.includes(1) && res.locals.jwtPayload.id !== id)) {
     res.statusCode = 401;
     res.json({'msg': 'You are not allowed to do this'});
     return;
-  }
+  }*/
   const instance = await User.findByPk(id);
   if (instance == null) {
     res.statusCode = 404;
@@ -89,8 +89,8 @@ function addRole(newUser: any) {
 }
 
 // Get service
-router.get('/service/:serviceId', async (req: Request, res: Response) => {
-  const serviceId = parseInt(req.params.serviceId, undefined);
+router.get('/service/:id', async (req: Request, res: Response) => {
+  const serviceId = parseInt(req.params.id, undefined);
   const instance = await Service.findByPk(serviceId);
   if (instance == null) {
     res.statusCode = 404;
@@ -229,9 +229,9 @@ router.post('/service', async (req: Request, res: Response) => {
 });
 
 // Edit service
-router.put('/service', async (req: Request, res: Response) => {
+router.put('/service/:id', async (req: Request, res: Response) => {
   const userId = parseInt(req.body.userId, undefined);
-  const serviceId = parseInt(req.body.serviceId, undefined);
+  const serviceId = parseInt(req.params.id, undefined);
   const instanceUser = await User.findByPk(userId);
   const instanceService = await Service.findByPk(serviceId);
   if (instanceUser == null) {
