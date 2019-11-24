@@ -142,8 +142,8 @@
 
               <ion-item>
                 <ion-label position="floating">Description</ion-label>
-                <ion-textarea type="text" name="description" formControlName="description" spellcheck wrap="soft"
-                              autoGrow></ion-textarea>
+                <ion-textarea type="text" name="description" formControlName="description" spellcheck
+                             rows="5" autoGrow="false"></ion-textarea>
               </ion-item>
               <div class="validation-errors ion-text-wrap">
                 <ng-container *ngFor="let validation of serviceValidation.description">
