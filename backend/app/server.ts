@@ -3,7 +3,6 @@ import express from 'express';
 
 // import all the controllers. If you add a new controller, make sure to import it here as well.
 import {Sequelize} from 'sequelize-typescript';
-import {WelcomeController} from './controllers';
 import {Service} from './models/service.model';
 import {User} from './models/user.model';
 import {Event} from './models/event.model';
@@ -110,7 +109,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/welcome', CheckLoginController, WelcomeController);
 // api/register endpoint
 app.use('/api/register', RegisterController);
 app.use('/api/login', LoginController);
