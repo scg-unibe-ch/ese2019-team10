@@ -8,14 +8,19 @@ import {RoleUser} from '../models/RoleUser';
 
 const router: Router = Router();
 
+function isAuthentic(response: Response, id: number): boolean {
+  if (response.locals.jwtPayload === null || response.locals.jwtPayload.id !== id) {
+    response.statusCode = 401;
+    response.json({'msg': 'You are not allowed to do this'});
+    return false;
+  } else {
+    return true;
+  }
+}
+
 // Get user profile
 router.get('/profile/:id', async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, undefined);
-  /*if (res.locals.jwtPayload === null || (!res.locals.jwtPayload.roles.includes(1) && res.locals.jwtPayload.id !== id)) {
-    res.statusCode = 401;
-    res.json({'msg': 'You are not allowed to do this'});
-    return;
-  }*/
   const instance = await User.findByPk(id);
   if (instance == null) {
     res.statusCode = 404;
@@ -134,6 +139,10 @@ router.get('/event/:evenId', async (req: Request, res: Response) => {
 // Edit user profile
 router.put('/profile/:id', async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, undefined);
+  if (! isAuthentic(res, id)) {
+    return;
+  }
+
   const instance = await User.findByPk(id);
   if (instance == null) {
     res.statusCode = 404;
@@ -207,6 +216,11 @@ function delRoleUser(userId: number, roleId: number) {
 router.post('/service', async (req: Request, res: Response) => {
   // search for user with requested email
   const id = parseInt(req.body.userId, undefined);
+
+  if (! isAuthentic(res, id)) {
+    return;
+  }
+
   const instance = await User.findByPk(id);
   if (instance == null) {
     res.statusCode = 404;
@@ -231,6 +245,11 @@ router.post('/service', async (req: Request, res: Response) => {
 // Edit service
 router.put('/service/:id', async (req: Request, res: Response) => {
   const userId = parseInt(req.body.userId, undefined);
+
+  if (! isAuthentic(res, userId)) {
+    return;
+  }
+
   const serviceId = parseInt(req.params.id, undefined);
   const instanceUser = await User.findByPk(userId);
   const instanceService = await Service.findByPk(serviceId);
@@ -274,6 +293,11 @@ router.put('/service/:id', async (req: Request, res: Response) => {
 router.post('/event', async (req: Request, res: Response) => {
   // search for user with requested email
   const id = parseInt(req.body.userId, undefined);
+
+  if (! isAuthentic(res, id)) {
+    return;
+  }
+
   const instance = await User.findByPk(id);
   if (instance == null) {
     res.statusCode = 404;
@@ -298,6 +322,11 @@ router.post('/event', async (req: Request, res: Response) => {
 // Edit event
 router.put('/event', async (req: Request, res: Response) => {
   const userId = parseInt(req.body.userId, undefined);
+
+  if (! isAuthentic(res, userId)) {
+    return;
+  }
+
   const eventId = parseInt(req.body.eventId, undefined);
   const instanceUser = await User.findByPk(userId);
   const instanceEvent = await Event.findByPk(eventId);
