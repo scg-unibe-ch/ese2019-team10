@@ -3,6 +3,7 @@ import {User} from '../models/user.model';
 import {Service} from '../models/service.model';
 import {Event} from '../models/event.model';
 import { Op } from 'sequelize';
+import {sequelize} from '../server';
 
 const router: Router = Router();
 
@@ -48,18 +49,17 @@ class SearchResult {
  * @param result pointer to a SearchResult instance to store results
  */
 async function searchUser(searchTerm: string, result: SearchResult) {
-  result.addUsers(await User.findAll({
-    where: {
-      [Op.or]: {
-        firstName: {
-          [Op.iLike]: searchTerm
-        },
-        lastName: {
-          [Op.iLike]: searchTerm
-        }
-      }
+  const sqlQuery = 'SELECT u."id", u."firstName", u."lastName" FROM "User" AS u WHERE to_tsvector(' +
+    'u."firstName" || \' \' || u."lastName") @@ plainto_tsquery(\'english\', :searchTerm)';
+
+  const queryResult = await sequelize.query(
+    sqlQuery,
+    {
+      replacements: {'searchTerm': searchTerm},
     }
-  }));
+  );
+
+  result.addUsers(queryResult[0]);
 }
 
 /**
@@ -69,20 +69,17 @@ async function searchUser(searchTerm: string, result: SearchResult) {
  * @param result pointer to a SearchResult instance to store results
  */
 async function searchService(searchTerm: string, result: SearchResult) {
-  result.addServices(await Service.findAll({
-    where : {
-      [Op.or] : {
-        name: {
-          [Op.iLike] : searchTerm
-        },
-        description : {
-          [Op.iLike] : searchTerm
-        }
-      }
-    }
-  }));
+  const sqlQuery = 'SELECT * FROM "Service" AS s WHERE to_tsvector(s."name" || \' \' || s."description") ' +
+    '@@ plainto_tsquery(\'english\', :searchTerm)';
 
-  return result;
+  const queryResult = await sequelize.query(
+    sqlQuery,
+    {
+      replacements: {'searchTerm': searchTerm},
+    }
+  );
+
+  result.addServices(queryResult[0]);
 }
 
 /**
@@ -92,20 +89,17 @@ async function searchService(searchTerm: string, result: SearchResult) {
  * @param result pointer to a SearchResult instance to store results
  */
 async function searchEvent(searchTerm: string, result: SearchResult) {
-  result.addEvents(await Event.findAll({
-    where : {
-      [Op.or] : {
-        name: {
-          [Op.iLike] : searchTerm
-        },
-        description : {
-          [Op.iLike] : searchTerm
-        }
-      }
-    }
-  }));
+  const sqlQuery = 'SELECT * FROM "Event" AS e WHERE to_tsvector(e."name" || \' \' || e."description") ' +
+                   '@@ plainto_tsquery(\'english\', :searchTerm)';
 
-  return result;
+  const queryResult = await sequelize.query(
+    sqlQuery,
+    {
+      replacements: {'searchTerm': searchTerm},
+    }
+  );
+
+  result.addEvents(queryResult[0]);
 }
 
 /**
@@ -125,7 +119,7 @@ class Search {
    * @param searchParameter JSON specifying the searchCategory and the searchTerm
    */
   constructor(searchParameter: any) {
-    this.searchTerm = '%' + searchParameter['searchTerm'] + '%';  // '%' represents any number of characters
+    this.searchTerm = searchParameter['searchTerm'];
     switch (searchParameter['searchCategory']) {
       case 'everything' : {
         this.searchFunctions = [searchUser, searchService, searchEvent];
