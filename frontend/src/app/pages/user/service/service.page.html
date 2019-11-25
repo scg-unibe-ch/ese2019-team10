@@ -70,10 +70,20 @@
 
           <ion-row *ngIf="viewerIsEventManager" class="ion-margin-top">
 
-            <form *ngIf="eventsLoaded" [formGroup]="bookingForm" (ngSubmit)="bookService()">
+            <ion-item-divider *ngIf="eventsLoaded" class="ion-margin-top" color="dark" sticky="true">
+              <ion-label>
+                <ion-icon class="divider-icon" slot="start" name="basket"></ion-icon>
+                You can book this service
+              </ion-label>
+            </ion-item-divider>
+
+            <form [formGroup]="bookingForm" (ngSubmit)="bookService()">
               <ion-row>
                 <ion-col>
                   <ion-list inset>
+                    <ion-list-header>
+                      <ion-label>Select the event for which you want to book this service and optionally add a short message.</ion-label>
+                    </ion-list-header>
 
                     <ion-item>
                       <ion-label position="floating">Message</ion-label>
