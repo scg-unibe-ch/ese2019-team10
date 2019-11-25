@@ -11,29 +11,25 @@ const router: Router = Router();
  * The result of a search, will be converted into a JSON string to be returned in a response.
  */
 class SearchResult {
-  private services: Service[] = [];
-  private events: Event[] = [];
+  private services: any[] = [];
+  private events: any[] = [];
   private users: any[] = [];
 
-  addServices(services: Service[]): void {
+  addServices(services: any[]): void {
     services.forEach( (service) => {
       this.services.push(service);
     });
   }
 
-  addEvents(events: Event[]): void {
+  addEvents(events: any[]): void {
     events.forEach( (event) => {
       this.events.push(event);
     });
   }
 
-  addUsers(users: User[]): void {
+  addUsers(users: any[]): void {
     users.forEach( (user) => {
-      this.users.push({
-        'id': user.id,
-        'firstName': user.firstName,
-        'lastName': user.lastName,
-      });
+      this.users.push(user);
     });
   }
 
@@ -49,8 +45,8 @@ class SearchResult {
  * @param result pointer to a SearchResult instance to store results
  */
 async function searchUser(searchTerm: string, result: SearchResult) {
-  const sqlQuery = 'SELECT u."id", u."firstName", u."lastName" FROM "User" AS u WHERE to_tsvector(' +
-    'u."firstName" || \' \' || u."lastName") @@ plainto_tsquery(\'english\', :searchTerm)';
+  const sqlQuery = 'SELECT u."id", u."firstName", u."lastName", u."city", u."country" FROM "User" AS u WHERE ' +
+    'to_tsvector(u."firstName" || \' \' || u."lastName") @@ plainto_tsquery(\'english\', :searchTerm)';
 
   const queryResult = await sequelize.query(
     sqlQuery,
@@ -163,7 +159,7 @@ class Search {
   }
 }
 
-router.post('/', async (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
     const search: Search = new Search(req.body);
     let results!: SearchResult;
@@ -173,7 +169,7 @@ router.post('/', async (req: Request, res: Response) => {
     res.send(results.String());
   } catch (e) {
     console.log(e);
-    res.statusMessage = 'Invalid search type';
+    res.statusMessage = e.message;
     res.sendStatus(500);
   }
 });
