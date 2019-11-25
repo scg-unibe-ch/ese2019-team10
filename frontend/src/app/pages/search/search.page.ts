@@ -20,7 +20,9 @@ export class SearchPage implements OnInit {
   foundUsers: boolean;
   foundServices: boolean;
   foundEvents: boolean;
-  searchCategory: any;
+  searchCategory: string;
+  searchAttribute: string;
+  refineSearch: string;
   services: Service[];
   events: Event[];
   users: User[];
@@ -42,7 +44,8 @@ export class SearchPage implements OnInit {
     this.foundServices = false;
     this.foundEvents = false;
     this.searchCategory = 'everything';
-
+    this.searchAttribute = 'everything';
+    this.refineSearch = 'everything';
   }
 
   search(term) {
@@ -52,6 +55,7 @@ export class SearchPage implements OnInit {
 
       const searchObject = {
         searchCategory: this.searchCategory,
+        searchAttribute: this.refineSearch,
         searchTerm: term,
       };
 
@@ -81,6 +85,12 @@ export class SearchPage implements OnInit {
       });
 
     }
+  }
+
+  selectCategory(category) {
+    console.log(category);
+    this.searchCategory = category;
+    this.refineSearch = 'everything';
   }
 
   goToService(service) {
