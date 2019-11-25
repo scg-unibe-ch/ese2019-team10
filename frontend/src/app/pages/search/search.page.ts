@@ -39,30 +39,37 @@ export class SearchPage implements OnInit {
   ngOnInit() {
     this.title = 'Search';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
+    this.searchCategory = 'everything';
+    this.searchAttribute = 'everything';
+    this.refineSearch = 'everything';
+    this.initialize();
+  }
+
+  initialize() {
     this.foundResult = false;
     this.foundUsers = false;
     this.foundServices = false;
     this.foundEvents = false;
-    this.searchCategory = 'everything';
-    this.searchAttribute = 'everything';
-    this.refineSearch = 'everything';
+    this.services = [];
+    this.events = [];
+    this.users = [];
   }
 
   search(term) {
-
 
     if (term.length > 0) {
 
       const searchObject = {
         searchCategory: this.searchCategory,
-        searchAttribute: this.refineSearch,
+        searchAttribute: this.searchAttribute,
         searchTerm: term,
       };
 
       console.log(searchObject);
-      this.searched = true;
+      this.initialize();
 
       this.authService.search(searchObject).subscribe((result: any) => {
+        this.searched = true;
         this.searchResult = result;
 
         if (this.searchResult.services.length > 0) {
@@ -90,25 +97,19 @@ export class SearchPage implements OnInit {
   selectCategory(category) {
     console.log(category);
     this.searchCategory = category;
-    this.refineSearch = 'everything';
+    this.searchAttribute = 'everything';
   }
 
   goToService(service) {
-    this.router.navigate(['/', 'user/', service.userId, '/service/', service.id]).then(/*nav => {}, err => {
-        console.log(err); // when there's an error
-      }*/);
+    this.router.navigate(['/user/service/', service.id]).then();
 
   }
 
   goToEvent(event) {
-    this.router.navigate(['/', 'user/', event.userId, '/event/', event.id]).then(/*nav => {}, err => {
-        console.log(err); // when there's an error
-      }*/);
+    this.router.navigate(['/user/event/', event.id]).then();
   }
 
   goToUser(user) {
-    this.router.navigate(['/', 'user/profile/', user.id]).then(/*nav => {}, err => {
-        console.log(err); // when there's an error
-      }*/);
+    this.router.navigate(['/user/profile/', user.id]).then();
   }
 }

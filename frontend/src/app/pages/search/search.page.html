@@ -23,11 +23,11 @@
     </div>
 
 
-    <!-- Icon top -->
-    <ion-segment #segmentCategory color="tertiary"  (ionChange)="selectCategory(segmentCategory.value)">
+    <ion-segment #segmentCategory color="tertiary" (ionChange)="selectCategory(segmentCategory.value)"
+                 scrollable="true">
       <ion-segment-button value="everything" checked>
         <ion-label>Everything</ion-label>
-        <ion-icon name="search"></ion-icon>
+        <ion-icon name="infinite"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="services">
         <ion-label>Services</ion-label>
@@ -38,7 +38,7 @@
         <ion-icon name="gift"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="user">
-        <ion-label>User</ion-label>
+        <ion-label>Users</ion-label>
         <ion-icon name="person"></ion-icon>
       </ion-segment-button>
     </ion-segment>
@@ -46,7 +46,7 @@
 
     <ion-item *ngIf="searchCategory === 'services'">
       <ion-label>Refine your search:</ion-label>
-      <ion-select [(ngModel)]="refineSearch"  value="Category" interface="alert" ok-text="OK" cancel-text="Cancel">
+      <ion-select [(ngModel)]="searchAttribute" value="Category" interface="alert" ok-text="OK" cancel-text="Cancel">
         <ion-select-option value="everything" selected>Everything</ion-select-option>
         <ion-select-option value="name">Name</ion-select-option>
         <ion-select-option value="category">Category</ion-select-option>
@@ -60,7 +60,7 @@
 
     <ion-item *ngIf="searchCategory === 'events'">
       <ion-label>Refine your search:</ion-label>
-      <ion-select [(ngModel)]="refineSearch"  value="Category" interface="alert" ok-text="OK" cancel-text="Cancel">
+      <ion-select [(ngModel)]="searchAttribute" value="Category" interface="alert" ok-text="OK" cancel-text="Cancel">
         <ion-select-option value="everything" selected>Everything</ion-select-option>
         <ion-select-option value="name">Name</ion-select-option>
         <ion-select-option value="description">Description</ion-select-option>
@@ -71,7 +71,7 @@
 
     <ion-item *ngIf="searchCategory === 'user'">
       <ion-label>Refine your search:</ion-label>
-      <ion-select [(ngModel)]="refineSearch"  value="Category" interface="alert" ok-text="OK" cancel-text="Cancel">
+      <ion-select [(ngModel)]="searchAttribute" value="Category" interface="alert" ok-text="OK" cancel-text="Cancel">
         <ion-select-option value="everything" selected>Everything</ion-select-option>
         <ion-select-option value="firstName">First Name</ion-select-option>
         <ion-select-option value="lastName">Last Name</ion-select-option>
@@ -84,69 +84,86 @@
     <ion-card-content *ngIf="searched">
       <ion-list *ngIf="foundResult; else noResultsFound">
         <ion-list-header>
-          These results were found:
+          The following results were found:
         </ion-list-header>
 
-        <ion-list *ngIf="foundServices">
+        <ion-list *ngIf="foundServices" inset>
+          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+            <ion-label>
+              <ion-icon class="divider-icon" slot="start" name="build"></ion-icon>
+              Services
+            </ion-label>
+          </ion-item-divider>
 
-        <ion-item *ngFor="let service of services">
-          <ion-avatar slot="start">
-            <img src="../../../assets/verified_user-24px.svg" alt="verified avatar">
-          </ion-avatar>
-          <ion-label>
-            <h2>{{service.name}}</h2>
-            <h3>{{service.description}}</h3>
-            <p>{{'ID: ' + service.id}}</p>
-          </ion-label>
-          <ion-icon slot="end" name="checkmark" color="success"></ion-icon>
-          <ion-button class="search-confirm ion-no-margin" color="secondary"
-                      (click)="goToService(service)">
-            <ion-icon name="share-alt" slot="start"></ion-icon>
-            View Service
-          </ion-button>
-        </ion-item>
+          <ion-card *ngFor="let service of services" class="ion-margin-bottom" (click)="goToService(service)"
+                    type="button" button="true">
+            <ion-item>
+              <ion-badge slot="end" color="warning">Name</ion-badge>
+              <ion-label class="ion-text-wrap">{{service.name}}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label class="ion-text-wrap">{{service.description}}</ion-label>
+              <ion-badge slot="end" color="warning">Description</ion-badge>
+            </ion-item>
+            <ion-item>
+              <ion-label class="ion-text-wrap">{{service.place}}</ion-label>
+              <ion-badge slot="end" color="warning">Place</ion-badge>
+            </ion-item>
+          </ion-card>
 
         </ion-list>
 
-        <ion-list *ngIf="foundEvents">
+        <ion-list *ngIf="foundEvents" inset>
 
-          <ion-item *ngFor="let event of events">
-            <ion-avatar slot="start">
-              <img src="../../../assets/verified_user-24px.svg" alt="verified avatar">
-            </ion-avatar>
+          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
             <ion-label>
-              <h2>{{event.name}}</h2>
-              <h3>{{event.description}}</h3>
-              <p>{{'ID: ' + event.id}}</p>
+              <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
+              Events
             </ion-label>
-            <ion-icon slot="end" name="checkmark" color="success"></ion-icon>
-            <ion-button class="search-confirm ion-no-margin" color="secondary"
-                        (click)="goToEvent(event)">
-              <ion-icon name="share-alt" slot="start"></ion-icon>
-              View Service
-            </ion-button>
-          </ion-item>
+          </ion-item-divider>
+
+          <ion-card *ngFor="let event of events" class="ion-margin-bottom" (click)="goToEvent(event)" type="button"
+                    button="true">
+            <ion-item>
+              <ion-badge slot="end" color="warning">Name</ion-badge>
+              <ion-label class="ion-text-wrap">{{event.name}}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label class="ion-text-wrap">{{event.description}}</ion-label>
+              <ion-badge slot="end" color="warning">Description</ion-badge>
+            </ion-item>
+            <ion-item>
+              <ion-label class="ion-text-wrap">{{event.place}}</ion-label>
+              <ion-badge slot="end" color="warning">Place</ion-badge>
+            </ion-item>
+          </ion-card>
 
         </ion-list>
 
-        <ion-list *ngIf="foundUsers">
+        <ion-list *ngIf="foundUsers" inset>
 
-          <ion-item *ngFor="let user of users">
-            <ion-avatar slot="start">
-              <img src="../../../assets/verified_user-24px.svg" alt="verified avatar">
-            </ion-avatar>
+          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
             <ion-label>
-              <h2>{{user.getFullName()}}</h2>
-              <h3>{{user.email}}</h3>
-              <p>{{'ID: ' + user.id}}</p>
+              <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
+              Users
             </ion-label>
-            <ion-icon slot="end" name="checkmark" color="success"></ion-icon>
-            <ion-button class="search-confirm ion-no-margin" color="secondary"
-                        (click)="goToUser(user)">
-              <ion-icon name="share-alt" slot="start"></ion-icon>
-              View Service
-            </ion-button>
-          </ion-item>
+          </ion-item-divider>
+
+          <ion-card *ngFor="let user of users" class="ion-margin-bottom" (click)="goToUser(user)" type="button"
+                    button="true">
+            <ion-item>
+              <ion-badge slot="end" color="warning">Name</ion-badge>
+              <ion-label class="ion-text-wrap">{{user.firstName + ' ' + user.lastName}}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label class="ion-text-wrap">{{user.city}}</ion-label>
+              <ion-badge slot="end" color="warning">City</ion-badge>
+            </ion-item>
+            <ion-item>
+              <ion-label class="ion-text-wrap">{{user.country}}</ion-label>
+              <ion-badge slot="end" color="warning">Country</ion-badge>
+            </ion-item>
+          </ion-card>
 
         </ion-list>
 
@@ -154,7 +171,7 @@
 
       <ng-template #noResultsFound>
         <ion-list-header>
-          This search found no results. Please try again.
+          No results were found. Please try again.
         </ion-list-header>
       </ng-template>
     </ion-card-content>
