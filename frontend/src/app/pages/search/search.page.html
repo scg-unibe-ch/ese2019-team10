@@ -23,23 +23,60 @@
     </div>
 
 
-    <ion-item>
-      <ion-label>Specify a search category</ion-label>
-      <ion-select [(ngModel)]="searchCategory"  value="Category" interface="alert" ok-text="OK" cancel-text="Cancel">
+    <!-- Icon top -->
+    <ion-segment #segmentCategory color="tertiary"  (ionChange)="selectCategory(segmentCategory.value)">
+      <ion-segment-button value="everything" checked>
+        <ion-label>Everything</ion-label>
+        <ion-icon name="search"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="services">
+        <ion-label>Services</ion-label>
+        <ion-icon name="build"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="events">
+        <ion-label>Events</ion-label>
+        <ion-icon name="gift"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="user">
+        <ion-label>User</ion-label>
+        <ion-icon name="person"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+
+
+    <ion-item *ngIf="searchCategory === 'services'">
+      <ion-label>Refine your search:</ion-label>
+      <ion-select [(ngModel)]="refineSearch"  value="Category" interface="alert" ok-text="OK" cancel-text="Cancel">
         <ion-select-option value="everything" selected>Everything</ion-select-option>
-        <ion-select-option value="services">Services</ion-select-option>
-        <ion-select-option value="serviceName">Service Name</ion-select-option>
-        <ion-select-option value="serviceCategory">Service Category</ion-select-option>
-        <ion-select-option value="serviceDescription">Service Description</ion-select-option>
-        <ion-select-option value="servicePrice">Service Price</ion-select-option>
-        <ion-select-option value="serviceAvailability">Service Availability</ion-select-option>
-        <ion-select-option value="servicePlace">Service Place</ion-select-option>
-        <ion-select-option value="serviceQuantity">Service Quantity</ion-select-option>
-        <ion-select-option value="events">Events</ion-select-option>
-        <ion-select-option value="eventName">Event Name</ion-select-option>
-        <ion-select-option value="eventDescription">Event Description</ion-select-option>
-        <ion-select-option value="eventDate">Event Date</ion-select-option>
-        <ion-select-option value="eventPlace">Event Place</ion-select-option>
+        <ion-select-option value="name">Name</ion-select-option>
+        <ion-select-option value="category">Category</ion-select-option>
+        <ion-select-option value="description">Description</ion-select-option>
+        <ion-select-option value="price">Price</ion-select-option>
+        <ion-select-option value="availability">Availability</ion-select-option>
+        <ion-select-option value="place">Place</ion-select-option>
+        <ion-select-option value="quantity">Quantity</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="searchCategory === 'events'">
+      <ion-label>Refine your search:</ion-label>
+      <ion-select [(ngModel)]="refineSearch"  value="Category" interface="alert" ok-text="OK" cancel-text="Cancel">
+        <ion-select-option value="everything" selected>Everything</ion-select-option>
+        <ion-select-option value="name">Name</ion-select-option>
+        <ion-select-option value="description">Description</ion-select-option>
+        <ion-select-option value="date">Date</ion-select-option>
+        <ion-select-option value="place">Place</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="searchCategory === 'user'">
+      <ion-label>Refine your search:</ion-label>
+      <ion-select [(ngModel)]="refineSearch"  value="Category" interface="alert" ok-text="OK" cancel-text="Cancel">
+        <ion-select-option value="everything" selected>Everything</ion-select-option>
+        <ion-select-option value="firstName">First Name</ion-select-option>
+        <ion-select-option value="lastName">Last Name</ion-select-option>
+        <ion-select-option value="city">City</ion-select-option>
+        <ion-select-option value="country">Country</ion-select-option>
       </ion-select>
     </ion-item>
 
