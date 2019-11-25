@@ -61,20 +61,14 @@ export class ServicePage implements OnInit {
       ])),
       eventId: ['', Validators.required],
     });
-
-
   }
 
   ionViewWillEnter() {
-    this.userId = Number(this.route.snapshot.paramMap.get('userId'));
     this.serviceId = Number(this.route.snapshot.paramMap.get('serviceId'));
     this.viewerIsEventManager = false;
     this.eventsLoaded = false;
-    this.loadService(this.userId, this.serviceId);
-
+    this.loadService(this.serviceId);
     this.checkViewerStatus();
-
-
   }
 
 
@@ -87,28 +81,14 @@ export class ServicePage implements OnInit {
   }
 
 
-  public loadService(userId, serviceId) {
-    this.authService.loadService(userId, serviceId).subscribe(service => {
+  public loadService(serviceId) {
+    this.authService.loadService(serviceId).subscribe(service => {
       this.service = service;
       this.service.categoryName = service.category.name;
-      console.log('this.user: ' + userId);
       console.log(this.service);
-      this.titleService.setTitle(this.service.name + '\'s ' + this.title + appConstants.APPENDED_TITLE);
+      this.titleService.setTitle(this.service.name + ' | ' + this.title + appConstants.APPENDED_TITLE);
 
-      this.loadUser(userId);
-
-
-      /*      this.profileForm.patchValue({
-              email: this.user.email,
-            });*/
-
-
-      /*      Object.keys(this.user).forEach(k => {
-              const control = this.profileForm.get(k);
-              if (control) {
-                control.setValue(this.user[k], {onlySelf: true});
-              }
-            });*/
+      this.loadUser(this.service.userId);
 
     });
   }
@@ -130,20 +110,8 @@ export class ServicePage implements OnInit {
       userId: this.userId,
       serviceId: this.service.id,
     };
-    this.authService.bookService(service).subscribe(res => {
+    this.authService.bookService(service).subscribe(() => {
 
-
-      /*      this.profileForm.patchValue({
-              email: this.user.email,
-            });*/
-
-
-      /*      Object.keys(this.user).forEach(k => {
-              const control = this.profileForm.get(k);
-              if (control) {
-                control.setValue(this.user[k], {onlySelf: true});
-              }
-            });*/
 
     });
   }

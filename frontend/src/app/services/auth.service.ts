@@ -141,25 +141,12 @@ export class AuthService {
     });
   }
 
-  loadProfile(): Observable<User> {
-    return this.http.get<User>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
-      map(data => new User().deserialize(data[0]))
-    );
-  }
 
-  loadUser(id): Observable<User> {
-    return this.http.get<User>(this.url + 'user/profile/' + id, httpOptions).pipe(
-      map(data => new User().deserialize(data[0]))
-    );
-  }
 
   saveProfile(credentials) {
     return this.http.put(this.url + 'user/profile/' + this.id, credentials, httpOptions).pipe(
     );
   }
-
-
-
 
   saveService(service) {
     service.userId = this.id;
@@ -208,13 +195,25 @@ export class AuthService {
     return this.loadProfile();
   }
 
-  loadEvent(userId, eventId): Observable<Event> {
+  loadProfile(): Observable<User> {
+    return this.http.get<User>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
+      map(data => new User().deserialize(data[0]))
+    );
+  }
+
+  loadUser(userId): Observable<User> {
+    return this.http.get<User>(this.url + 'user/profile/' + userId, httpOptions).pipe(
+      map(data => new User().deserialize(data[0]))
+    );
+  }
+
+  loadEvent(eventId): Observable<Event> {
     return this.http.get<Event>(this.url + 'user/event/' + eventId, httpOptions).pipe(
       map(data => new Event().deserialize(data))
     );
   }
 
-  loadService(userId, serviceId): Observable<Service> {
+  loadService(serviceId): Observable<Service> {
     return this.http.get<Service>(this.url + 'user/service/' + serviceId, httpOptions).pipe(
       map(data => new Service().deserialize(data))
     );

@@ -14,7 +14,10 @@ const routes: Routes = [
   {path: 'registered', loadChildren: './pages/registered/registered.module#RegisteredPageModule'},
   {path: 'privacy-policy', loadChildren: './pages/privacy-policy/privacy-policy.module#PrivacyPolicyPageModule'},
   {path: 'terms-conditions', loadChildren: './pages/terms/terms.module#TermsPageModule'},
-  {path: 'search', loadChildren: './pages/search/search.module#SearchPageModule'},
+  {
+    path: 'search', loadChildren: './pages/search/search.module#SearchPageModule',
+    canActivate: [AuthGuardService]
+  },
   {
     path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule',
     canActivate: [AuthGuardService]
@@ -32,15 +35,15 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'user/profile/:id', loadChildren: './pages/user/profile/profile.module#ProfilePageModule',
+    path: 'user/profile/:userId', loadChildren: './pages/user/profile/profile.module#ProfilePageModule',
     canActivate: [AuthGuardService]
   },
   {
-    path: 'user/:userId/service/:serviceId', loadChildren: './pages/user/service/service.module#ServicePageModule',
+    path: 'user/service/:serviceId', loadChildren: './pages/user/service/service.module#ServicePageModule',
     canActivate: [AuthGuardService]
   },
   {
-    path: 'user/:userId/event/:eventId', loadChildren: './pages/user/event/event.module#EventPageModule',
+    path: 'user/event/:eventId', loadChildren: './pages/user/event/event.module#EventPageModule',
     canActivate: [AuthGuardService]
   },
   {

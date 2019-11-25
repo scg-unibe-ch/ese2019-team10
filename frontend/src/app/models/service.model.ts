@@ -3,6 +3,7 @@ import {Deserializable} from './deserializable.model';
 export class Service implements Deserializable {
   public id: number;
   public serviceId: number;
+  public userId: number;
   public name: string;
   public category: {
     id,

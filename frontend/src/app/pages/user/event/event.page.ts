@@ -38,15 +38,11 @@ export class EventPage implements OnInit {
     this.title = 'Event';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
     this.event = new Event().deserialize({});
-
-
   }
 
   ionViewWillEnter() {
-    const userId = this.route.snapshot.paramMap.get('userId');
     const eventId = this.route.snapshot.paramMap.get('eventId');
-    this.loadEvent(userId, eventId);
-
+    this.loadEvent(eventId);
   }
 
   public loadUser(userId) {
@@ -58,26 +54,13 @@ export class EventPage implements OnInit {
   }
 
 
-  public loadEvent(userId, eventId) {
-    this.authService.loadEvent(userId, eventId).subscribe(event => {
+  public loadEvent(eventId) {
+    this.authService.loadEvent(eventId).subscribe(event => {
       this.event = event;
-      console.log('this.user: ' + userId);
       console.log(this.event);
-      this.titleService.setTitle(this.event.name + '\'s ' + this.title + appConstants.APPENDED_TITLE);
+      this.titleService.setTitle(this.event.name + ' | ' + this.title + appConstants.APPENDED_TITLE);
 
-      this.loadUser(userId);
-
-      /*      this.profileForm.patchValue({
-              email: this.user.email,
-            });*/
-
-
-      /*      Object.keys(this.user).forEach(k => {
-              const control = this.profileForm.get(k);
-              if (control) {
-                control.setValue(this.user[k], {onlySelf: true});
-              }
-            });*/
+      this.loadUser(this.event.userId);
 
     });
   }

@@ -77,7 +77,7 @@ export class ProfilePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    const userId = this.route.snapshot.paramMap.get('id');
+    const userId = this.route.snapshot.paramMap.get('userId');
     this.loadUser(userId);
 
   }
@@ -92,24 +92,13 @@ export class ProfilePage implements OnInit {
 
       if (user.services.length > 0) {
         this.services = this.user.services;
-        /*        for (const service of this.user.services) {
-                  this.services.push(
-                    {key: service.id, value: service.name},
-                  );
-                }*/
         this.loadedServices = true;
       }
 
       if (user.events.length > 0) {
         this.events = this.user.events;
-        /*        for (const event of this.user.events) {
-                  this.events.push(
-                    {key: event.id, value: event.name},
-                  );
-                }*/
         this.loadedEvents = true;
       }
-
 
     });
   }

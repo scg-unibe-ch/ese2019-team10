@@ -15,6 +15,16 @@
       </ion-col>
     </ion-row>
 
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <ion-button type="button" [routerLink]="['/search']" color="dark" fill="outline" class="profile"
+                    expand="block">
+          <ion-icon slot="start" name="search" class="button-icon"></ion-icon>
+          Search
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
 
     <ion-row *ngIf="this.user.id" class="ion-margin-top">
       <ion-col>
@@ -23,6 +33,16 @@
                     expand="block">
           <ion-icon slot="start" name="person" class="button-icon"></ion-icon>
           View Profile
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-margin-top">
+      <ion-col>
+        <ion-button type="button" [routerLink]="['/profile']" color="dark" fill="outline" class="profile"
+                    expand="block">
+          <ion-icon slot="start" name="create" class="button-icon"></ion-icon>
+          Edit Profile
         </ion-button>
       </ion-col>
     </ion-row>
@@ -49,15 +69,6 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-top">
-      <ion-col>
-        <ion-button type="button" [routerLink]="['/profile']" color="dark" fill="outline" class="profile"
-                    expand="block">
-          <ion-icon slot="start" name="create" class="button-icon"></ion-icon>
-          Edit Profile
-        </ion-button>
-      </ion-col>
-    </ion-row>
 
     <ion-row *ngIf="this.user.isAdmin" class="ion-margin-top">
       <ion-col>
