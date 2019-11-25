@@ -3,26 +3,17 @@ import {Validators, FormBuilder, FormGroup, FormControl, FormArray} from '@angul
 import {Router, NavigationEnd, ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {tap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 import {PasswordValidator} from '../../../validators/password.validator';
 import {AuthService} from '../../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
 import {User} from '../../../models/user.model';
-import {Observable} from 'rxjs';
+import {Event} from '../../../models/event.model';
+import {Service} from '../../../models/service.model';
 import {appConstants} from '../../../constants/app.constants';
+import {KeyValuePair} from '../../../models/key-value-pair.model';
 
-
-// import {Service} from '../../models/service.model';
-
-interface Service {
-  name: string;
-  category: string;
-}
-
-interface Event {
-  name: string;
-  category: string;
-}
 
 @Component({
   selector: 'app-profile',
@@ -45,6 +36,8 @@ export class ProfilePage implements OnInit {
   public events: Event[];
   public serviceList: FormArray;
   public eventList: FormArray;
+  private loadedServices: boolean;
+  private loadedEvents: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -64,7 +57,10 @@ export class ProfilePage implements OnInit {
     this.month = String(this.currentTime.getMonth() + 1).padStart(2, '0');
     this.year = this.currentTime.getFullYear();
     this.services = [];
+    this.events = [];
     this.user = new User().deserialize({});
+    this.loadedEvents = false;
+    this.loadedServices = false;
 
     this.countries = [
       'Switzerland',
@@ -94,17 +90,26 @@ export class ProfilePage implements OnInit {
       console.log(this.user);
       this.titleService.setTitle(this.user.firstName + '\'s ' + this.title + appConstants.APPENDED_TITLE);
 
-      /*      this.profileForm.patchValue({
-              email: this.user.email,
-            });*/
+      if (user.services.length > 0) {
+        this.services = this.user.services;
+        /*        for (const service of this.user.services) {
+                  this.services.push(
+                    {key: service.id, value: service.name},
+                  );
+                }*/
+        this.loadedServices = true;
+      }
 
+      if (user.events.length > 0) {
+        this.events = this.user.events;
+        /*        for (const event of this.user.events) {
+                  this.events.push(
+                    {key: event.id, value: event.name},
+                  );
+                }*/
+        this.loadedEvents = true;
+      }
 
-      /*      Object.keys(this.user).forEach(k => {
-              const control = this.profileForm.get(k);
-              if (control) {
-                control.setValue(this.user[k], {onlySelf: true});
-              }
-            });*/
 
     });
   }

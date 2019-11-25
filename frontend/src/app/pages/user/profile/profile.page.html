@@ -89,6 +89,49 @@
           </ion-item>
 
 
+          <ion-item >
+            <ion-note slot="start">Street</ion-note>
+            <ion-label>{{user.street}}</ion-label>
+          </ion-item>
+
+
+          <ion-item-divider *ngIf="loadedServices" class="ion-margin-top" color="dark" sticky="true">
+            <ion-label>
+              <ion-icon class="divider-icon" slot="start" name="build"></ion-icon>
+              Services
+            </ion-label>
+          </ion-item-divider>
+
+          <ion-list>
+            <ion-item *ngFor="let service of services">
+              <ion-label><a href="/user/service/{{service.id}}">
+                {{service.name}}
+              </a>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+
+          <ion-item-divider *ngIf="loadedEvents" class="ion-margin-top" color="dark" sticky="true">
+            <ion-label>
+              <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
+              Events
+            </ion-label>
+          </ion-item-divider>
+
+          <ion-list>
+            <ion-item *ngFor="let event of events">
+              <ion-label><a href="/user/event/{{event.id}}">
+                {{event.name}}
+              </a>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+
+
+
+
+
+
         </ion-list>
       </ion-col>
     </ion-row>
