@@ -69,6 +69,7 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
 
 function addRole(newUser: any) {
   const roleArray = newUser[0].role;
+  console.log(roleArray);
   newUser[0].isAdmin = false;
   newUser[0].isServiceProvider = false;
   newUser[0].isEventManager = false;
@@ -119,11 +120,6 @@ router.get('/service/:id', async (req: Request, res: Response) => {
 // Get event
 router.get('/event/:evenId', async (req: Request, res: Response) => {
   const eventId = parseInt(req.params.evenId, undefined);
-  /*if (res.locals.jwtPayload === null || (!res.locals.jwtPayload.roles.includes(1) && res.locals.jwtPayload.id !== id)) {
-    res.statusCode = 401;
-    res.json({'msg': 'You are not allowed to do this'});
-    return;
-  }*/
   const instance = await Event.findByPk(eventId);
   if (instance == null) {
     res.statusCode = 404;
@@ -169,15 +165,15 @@ router.put('/profile/:id', async (req: Request, res: Response) => {
   }).then(result => {
     res.statusCode = 200;
     // Add or update RoleUser
-    if (req.body.isServiceProvider) {
-        addRoleUser(id, 1);
+    if (req.body.isEventManager) {
+      addRoleUser(id, 1);
     } else {
       delRoleUser(id, 1);
     }
-    if (req.body.isEventManager) {
-        addRoleUser(id, 3);
+    if (req.body.isServiceProvider) {
+      addRoleUser(id, 2);
     } else {
-      delRoleUser(id, 3);
+      delRoleUser(id, 2);
     }
     res.json({'msg': 'User updated'});
   }).catch(error => {
