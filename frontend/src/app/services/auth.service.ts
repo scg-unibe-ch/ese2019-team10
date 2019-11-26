@@ -227,7 +227,7 @@ export class AuthService {
 
 
   search(searchObject) {
-    return this.http.get(this.url + 'search', searchObject).pipe(
+    return this.http.post(this.url + 'search', searchObject).pipe(
       // map((users: any[]) => users.map((user) => new User().deserialize(user)))
     );
   }
