@@ -34,6 +34,7 @@ export class ServicePage implements OnInit {
   private serviceProvider: User;
   private providerName: string;
   private providerId: number;
+  private servicesLoaded: boolean;
 
 
   constructor(
@@ -54,6 +55,7 @@ export class ServicePage implements OnInit {
     this.eventsLoaded = false;
     this.viewerIsEventManager = false;
     this.events = [];
+    this.servicesLoaded = false;
 
     this.bookingForm = this.formBuilder.group({
       message: new FormControl('', Validators.compose([
@@ -67,6 +69,7 @@ export class ServicePage implements OnInit {
     this.serviceId = Number(this.route.snapshot.paramMap.get('serviceId'));
     this.viewerIsEventManager = false;
     this.eventsLoaded = false;
+    this.servicesLoaded = false;
     this.loadService(this.serviceId);
     this.checkViewerStatus();
   }
@@ -83,6 +86,7 @@ export class ServicePage implements OnInit {
 
   public loadService(serviceId) {
     this.authService.loadService(serviceId).subscribe(service => {
+      this.servicesLoaded = true;
       this.service = service;
       this.service.categoryName = service.category.name;
       console.log(this.service);
@@ -109,11 +113,14 @@ export class ServicePage implements OnInit {
     const service = {
       userId: this.userId,
       serviceId: this.service.id,
+      eventId: this.bookingForm.value.eventId,
     };
-    this.authService.bookService(service).subscribe(() => {
-
-
-    });
+    this.authService.bookService(service).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.alertService.presentToast(data.msg).then();
+      },
+    );
   }
 
 

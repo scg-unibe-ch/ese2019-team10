@@ -222,12 +222,12 @@ export class AuthService {
   bookService(service) {
     service.bookerId = this.id;
     // console.log(service);
-    return this.http.post(this.url + 'user/service/book', service, httpOptions);
+    return this.http.post(this.url + 'user/booking', service, httpOptions);
   }
 
 
-  search(term) {
-    return this.http.post(this.url + 'search', term).pipe(
+  search(searchObject) {
+    return this.http.get(this.url + 'search', searchObject).pipe(
       // map((users: any[]) => users.map((user) => new User().deserialize(user)))
     );
   }
