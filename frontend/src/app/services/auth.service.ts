@@ -120,7 +120,6 @@ export class AuthService {
 
   /**
    * Call the login api wih the provided credentials. If successful, store the token and set the user.
-   * @param credentials
    */
   login(credentials): Observable<any> {
     return this.http.post(this.url + 'login', credentials, httpOptions)
@@ -275,7 +274,6 @@ export class AuthService {
       // map((users: any[]) => users.map((user) => new User().deserialize(user)))
     );
   }
-
 
 
 }
