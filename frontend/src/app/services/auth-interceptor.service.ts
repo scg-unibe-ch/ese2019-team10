@@ -29,6 +29,9 @@ export class AuthInterceptorService implements HttpInterceptor {
     private alertController: AlertController) {
   }
 
+  /**
+   * Intercept http requests and inject the JWT token for authentication (if there is one).
+   */
   intercept(req: HttpRequest<any>,
             next: HttpHandler): Observable<HttpEvent<any>> {
 

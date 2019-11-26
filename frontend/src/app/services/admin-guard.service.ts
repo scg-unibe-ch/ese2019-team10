@@ -17,6 +17,9 @@ export class AdminGuardService implements CanActivate {
   ) {
   }
 
+  /**
+   * Check if the user is an admin, if not, return the user to the dashboard.
+   */
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
     if (this.authService.isAdmin()) {

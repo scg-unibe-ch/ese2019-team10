@@ -9,6 +9,9 @@ export class AlertService {
   constructor(private toastController: ToastController) {
   }
 
+  /**
+   * Display a toast message using the settings defined below.
+   */
   async presentToast(msg: any) {
     const toast = await this.toastController.create({
       message: msg,

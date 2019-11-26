@@ -16,9 +16,7 @@ import {AlertService} from './alert.service';
 @Injectable({
   providedIn: 'root'
 })
-
 export class HttpErrorService implements HttpInterceptor {
-
 
   constructor(
     private alertController: AlertController,
@@ -26,17 +24,21 @@ export class HttpErrorService implements HttpInterceptor {
   ) {
   }
 
+  /**
+   * Intercept http events and catch errors to handle them in one place, namely here.
+   */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request)
       .pipe(
+        // don't retry
         retry(0),
-/*        map((event: HttpEvent<any>) => {
-          if (event instanceof HttpResponse) {
-            console.log('event--->>>', event);
-            // this.errorDialogService.openDialog(event);
-          }
-          return event;
-        }),*/
+        /*        map((event: HttpEvent<any>) => {
+                  if (event instanceof HttpResponse) {
+                    console.log('event--->>>', event);
+                    // this.errorDialogService.openDialog(event);
+                  }
+                  return event;
+                }),*/
         catchError((error: HttpErrorResponse) => {
           let errorMessage = '';
           if (error.error instanceof ErrorEvent) {
@@ -47,10 +49,12 @@ export class HttpErrorService implements HttpInterceptor {
             // server-side error
             // console.log(error.error);
             errorMessage = `Error Code: ${error.status}\nMessage: ${error.statusText}`;
+            // return these errors instead of show an alert
             if (error.status === 401 && (error.statusText === 'Wrong username/password combination.' || error.statusText === 'Account is not approved yet.')) {
               // this.alertService.presentToast(error.statusText).then();
               return throwError(error.statusText);
             } else {
+              // show an alert for all other errors
               this.showAlert('Error Code: ' + error.status, error.message);
             }
           }
@@ -59,6 +63,9 @@ export class HttpErrorService implements HttpInterceptor {
       );
   }
 
+  /**
+   * Display the error in an alert with a header and a message and an OK button.
+   */
   showAlert(hdr, msg) {
     const alert = this.alertController.create({
       message: msg,

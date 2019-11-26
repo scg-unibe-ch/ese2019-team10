@@ -50,6 +50,9 @@ export class AuthService {
     });
   }
 
+  /**
+   * Check if there is a token in the storage. If there is, check if it is expired. If it is, remove the token from the storage.
+   */
   checkToken() {
     this.storage.get(TOKEN_KEY).then(token => {
       if (token) {
@@ -80,14 +83,27 @@ export class AuthService {
     });
   }
 
+  /**
+   * return true if user is authenticated
+   */
   isAuthenticated() {
     return this.authenticationState.value;
   }
 
+  /**
+   * return true if user is an admin.
+   */
   isAdmin() {
     return this.admin;
   }
 
+  isEventManager() {
+    return this.loadProfile();
+  }
+
+  /**
+   * call the registration api with the provided credentials.
+   */
   register(credentials) {
     return this.http.post(this.url + 'register', credentials, httpOptions)
       .pipe(
@@ -102,6 +118,10 @@ export class AuthService {
       );
   }
 
+  /**
+   * Call the login api wih the provided credentials. If successful, store the token and set the user.
+   * @param credentials
+   */
   login(credentials): Observable<any> {
     return this.http.post(this.url + 'login', credentials, httpOptions)
       .pipe(
@@ -127,6 +147,9 @@ export class AuthService {
       );
   }
 
+  /**
+   * Log the user out by remove the token from the storage, removing the user id, and changing the authentication state to false.
+   */
   logout() {
     this.storage.remove(TOKEN_KEY).then(() => {
       this.authenticationState.next(false);
@@ -141,23 +164,33 @@ export class AuthService {
     });
   }
 
-
-
+  /**
+   * Save a user profile with the provided credentials.
+   */
   saveProfile(credentials) {
     return this.http.put(this.url + 'user/profile/' + this.id, credentials, httpOptions).pipe(
     );
   }
 
+  /**
+   * Save a service with the given service data.
+   */
   saveService(service) {
     service.userId = this.id;
     return this.http.put(this.url + 'user/service/' + service.id, service, httpOptions);
   }
 
+  /**
+   * Save an event with the given event data.
+   */
   saveEvent(event) {
     event.userId = this.id;
     return this.http.put(this.url + 'user/event/' + event.id, event, httpOptions);
   }
 
+  /**
+   * Save a new service with the provided service data.
+   */
   saveNewService(service) {
     service.userId = this.id;
     return this.http.post(this.url + 'user/service', service, httpOptions);
@@ -180,7 +213,9 @@ export class AuthService {
     return this.http.delete(this.url + 'user/event/', event);
   }
 
-
+  /**
+   * Load services by loading the user profile.
+   */
   loadServices(): Observable<User> {
     /*    return this.http.get<Service[]>(this.url + 'user/profile/get' + this.id, httpOptions).pipe(
           map((services: any[]) => services.map((service) => new Service().deserialize(service)))
@@ -188,6 +223,9 @@ export class AuthService {
     return this.loadProfile();
   }
 
+  /**
+   * Load events by loading the user profile.
+   */
   loadEvents(): Observable<User> {
     /*return this.http.get<Array<Service>>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
       map(data => console.log(data))
@@ -195,12 +233,18 @@ export class AuthService {
     return this.loadProfile();
   }
 
+  /**
+   * Load the private profile of the user identified by the stored user id.
+   */
   loadProfile(): Observable<User> {
     return this.http.get<User>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
       map(data => new User().deserialize(data[0]))
     );
   }
 
+  /**
+   * Load the public profile of a user identified by the provided user id.
+   */
   loadUser(userId): Observable<User> {
     return this.http.get<User>(this.url + 'user/profile/' + userId, httpOptions).pipe(
       map(data => new User().deserialize(data[0]))
@@ -233,7 +277,5 @@ export class AuthService {
   }
 
 
-  isEventManager() {
-    return this.loadProfile();
-  }
+
 }

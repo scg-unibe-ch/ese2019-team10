@@ -17,6 +17,11 @@ export class AuthGuardService implements CanActivate {
   ) {
   }
 
+  /**
+   * Check if a given route can activate the guard.
+   * Check if the user is authenticated and if not,
+   * return the user to the login page and store the url as a return url.
+   */
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
     if (this.authService.isAuthenticated()) {
