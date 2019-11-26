@@ -159,7 +159,7 @@ class Search {
   }
 }
 
-router.get('/', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
   try {
     const search: Search = new Search(req.body);
     let results!: SearchResult;
