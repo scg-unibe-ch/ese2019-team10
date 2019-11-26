@@ -18,23 +18,43 @@ function isAuthentic(response: Response, id: number): boolean {
   }
 }
 
-// Get user profile
-router.get('/profile/:id', async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id, undefined);
-  const instance = await User.findByPk(id);
+/************************************************************************
+* Validate if a row exists in the database                              *
+* @param model model (table) to consult                                 *
+* @param id integer, table's primary key to query                       *
+* @param message string, custom message to respond                      *
+*************************************************************************/
+async function isInstance(response: Response, model: any, id: number, message = 'Not found') {
+  const instance = await model.findByPk(id);
   if (instance == null) {
-    res.statusCode = 404;
-    res.json({
-      'msg': 'Not found'
+    response.statusCode = 404;
+    response.json({
+      'msg': message
     });
+    return false;
+  } else {
+    return instance;
+  }
+}
+
+/************************************************************************
+* Endpoint to get the user's profile                                    *
+*************************************************************************/
+router.get('/profile/:id', async (request: Request, response: Response) => {
+  const userId = parseInt(request.params.id, undefined);
+  const user = await isInstance(response, User, userId, 'User not found');
+
+  if (! user) {
     return;
   }
   User.findAll({
     where: {
-      id: id
+      id: userId
     },
-    attributes: ['id', 'firstName', 'lastName', 'street', 'email', 'phone',
-      'birthday', 'gender', 'city', 'postalCode', 'country'],
+    attributes: [
+      'id', 'firstName', 'lastName', 'street', 'email', 'phone',
+      'birthday', 'gender', 'city', 'postalCode', 'country'
+    ],
     include: [
       {
         model: Event,
@@ -43,8 +63,10 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
       },
       {
         model: Service,
-        attributes: ['id', 'name', 'description', 'price', 'available', 'quantity',
-          'availability', 'place'],
+        attributes: [
+          'id', 'name', 'description', 'price', 'available', 'quantity',
+          'availability', 'place'
+        ],
         as: 'services',
         include: [{
           model: Category,
@@ -57,132 +79,138 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
         as: 'role',
       }
     ]
-  }).then(result => {
-    res.statusCode = 200;
-    const newResult = JSON.parse(JSON.stringify(result));
-    res.json(addRole(newResult));
-  }).catch(error => {
-    res.statusCode = 500;
-    res.json({'msg': 'Error with user profile'});
+  }).then(userRoleArray => {
+    response.statusCode = 200;
+    const userRoleJSON = JSON.parse(JSON.stringify(userRoleArray));
+    response.json(addRole(userRoleJSON));
+  }).catch(() => {
+    response.statusCode = 500;
+    response.json({'msg': 'Error with user profile'});
   });
 });
 
-function addRole(newUser: any) {
-  const roleArray = newUser[0].role;
-  console.log(roleArray);
-  newUser[0].isAdmin = false;
-  newUser[0].isServiceProvider = false;
-  newUser[0].isEventManager = false;
+/************************************************************************
+* Modify the JSON with the user's information. Add roles.               *
+* @param userRoleJSON JSON with the user's information                  *
+* @returns userRoleJSON JSON with roles                                 *
+*************************************************************************/
+function addRole(userRoleJSON: any) {
+  const roleArray = userRoleJSON[0].role;
+  userRoleJSON[0].isAdmin = false;
+  userRoleJSON[0].isServiceProvider = false;
+  userRoleJSON[0].isEventManager = false;
 
   for (const r of roleArray) {
     switch (r.name) {
-      case 'Admin': {
-        newUser[0].isAdmin = true;
+      case 'Admin' : {
+        userRoleJSON[0].isAdmin = true;
         break;
       }
-      case 'ServiceProvider': {
-        newUser[0].isServiceProvider = true;
+      case 'ServiceProvider' : {
+        userRoleJSON[0].isServiceProvider = true;
         break;
       }
-      case 'EventManager': {
-        newUser[0].isEventManager = true;
+      case 'EventManager' : {
+        userRoleJSON[0].isEventManager = true;
         break;
       }
     }
   }
-  delete newUser[0].role;
-  return newUser;
+  delete userRoleJSON[0].role;
+  return userRoleJSON;
 }
 
-// Get service
-router.get('/service/:id', async (req: Request, res: Response) => {
-  const serviceId = parseInt(req.params.id, undefined);
-  const instance = await Service.findByPk(serviceId);
-  if (instance == null) {
-    res.statusCode = 404;
-    res.json({
-      'msg': 'Not found'
-    });
+/************************************************************************
+* Endpoint to get a service                                             *
+*************************************************************************/
+router.get('/service/:id', async (request: Request, response: Response) => {
+  const serviceId = parseInt(request.params.id, undefined);
+  const instance = await isInstance(response, Service, serviceId, 'Service not found');
+
+  if (! instance) {
     return;
   }
   Service.findOne({
-  where: {id: serviceId},
-  include: [{
-    model: Category,
-    attributes: ['name'],
-    required: false
-  }],
-  }).then(serv => {
-    res.json(serv);
-  });
+    where: {
+      id: serviceId
+    },
+    include: [{
+      model: Category,
+      attributes: ['name'],
+      required: false
+    }],
+  }).then(service => {
+      response.json(service);
+    });
 });
 
-// Get event
-router.get('/event/:id', async (req: Request, res: Response) => {
-  const eventId = parseInt(req.params.id, undefined);
-  const instance = await Event.findByPk(eventId);
-  if (instance == null) {
-    res.statusCode = 404;
-    res.json({
-      'msg': 'Not found'
-    });
+/************************************************************************
+* Endpoint to get an event                                              *
+*************************************************************************/
+router.get('/event/:id', async (request: Request, response: Response) => {
+  const eventId = parseInt(request.params.id, undefined);
+  const instance = await isInstance(response, Event, eventId);
+
+  if (! instance) {
     return;
   } else {
-    res.json(instance);
+    response.json(instance);
   }
 });
 
-// Edit user profile
-router.put('/profile/:id', async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id, undefined);
-  if (! isAuthentic(res, id)) {
+/************************************************************************
+* Endpoint to edit the user's profile                                   *
+*************************************************************************/
+router.put('/profile/:id', async (request: Request, response: Response) => {
+  const userId = parseInt(request.params.id, undefined);
+  const user = await isInstance(response, User, userId, 'User not found');
+  if (! isAuthentic(response, userId)) {
     return;
   }
-
-  const instance = await User.findByPk(id);
-  if (instance == null) {
-    res.statusCode = 404;
-    res.json({
-      'msg': 'Not found'
-    });
+  if (! user) {
     return;
   }
   User.update({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    street: req.body.street,
-    birthday: req.body.birthday,
-    phone: req.body.phone,
-    gender: req.body.gender,
-    city: req.body.city,
-    postalCode: req.body.postalCode,
-    country: req.body.country
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    email: request.body.email,
+    street: request.body.street,
+    birthday: request.body.birthday,
+    phone: request.body.phone,
+    gender: request.body.gender,
+    city: request.body.city,
+    postalCode: request.body.postalCode,
+    country: request.body.country
   }, {
     where: {
-      id: id
+      id: userId
     }
-  }).then(result => {
-    res.statusCode = 200;
+  }).then(() => {
+    response.statusCode = 200;
     // Add or update RoleUser
-    if (req.body.isEventManager) {
-      addRoleUser(id, 1);
+    if (request.body.isEventManager) {
+      addRoleUser(userId, 1);
     } else {
-      delRoleUser(id, 1);
+      delRoleUser(userId, 1);
     }
-    if (req.body.isServiceProvider) {
-      addRoleUser(id, 2);
+    if (request.body.isServiceProvider) {
+      addRoleUser(userId, 2);
     } else {
-      delRoleUser(id, 2);
+      delRoleUser(userId, 2);
     }
-    res.json({'msg': 'User updated'});
+    response.json({'msg': 'User updated'});
   }).catch(error => {
-    res.statusCode = 500;
-    res.json({'msg': 'Error, user not updated'});
+    response.statusCode = 500;
+    response.json({'msg': 'Error, user not updated'});
     console.log(error);
   });
 });
 
+/************************************************************************
+* Add a role to the user if it does not exists.                         *
+* @param userId integer, user's primary key                             *
+* @param roleId integer, role's primary key                             *
+*************************************************************************/
 function addRoleUser(userId: number, roleId: number) {
   RoleUser.findOrCreate({
     where:
@@ -197,6 +225,11 @@ function addRoleUser(userId: number, roleId: number) {
     });
 }
 
+/************************************************************************
+* Deletes a user's role.                                                *
+* @param userId integer, user's primary key                             *
+* @param roleId integer, role's primary key                             *
+*************************************************************************/
 function delRoleUser(userId: number, roleId: number) {
   RoleUser.destroy({
     where: {
@@ -208,185 +241,157 @@ function delRoleUser(userId: number, roleId: number) {
     });
 }
 
-// Function to create new service
-router.post('/service', async (req: Request, res: Response) => {
+/************************************************************************
+* Endpoint to to create a new service                                   *
+*************************************************************************/
+router.post('/service', async (request: Request, response: Response) => {
   // search for user with requested email
-  const id = parseInt(req.body.userId, undefined);
-
-  if (! isAuthentic(res, id)) {
+  const userId = parseInt(request.body.userId, undefined);
+  const user = await isInstance(response, User, userId, 'User not found');
+  if (! isAuthentic(response, userId)) {
     return;
   }
-
-  const instance = await User.findByPk(id);
-  if (instance == null) {
-    res.statusCode = 404;
-    res.json({
-      'msg': 'User not found'
-    });
+  if (! user) {
     return;
-  } else {
-    const serviceInstance = new Service();
-    serviceInstance.post_(req.body);
-    serviceInstance.save().then(result => {
-      res.statusCode = 201;
-      res.json({'msg': 'Service created'});
-    }).catch(error => {
-      res.statusCode = 500;
-      console.log(error);
-      res.json({'msg': 'Service was not created'});
-    });
   }
+  const serviceInstance = new Service();
+  serviceInstance.post_(request.body);
+  serviceInstance.save().then(() => {
+    response.statusCode = 201;
+    response.json({'msg': 'Service created'});
+  }).catch(error => {
+    response.statusCode = 500;
+    console.log(error);
+    response.json({'msg': 'Service was not created'});
+  });
 });
 
-// Edit service
-router.put('/service/:id', async (req: Request, res: Response) => {
-  const userId = parseInt(req.body.userId, undefined);
+/************************************************************************
+* Endpoint to edit a service                                            *
+*************************************************************************/
+router.put('/service/:id', async (request: Request, response: Response) => {
+  const userId = parseInt(request.body.userId, undefined);
+  const serviceId = parseInt(request.params.id, undefined);
 
-  if (! isAuthentic(res, userId)) {
+  if (! isAuthentic(response, userId)) {
     return;
   }
-
-  const serviceId = parseInt(req.params.id, undefined);
-  const instanceUser = await User.findByPk(userId);
-  const instanceService = await Service.findByPk(serviceId);
-  if (instanceUser == null) {
-    res.statusCode = 404;
-    res.json({
-      'msg': 'User not found'
-    });
+  const user = await isInstance(response, User, userId, 'User not found');
+  if (! user) {
     return;
   }
-  if (instanceService == null) {
-    res.statusCode = 404;
-    res.json({
-      'msg': 'Service not found'
-    });
+  const service = await isInstance(response, Service, serviceId, 'Service not found');
+  if (! service) {
     return;
   }
   Service.update({
-    name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    available: req.body.available,
-    quantity: req.body.quantity,
-    availability: req.body.availability,
-    place: req.body.place
-  }, {
+    name: request.body.name,
+    description: request.body.description,
+    price: request.body.price,
+    available: request.body.available,
+    quantity: request.body.quantity,
+    availability: request.body.availability,
+    place: request.body.place
+  },
+  {
     where: {
       id: serviceId
     }
-  }).then(result => {
-    res.statusCode = 200;
-    res.json({'msg': 'Service updated'});
-  }).catch(error => {
-    res.statusCode = 500;
-    res.json({'msg': 'Error, service not updated'});
-    console.log(error);
+  }).then(() => {
+    response.statusCode = 200;
+    response.json({'msg': 'Service updated'});
+  }).catch(() => {
+    response.statusCode = 500;
+    response.json({'msg': 'Error, service not updated'});
   });
 });
 
-// Function to create new event
-router.post('/event', async (req: Request, res: Response) => {
+/************************************************************************
+* Endpoint to create a new event                                        *
+*************************************************************************/
+router.post('/event', async (request: Request, response: Response) => {
   // search for user with requested email
-  const id = parseInt(req.body.userId, undefined);
+  const userId = parseInt(request.body.userId, undefined);
 
-  if (! isAuthentic(res, id)) {
+  if (! isAuthentic(response, userId)) {
     return;
   }
 
-  const instance = await User.findByPk(id);
-  if (instance == null) {
-    res.statusCode = 404;
-    res.json({
-      'msg': 'User not found'
-    });
+  const user = await isInstance(response, User, userId, 'User not found');
+  if (! user) {
     return;
-  } else {
-    const eventInstance = new Event();
-    eventInstance.post_(req.body);
-    eventInstance.save().then(result => {
-      res.statusCode = 201;
-      res.json({'msg': 'Event created'});
-    }).catch(error => {
-      res.statusCode = 500;
-      console.log(error);
-      res.json({'msg': 'Event was not created'});
-    });
   }
+  const eventInstance = new Event();
+  eventInstance.post_(request.body);
+  eventInstance.save().then(() => {
+    response.statusCode = 201;
+    response.json({'msg': 'Event created'});
+  }).catch(() => {
+    response.statusCode = 500;
+    response.json({'msg': 'Event was not created'});
+  });
 });
 
-// Edit event
-router.put('/event/:id', async (req: Request, res: Response) => {
-  const userId = parseInt(req.body.userId, undefined);
-  if (! isAuthentic(res, userId)) {
+/************************************************************************
+* Endpoint to edit an event                                             *
+*************************************************************************/
+router.put('/event/:id', async (request: Request, response: Response) => {
+  const userId = parseInt(request.body.userId, undefined);
+  if (! isAuthentic(response, userId)) {
     return;
   }
 
-  const eventId = parseInt(req.params.id, undefined);
-  const instanceUser = await User.findByPk(userId);
-  const instanceEvent = await Event.findByPk(eventId);
-  if (instanceUser == null) {
-    res.statusCode = 404;
-    res.json({
-      'msg': 'User not found'
-    });
+  const eventId = parseInt(request.params.id, undefined);
+  const user = await isInstance(response, User, userId, 'User not found');
+  if (! user) {
     return;
   }
-  if (instanceEvent == null) {
-    res.statusCode = 404;
-    res.json({
-      'msg': 'Event not found'
-    });
+  const event = await isInstance(response, Event, eventId, 'Event not found');
+  if (! event) {
     return;
   }
+
   Event.update({
-    name: req.body.name,
-    description: req.body.description,
-    date: req.body.date,
-    place: req.body.place
-  }, {
+    name: request.body.name,
+    description: request.body.description,
+    date: request.body.date,
+    place: request.body.place
+  },
+  {
     where: {
       id: eventId
     }
-  }).then(result => {
-    res.statusCode = 200;
-    res.json({'msg': 'Event updated'});
-  }).catch(error => {
-    res.statusCode = 500;
-    res.json({'msg': 'Error, event not updated'});
-    console.log(error);
+  }).then(() => {
+    response.statusCode = 200;
+    response.json({'msg': 'Event updated'});
+  }).catch(() => {
+    response.statusCode = 500;
+    response.json({'msg': 'Error, event not updated'});
   });
 });
 
-// New booking
-router.post('/booking', async (req: Request, res: Response) => {
-  const eventId = parseInt(req.body.eventId, undefined);
-  const serviceId = parseInt(req.body.serviceId, undefined);
-  const instanceEvent = await Event.findByPk(eventId);
-  const instanceService = await Service.findByPk(serviceId);
-  if (instanceEvent == null) {
-    res.statusCode = 404;
-    res.json({
-      'msg': 'Event not found'
-    });
+/************************************************************************
+* Endpoint to cerate a new booking                                      *
+*************************************************************************/
+router.post('/booking', async (request: Request, response: Response) => {
+  const eventId = parseInt(request.body.eventId, undefined);
+  const serviceId = parseInt(request.body.serviceId, undefined);
+  const event = await isInstance(response, Event, eventId, 'Event not found');
+  if (! event) {
     return;
   }
-  if (instanceService == null) {
-    res.statusCode = 404;
-    res.json({
-      'msg': 'Service not found'
-    });
+  const service = await isInstance(response, Service, serviceId, 'Service not found');
+  if (! service) {
     return;
   }
   const eventService = new EventService();
-  eventService.post_(req.body);
-  eventService.save().then(result => {
-    res.statusCode = 201;
-    res.json({'msg': 'Booking created'});
-  }).catch(error => {
-    res.statusCode = 500;
-    console.log(error);
-    res.json({'msg': 'Booking was not created'});
+  eventService.post_(request.body);
+  eventService.save().then(() => {
+    response.statusCode = 201;
+    response.json({'msg': 'Booking created'});
+  }).catch(() => {
+    response.statusCode = 500;
+    response.json({'msg': 'Booking was not created'});
   });
 });
 
