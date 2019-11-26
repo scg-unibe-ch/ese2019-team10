@@ -118,8 +118,8 @@ router.get('/service/:id', async (req: Request, res: Response) => {
 });
 
 // Get event
-router.get('/event/:evenId', async (req: Request, res: Response) => {
-  const eventId = parseInt(req.params.evenId, undefined);
+router.get('/event/:id', async (req: Request, res: Response) => {
+  const eventId = parseInt(req.params.id, undefined);
   const instance = await Event.findByPk(eventId);
   if (instance == null) {
     res.statusCode = 404;
@@ -316,14 +316,13 @@ router.post('/event', async (req: Request, res: Response) => {
 });
 
 // Edit event
-router.put('/event', async (req: Request, res: Response) => {
+router.put('/event/:id', async (req: Request, res: Response) => {
   const userId = parseInt(req.body.userId, undefined);
-
   if (! isAuthentic(res, userId)) {
     return;
   }
 
-  const eventId = parseInt(req.body.eventId, undefined);
+  const eventId = parseInt(req.params.id, undefined);
   const instanceUser = await User.findByPk(userId);
   const instanceEvent = await Event.findByPk(eventId);
   if (instanceUser == null) {
