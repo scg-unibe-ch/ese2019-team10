@@ -24,13 +24,13 @@
           <ion-button *ngIf="!this.helperArray[ix]; else hideThisEvent" class="submit-btn ion-no-margin"
                       expand="full"
                       type="button"
-                      (click)="showEvent(ix)" color="dark">
+                      (click)="showEvent(ix)" color="primary">
             <ion-icon slot="start" name="arrow-dropdown"></ion-icon>
             Show {{getProperty(ix, 'name')}}
           </ion-button>
           <ng-template #hideThisEvent>
             <ion-button class="submit-btn ion-no-margin" expand="full" type="button" (click)="hideEvent(ix)"
-                        color="dark">
+                        color="tertiary">
               <ion-icon slot="start" name="arrow-dropup"></ion-icon>
               Hide {{getProperty(ix, 'name')}}
             </ion-button>
@@ -128,7 +128,7 @@
 
   <ion-card class="ion-margin-top">
 
-    <ion-item-divider color="dark" sticky="true">
+    <ion-item-divider  *ngIf="showNewEventForm" color="dark" sticky="true">
       <ion-label>
         <ion-icon class="divider-icon" slot="start" name="clipboard"></ion-icon>
         Add a New Event
@@ -139,7 +139,6 @@
     <form *ngIf="showNewEventForm" [formGroup]="newEventForm" (ngSubmit)="saveNewEvent()">
 
       <ion-list inset>
-
         <ion-item-group>
 
           <div class="row">
@@ -227,7 +226,7 @@
 
     <div *ngIf="!showNewEventForm">
       <ion-button (click)="addNewEvent()" slot="end" class="submit-btn ion-no-margin" expand="full"
-                  type="button">
+                  type="button" color="success">
         <ion-icon slot="start" name="add"></ion-icon>
         Add Event
       </ion-button>
