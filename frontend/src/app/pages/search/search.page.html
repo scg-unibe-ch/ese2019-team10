@@ -6,17 +6,17 @@
 
 <ion-content>
 
-  <ion-card>
+  <ion-card class="ion-padding">
 
     <div class="input-outer-padding">
       <div class="input-inner-padding">
         <ion-searchbar #mainSearch id="search-field" class="input-field ion-no-padding ion-no-margin"
-                       placeholder="Search..." autocomplete="on" color="dark" inputmode="search"
+                       placeholder="Search..." autocomplete="on" color="light" inputmode="search"
                        type="search"
                        showCancelButton="focus" (keyup.enter)="search(mainSearch.value)" animated>
         </ion-searchbar>
       </div>
-      <ion-button class="search-confirm ion-no-margin" id="search-button" color="secondary"
+      <ion-button class="search-confirm ion-no-margin" id="search-button" color="primary"
                   (click)="search(mainSearch.value)">
         <ion-icon name="search" slot="icon-only"></ion-icon>
       </ion-button>
@@ -83,11 +83,11 @@
 
     <ion-card-content *ngIf="hasSearched">
       <ion-list *ngIf="foundResult; else noResultsFound">
-        <ion-list-header>
-          The following results were found:
-        </ion-list-header>
+        <!--        <ion-list-header>
+                  The following results were found:
+                </ion-list-header>-->
 
-        <ion-list *ngIf="foundServices" inset>
+        <ion-list *ngIf="foundServices && showServices" inset>
           <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
             <ion-label>
               <ion-icon class="divider-icon" slot="start" name="build"></ion-icon>
@@ -113,7 +113,7 @@
 
         </ion-list>
 
-        <ion-list *ngIf="foundEvents" inset>
+        <ion-list *ngIf="foundEvents && showEvents" inset>
 
           <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
             <ion-label>
@@ -140,7 +140,7 @@
 
         </ion-list>
 
-        <ion-list *ngIf="foundUsers" inset>
+        <ion-list *ngIf="foundUsers && showUsers" inset>
 
           <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
             <ion-label>
