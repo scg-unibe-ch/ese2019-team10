@@ -203,13 +203,13 @@ export class AuthService {
   deleteService(service) {
     service.userId = this.id;
     console.log(service);
-    return this.http.delete(this.url + 'user/service/', service);
+    return this.http.delete(this.url + 'user/service/' + service.serviceId, httpOptions);
   }
 
   deleteEvent(event) {
     event.userId = this.id;
     console.log(event);
-    return this.http.delete(this.url + 'user/event/', event);
+    return this.http.delete(this.url + 'user/event/' + event.eventId, httpOptions);
   }
 
   /**

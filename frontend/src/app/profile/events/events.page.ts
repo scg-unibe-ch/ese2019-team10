@@ -223,14 +223,16 @@ export class EventsPage implements OnInit {
 
   public deleteEvent(index: number): void {
     // this.events.splice(index, 1);
-    this.eventList.removeAt(index);
     const id = this.getProperty(index, 'id');
     const event = {
       eventId: id,
     };
-    this.authService.deleteEvent(event).subscribe(() => {
+    // this.eventList.removeAt(index);
+    this.authService.deleteEvent(event).subscribe((data: any) => {
       this.initialize();
       this.loadEvents();
+      console.log(data.msg);
+      this.alertService.presentToast(data.msg).then();
     });
   }
 
