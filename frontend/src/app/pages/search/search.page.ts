@@ -17,17 +17,16 @@ export class SearchPage implements OnInit {
   private title: string;
   private searchResult: any;
   private foundResult: boolean;
-  foundUsers: boolean;
-  foundServices: boolean;
-  foundEvents: boolean;
-  searchCategory: string;
-  searchAttribute: string;
-  refineSearch: string;
-  services: Service[];
-  events: Event[];
-  users: User[];
+  private foundUsers: boolean;
+  private foundServices: boolean;
+  private foundEvents: boolean;
+  private hasSearched: boolean;
+  private searchCategory: string;
+  private searchAttribute: string;
+  public services: Service[];
+  public events: Event[];
+  public users: User[];
 
-  searched: boolean;
 
   constructor(
     private titleService: Title,
@@ -41,24 +40,32 @@ export class SearchPage implements OnInit {
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
     this.searchCategory = 'everything';
     this.searchAttribute = 'everything';
-    this.refineSearch = 'everything';
     this.initialize();
   }
 
+  /**
+   * Initialize all variables.
+   */
   initialize() {
     this.foundResult = false;
     this.foundUsers = false;
     this.foundServices = false;
     this.foundEvents = false;
+    this.hasSearched = false;
     this.services = [];
     this.events = [];
     this.users = [];
   }
 
+
+  /**
+   * Search with the provided search term.
+   * First create a search object with category, attribute and term. Then query the api and assign the results to the variables.
+   */
   search(term) {
 
+    // search term must have at least 1 character
     if (term.length > 0) {
-
       const searchObject = {
         searchCategory: this.searchCategory,
         searchAttribute: this.searchAttribute,
@@ -69,7 +76,7 @@ export class SearchPage implements OnInit {
       this.initialize();
 
       this.authService.search(searchObject).subscribe((result: any) => {
-        this.searched = true;
+        this.hasSearched = true;
         this.searchResult = result;
 
         if (this.searchResult.services.length > 0) {
@@ -94,21 +101,32 @@ export class SearchPage implements OnInit {
     }
   }
 
+  /**
+   * Change the search category upon segment change.
+   */
   selectCategory(category) {
     console.log(category);
     this.searchCategory = category;
     this.searchAttribute = 'everything';
   }
 
+  /**
+   * navigate to a service page
+   */
   goToService(service) {
     this.router.navigate(['/user/service/', service.id]).then();
-
   }
 
+  /**
+   * navigate to an event page
+   */
   goToEvent(event) {
     this.router.navigate(['/user/event/', event.id]).then();
   }
 
+  /**
+   * navigate to a user page
+   */
   goToUser(user) {
     this.router.navigate(['/user/profile/', user.id]).then();
   }

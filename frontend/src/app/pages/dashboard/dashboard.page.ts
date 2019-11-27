@@ -22,7 +22,7 @@ export class DashboardPage implements OnInit {
   public userId = undefined;
   private isServiceProvider: boolean;
   private isEventManager: boolean;
-  public  user: User;
+  public user: User;
 
   constructor(
     private authService: AuthService,
@@ -37,21 +37,31 @@ export class DashboardPage implements OnInit {
     this.user = new User().deserialize({});
   }
 
-  ionViewWillEnter() {
+  initialize() {
     this.userId = null;
     this.isServiceProvider = false;
     this.isEventManager = false;
+  }
+
+  ionViewWillEnter() {
+    this.initialize();
   }
 
   ionViewDidEnter() {
     this.loadData();
   }
 
+  /**
+   * Display a random welcome message.
+   */
   loadMessage() {
     const randomNumber = Math.floor(Math.random() * this.messages.length);
     return this.messages[randomNumber];
   }
 
+  /**
+   * Load the user data.
+   */
   loadData() {
     this.authService.loadProfile().subscribe((user: any) => {
       this.user = user;
@@ -72,6 +82,10 @@ export class DashboardPage implements OnInit {
 
   isAdmin() {
     return this.authService.isAdmin();
+  }
+
+  ionViewDidLeave() {
+    this.initialize();
   }
 
 }
