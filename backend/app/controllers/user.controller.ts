@@ -164,9 +164,9 @@ router.get('/event/:id', async (request: Request, response: Response) => {
 router.put('/profile/:id', async (request: Request, response: Response) => {
   const userId = parseInt(request.params.id, undefined);
   const user = await isInstance(response, User, userId, 'User not found');
-  if (! isAuthentic(response, userId)) {
+  /*if (! isAuthentic(response, userId)) {
     return;
-  }
+  }*/
   if (! user) {
     return;
   }
@@ -187,6 +187,9 @@ router.put('/profile/:id', async (request: Request, response: Response) => {
     }
   }).then(() => {
     response.statusCode = 200;
+    // Consult id and name of roles
+    const rolesArray = getRolesArray(response);
+    console.log('rolesArray: ' + rolesArray);
     // Add or update RoleUser
     if (request.body.isEventManager) {
       addRoleUser(userId, 1);
@@ -205,6 +208,19 @@ router.put('/profile/:id', async (request: Request, response: Response) => {
     console.log(error);
   });
 });
+
+/************************************************************************
+* Consult id and name of roles.                                         *
+* @returns rolesArray, Array with id and name of roles                   *
+*************************************************************************/
+function getRolesArray(response: Response) {
+  Role.findAll().then(roleArray => {
+    return roleArray;
+  }).catch(() => {
+    response.statusCode = 500;
+    response.json({'msg': 'Error with user roles'});
+  });
+}
 
 /************************************************************************
 * Add a role to the user if it does not exists.                         *
@@ -373,7 +389,7 @@ router.put('/event/:id', async (request: Request, response: Response) => {
 /************************************************************************
 * Endpoint to create a new booking                                      *
 *************************************************************************/
-router.post('/booking', async (request: Request, response: Response) => {
+router.post('/service/book', async (request: Request, response: Response) => {
   const eventId = parseInt(request.body.eventId, undefined);
   const serviceId = parseInt(request.body.serviceId, undefined);
   const event = await isInstance(response, Event, eventId, 'Event not found');
@@ -387,6 +403,8 @@ router.post('/booking', async (request: Request, response: Response) => {
   const eventService = new EventService();
   eventService.post_(request.body);
   eventService.save().then(() => {
+    // Send message to service provider
+
     response.statusCode = 201;
     response.json({'msg': 'Booking created'});
   }).catch(() => {
@@ -396,26 +414,62 @@ router.post('/booking', async (request: Request, response: Response) => {
 });
 
 /************************************************************************
+* Endpoint to list a service requests to be confirmed                   *
+*************************************************************************/
+router.get('/service/to-confirm/:userId', async (request: Request, response: Response) => {
+  let options = {};
+  options = {
+    attributes: ['id', 'firstName', 'lastName', 'email'],
+    where: {
+      responded: false
+    }
+  };
+  EventService.findAll(options).then(result => {
+    response.statusCode = 200;
+    response.json(result.map(e => e));
+  }).catch(()  => {
+    response.statusCode = 500;
+    response.json({'msg': 'Error, there is not request list'});
+  });
+});
+
+/************************************************************************
+* Endpoint to confirm or reject a service request                       *
+*************************************************************************/
+router.put('/service/confirm/:id', async (request: Request, response: Response) => {
+  const bookingId = parseInt(request.params.id, undefined);
+  const booking = await isInstance(response, EventService, bookingId, 'Booking not found');
+  if (! booking) {
+    return;
+  }
+  EventService.update({
+    booked: request.body.booked,
+    responded: true,
+    reply: request.body.reply
+  }, {
+    where: {
+      id: bookingId
+    }
+  }).then(() => {
+    response.statusCode = 200;
+    response.json({'msg': 'Booking updated'});
+  }).catch(()  => {
+    response.statusCode = 500;
+    response.json({'msg': 'Error, booking not updated'});
+  });
+});
+
+/************************************************************************
 * Endpoint to delete an event                                            *
 *************************************************************************/
-router.delete('/event', async (request: Request, response: Response) => {
-  const userId = parseInt(request.body.userId, undefined);
-  const eventId = parseInt(request.body.eventId, undefined);
-
-  if (! isAuthentic(response, userId)) {
-    return;
-  }
-  const user = await isInstance(response, User, userId, 'User not found');
-  if (! user) {
-    return;
-  }
+router.delete('/event/:id', async (request: Request, response: Response) => {
+  const eventId = parseInt(request.params.id, undefined);
   const event = await isInstance(response, Event, eventId, 'Event not found');
   if (! event) {
     return;
   }
   Event.destroy({
     where: {
-      userId: userId,
       id: eventId
     }
   }).then(() => {
