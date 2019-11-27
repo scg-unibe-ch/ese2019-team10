@@ -371,7 +371,7 @@ router.put('/event/:id', async (request: Request, response: Response) => {
 });
 
 /************************************************************************
-* Endpoint to cerate a new booking                                      *
+* Endpoint to create a new booking                                      *
 *************************************************************************/
 router.post('/booking', async (request: Request, response: Response) => {
   const eventId = parseInt(request.body.eventId, undefined);
@@ -392,6 +392,38 @@ router.post('/booking', async (request: Request, response: Response) => {
   }).catch(() => {
     response.statusCode = 500;
     response.json({'msg': 'Booking was not created'});
+  });
+});
+
+/************************************************************************
+* Endpoint to delete an event                                            *
+*************************************************************************/
+router.delete('/event', async (request: Request, response: Response) => {
+  const userId = parseInt(request.body.userId, undefined);
+  const eventId = parseInt(request.body.eventId, undefined);
+
+  if (! isAuthentic(response, userId)) {
+    return;
+  }
+  const user = await isInstance(response, User, userId, 'User not found');
+  if (! user) {
+    return;
+  }
+  const event = await isInstance(response, Event, eventId, 'Event not found');
+  if (! event) {
+    return;
+  }
+  Event.destroy({
+    where: {
+      userId: userId,
+      id: eventId
+    }
+  }).then(() => {
+    response.statusCode = 201;
+    response.json({'msg': 'Event deleted'});
+    }).catch(() => {
+    response.statusCode = 500;
+    response.json({'msg': 'Error, event not deleted'});
   });
 });
 

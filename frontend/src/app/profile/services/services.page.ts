@@ -242,14 +242,16 @@ export class ServicesPage implements OnInit {
 
   public deleteService(index: number): void {
     // this.services.splice(index, 1);
-    this.serviceList.removeAt(index);
     const id = this.getProperty(index, 'id');
     const service = {
       serviceId: id,
     };
-    this.authService.deleteService(service).subscribe(() => {
+    // this.serviceList.removeAt(index);
+    this.authService.deleteService(service).subscribe((data: any) => {
       this.initialize();
       this.loadServices();
+      console.log(data.msg);
+      this.alertService.presentToast(data.msg).then();
     });
   }
 
