@@ -22,7 +22,9 @@
               </ion-item-divider>
 
               <ion-item>
-                <ion-label position="floating">E-Mail address</ion-label>
+                <ion-label position="floating">E-Mail address
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
                 <ion-input autocomplete="email" formControlName="email" name="email" required
                            type="email"></ion-input>
               </ion-item>
@@ -39,7 +41,9 @@
               <div formGroupName="matchingPasswords">
 
                 <ion-item>
-                  <ion-label position="floating">Password</ion-label>
+                  <ion-label position="floating">Password
+                    <ion-text color="danger">*</ion-text>
+                  </ion-label>
                   <ion-input autocomplete="new-password" formControlName="password" name="password"
                              type="password"
                              required></ion-input>
@@ -55,7 +59,9 @@
                 </div>
 
                 <ion-item>
-                  <ion-label position="floating">Confirm password</ion-label>
+                  <ion-label position="floating">Confirm password
+                    <ion-text color="danger">*</ion-text>
+                  </ion-label>
                   <ion-input formControlName="confirmPassword" name="confirmPassword"
                              type="password"
                              autocomplete="new-password"
@@ -91,7 +97,9 @@
               </ion-item-divider>
 
               <ion-item>
-                <ion-label position="floating">First name</ion-label>
+                <ion-label position="floating">First name
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
                 <ion-input autocomplete="given-name" formControlName="firstName" name="firstName"
                            type="text"
                            required></ion-input>
@@ -107,7 +115,9 @@
               </div>
 
               <ion-item>
-                <ion-label position="floating">Last name</ion-label>
+                <ion-label position="floating">Last name
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
                 <ion-input autocomplete="family-name" formControlName="lastName" name="lastName"
                            type="text"
                            required></ion-input>
@@ -190,7 +200,8 @@
               </ion-button>
 
               <ion-item>
-                <ion-label class="ion-text-wrap">I have read and agree to the terms and conditions and privacy policy.</ion-label>
+                <ion-label class="ion-text-wrap">I have read and agree to the terms and conditions and privacy policy.
+                </ion-label>
                 <ion-checkbox formControlName="terms" name="terms"></ion-checkbox>
               </ion-item>
 

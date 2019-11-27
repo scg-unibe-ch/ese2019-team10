@@ -36,7 +36,7 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() {
     this.title = 'Register';
-    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
+    this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
 
 
     this.matchingPasswordsGroup = new FormGroup({

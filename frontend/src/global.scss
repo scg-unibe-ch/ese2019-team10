@@ -23,6 +23,9 @@
 @import "~@ionic/angular/css/flex-utils.css";
 @import url('https://fonts.googleapis.com/css?family=Merriweather|Merriweather+Sans&display=swap');
 
+
+/* Fonts */
+
 * {
   font-family: 'Merriweather Sans', 'Roboto', sans-serif;
 }
@@ -30,6 +33,10 @@
 ion-text {
   font-family: 'Merriweather', serif;
 }
+
+
+/* Icons */
+
 
 .button-icon {
   margin-right: 9px;
@@ -45,6 +52,10 @@ ion-text {
 
 .left-margin {
   margin-left: 9px;
+}
+
+.error-message {
+  color: #8b0000;
 }
 
 h3 {
