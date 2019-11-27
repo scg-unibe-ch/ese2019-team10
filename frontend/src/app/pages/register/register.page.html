@@ -3,258 +3,9 @@
   </app-header>
 </ion-header>
 
-<ion-content>
-  <ion-card>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of registrationMessages.email">
-        <div
-          *ngIf="registrationForm.get('email').hasError(validation.type) && (registrationForm.get('email').dirty || registrationForm.get('email').touched)"
-          class="error-message">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of registrationMessages.password">
-        <div
-          *ngIf="registrationForm.get('matchingPasswords').get('password').hasError(validation.type) && (registrationForm.get('matchingPasswords').get('password').dirty || registrationForm.get('matchingPasswords').get('password').touched)"
-          class="error-message">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of registrationMessages.confirmPassword">
-        <div
-          *ngIf="registrationForm.get('matchingPasswords').get('confirmPassword').hasError(validation.type) && (registrationForm.get('matchingPasswords').get('confirmPassword').dirty || registrationForm.get('matchingPasswords').get('confirmPassword').touched)"
-          class="error-message">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of registrationMessages.matchingPasswords">
-        <div
-          *ngIf="registrationForm.get('matchingPasswords').hasError(validation.type) && (registrationForm.get('matchingPasswords').get('confirmPassword').dirty || registrationForm.get('matchingPasswords').get('confirmPassword').touched)"
-          class="error-message">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of registrationMessages.firstName">
-        <div
-          *ngIf="registrationForm.get('firstName').hasError(validation.type) && (registrationForm.get('firstName').dirty || registrationForm.get('firstName').touched)"
-          class="error-message">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of registrationMessages.lastName">
-        <div
-          *ngIf="registrationForm.get('lastName').hasError(validation.type) && (registrationForm.get('lastName').dirty || registrationForm.get('lastName').touched)"
-          class="error-message">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of registrationMessages.street">
-        <div
-          *ngIf="registrationForm.get('street').hasError(validation.type) && (registrationForm.get('street').dirty || registrationForm.get('street').touched)"
-          class="error-message">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of registrationMessages.city">
-        <div
-          *ngIf="registrationForm.get('city').hasError(validation.type) && (registrationForm.get('city').dirty || registrationForm.get('city').touched)"
-          class="error-message">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of registrationMessages.postalCode">
-        <div
-          *ngIf="registrationForm.get('postalCode').hasError(validation.type) && (registrationForm.get('postalCode').dirty || registrationForm.get('postalCode').touched)"
-          class="error-message">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-    <div class="validation-errors">
-      <ng-container *ngFor="let validation of registrationMessages.terms">
-        <div
-          *ngIf="registrationForm.get('terms').hasError(validation.type) && (registrationForm.get('terms').dirty || registrationForm.get('terms').touched)"
-          class="error-message">
-          <ion-icon name="information-circle-outline"></ion-icon>
-          {{ validation.message }}
-        </div>
-      </ng-container>
-    </div>
-  </ion-card>
-
-  <ion-card class="SignupCard">
-
-
-    <div class="registration-form">
-      <form (ngSubmit)="onSubmit()" [formGroup]="registrationForm">
-        <ion-row>
-          <ion-col>
-            <ion-list inset>
-
-              <ion-item-divider class="ion-margin-top" sticky="true">
-                <ion-label>
-                  <ion-icon class="form-icon" name="mail" slot="start"></ion-icon>
-                  Account Information
-                </ion-label>
-              </ion-item-divider>
-
-              <ion-item>
-
-                <ion-input autocomplete="email" formControlName="email" name="email" placeholder="E-Mail" required
-                           type="email"></ion-input>
-              </ion-item>
-
-
-              <div formGroupName="matchingPasswords">
-
-                <ion-item>
-
-                  <ion-input autocomplete="new-password" formControlName="password" name="password"
-                             placeholder="Password" required
-                             type="password"></ion-input>
-                </ion-item>
-
-
-                <ion-item>
-
-                  <ion-input autocomplete="new-password" formControlName="confirmPassword" name="confirmPassword"
-                             placeholder="Confirm Password"
-                             required
-                             type="password"></ion-input>
-                </ion-item>
-
-
-              </div>
-
-
-              <ion-item-divider class="ion-margin-top" sticky="true">
-                <ion-label>
-                  <ion-icon class="form-icon" name="person" slot="start"></ion-icon>
-                  Personal Information
-                </ion-label>
-              </ion-item-divider>
-
-              <ion-item>
-
-                <ion-input autocomplete="given-name" formControlName="firstName" name="firstName"
-                           placeholder="First Name" required
-                           type="text"></ion-input>
-              </ion-item>
-
-
-              <ion-item>
-
-                <ion-input autocomplete="family-name" formControlName="lastName" name="lastName" placeholder="Last Name"
-                           required
-                           type="text"></ion-input>
-              </ion-item>
-
-
-              <ion-item>
-
-                <ion-input autocomplete="street-address" formControlName="street" name="street" placeholder="Street"
-                           required
-                           type="text"></ion-input>
-              </ion-item>
-
-
-              <ion-item>
-
-                <ion-input autocomplete="address-level2" formControlName="city" name="city" placeholder="City"
-                           required
-                           type="text"></ion-input>
-              </ion-item>
-
-
-              <ion-item>
-
-                <ion-input autocomplete="postal-code" formControlName="postalCode" name="postalCode"
-                           placeholder="Postal Code" required
-                           type="text"></ion-input>
-              </ion-item>
-
-
-              <ion-item-divider class="ion-margin-top" sticky="true">
-                <ion-label>
-                  <ion-icon class="form-icon" name="book" slot="start"></ion-icon>
-                  Legal Matters
-                </ion-label>
-              </ion-item-divider>
-
-
-              <ion-button class="terms ion-text-capitalize" expand="block" fill="outline" href="/terms-conditions"
-                          routerDirection="forward" target="_blank" type="button">
-              <span class="ion-text-left">Terms & Conditions
-              <ion-icon class="left-margin" name="open"></ion-icon></span>
-              </ion-button>
-
-              <ion-button class="terms ion-text-capitalize" expand="block" fill="outline" href="/privacy-policy"
-                          routerDirection="forward" target="_blank" type="button">
-              <span class="ion-text-left">Privacy Policy
-              <ion-icon class="left-margin" name="open"></ion-icon></span>
-              </ion-button>
-
-
-              <ion-item>
-                <ion-label>I have read and agree to the terms and conditions and privacy policy.</ion-label>
-                <ion-checkbox formControlName="terms" name="terms"></ion-checkbox>
-              </ion-item>
-
-
-              <ion-row class="ion-margin-top">
-                <ion-button [disabled]="!registrationForm.valid" class="submit-btn" expand="full" type="submit"
-                >
-                  <ion-icon name="person-add" slot="start"></ion-icon>
-                  Register
-                </ion-button>
-              </ion-row>
-
-            </ion-list>
-          </ion-col>
-        </ion-row>
-
-      </form>
-    </div>
-  </ion-card>
-</ion-content>
-
-
-<!--
-
-
-<ion-header>
-  <app-header [title]="title">
-  </app-header>
-</ion-header>
-
 <ion-content class="ion-padding">
 
-
+  <ion-card class="SignupCard">
 
 
     <div class="registration-form">
@@ -263,7 +14,7 @@
           <ion-col>
             <ion-list inset>
 
-              <ion-item-divider class="ion-margin-top"  sticky="true">
+              <ion-item-divider class="ion-margin-top" sticky="true" color="dark">
                 <ion-label>
                   <ion-icon class="divider-icon" slot="start" name="mail"></ion-icon>
                   Account Information
@@ -271,8 +22,8 @@
               </ion-item-divider>
 
               <ion-item>
-
-                <ion-input autocomplete="email" formControlName="email" name="email" placeholder="E-Mail" required
+                <ion-label position="floating">E-Mail address</ion-label>
+                <ion-input autocomplete="email" formControlName="email" name="email" required
                            type="email"></ion-input>
               </ion-item>
               <div class="validation-errors">
@@ -288,9 +39,9 @@
               <div formGroupName="matchingPasswords">
 
                 <ion-item>
-
+                  <ion-label position="floating">Password</ion-label>
                   <ion-input autocomplete="new-password" formControlName="password" name="password"
-                             placeholder="Password" type="password"
+                             type="password"
                              required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
@@ -304,8 +55,8 @@
                 </div>
 
                 <ion-item>
-
-                  <ion-input formControlName="confirmPassword" name="confirmPassword" placeholder="Confirm Password"
+                  <ion-label position="floating">Confirm password</ion-label>
+                  <ion-input formControlName="confirmPassword" name="confirmPassword"
                              type="password"
                              autocomplete="new-password"
                              required></ion-input>
@@ -332,7 +83,7 @@
                 </ng-container>
               </div>
 
-              <ion-item-divider class="ion-margin-top"  sticky="true">
+              <ion-item-divider class="ion-margin-top" sticky="true" color="dark">
                 <ion-label>
                   <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
                   Personal Information
@@ -340,9 +91,9 @@
               </ion-item-divider>
 
               <ion-item>
-
+                <ion-label position="floating">First name</ion-label>
                 <ion-input autocomplete="given-name" formControlName="firstName" name="firstName"
-                           placeholder="First Name" type="text"
+                           type="text"
                            required></ion-input>
               </ion-item>
               <div class="validation-errors">
@@ -356,8 +107,8 @@
               </div>
 
               <ion-item>
-
-                <ion-input autocomplete="family-name" formControlName="lastName" name="lastName" placeholder="Last Name"
+                <ion-label position="floating">Last name</ion-label>
+                <ion-input autocomplete="family-name" formControlName="lastName" name="lastName"
                            type="text"
                            required></ion-input>
               </ion-item>
@@ -372,8 +123,8 @@
               </div>
 
               <ion-item>
-
-                <ion-input autocomplete="street-address" formControlName="street" name="street" placeholder="Street"
+                <ion-label position="floating">Street</ion-label>
+                <ion-input autocomplete="street-address" formControlName="street" name="street"
                            type="text"
                            required></ion-input>
               </ion-item>
@@ -388,8 +139,8 @@
               </div>
 
               <ion-item>
-
-                <ion-input autocomplete="address-level2" formControlName="city" name="city" placeholder="City"
+                <ion-label position="floating">City</ion-label>
+                <ion-input autocomplete="address-level2" formControlName="city" name="city"
                            type="text"
                            required></ion-input>
               </ion-item>
@@ -404,9 +155,9 @@
               </div>
 
               <ion-item>
-
+                <ion-label position="floating">Postal code</ion-label>
                 <ion-input autocomplete="postal-code" formControlName="postalCode" name="postalCode"
-                           placeholder="Postal Code" type="text"
+                           type="text"
                            required></ion-input>
               </ion-item>
               <div class="validation-errors">
@@ -419,25 +170,30 @@
                 </ng-container>
               </div>
 
-              <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+              <ion-item-divider class="ion-margin-top" sticky="true" color="dark">
                 <ion-label>
-                  <ion-icon class="divider-icon" slot="start" name="clipboard"></ion-icon>
-                  Terms & Conditions
+                  <ion-icon class="divider-icon" name="book" slot="start"></ion-icon>
+                  Legal Matters
                 </ion-label>
               </ion-item-divider>
 
-
-              <ion-button class="terms ion-text-capitalize" type="button" routerDirection="forward" target="_blank"
-                          expand="block" fill="outline" href="/terms">
-              <span class="ion-text-left">Read the terms
+              <ion-button class="terms ion-text-capitalize" expand="block" fill="outline" href="/terms-conditions"
+                          routerDirection="forward" target="_blank" type="button">
+              <span class="ion-text-left">Terms & Conditions
               <ion-icon class="left-margin" name="open"></ion-icon></span>
               </ion-button>
 
+              <ion-button class="terms ion-text-capitalize" expand="block" fill="outline" href="/privacy-policy"
+                          routerDirection="forward" target="_blank" type="button">
+              <span class="ion-text-left">Privacy Policy
+              <ion-icon class="left-margin" name="open"></ion-icon></span>
+              </ion-button>
 
               <ion-item>
-                <ion-label>I accept</ion-label>
-                <ion-checkbox name="terms" formControlName="terms"></ion-checkbox>
+                <ion-label class="ion-text-wrap">I have read and agree to the terms and conditions and privacy policy.</ion-label>
+                <ion-checkbox formControlName="terms" name="terms"></ion-checkbox>
               </ion-item>
+
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.terms">
                   <div class="error-message"
@@ -463,5 +219,5 @@
       </form>
     </div>
 
-
-</ion-content>-->
+  </ion-card>
+</ion-content>
