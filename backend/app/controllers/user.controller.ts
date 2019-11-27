@@ -460,30 +460,6 @@ router.put('/service/confirm/:id', async (request: Request, response: Response) 
 });
 
 /************************************************************************
-* Endpoint to reject a service request                                      *
-*************************************************************************/
-router.put('/service/confirm/:id', async (request: Request, response: Response) => {
-  const bookingId = parseInt(request.params.id, undefined);
-  const booking = await isInstance(response, EventService, bookingId, 'Booking not found');
-  if (! booking) {
-    return;
-  }
-  EventService.update({
-    responded: true
-  }, {
-    where: {
-      id: bookingId
-    }
-  }).then(() => {
-    response.statusCode = 200;
-    response.json({'msg': 'Booking rejected'});
-  }).catch(()  => {
-    response.statusCode = 500;
-    response.json({'msg': 'Error, booking not rejected'});
-  });
-});
-
-/************************************************************************
 * Endpoint to delete an event                                            *
 *************************************************************************/
 router.delete('/event/:id', async (request: Request, response: Response) => {
