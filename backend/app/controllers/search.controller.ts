@@ -1,6 +1,6 @@
 import {Request, Response, Router} from 'express';
 import {User} from '../models/user.model';
-import {Service} from '../models/service.model';
+import {Category, Service} from '../models/service.model';
 import {Event} from '../models/event.model';
 import { Op } from 'sequelize';
 import {sequelize} from '../server';
@@ -39,19 +39,73 @@ class SearchResult {
 }
 
 /**
+ * Convert a table name T and column names c1,..cn to a string like 'T."c1' || \' \' || .. || \' \' || T."cn"'.
+ *
+ * This method is used to compose a query string.
+ *
+ * @param tableShortName short name for table (like 'e' for table 'Event')
+ * @param columns array of column names
+ */
+function getSearchColumnString(tableShortName: string, columns: string[]): string {
+  const tableColumns = columns.map((column) => 'coalesce(' + tableShortName + '."' + column + '", \'\')');
+  return tableColumns.join(' || \' \' || ');
+}
+
+/**
+ * Convert a table name T and column names c1,..cn to a string like 'T."c1', ..., T."cn"'.
+ *
+ * This method is used to compose a query string.
+ *
+ * @param tableShortName
+ * @param columns
+ */
+function getRequestColumnString(tableShortName: string, columns: string[]): string {
+  const tableColumns = columns.map((column) => tableShortName + '."' + column + '"');
+  return tableColumns.join(', ');
+}
+
+/**
+ * Compose an SQL query that searches (full text) gets given columns from given table where given columns match.
+ *
+ * Note that these parameters MUST NOT BE USER CONTROLLED! They are not getting sanitized for the query!
+ *
+ * @param unsafeTableName
+ * @param unsafeSearchAttributes
+ * @param unsafeResultAttributes
+ */
+function buildSearchQuery(unsafeTableName: string, unsafeSearchAttributes: string[],
+                          unsafeResultAttributes: string[]): string {
+  const tableShortName = unsafeTableName.charAt(0).toLowerCase();
+  const searchColumnString = getSearchColumnString(tableShortName, unsafeSearchAttributes);
+  const requestColumnString = getRequestColumnString(tableShortName, unsafeResultAttributes);
+
+  return 'SELECT ' + requestColumnString + ' FROM "' + unsafeTableName + '" AS ' + tableShortName + ' WHERE ' +
+    'to_tsvector(' + searchColumnString + ') @@ plainto_tsquery(\'english\', :searchTerm)';
+}
+
+/**
  * Search a user with firstName or lastName containing a given string, case insensitive.
  *
  * @param searchTerm string that firstName or lastName should contain
+ * @param searchAttribute the attribute/column name to search
  * @param result pointer to a SearchResult instance to store results
  */
-async function searchUser(searchTerm: string, result: SearchResult) {
-  const sqlQuery = 'SELECT u."id", u."firstName", u."lastName", u."city", u."country" FROM "User" AS u WHERE ' +
-    'to_tsvector(u."firstName" || \' \' || u."lastName") @@ plainto_tsquery(\'english\', :searchTerm)';
+async function searchUser(searchTerm: string, searchAttribute: string, result: SearchResult) {
+  const attributes: {[key: string]: string[]} = {
+    'everything': ['firstName', 'lastName', 'city', 'country'],
+    'firstName': ['firstName'],
+    'lastName': ['lastName'],
+    'city': ['city'],
+    'country': ['country'],
+  };
+
+  const sqlQuery = buildSearchQuery('User', attributes[searchAttribute],
+    attributes['everything']);
 
   const queryResult = await sequelize.query(
     sqlQuery,
     {
-      replacements: {'searchTerm': searchTerm},
+      replacements: {'searchTerm': searchTerm}
     }
   );
 
@@ -62,11 +116,40 @@ async function searchUser(searchTerm: string, result: SearchResult) {
  * Search a service with description or name containing a given string, case insensitive.
  *
  * @param searchTerm string that name or description should contain
+ * @param searchAttribute the attribute/column name to search
  * @param result pointer to a SearchResult instance to store results
  */
-async function searchService(searchTerm: string, result: SearchResult) {
-  const sqlQuery = 'SELECT * FROM "Service" AS s WHERE to_tsvector(s."name" || \' \' || s."description") ' +
-    '@@ plainto_tsquery(\'english\', :searchTerm)';
+async function searchService(searchTerm: string, searchAttribute: string, result: SearchResult) {
+  const attributes: {[key: string]: string[]} = {
+    'everything': ['name', 'description', 'price', 'availability', 'place', 'quantity'],
+    'name': ['name'],
+    'category': ['categoryId'],
+    'description': ['description'],
+    'price': ['price'],
+    'availability': ['availability'],
+    'place': ['place'],
+    'quantity': ['quantity'],
+  };
+
+  // this is ad-hoc and should be improved later
+  if (searchAttribute === 'category') {
+    // search a category with the given search term as name
+    await Category.find({where: {'name': searchTerm}}).then( (category) => {
+      if (category) {
+        // if found, search a service with the categoryId set to the id of the this category
+        Service.find({where: {'categoryId': category.id}}).then((service) => {
+          if (service) {
+            result.addServices([service]);
+          }
+        });
+      }
+    });
+
+    return;
+  }
+
+  const sqlQuery = buildSearchQuery('Service', attributes[searchAttribute],
+    attributes['everything']);
 
   const queryResult = await sequelize.query(
     sqlQuery,
@@ -82,11 +165,20 @@ async function searchService(searchTerm: string, result: SearchResult) {
  * Search an event with description or name containing a given string, case insensitive.
  *
  * @param searchTerm string that name or description should contain
+ * @param searchAttribute the attribute/column name to search
  * @param result pointer to a SearchResult instance to store results
  */
-async function searchEvent(searchTerm: string, result: SearchResult) {
-  const sqlQuery = 'SELECT * FROM "Event" AS e WHERE to_tsvector(e."name" || \' \' || e."description") ' +
-                   '@@ plainto_tsquery(\'english\', :searchTerm)';
+async function searchEvent(searchTerm: string, searchAttribute: string, result: SearchResult) {
+  const attributes: {[key: string]: string[]} = {
+    'everything': ['name', 'description', 'date', 'place'],
+    'name': ['name'],
+    'description': ['description'],
+    'date': ['date'],
+    'place': ['place'],
+  };
+
+  const sqlQuery = buildSearchQuery('Event', attributes[searchAttribute],
+    attributes['everything']);
 
   const queryResult = await sequelize.query(
     sqlQuery,
@@ -107,6 +199,7 @@ async function searchEvent(searchTerm: string, result: SearchResult) {
 class Search {
   private readonly searchFunctions!: Function[];
   private results: SearchResult = new SearchResult();
+  private searchAttribute!: string;
   searchTerm!: string;
 
   /**
@@ -116,6 +209,8 @@ class Search {
    */
   constructor(searchParameter: any) {
     this.searchTerm = searchParameter['searchTerm'];
+    this.searchAttribute = searchParameter['searchAttribute'];
+
     switch (searchParameter['searchCategory']) {
       case 'everything' : {
         this.searchFunctions = [searchUser, searchService, searchEvent];
@@ -151,7 +246,7 @@ class Search {
     while (this.searchFunctions.length > 0) {
       currentSearch = this.searchFunctions.pop();
       if (currentSearch !== undefined) {
-        await currentSearch(this.searchTerm, this.results);
+        await currentSearch(this.searchTerm, this.searchAttribute, this.results);
       }
     }
 
