@@ -402,9 +402,9 @@ router.delete('/event', async (request: Request, response: Response) => {
   const userId = parseInt(request.body.userId, undefined);
   const eventId = parseInt(request.body.eventId, undefined);
 
-  /*if (! isAuthentic(response, userId)) {
+  if (! isAuthentic(response, userId)) {
     return;
-  }*/
+  }
   const user = await isInstance(response, User, userId, 'User not found');
   if (! user) {
     return;
