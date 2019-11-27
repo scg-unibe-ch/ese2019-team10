@@ -8,6 +8,12 @@ export class EventService extends Model<EventService> {
   public startDate!: string;
 
   @Column
+  public booked!: boolean;
+
+  @Column
+  public responded!: boolean;
+
+  @Column
   public endDate!: string;
 
   @Column
@@ -15,6 +21,12 @@ export class EventService extends Model<EventService> {
 
   @Column
   public endTime!: string;
+
+  @Column
+  public message!: string;
+
+  @Column
+  public reply!: string;
 
   @ForeignKey(() => Event)
   @Column
@@ -24,12 +36,15 @@ export class EventService extends Model<EventService> {
   @Column
   public serviceId!: number;
 
-  post_(event_data: any): void {
-    this.startDate = event_data['startDate'];
-    this.endDate = event_data['endDate'];
-    this.startTime = event_data['startTime'];
-    this.endTime = event_data['endTime'];
-    this.eventId = event_data['eventId'];
-    this.serviceId = event_data['serviceId'];
+  post_(eventService_data: any): void {
+    this.startDate = eventService_data['startDate'];
+    this.endDate = eventService_data['endDate'];
+    this.startTime = eventService_data['startTime'];
+    this.endTime = eventService_data['endTime'];
+    this.eventId = eventService_data['eventId'];
+    this.serviceId = eventService_data['serviceId'];
+    this.message = eventService_data['message'];
+    this.booked = false;
+    this.responded = false;
   }
 }
