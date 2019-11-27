@@ -67,7 +67,7 @@ function getRequestColumnString(tableShortName: string, columns: string[]): stri
 /**
  * Compose an SQL query that searches (full text) gets given columns from given table where given columns match.
  *
- * Note that these parameters MUST NOT BE USER CONTROLLED! They are not getting sanitized for the query!
+ * Please note that these parameters MUST NOT BE USER CONTROLLED! They are not getting sanitized for the query!
  *
  * @param unsafeTableName
  * @param unsafeSearchAttributes
