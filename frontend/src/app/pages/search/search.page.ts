@@ -29,6 +29,7 @@ export class SearchPage implements OnInit {
   private showUsers: boolean;
   private showServices: boolean;
   private showEvents: boolean;
+  private searchTerm: string;
 
 
   constructor(
@@ -64,6 +65,10 @@ export class SearchPage implements OnInit {
     this.checkCategoryDisplay();
   }
 
+
+  getSearchTerm(term: string) {
+    this.searchTerm = term;
+  }
 
   /**
    * Search with the provided search term.
@@ -111,11 +116,12 @@ export class SearchPage implements OnInit {
   /**
    * Change the search category upon segment change.
    */
-  selectCategory(category) {
-    console.log(category);
+  selectCategory(category: string) {
+    console.log(this.searchTerm);
     this.searchCategory = category;
     this.searchAttribute = 'everything';
     this.checkCategoryDisplay();
+    this.search(this.searchTerm);
   }
 
   checkCategoryDisplay() {
