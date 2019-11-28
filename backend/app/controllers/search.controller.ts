@@ -1,8 +1,8 @@
 import {Request, Response, Router} from 'express';
 import {User} from '../models/user.model';
-import {Category, Service} from '../models/service.model';
+import {Service} from '../models/service.model';
+import {Category} from '../models/category.model';
 import {Event} from '../models/event.model';
-import { Op } from 'sequelize';
 import {sequelize} from '../server';
 
 const router: Router = Router();
