@@ -237,7 +237,7 @@ export class AuthService {
    */
   loadProfile(): Observable<User> {
     return this.http.get<User>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
-      map(data => new User().deserialize(data[0]))
+      map(data => new User().deserialize(data))
     );
   }
 
@@ -246,7 +246,7 @@ export class AuthService {
    */
   loadUser(userId): Observable<User> {
     return this.http.get<User>(this.url + 'user/profile/' + userId, httpOptions).pipe(
-      map(data => new User().deserialize(data[0]))
+      map(data => new User().deserialize(data))
     );
   }
 
