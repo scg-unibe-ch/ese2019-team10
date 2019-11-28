@@ -1,4 +1,4 @@
-import {Column, ForeignKey, Model, Table} from 'sequelize-typescript';
+import {Column, ForeignKey, Model, Table, BelongsTo} from 'sequelize-typescript';
 import {Event} from './event.model';
 import {Service} from './service.model';
 
@@ -28,6 +28,9 @@ export class EventService extends Model<EventService> {
   @Column
   public reply!: string;
 
+  @BelongsTo(() => Event)
+  public event!: Event;
+
   @ForeignKey(() => Event)
   @Column
   public eventId!: number;
@@ -44,7 +47,6 @@ export class EventService extends Model<EventService> {
     this.eventId = eventService_data['eventId'];
     this.serviceId = eventService_data['serviceId'];
     this.message = eventService_data['message'];
-    this.booked = false;
     this.responded = false;
   }
 }
