@@ -8,7 +8,7 @@ import {User} from './models/user.model';
 import {Event} from './models/event.model';
 import {City} from './models/city.model';
 import {Country} from './models/country.model';
-import {Category} from './models/service.model';
+import {Category} from './models/category.model';
 import {EventUser} from './models/EventUser';
 import {EventService} from './models/EventService';
 import {RegisterController} from './controllers';
@@ -20,6 +20,7 @@ import {RoleUser} from './models/RoleUser';
 import {AdminController} from './controllers/admin.controller';
 import {CheckAdminController} from './controllers/checkAdmin.controller.';
 import {SearchController} from './controllers/search.controller';
+import {CategoryController} from './controllers/category.controller';
 
 /**
  * Create required roles if they don't exist yet
@@ -115,6 +116,7 @@ app.use('/api/login', LoginController);
 app.use('/api/admin', CheckLoginController, CheckAdminController, AdminController);
 app.use('/api/user', CheckLoginController, UserController);
 app.use('/api/search', SearchController);
+app.use('/api/category', CategoryController);
 
 // .sync() is not recommended for production, yes, but I use it for development!
 sequelize.sync().then(() => {

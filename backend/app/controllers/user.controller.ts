@@ -2,7 +2,8 @@ import {Router, Request, Response} from 'express';
 import {User} from '../models/user.model';
 import {Event} from '../models/event.model';
 import {Role} from '../models/role.model';
-import {Service, Category} from '../models/service.model';
+import {Service} from '../models/service.model';
+import {Category} from '../models/category.model';
 import {EventService} from '../models/EventService';
 
 const router: Router = Router();
