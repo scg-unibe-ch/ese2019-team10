@@ -1,4 +1,4 @@
-import {BelongsToMany, Column, BelongsTo, Model, Table, ForeignKey} from 'sequelize-typescript';
+import {BelongsToMany, Column, BelongsTo, Model, Table, ForeignKey, HasMany} from 'sequelize-typescript';
 import {User} from './user.model';
 import {Event} from './event.model';
 import {EventService} from './EventService';
