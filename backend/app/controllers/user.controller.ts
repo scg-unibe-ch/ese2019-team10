@@ -87,7 +87,7 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
     userRoleJSON.isEventManager = roles.includes('EventManager');
     delete userRoleJSON.role;
 
-    res.status(200).json({0: userRoleJSON});
+    res.status(200).json(userRoleJSON);
   }).catch((e) => {
     res.status(500).json({'msg': 'Error with user profile'});
   });
