@@ -263,9 +263,9 @@ export class AuthService {
   }
 
   bookService(service) {
-    service.bookerId = this.id;
+    // service.bookerId = this.id;
     // console.log(service);
-    return this.http.post(this.url + 'user/booking', service, httpOptions);
+    return this.http.post(this.url + 'user/service/book', service, httpOptions);
   }
 
 
