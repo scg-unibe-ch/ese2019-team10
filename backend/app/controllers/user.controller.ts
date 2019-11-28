@@ -264,9 +264,9 @@ router.post('/service', async (request: Request, response: Response) => {
   // search for user with requested email
   const userId = parseInt(request.body.userId, undefined);
   const user = await isInstance(response, User, userId, 'User not found');
-  if (! isAuthentic(response, userId)) {
+  /*if (! isAuthentic(response, userId)) {
     return;
-  }
+  }*/
   if (! user) {
     return;
   }
@@ -289,9 +289,9 @@ router.put('/service/:id', async (request: Request, response: Response) => {
   const userId = parseInt(request.body.userId, undefined);
   const serviceId = parseInt(request.params.id, undefined);
 
-  if (! isAuthentic(response, userId)) {
+  /*if (! isAuthentic(response, userId)) {
     return;
-  }
+  }*/
   const user = await isInstance(response, User, userId, 'User not found');
   if (! user) {
     return;
@@ -329,9 +329,9 @@ router.post('/event', async (request: Request, response: Response) => {
   // search for user with requested email
   const userId = parseInt(request.body.userId, undefined);
 
-  if (! isAuthentic(response, userId)) {
+  /*if (! isAuthentic(response, userId)) {
     return;
-  }
+  }*/
 
   const user = await isInstance(response, User, userId, 'User not found');
   if (! user) {
@@ -416,39 +416,56 @@ router.post('/service/book', async (request: Request, response: Response) => {
 /************************************************************************
 * Endpoint to list a service requests to be confirmed                   *
 *************************************************************************/
-router.get('/service/to-confirm/:userId', async (request: Request, response: Response) => {
-  let options = {};
-  options = {
-    attributes: ['id', 'firstName', 'lastName', 'email'],
+router.get('/service/to-confirm/:id', async (request: Request, response: Response) => {
+  const userId = parseInt(request.params.id, undefined);
+
+  Service.findAll({
     where: {
-      responded: false
-    }
-  };
-  EventService.findAll(options).then(result => {
+      userId: userId
+    },
+    attributes: [
+      'id',
+      'name'
+    ],
+    include: [{
+      model: EventService,
+      where: {
+        responded: false
+      },
+      attributes: ['eventId', 'message'],
+      include: [{
+        model: Event,
+        attributes: ['name'],
+        include: [{
+          model: User,
+          attributes: ['firstName', 'email'],
+        }],
+      }],
+    }],
+  }).then(result => {
     response.statusCode = 200;
-    response.json(result.map(e => e));
-  }).catch(()  => {
+    response.json(result);
+  }).catch((error)  => {
     response.statusCode = 500;
-    response.json({'msg': 'Error, there is not request list'});
+    response.json({'msg': 'Error, there is not request list' + error});
   });
 });
 
 /************************************************************************
 * Endpoint to confirm or reject a service request                       *
 *************************************************************************/
-router.put('/service/confirm/:id', async (request: Request, response: Response) => {
-  const bookingId = parseInt(request.params.id, undefined);
-  const booking = await isInstance(response, EventService, bookingId, 'Booking not found');
-  if (! booking) {
-    return;
-  }
+router.put('/confirm', async (request: Request, response: Response) => {
+  const eventId = parseInt(request.body.eventId, undefined);
+  const serviceId = parseInt(request.body.serviceId, undefined);
+
   EventService.update({
     booked: request.body.booked,
     responded: true,
     reply: request.body.reply
   }, {
     where: {
-      id: bookingId
+      eventId: eventId,
+      serviceId: serviceId
     }
   }).then(() => {
     response.statusCode = 200;
