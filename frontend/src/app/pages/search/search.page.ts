@@ -26,6 +26,10 @@ export class SearchPage implements OnInit {
   public services: Service[];
   public events: Event[];
   public users: User[];
+  private showUsers: boolean;
+  private showServices: boolean;
+  private showEvents: boolean;
+  private searchTerm: string;
 
 
   constructor(
@@ -52,11 +56,19 @@ export class SearchPage implements OnInit {
     this.foundServices = false;
     this.foundEvents = false;
     this.hasSearched = false;
+    this.showUsers = false;
+    this.showServices = false;
+    this.showEvents = false;
     this.services = [];
     this.events = [];
     this.users = [];
+    this.checkCategoryDisplay();
   }
 
+
+  getSearchTerm(term: string) {
+    this.searchTerm = term;
+  }
 
   /**
    * Search with the provided search term.
@@ -104,10 +116,35 @@ export class SearchPage implements OnInit {
   /**
    * Change the search category upon segment change.
    */
-  selectCategory(category) {
-    console.log(category);
+  selectCategory(category: string) {
+    console.log(this.searchTerm);
     this.searchCategory = category;
     this.searchAttribute = 'everything';
+    this.checkCategoryDisplay();
+    this.search(this.searchTerm);
+  }
+
+  checkCategoryDisplay() {
+    if (this.searchCategory === 'everything') {
+      this.showEvents = true;
+      this.showServices = true;
+      this.showUsers = true;
+    }
+    if (this.searchCategory === 'services') {
+      this.showEvents = false;
+      this.showServices = true;
+      this.showUsers = false;
+    }
+    if (this.searchCategory === 'events') {
+      this.showEvents = true;
+      this.showServices = false;
+      this.showUsers = false;
+    }
+    if (this.searchCategory === 'user') {
+      this.showEvents = false;
+      this.showServices = false;
+      this.showUsers = true;
+    }
   }
 
   /**

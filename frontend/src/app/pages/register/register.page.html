@@ -3,18 +3,17 @@
   </app-header>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-margin ion-padding">
 
-  <ion-card class="SignupCard">
-
+  <ion-card class="SignupCard ion-margin ion-no-padding">
 
     <div class="registration-form">
       <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-        <ion-row>
-          <ion-col>
-            <ion-list inset>
+        <ion-row class="ion-no-margin ion-no-padding">
+          <ion-col class="ion-no-margin ion-no-padding">
+            <ion-list class="ion-no-margin ion-no-padding">
 
-              <ion-item-divider class="ion-margin-top" sticky="true" color="dark">
+              <ion-item-divider class="ion-no-margin" sticky="true" color="dark">
                 <ion-label>
                   <ion-icon class="divider-icon" slot="start" name="mail"></ion-icon>
                   Account Information
@@ -22,7 +21,9 @@
               </ion-item-divider>
 
               <ion-item>
-                <ion-label position="floating">E-Mail address</ion-label>
+                <ion-label position="floating">E-Mail address
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
                 <ion-input autocomplete="email" formControlName="email" name="email" required
                            type="email"></ion-input>
               </ion-item>
@@ -39,7 +40,9 @@
               <div formGroupName="matchingPasswords">
 
                 <ion-item>
-                  <ion-label position="floating">Password</ion-label>
+                  <ion-label position="floating">Password
+                    <ion-text color="danger">*</ion-text>
+                  </ion-label>
                   <ion-input autocomplete="new-password" formControlName="password" name="password"
                              type="password"
                              required></ion-input>
@@ -55,7 +58,9 @@
                 </div>
 
                 <ion-item>
-                  <ion-label position="floating">Confirm password</ion-label>
+                  <ion-label position="floating">Confirm password
+                    <ion-text color="danger">*</ion-text>
+                  </ion-label>
                   <ion-input formControlName="confirmPassword" name="confirmPassword"
                              type="password"
                              autocomplete="new-password"
@@ -70,7 +75,6 @@
                     </div>
                   </ng-container>
                 </div>
-
               </div>
 
               <div class="validation-errors">
@@ -91,7 +95,9 @@
               </ion-item-divider>
 
               <ion-item>
-                <ion-label position="floating">First name</ion-label>
+                <ion-label position="floating">First name
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
                 <ion-input autocomplete="given-name" formControlName="firstName" name="firstName"
                            type="text"
                            required></ion-input>
@@ -107,7 +113,9 @@
               </div>
 
               <ion-item>
-                <ion-label position="floating">Last name</ion-label>
+                <ion-label position="floating">Last name
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
                 <ion-input autocomplete="family-name" formControlName="lastName" name="lastName"
                            type="text"
                            required></ion-input>
@@ -122,16 +130,32 @@
                 </ng-container>
               </div>
 
+              <!--              <ion-item>
+                              <ion-label position="floating">Street</ion-label>
+                              <ion-input autocomplete="street-address" formControlName="street" name="street"
+                                         type="text"
+                                         required></ion-input>
+                            </ion-item>
+                            <div class="validation-errors">
+                              <ng-container *ngFor="let validation of registrationMessages.street">
+                                <div class="error-message"
+                                     *ngIf="registrationForm.get('street').hasError(validation.type) && (registrationForm.get('street').dirty || registrationForm.get('street').touched)">
+                                  <ion-icon name="information-circle-outline"></ion-icon>
+                                  {{ validation.message }}
+                                </div>
+                              </ng-container>
+                            </div>-->
+
               <ion-item>
-                <ion-label position="floating">Street</ion-label>
-                <ion-input autocomplete="street-address" formControlName="street" name="street"
+                <ion-label position="floating">Postal code</ion-label>
+                <ion-input autocomplete="postal-code" formControlName="postalCode" name="postalCode"
                            type="text"
                            required></ion-input>
               </ion-item>
               <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.street">
+                <ng-container *ngFor="let validation of registrationMessages.postalCode">
                   <div class="error-message"
-                       *ngIf="registrationForm.get('street').hasError(validation.type) && (registrationForm.get('street').dirty || registrationForm.get('street').touched)">
+                       *ngIf="registrationForm.get('postalCode').hasError(validation.type) && (registrationForm.get('postalCode').dirty || registrationForm.get('postalCode').touched)">
                     <ion-icon name="information-circle-outline"></ion-icon>
                     {{ validation.message }}
                   </div>
@@ -154,21 +178,6 @@
                 </ng-container>
               </div>
 
-              <ion-item>
-                <ion-label position="floating">Postal code</ion-label>
-                <ion-input autocomplete="postal-code" formControlName="postalCode" name="postalCode"
-                           type="text"
-                           required></ion-input>
-              </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.postalCode">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('postalCode').hasError(validation.type) && (registrationForm.get('postalCode').dirty || registrationForm.get('postalCode').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
 
               <ion-item-divider class="ion-margin-top" sticky="true" color="dark">
                 <ion-label>
@@ -177,20 +186,23 @@
                 </ion-label>
               </ion-item-divider>
 
-              <ion-button class="terms ion-text-capitalize" expand="block" fill="outline" href="/terms-conditions"
-                          routerDirection="forward" target="_blank" type="button">
-              <span class="ion-text-left">Terms & Conditions
-              <ion-icon class="left-margin" name="open"></ion-icon></span>
-              </ion-button>
+              <!--              <ion-button class="terms ion-text-capitalize" expand="block" fill="outline" href="/terms-conditions"
+                                        routerDirection="forward" target="_blank" type="button">
+                            <span class="ion-text-left">Terms & Conditions
+                            <ion-icon class="left-margin" name="open"></ion-icon></span>
+                            </ion-button>
 
-              <ion-button class="terms ion-text-capitalize" expand="block" fill="outline" href="/privacy-policy"
-                          routerDirection="forward" target="_blank" type="button">
-              <span class="ion-text-left">Privacy Policy
-              <ion-icon class="left-margin" name="open"></ion-icon></span>
-              </ion-button>
+                            <ion-button class="terms ion-text-capitalize" expand="block" fill="outline" href="/privacy-policy"
+                                        routerDirection="forward" target="_blank" type="button">
+                            <span class="ion-text-left">Privacy Policy
+                            <ion-icon class="left-margin" name="open"></ion-icon></span>
+                            </ion-button>-->
 
               <ion-item>
-                <ion-label class="ion-text-wrap">I have read and agree to the terms and conditions and privacy policy.</ion-label>
+                <ion-label class="ion-text-wrap">I have read and agree to the <a href="/terms-conditions"
+                                                                                 target="_blank">terms and
+                  conditions</a> and to the <a href="/privacy-policy" target="_blank">privacy policy</a> .
+                </ion-label>
                 <ion-checkbox formControlName="terms" name="terms"></ion-checkbox>
               </ion-item>
 
@@ -204,12 +216,16 @@
                 </ng-container>
               </div>
 
-              <ion-row class="ion-margin-top">
-                <ion-button class="submit-btn" expand="full" type="submit" [disabled]="!registrationForm.valid"
-                >
-                  <ion-icon slot="start" name="person-add"></ion-icon>
-                  Register
-                </ion-button>
+
+              <ion-row class="ion-no-margin ion-no-padding">
+                <ion-col class="ion-no-margin ion-no-padding">
+                  <ion-button class="submit-btn ion-no-margin ion-no-padding" expand="full" type="submit"
+                              [disabled]="!registrationForm.valid"
+                  >
+                    <ion-icon class="button-icon" slot="start" name="person-add"></ion-icon>
+                    Register
+                  </ion-button>
+                </ion-col>
               </ion-row>
 
             </ion-list>

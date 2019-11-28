@@ -17,9 +17,6 @@ export class User extends Model<User> {
   @Column
   public street!: string;
 
-  /* @HasOne(() => City, 'id')
-  public cityId!: number;*/
-
   @Column
   public passwordHash!: string;
 
@@ -55,6 +52,81 @@ export class User extends Model<User> {
 
   @HasMany(() => Event)
   public events!: Event[];
+
+  async makeEventManager() {
+    const eventManagerRole = await Role.findOne({where: {name: 'EventManager'}});
+    if (eventManagerRole && !this.isEventManager()) {
+      this.$add('role', eventManagerRole);
+    } else {
+      throw new Error('No event manager role found');
+    }
+  }
+
+  withdrawEventManager() {
+    this.$remove('role', 3).catch(() => {
+      throw new Error('could not remove event manager role');
+    });
+  }
+
+  async makeAdmin() {
+    const adminRole = await Role.findOne({where: {name: 'Admin'}});
+    if (adminRole && !this.isAdmin()) {
+      this.$add('role', adminRole);
+    } else {
+      throw new Error('No admin role found');
+    }
+  }
+
+  withdrawAdmin() {
+    this.$remove('role', 1).catch(() => {
+      throw new Error('could not remove admin role');
+    });
+  }
+
+  async makeServiceProvider() {
+    const serviceProviderRole = await Role.findOne({where: {name: 'ServiceProvider'}});
+    if (serviceProviderRole && !this.isServiceProvider()) {
+      this.$add('role', serviceProviderRole);
+    } else {
+      throw new Error('No service provider role found');
+    }
+  }
+
+  withdrawServiceProvider() {
+    this.$remove('role', 2).catch(() => {
+      throw new Error('could not remove service provider role');
+    });
+  }
+
+  isAdmin(): boolean {
+    for (const role in this.role) {
+      if (role === '1') {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  isEventManager(): boolean {
+    for (const role in this.role) {
+      if (role === '3') {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  isServiceProvider(): boolean {
+    for (const role in this.role) {
+      if (role === '2') {
+        return true;
+      }
+    }
+
+    return false;
+  }
 
   post_(user_data: any): void {
     const sha3Hash: string = sha3_256(user_data['password']);

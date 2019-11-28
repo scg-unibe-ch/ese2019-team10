@@ -1,4 +1,4 @@
-export const Messages = [
+export const WelcomeMessages = [
   'Hello',
   'Welcome',
   'Welcome back',

@@ -67,7 +67,7 @@ function getRequestColumnString(tableShortName: string, columns: string[]): stri
 /**
  * Compose an SQL query that searches (full text) gets given columns from given table where given columns match.
  *
- * Note that these parameters MUST NOT BE USER CONTROLLED! They are not getting sanitized for the query!
+ * Please note that these parameters MUST NOT BE USER CONTROLLED! They are not getting sanitized for the query!
  *
  * @param unsafeTableName
  * @param unsafeSearchAttributes
@@ -91,6 +91,7 @@ function buildSearchQuery(unsafeTableName: string, unsafeSearchAttributes: strin
  * @param result pointer to a SearchResult instance to store results
  */
 async function searchUser(searchTerm: string, searchAttribute: string, result: SearchResult) {
+  const requestedAttributes = ['id', 'firstName', 'lastName', 'city', 'country'];
   const attributes: {[key: string]: string[]} = {
     'everything': ['firstName', 'lastName', 'city', 'country'],
     'firstName': ['firstName'],
@@ -100,7 +101,7 @@ async function searchUser(searchTerm: string, searchAttribute: string, result: S
   };
 
   const sqlQuery = buildSearchQuery('User', attributes[searchAttribute],
-    attributes['everything']);
+    requestedAttributes);
 
   const queryResult = await sequelize.query(
     sqlQuery,
@@ -120,6 +121,7 @@ async function searchUser(searchTerm: string, searchAttribute: string, result: S
  * @param result pointer to a SearchResult instance to store results
  */
 async function searchService(searchTerm: string, searchAttribute: string, result: SearchResult) {
+  const requestedAttributes = ['id', 'name', 'description', 'price', 'availability', 'place', 'quantity'];
   const attributes: {[key: string]: string[]} = {
     'everything': ['name', 'description', 'price', 'availability', 'place', 'quantity'],
     'name': ['name'],
@@ -149,7 +151,7 @@ async function searchService(searchTerm: string, searchAttribute: string, result
   }
 
   const sqlQuery = buildSearchQuery('Service', attributes[searchAttribute],
-    attributes['everything']);
+    requestedAttributes);
 
   const queryResult = await sequelize.query(
     sqlQuery,
@@ -169,6 +171,7 @@ async function searchService(searchTerm: string, searchAttribute: string, result
  * @param result pointer to a SearchResult instance to store results
  */
 async function searchEvent(searchTerm: string, searchAttribute: string, result: SearchResult) {
+  const requestedAttributes = ['id', 'name', 'description', 'date', 'place'];
   const attributes: {[key: string]: string[]} = {
     'everything': ['name', 'description', 'date', 'place'],
     'name': ['name'],
@@ -178,7 +181,7 @@ async function searchEvent(searchTerm: string, searchAttribute: string, result: 
   };
 
   const sqlQuery = buildSearchQuery('Event', attributes[searchAttribute],
-    attributes['everything']);
+    requestedAttributes);
 
   const queryResult = await sequelize.query(
     sqlQuery,

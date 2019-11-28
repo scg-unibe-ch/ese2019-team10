@@ -24,7 +24,7 @@ export class ThemeService {
   setTheme(theme) {
     const cssText = CSSTextGenerator(theme);
     this.setGlobalCSS(cssText);
-    this.storage.set('theme', cssText);
+    this.storage.set('theme', cssText).then();
   }
 
   // Define a single CSS variable

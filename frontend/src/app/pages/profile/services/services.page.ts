@@ -5,15 +5,15 @@ import {Title} from '@angular/platform-browser';
 import {map, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
-import {PasswordValidator} from '../../validators/password.validator';
-import {AuthService} from '../../services/auth.service';
+import {PasswordValidator} from '../../../validators/password.validator';
+import {AuthService} from '../../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
-import {ValidationMessages} from '../../models/validation-messages.model';
-import {User} from '../../models/user.model';
-import {Service} from '../../models/service.model';
-import {appConstants} from '../../constants/app.constants';
-import {ServiceValidation} from '../../constants/service-validation.constants';
-import {KeyValuePair} from '../../models/key-value-pair.model';
+import {ValidationMessages} from '../../../constants/validation-messages.constants';
+import {User} from '../../../models/user.model';
+import {Service} from '../../../models/service.model';
+import {appConstants} from '../../../constants/app.constants';
+import {ServiceValidation} from '../../../constants/service-validation.constants';
+import {KeyValuePair} from '../../../models/key-value-pair.model';
 
 
 @Component({

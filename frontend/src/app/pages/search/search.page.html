@@ -6,17 +6,17 @@
 
 <ion-content>
 
-  <ion-card>
+  <ion-card class="ion-padding">
 
     <div class="input-outer-padding">
       <div class="input-inner-padding">
         <ion-searchbar #mainSearch id="search-field" class="input-field ion-no-padding ion-no-margin"
-                       placeholder="Search..." autocomplete="on" color="dark" inputmode="search"
+                       placeholder="Search..." autocomplete="on" color="light" inputmode="search"
                        type="search"
-                       showCancelButton="focus" (keyup.enter)="search(mainSearch.value)" animated>
+                       showCancelButton="focus" (keyup.enter)="search(mainSearch.value)" (ionChange)="getSearchTerm(mainSearch.value)" animated="true">
         </ion-searchbar>
       </div>
-      <ion-button class="search-confirm ion-no-margin" id="search-button" color="secondary"
+      <ion-button class="search-confirm ion-no-margin" id="search-button" color="primary"
                   (click)="search(mainSearch.value)">
         <ion-icon name="search" slot="icon-only"></ion-icon>
       </ion-button>
@@ -81,13 +81,10 @@
     </ion-item>
 
 
-    <ion-card-content *ngIf="hasSearched">
-      <ion-list *ngIf="foundResult; else noResultsFound">
-        <ion-list-header>
-          The following results were found:
-        </ion-list-header>
+    <ion-card-content *ngIf="hasSearched" class="ion-no-padding ion-no-margin">
+      <ion-list *ngIf="foundResult; else noResultsFound" lines="none">
 
-        <ion-list *ngIf="foundServices" inset>
+        <ion-item-group *ngIf="foundServices && showServices">
           <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
             <ion-label>
               <ion-icon class="divider-icon" slot="start" name="build"></ion-icon>
@@ -95,7 +92,7 @@
             </ion-label>
           </ion-item-divider>
 
-          <ion-card *ngFor="let service of services" class="ion-margin-bottom" (click)="goToService(service)"
+          <ion-card *ngFor="let service of services" class="ion-margin-bottom ion-no-padding" (click)="goToService(service)"
                     type="button" button="true">
             <ion-item>
               <ion-badge slot="end" color="warning">Name</ion-badge>
@@ -111,9 +108,9 @@
             </ion-item>
           </ion-card>
 
-        </ion-list>
+        </ion-item-group>
 
-        <ion-list *ngIf="foundEvents" inset>
+        <ion-item-group *ngIf="foundEvents && showEvents">
 
           <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
             <ion-label>
@@ -138,9 +135,9 @@
             </ion-item>
           </ion-card>
 
-        </ion-list>
+        </ion-item-group>
 
-        <ion-list *ngIf="foundUsers" inset>
+        <ion-list *ngIf="foundUsers && showUsers" lines="none">
 
           <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
             <ion-label>

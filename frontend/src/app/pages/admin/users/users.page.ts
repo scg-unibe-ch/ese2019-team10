@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 
-import {AuthService} from '../../services/auth.service';
-import {AlertService} from '../../services/alert.service';
-import {AdminService} from '../../services/admin.service';
-import {User} from '../../models/user.model';
-import {appConstants} from '../../constants/app.constants';
+import {AuthService} from '../../../services/auth.service';
+import {AlertService} from '../../../services/alert.service';
+import {AdminService} from '../../../services/admin.service';
+import {User} from '../../../models/user.model';
+import {appConstants} from '../../../constants/app.constants';
 
 
 @Component({

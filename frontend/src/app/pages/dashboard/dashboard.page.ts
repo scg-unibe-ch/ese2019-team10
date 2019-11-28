@@ -3,7 +3,7 @@ import {Title} from '@angular/platform-browser';
 
 import {AuthService} from '../../services/auth.service';
 import {AdminService} from '../../services/admin.service';
-import {Messages} from '../../models/messages.model';
+import {WelcomeMessages} from '../../constants/welcome-messages.constants';
 import {appConstants} from '../../constants/app.constants';
 import {User} from '../../models/user.model';
 
@@ -18,7 +18,7 @@ export class DashboardPage implements OnInit {
   private firstName: string = null;
   private lastName: string = null;
   private title: string;
-  public messages: Array<string> = Messages;
+  public messages: Array<string> = WelcomeMessages;
   public userId = undefined;
   private isServiceProvider: boolean;
   private isEventManager: boolean;

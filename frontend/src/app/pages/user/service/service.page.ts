@@ -11,7 +11,7 @@ import {Observable} from 'rxjs';
 import {appConstants} from '../../../constants/app.constants';
 import {Service} from '../../../models/service.model';
 import {Event} from '../../../models/event.model';
-import {ValidationMessages} from '../../../models/validation-messages.model';
+import {ValidationMessages} from '../../../constants/validation-messages.constants';
 import {BookingValidation} from '../../../constants/booking-validation.constants';
 import {KeyValuePair} from '../../../models/key-value-pair.model';
 
@@ -128,12 +128,10 @@ export class ServicePage implements OnInit {
     this.authService.loadProfile().subscribe(user => {
         this.viewer = user;
         this.viewerIsEventManager = user.isEventManager;
-        this.viewerIsEventManager = true;
         if (this.viewerIsEventManager) {
           this.loadEvents();
         }
-        // return user.isEventManager;
-      return true;
+        return user.isEventManager;
       },
     );
   }

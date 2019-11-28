@@ -7,7 +7,7 @@ import {Title} from '@angular/platform-browser';
 
 import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
-import {ValidationMessages} from '../../models/validation-messages.model';
+import {ValidationMessages} from '../../constants/validation-messages.constants';
 import {User} from '../../models/user.model';
 import {appConstants} from '../../constants/app.constants';
 
@@ -38,8 +38,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.title = 'Login';
-    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
-
+    this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
     this.route.queryParams.subscribe(params => this.returnUrl = params.returnUrl || '/dashboard');
 
     // this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/dashboard';
@@ -67,17 +66,13 @@ export class LoginPage implements OnInit {
     const user = this.prepareLogin();
     console.log(user);
     this.authService.login(user).subscribe(
-      (data: any) => {
+      () => {
         // console.log(data.msg);
         // console.log('return url: ' + this.returnUrl);
         this.authService.authenticationState.subscribe(state => {
           console.log('auth state: ' + state);
           if (state) {
-            this.router.navigateByUrl(this.returnUrl).then(/*nav => {
-              console.log(nav); // true if navigation is successful
-            }, err => {
-              console.log(err); // when there's an error
-            }*/);
+            this.router.navigateByUrl(this.returnUrl).then();
           } else {
             // console.log(state);
             /*          /!*          this.router.navigate(['login']).then(nav => {
@@ -87,32 +82,26 @@ export class LoginPage implements OnInit {
                                 });*!/*/
           }
         });
-/*
-        this.router.navigateByUrl(this.returnUrl, { skipLocationChange: true }).then(nav => {
-          console.log(nav); // true if navigation is successful
-        }, err => {
-          console.log('error: ' + err); // when there's an error
-        });
-*/
+        /*
+                this.router.navigateByUrl(this.returnUrl, { skipLocationChange: true }).then(nav => {
+                  console.log(nav); // true if navigation is successful
+                }, err => {
+                  console.log('error: ' + err); // when there's an error
+                });
+        */
 
-        this.alertService.presentToast('You have logged in. Welcome!').then(/*r => {
-          console.log(r);
-        }, err => {
-          console.log('error: ' + err);
-        }*/
-        );
+        this.alertService.presentToast('You have logged in. Welcome!').then();
       },
       error => {
-        if (error.message === 'Wrong username/password combination.') {
-          this.error = 'Your username and password don\'t match. Please try again.';
-        } else if (error.message === 'Account is not approved yet.') {
-          this.error = 'Your account has not been approved yet. \nPlease wait for an admin to approve it.';
+        console.log('login error: ');
+        console.log(error);
+        if (error.message.includes('username/password')) {
+          this.error = 'Either your username or your password is wrong.';
+        } else if (error.message.includes('not approved')) {
+          this.error = 'Your account has not yet been approved.';
         } else {
-          console.log('login error: ');
-          console.log(error.message);
+
         }
-      },
-      () => {
       }
     );
 

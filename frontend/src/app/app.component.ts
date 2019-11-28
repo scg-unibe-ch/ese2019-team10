@@ -116,6 +116,16 @@ export class AppComponent implements OnInit {
               icon: 'home'
             },
             {
+              title: 'About',
+              url: '/about',
+              icon: 'information-circle'
+            },
+            {
+              title: 'FAQ',
+              url: '/faq',
+              icon: 'help'
+            },
+            {
               title: 'Login',
               url: '/login',
               icon: 'log-in'

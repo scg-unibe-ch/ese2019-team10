@@ -1,19 +1,21 @@
 .input-outer-padding {
   position: relative;
   overflow: hidden;
+  padding: 0;
 }
 
 .input-inner-padding {
   width: auto;
   height: auto;
   padding: 0;
+  border-top-left-radius: 20px;
 }
 
 .input-field {
   width: 100%;
   display: block;
   /*resets for hiding the input boundaries */
-  border: 0;
+  border: 1px solid var(--ion-color-primary);
   margin: 0;
   padding: 0;
   outline: none;

@@ -7,7 +7,7 @@ import {tap} from 'rxjs/operators';
 import {PasswordValidator} from '../../validators/password.validator';
 import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
-import {ValidationMessages} from '../../models/validation-messages.model';
+import {ValidationMessages} from '../../constants/validation-messages.constants';
 import {User} from '../../models/user.model';
 import {appConstants} from '../../constants/app.constants';
 
@@ -36,7 +36,7 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() {
     this.title = 'Register';
-    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
+    this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
 
 
     this.matchingPasswordsGroup = new FormGroup({
@@ -67,15 +67,12 @@ export class RegisterPage implements OnInit {
         Validators.maxLength(100)
       ])),
       street: new FormControl('', Validators.compose([
-        Validators.required,
         Validators.maxLength(100)
       ])),
       city: new FormControl('', Validators.compose([
-        Validators.required,
         Validators.maxLength(100)
       ])),
       postalCode: new FormControl('', Validators.compose([
-        Validators.required,
         // postal codes can have numbers, letters, spaces, and hyphens
         // Validators.pattern('^[A-Za-z0-9- ]+$'),
         Validators.pattern('^[0-9]+$'),

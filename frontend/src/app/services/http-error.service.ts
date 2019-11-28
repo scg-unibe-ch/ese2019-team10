@@ -40,19 +40,24 @@ export class HttpErrorService implements HttpInterceptor {
                   return event;
                 }),*/
         catchError((error: HttpErrorResponse) => {
-          let errorMessage = '';
+          let errorMessage: string;
           if (error.error instanceof ErrorEvent) {
             // client-side error
-            errorMessage = `Error: ${error.error.message}`;
+            errorMessage = 'Error: ${error.error.message}';
             this.showAlert('Error', error.error.message);
           } else {
             // server-side error
-            // console.log(error.error);
-            errorMessage = `Error Code: ${error.status}\nMessage: ${error.statusText}`;
+            console.log(error.error);
+            errorMessage = 'Error Code: ${error.status}\nMessage: ${error.statusText}';
             // return these errors instead of show an alert
-            if (error.status === 401 && (error.statusText === 'Wrong username/password combination.' || error.statusText === 'Account is not approved yet.')) {
+            if (error.status === 401 &&
+              (error.statusText.includes('username/password') || error.statusText.includes('not approved'))) {
               // this.alertService.presentToast(error.statusText).then();
               return throwError(error.statusText);
+            } else if (error.status === 401 &&
+              (error.error.msg.includes('username/password') || error.error.msg.includes('not approved'))) {
+              // this.alertService.presentToast(error.statusText).then();
+              return throwError(error.error.msg);
             } else {
               // show an alert for all other errors
               this.showAlert('Error Code: ' + error.status, error.message);

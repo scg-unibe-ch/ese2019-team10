@@ -6,7 +6,6 @@
 <ion-content class="ion-padding">
   <ion-card>
 
-
     <ion-item-divider *ngIf="loadedServices" class="" color="dark" sticky="true">
       <ion-label>
         <ion-icon class="divider-icon" slot="start" name="clipboard"></ion-icon>
@@ -18,19 +17,18 @@
 
       <ion-item-group formArrayName="services">
 
-
         <ion-list *ngFor="let service of getControls(); index as ix" inset>
 
           <ion-button *ngIf="!this.helperArray[ix]; else hideThisService" class="submit-btn ion-no-margin"
                       expand="full"
                       type="button"
-                      (click)="showService(ix)" color="dark">
+                      (click)="showService(ix)" color="primary">
             <ion-icon slot="start" name="arrow-dropdown"></ion-icon>
             Show {{getProperty(ix, 'name')}}
           </ion-button>
           <ng-template #hideThisService>
             <ion-button class="submit-btn ion-no-margin" expand="full" type="button" (click)="hideService(ix)"
-                        color="dark">
+                        color="tertiary">
               <ion-icon slot="start" name="arrow-dropup"></ion-icon>
               Hide {{getProperty(ix, 'name')}}
             </ion-button>
@@ -171,36 +169,28 @@
             </div>
 
           </ion-item-group>
-
-
         </ion-list>
-
       </ion-item-group>
-
     </form>
-
-
   </ion-card>
 
   <ion-card class="ion-margin-top">
 
-    <ion-item-divider color="dark" sticky="true">
+    <ion-item-divider *ngIf="showNewServiceForm" color="dark" sticky="true">
       <ion-label>
         <ion-icon class="divider-icon" slot="start" name="clipboard"></ion-icon>
         Add a New Service
       </ion-label>
     </ion-item-divider>
 
-
     <form *ngIf="showNewServiceForm" [formGroup]="newServiceForm" (ngSubmit)="saveNewService()">
 
       <ion-list inset>
-
         <ion-item-group>
-
           <div class="row">
+
             <ion-item>
-              <ion-label position="floating">Name</ion-label>
+              <ion-label position="floating">Name <ion-text color="danger">*</ion-text></ion-label>
               <ion-input type="text" name="name" formControlName="name"></ion-input>
             </ion-item>
             <div class="validation-errors ion-text-wrap">
@@ -214,7 +204,7 @@
             </div>
 
             <ion-item>
-              <ion-label position="floating">Category</ion-label>
+              <ion-label position="floating">Category <ion-text color="danger">*</ion-text></ion-label>
               <ion-select interface="popover" name="categoryId" formControlName="categoryId">
                 <ion-select-option *ngFor="let category of categories"
                                    [value]="category.key">{{category.value}}</ion-select-option>
@@ -231,7 +221,7 @@
             </div>
 
             <ion-item>
-              <ion-label>Currently offered</ion-label>
+              <ion-label>Currently offered <ion-text color="danger">*</ion-text></ion-label>
               <ion-toggle slot="start" name="available" formControlName="available" color="dark" checked></ion-toggle>
             </ion-item>
             <div class="validation-errors ion-text-wrap">
@@ -245,7 +235,7 @@
             </div>
 
             <ion-item>
-              <ion-label position="floating">Availability</ion-label>
+              <ion-label position="floating">Available dates and times <ion-text color="danger">*</ion-text></ion-label>
               <ion-input type="text" name="availability" formControlName="availability"></ion-input>
             </ion-item>
             <div class="validation-errors ion-text-wrap">
@@ -259,7 +249,7 @@
             </div>
 
             <ion-item>
-              <ion-label position="floating">Place</ion-label>
+              <ion-label position="floating">Place <ion-text color="danger">*</ion-text></ion-label>
               <ion-input type="text" name="place" formControlName="place"></ion-input>
             </ion-item>
             <div class="validation-errors ion-text-wrap">
@@ -273,7 +263,7 @@
             </div>
 
             <ion-item>
-              <ion-label position="floating">Price</ion-label>
+              <ion-label position="floating">Price <ion-text color="danger">*</ion-text></ion-label>
               <ion-input type="text" name="price" formControlName="price"></ion-input>
             </ion-item>
             <div class="validation-errors ion-text-wrap">
@@ -287,7 +277,7 @@
             </div>
 
             <ion-item>
-              <ion-label position="floating">Quantity</ion-label>
+              <ion-label position="floating">Quantity <ion-text color="danger">*</ion-text></ion-label>
               <ion-input type="text" name="quantity" formControlName="quantity"></ion-input>
             </ion-item>
             <div class="validation-errors ion-text-wrap">
@@ -301,7 +291,7 @@
             </div>
 
             <ion-item>
-              <ion-label position="floating">Description</ion-label>
+              <ion-label position="floating">Description <ion-text color="danger">*</ion-text></ion-label>
               <ion-input type="text" name="description" formControlName="description"></ion-input>
             </ion-item>
             <div class="validation-errors ion-text-wrap">
@@ -314,11 +304,8 @@
               </ng-container>
             </div>
 
-
           </div>
-
         </ion-item-group>
-
       </ion-list>
 
       <ion-button (click)="deleteNewService()" slot="end" class="ion-margin-top">
@@ -338,7 +325,7 @@
 
     <div *ngIf="!showNewServiceForm">
       <ion-button (click)="addNewService()" slot="end" class="submit-btn ion-no-margin" expand="full"
-                  type="button">
+                  type="button" color="success">
         <ion-icon slot="start" name="add"></ion-icon>
         Add Service
       </ion-button>
