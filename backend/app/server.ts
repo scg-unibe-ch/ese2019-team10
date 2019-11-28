@@ -21,6 +21,7 @@ import {AdminController} from './controllers/admin.controller';
 import {CheckAdminController} from './controllers/checkAdmin.controller.';
 import {SearchController} from './controllers/search.controller';
 import {CategoryController} from './controllers/category.controller';
+import {ServiceController} from './controllers/service.controller';
 
 /**
  * Create required roles if they don't exist yet
@@ -117,6 +118,7 @@ app.use('/api/admin', CheckLoginController, CheckAdminController, AdminControlle
 app.use('/api/user', CheckLoginController, UserController);
 app.use('/api/search', SearchController);
 app.use('/api/category', CategoryController);
+app.use('/api/user', ServiceController);
 
 // .sync() is not recommended for production, yes, but I use it for development!
 sequelize.sync().then(() => {
