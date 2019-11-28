@@ -5,7 +5,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {IonicModule} from '@ionic/angular';
 
 import {EventsPage} from './events.page';
-import {SharedComponentsModule} from '../../components/shared-components.module';
+import {SharedComponentsModule} from '../../../components/shared-components.module';
 
 
 const routes: Routes = [

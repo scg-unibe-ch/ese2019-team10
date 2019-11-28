@@ -7,7 +7,7 @@ import {Title} from '@angular/platform-browser';
 
 import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
-import {ValidationMessages} from '../../models/validation-messages.model';
+import {ValidationMessages} from '../../constants/validation-messages.constants';
 import {User} from '../../models/user.model';
 import {appConstants} from '../../constants/app.constants';
 

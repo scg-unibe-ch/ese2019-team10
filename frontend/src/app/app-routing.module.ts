@@ -27,11 +27,11 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'profile/services', loadChildren: './profile/services/services.module#ServicesPageModule',
+    path: 'profile/services', loadChildren: './pages/profile/services/services.module#ServicesPageModule',
     canActivate: [AuthGuardService]
   },
   {
-    path: 'profile/events', loadChildren: './profile/events/events.module#EventsPageModule',
+    path: 'profile/events', loadChildren: './pages/profile/events/events.module#EventsPageModule',
     canActivate: [AuthGuardService]
   },
   {
@@ -47,7 +47,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'admin/users', loadChildren: './admin/users/users.module#UsersPageModule',
+    path: 'admin/users', loadChildren: './pages/admin/users/users.module#UsersPageModule',
     canActivate: [AuthGuardService, AdminGuardService]
   },
   {path: '**', loadChildren: './pages/page-not-found/page-not-found.module#PageNotFoundPageModule'},

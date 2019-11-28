@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 
-import {ThemeService} from '../../theme.service';
+import {ThemeService} from '../../services/theme.service';
 import {appConstants} from '../../constants/app.constants';
 import {themeConstants} from '../../constants/theme.constants';
 
