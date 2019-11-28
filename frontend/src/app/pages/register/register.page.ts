@@ -67,15 +67,12 @@ export class RegisterPage implements OnInit {
         Validators.maxLength(100)
       ])),
       street: new FormControl('', Validators.compose([
-        Validators.required,
         Validators.maxLength(100)
       ])),
       city: new FormControl('', Validators.compose([
-        Validators.required,
         Validators.maxLength(100)
       ])),
       postalCode: new FormControl('', Validators.compose([
-        Validators.required,
         // postal codes can have numbers, letters, spaces, and hyphens
         // Validators.pattern('^[A-Za-z0-9- ]+$'),
         Validators.pattern('^[0-9]+$'),

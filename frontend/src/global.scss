@@ -55,7 +55,8 @@ ion-text {
 }
 
 .error-message {
-  color: #8b0000;
+  color: var(--ion-color-danger);
+  padding: 3px 2px 1px 5px;
 }
 
 h3 {

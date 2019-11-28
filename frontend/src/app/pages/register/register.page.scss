@@ -9,6 +9,14 @@
   }
 }*/
 
+.ion-activatable {
+  ion-label {
+    a {
+      position: relative;
+      z-index: 10;
+    }
+  }
+}
 
 
 /*ion-input {
