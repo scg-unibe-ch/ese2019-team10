@@ -3,80 +3,82 @@
   </app-header>
 </ion-header>
 
-
-<ion-content>
-
-
+<ion-content class="ion-margin ion-padding">
   <div class="login-form">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <ion-row>
-        <ion-col>
-          <ion-list inset>
+    <ion-card class="ion-margin ion-no-padding">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <ion-list class="ion-no-margin ion-no-padding" lines="full">
 
+          <ion-item>
+            <ion-label class="ion-text-wrap" position="floating">E-Mail</ion-label>
+            <ion-input autocomplete="email" formControlName="email" name="email" required
+                       type="email"></ion-input>
+          </ion-item>
 
-            <ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of loginMessages.email">
+              <ion-chip class="validation-chip" color="danger" outline="true"
+                        *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <ion-icon name="warning"></ion-icon>
+                <ion-label class="ion-text-wrap">
+                  {{validation.message}}
+                </ion-label>
+              </ion-chip>
+            </ng-container>
+          </div>
 
-              <ion-input autocomplete="email" formControlName="email" name="email" placeholder="E-Mail" required
-                         type="email"></ion-input>
-            </ion-item>
-            <div class="validation-errors">
-              <ng-container *ngFor="let validation of loginMessages.email">
-                <div class="error-message"
-                     *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
-                  <ion-icon name="information-circle-outline"></ion-icon>
-                  {{ validation.message }}
-                </div>
-              </ng-container>
-            </div>
+          <ion-item>
+            <ion-label class="ion-text-wrap" position="floating">Password</ion-label>
+            <ion-input autocomplete="current-password" formControlName="password" name="password"
+                       required
+                       type="password"></ion-input>
+          </ion-item>
 
-            <ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of loginMessages.password">
 
-              <ion-input autocomplete="current-password" formControlName="password" name="password"
-                         placeholder="Password" required
-                         type="password"></ion-input>
-            </ion-item>
-            <div class="validation-errors">
-              <ng-container *ngFor="let validation of loginMessages.password">
-                <div class="error-message"
-                     *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
-                  <ion-icon name="information-circle-outline"></ion-icon>
-                  {{ validation.message }}
-                </div>
-              </ng-container>
-            </div>
+              <ion-chip class="validation-chip" color="danger" outline="true"
+                        *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+                <ion-icon name="warning"></ion-icon>
+                <ion-label class="ion-text-wrap">
+                  {{validation.message}}
+                </ion-label>
+              </ion-chip>
+            </ng-container>
+          </div>
 
-
+          <div class="submission-errors">
             <ion-chip *ngIf="error" class="error ion-margin-vertical" color="warning" outline="true">
               <ion-icon name="alert"></ion-icon>
-              <ion-label>
+              <ion-label class="error-chip">
                 {{error}}
               </ion-label>
             </ion-chip>
+          </div>
 
-            <ion-row>
-              <ion-button [disabled]="!loginForm.valid" class="submit-btn" expand="full"
+
+          <ion-row class="ion-no-margin ion-no-padding">
+            <ion-col class="ion-no-margin ion-no-padding">
+              <ion-button [disabled]="!loginForm.valid" class="submit-btn ion-no-margin ion-no-padding" expand="full"
                           type="submit">
                 <ion-icon name="log-in" slot="start"></ion-icon>
                 Login
               </ion-button>
-            </ion-row>
+            </ion-col>
+          </ion-row>
 
-            <ion-row>
-              <ion-button [routerLink]="['/terms-conditions']" class="terms" expand="block" fill="outline"
-                          type="button">
-                <ion-icon name="book" slot="start"></ion-icon>
-                Terms
-              </ion-button>
-            </ion-row>
+          <!--            <ion-row>
+                        <ion-button [routerLink]="['/terms-conditions']" class="terms" expand="block" fill="outline"
+                                    type="button">
+                          <ion-icon name="book" slot="start"></ion-icon>
+                          Terms
+                        </ion-button>
+                      </ion-row>-->
 
-          </ion-list>
-        </ion-col>
-      </ion-row>
-
-    </form>
+        </ion-list>
+      </form>
+    </ion-card>
   </div>
-
-
 </ion-content>
 
 

@@ -37,7 +37,6 @@ ion-text {
 
 /* Icons */
 
-
 .button-icon {
   margin-right: 9px;
 }
@@ -54,9 +53,29 @@ ion-text {
   margin-left: 9px;
 }
 
+
+/* Messages */
+
+
 .error-message {
   color: var(--ion-color-danger);
   padding: 3px 2px 1px 5px;
+}
+
+.validation-chip {
+  color: var(--ion-color-danger);
+  margin: 5px 3px 7px 3px;
+}
+
+.error-chip {
+  color: var(--ion-color-warning);
+  margin: 5px 3px 7px 3px;
+}
+
+.submission-errors {
+  justify-content: center;
+  align-items: center;
+  text-align: center
 }
 
 h3 {
