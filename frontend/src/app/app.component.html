@@ -10,14 +10,14 @@
       <ion-list>
         <ion-menu-toggle auto-hide="true">
           <ion-item *ngFor="let pages of navigate" [routerLink]="pages.url" [class.active-item]="pages.active"
-                    routerDirection="forward">
+                    routerDirection="forward" detail>
             <ion-icon [name]="pages.icon" [class.active-item]="pages.active" slot="start"></ion-icon>
             {{pages.title}}
           </ion-item>
 
           <ion-item *ngIf="loggedIn" (click)="logout()" button="true" type="button" routerDirection="root">
             <ion-icon name="log-out" slot="start"></ion-icon>
-            Log Out
+            Logout
           </ion-item>
 
         </ion-menu-toggle>
