@@ -68,8 +68,8 @@ export class Service extends Model<Service> {
   @Column
   public categoryId!: number;
 
-  @BelongsTo(() => User)
-  public user!: User;
+  @HasMany(() => EventService)
+  public eventServices!: EventService[];
 
   @ForeignKey(() => User)
   @Column
