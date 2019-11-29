@@ -64,14 +64,7 @@ export class ServicesPage implements OnInit {
   ngOnInit() {
     this.title = 'Services';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
-
-
-    this.categories = [
-      {key: 1, value: 'Venue'},
-      {key: 2, value: 'Objects'},
-      {key: 3, value: 'Consumables'},
-      {key: 4, value: 'Professional'},
-    ];
+    this.categories = [];
 
     this.initialize();
     /* this.currentTime = new Date();
@@ -133,6 +126,9 @@ export class ServicesPage implements OnInit {
   }
 
   initialize() {
+    this.authService.getCategories().subscribe((data: KeyValuePair[]) => {
+      this.categories = data;
+    });
     this.services = [];
     this.helperArray = [];
     this.user = new User().deserialize({});

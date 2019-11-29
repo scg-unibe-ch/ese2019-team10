@@ -114,6 +114,7 @@ export class ServicePage implements OnInit {
       userId: this.userId,
       serviceId: this.service.id,
       eventId: this.bookingForm.value.eventId,
+      message: this.bookingForm.value.message,
     };
     this.authService.bookService(service).subscribe(
       (data: any) => {

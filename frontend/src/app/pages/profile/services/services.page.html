@@ -17,7 +17,7 @@
 
       <ion-item-group formArrayName="services">
 
-        <ion-list *ngFor="let service of getControls(); index as ix" inset>
+        <ion-list *ngFor="let service of getControls(); index as ix">
 
           <ion-button *ngIf="!this.helperArray[ix]; else hideThisService" class="submit-btn ion-no-margin"
                       expand="full"
@@ -55,7 +55,7 @@
                 <ion-label position="floating">Category</ion-label>
                 <ion-select interface="popover" name="categoryId" formControlName="categoryId">
                   <ion-select-option *ngFor="let category of categories"
-                                     [value]="category.key">{{category.value}}</ion-select-option>
+                                     [value]="category.id">{{category.name}}</ion-select-option>
                 </ion-select>
               </ion-item>
               <div class="validation-errors ion-text-wrap">
@@ -185,7 +185,7 @@
 
     <form *ngIf="showNewServiceForm" [formGroup]="newServiceForm" (ngSubmit)="saveNewService()">
 
-      <ion-list inset>
+      <ion-list>
         <ion-item-group>
           <div class="row">
 
@@ -207,7 +207,7 @@
               <ion-label position="floating">Category <ion-text color="danger">*</ion-text></ion-label>
               <ion-select interface="popover" name="categoryId" formControlName="categoryId">
                 <ion-select-option *ngFor="let category of categories"
-                                   [value]="category.key">{{category.value}}</ion-select-option>
+                                   [value]="category.id">{{category.name}}</ion-select-option>
               </ion-select>
             </ion-item>
             <div class="validation-errors ion-text-wrap">
