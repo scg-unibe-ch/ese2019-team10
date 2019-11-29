@@ -1,6 +1,6 @@
 export interface KeyValuePair {
-  key: number;
-  value: string;
+  id: number;
+  name: string;
 }
 
 

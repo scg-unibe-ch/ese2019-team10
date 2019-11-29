@@ -275,5 +275,11 @@ export class AuthService {
     );
   }
 
+  getCategories() {
+    return this.http.get(this.url + 'category/list', httpOptions).pipe(
+      // map(data => new Service().deserialize(data))
+    );
+  }
+
 
 }
