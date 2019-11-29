@@ -102,7 +102,7 @@ export class ServicePage implements OnInit {
     if (this.viewer.events.length > 0) {
       for (const event of this.viewer.events) {
         this.events.push(
-          {key: event.id, value: event.name},
+          {id: event.id, name: event.name},
         );
       }
       this.eventsLoaded = true;

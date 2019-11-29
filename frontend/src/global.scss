@@ -21,36 +21,57 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
-@import url('https://fonts.googleapis.com/css?family=Merriweather|Merriweather+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito|Nunito+Sans&display=swap');
 
 
 /* Fonts */
 
 * {
-  font-family: 'Merriweather Sans', 'Roboto', sans-serif;
+  font-family: 'Nunito', 'Roboto', sans-serif;
 }
 
-ion-text {
-  font-family: 'Merriweather', serif;
+ion-toolbar, ion-menu {
+  font-family:  'Nunito Sans', sans-serif;
 }
 
+.form-button {
+  margin-top: 29px;
+}
+
+.form-shutter {
+  margin-top: 19px;
+}
+
+.open-shutter {
+  margin-bottom: 37px;
+}
+
+.spaced-card {
+  margin-top: 47px;
+}
+
+.validation-errors {
+  justify-content: center;
+  align-items: center;
+  text-align: center
+}
 
 /* Icons */
 
 .button-icon {
-  margin-right: 9px;
+  margin-right: 11px;
 }
 
 .form-icon {
-  margin-right: 9px;
+  margin-right: 11px;
 }
 
 .divider-icon {
-  margin-right: 9px;
+  margin-right: 11px;
 }
 
 .left-margin {
-  margin-left: 9px;
+  margin-left: 11px;
 }
 
 
@@ -65,6 +86,7 @@ ion-text {
 .validation-chip {
   color: var(--ion-color-danger);
   margin: 5px 3px 7px 3px;
+  font-size: 0.9em;
 }
 
 .error-chip {
@@ -79,7 +101,7 @@ ion-text {
 }
 
 h3 {
-  margin: 20px 0 10px 5px;
+  margin: 23px 0 11px 5px;
 }
 
 span.ion-text-left {

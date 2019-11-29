@@ -62,14 +62,6 @@ export class EventsPage implements OnInit {
     this.title = 'Events';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
 
-
-    this.categories = [
-      {key: 1, value: 'Venue'},
-      {key: 2, value: 'Objects'},
-      {key: 3, value: 'Consumables'},
-      {key: 4, value: 'Professional'},
-    ];
-
     this.initialize();
     /* this.currentTime = new Date();
      this.day = String(this.currentTime.getDate()).padStart(2, '0');

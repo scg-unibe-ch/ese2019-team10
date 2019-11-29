@@ -27,13 +27,16 @@
                 <ion-input autocomplete="email" formControlName="email" name="email" required
                            type="email"></ion-input>
               </ion-item>
+
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.email">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('email').hasError(validation.type) && (registrationForm.get('email').dirty || registrationForm.get('email').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="registrationForm.get('email').hasError(validation.type) && (registrationForm.get('email').dirty || registrationForm.get('email').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
 
@@ -47,13 +50,16 @@
                              type="password"
                              required></ion-input>
                 </ion-item>
+
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of registrationMessages.password">
-                    <div class="error-message"
-                         *ngIf="registrationForm.get('matchingPasswords').get('password').hasError(validation.type) && (registrationForm.get('matchingPasswords').get('password').dirty || registrationForm.get('matchingPasswords').get('password').touched)">
-                      <ion-icon name="information-circle-outline"></ion-icon>
-                      {{ validation.message }}
-                    </div>
+                    <ion-chip class="validation-chip" color="danger" outline="true"
+                              *ngIf="registrationForm.get('matchingPasswords').get('password').hasError(validation.type) && (registrationForm.get('matchingPasswords').get('password').dirty || registrationForm.get('matchingPasswords').get('password').touched)">
+                      <ion-icon name="warning"></ion-icon>
+                      <ion-label class="ion-text-wrap">
+                        {{validation.message}}
+                      </ion-label>
+                    </ion-chip>
                   </ng-container>
                 </div>
 
@@ -66,24 +72,31 @@
                              autocomplete="new-password"
                              required></ion-input>
                 </ion-item>
+
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of registrationMessages.confirmPassword">
-                    <div class="error-message"
-                         *ngIf="registrationForm.get('matchingPasswords').get('confirmPassword').hasError(validation.type) && (registrationForm.get('matchingPasswords').get('confirmPassword').dirty || registrationForm.get('matchingPasswords').get('confirmPassword').touched)">
-                      <ion-icon name="information-circle-outline"></ion-icon>
-                      {{ validation.message }}
-                    </div>
+                    <ion-chip class="validation-chip" color="danger" outline="true"
+                              *ngIf="registrationForm.get('matchingPasswords').get('confirmPassword').hasError(validation.type) && (registrationForm.get('matchingPasswords').get('confirmPassword').dirty || registrationForm.get('matchingPasswords').get('confirmPassword').touched)">
+                      <ion-icon name="warning"></ion-icon>
+                      <ion-label class="ion-text-wrap">
+                        {{validation.message}}
+                      </ion-label>
+                    </ion-chip>
                   </ng-container>
                 </div>
               </div>
 
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.matchingPasswords">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('matchingPasswords').hasError(validation.type) && (registrationForm.get('matchingPasswords').get('confirmPassword').dirty || registrationForm.get('matchingPasswords').get('confirmPassword').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                  *ngIf="registrationForm.get('matchingPasswords').hasError(validation.type) &&
+                  (registrationForm.get('matchingPasswords').get('confirmPassword').dirty ||
+                  registrationForm.get('matchingPasswords').get('confirmPassword').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
 
@@ -102,13 +115,16 @@
                            type="text"
                            required></ion-input>
               </ion-item>
+
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.firstName">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('firstName').hasError(validation.type) && (registrationForm.get('firstName').dirty || registrationForm.get('firstName').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="registrationForm.get('firstName').hasError(validation.type) && (registrationForm.get('firstName').dirty || registrationForm.get('firstName').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
 
@@ -120,13 +136,16 @@
                            type="text"
                            required></ion-input>
               </ion-item>
+
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.lastName">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('lastName').hasError(validation.type) && (registrationForm.get('lastName').dirty || registrationForm.get('lastName').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="registrationForm.get('lastName').hasError(validation.type) && (registrationForm.get('lastName').dirty || registrationForm.get('lastName').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
 
@@ -150,15 +169,18 @@
                 <ion-label position="floating">Postal code</ion-label>
                 <ion-input autocomplete="postal-code" formControlName="postalCode" name="postalCode"
                            type="text"
-                           required></ion-input>
+                           ></ion-input>
               </ion-item>
+
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.postalCode">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('postalCode').hasError(validation.type) && (registrationForm.get('postalCode').dirty || registrationForm.get('postalCode').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="registrationForm.get('postalCode').hasError(validation.type) && (registrationForm.get('postalCode').dirty || registrationForm.get('postalCode').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
 
@@ -166,15 +188,18 @@
                 <ion-label position="floating">City</ion-label>
                 <ion-input autocomplete="address-level2" formControlName="city" name="city"
                            type="text"
-                           required></ion-input>
+                           ></ion-input>
               </ion-item>
+
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.city">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('city').hasError(validation.type) && (registrationForm.get('city').dirty || registrationForm.get('city').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="registrationForm.get('city').hasError(validation.type) && (registrationForm.get('city').dirty || registrationForm.get('city').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
 
@@ -208,21 +233,23 @@
 
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.terms">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('terms').hasError(validation.type) && (registrationForm.get('terms').dirty || registrationForm.get('terms').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="registrationForm.get('terms').hasError(validation.type) && (registrationForm.get('terms').dirty || registrationForm.get('terms').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
 
 
               <ion-row class="ion-no-margin ion-no-padding">
                 <ion-col class="ion-no-margin ion-no-padding">
-                  <ion-button class="submit-btn ion-no-margin ion-no-padding" expand="full" type="submit"
+                  <ion-button class="submit-btn ion-no-margin" expand="full" type="submit"
                               [disabled]="!registrationForm.valid"
                   >
-                    <ion-icon class="button-icon" slot="start" name="person-add"></ion-icon>
+                    <ion-icon class="button-icon" slot="start" name="save"></ion-icon>
                     Register
                   </ion-button>
                 </ion-col>

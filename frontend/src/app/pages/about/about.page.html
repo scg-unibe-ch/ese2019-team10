@@ -3,35 +3,32 @@
   </app-header>
 </ion-header>
 
+<ion-content class="ion-margin ion-padding">
+  <div class="about-page">
+    <ion-card class="ion-margin ion-no-padding">
+      <ion-card-content class="ion-no-margin ion-no-padding">
 
-<ion-content>
-  <ion-card>
+        <ion-button class="ion-no-margin" expand="full" href="/faq"
+                    routerDirection="forward" type="button">
+          <ion-icon slot="start" name="help" class="button-icon"></ion-icon>
+          Frequently Asked Questions
+        </ion-button>
 
+        <ion-button class="ion-no-margin form-button" expand="full"
+                    href="/terms-conditions"
+                    routerDirection="forward" type="button">
+          <ion-icon slot="start" name="book" class="button-icon"></ion-icon>
+          Terms & Conditions
+        </ion-button>
 
-    <ion-card-content>
+        <ion-button class="ion-no-margin form-button" expand="full"
+                    href="/privacy-policy"
+                    routerDirection="forward" type="button">
+          <ion-icon slot="start" name="finger-print" class="button-icon"></ion-icon>
+          Privacy Policy
+        </ion-button>
 
-      <ion-button class="terms ion-text-capitalize" expand="block" fill="outline" href="/faq"
-                  routerDirection="forward" target="_blank" type="button">
-        <ion-icon slot="start" name="help" class="button-icon"></ion-icon>
-              <span class="ion-text-left">Frequently Asked Questions
-              <ion-icon class="left-margin" name="open"></ion-icon></span>
-      </ion-button>
-
-      <ion-button class="terms ion-text-capitalize" expand="block" fill="outline" href="/terms-conditions"
-                  routerDirection="forward" target="_blank" type="button">
-        <ion-icon slot="start" name="clipboard" class="button-icon"></ion-icon>
-              <span class="ion-text-left">Terms & Conditions
-              <ion-icon class="left-margin" name="open"></ion-icon></span>
-      </ion-button>
-
-      <ion-button class="terms ion-text-capitalize" expand="block" fill="outline" href="/privacy-policy"
-                  routerDirection="forward" target="_blank" type="button">
-        <ion-icon slot="start" name="clipboard" class="button-icon"></ion-icon>
-              <span class="ion-text-left">Privacy Policy
-              <ion-icon class="left-margin" name="open"></ion-icon></span>
-      </ion-button>
-
-    </ion-card-content>
-
-  </ion-card>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

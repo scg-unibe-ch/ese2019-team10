@@ -3,33 +3,33 @@
   </app-header>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-card>
+<ion-content class="ion-margin ion-padding">
+  <ion-card class="ion-margin ion-no-padding">
 
-
-    <ion-item-divider *ngIf="loadedEvents" class="" color="dark" sticky="true">
+    <ion-item-divider *ngIf="loadedEvents" color="dark" sticky="true">
       <ion-label>
-        <ion-icon class="divider-icon" slot="start" name="clipboard"></ion-icon>
+        <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
         Your Saved Events
       </ion-label>
     </ion-item-divider>
 
     <form class="events-form" [formGroup]="savedEvents">
 
-      <ion-item-group formArrayName="events">
+      <ion-item-group formArrayName="events" class="ion-no-margin ion-no-padding">
 
+        <ion-list class="ion-no-margin ion-no-padding" *ngFor="let event of getControls(); index as ix">
 
-        <ion-list *ngFor="let event of getControls(); index as ix" inset>
-
-          <ion-button *ngIf="!this.helperArray[ix]; else hideThisEvent" class="submit-btn ion-no-margin"
+          <ion-button *ngIf="!this.helperArray[ix]; else hideThisEvent"
+                      class="form-shutter ion-no-margin ion-no-padding"
                       expand="full"
                       type="button"
-                      (click)="showEvent(ix)" color="primary">
+                      (click)="showEvent(ix)" color="tertiary">
             <ion-icon slot="start" name="arrow-dropdown"></ion-icon>
             Show {{getProperty(ix, 'name')}}
           </ion-button>
           <ng-template #hideThisEvent>
-            <ion-button class="submit-btn ion-no-margin" expand="full" type="button" (click)="hideEvent(ix)"
+            <ion-button class="form-shutter ion-no-margin ion-no-padding" expand="full" type="button"
+                        (click)="hideEvent(ix)"
                         color="tertiary">
               <ion-icon slot="start" name="arrow-dropup"></ion-icon>
               Hide {{getProperty(ix, 'name')}}
@@ -37,195 +37,231 @@
           </ng-template>
 
           <ion-item-group [formGroupName]="ix" [hidden]="!this.helperArray[ix]">
-            <div class="row">
 
-              <ion-item>
-                <ion-label position="floating">Name</ion-label>
-                <ion-input type="text" name="name" formControlName="name"></ion-input>
-              </ion-item>
-              <div class="validation-errors ion-text-wrap">
-                <ng-container *ngFor="let validation of eventValidation.name">
-                  <div class="error-message"
-                       *ngIf=" getControls()[ix].get('name').hasError(validation.type) && (getControls()[ix].get('name').dirty || getControls()[ix].get('name').touched)">
-                    <ion-icon name="information-circle-outline" slot="start"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
+            <ion-item>
+              <ion-label position="floating">Name
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+              <ion-input type="text" name="name" formControlName="name"></ion-input>
+            </ion-item>
 
-
-              <ion-item>
-                <ion-label position="floating">Place</ion-label>
-                <ion-input type="text" name="place" formControlName="place"></ion-input>
-              </ion-item>
-              <div class="validation-errors ion-text-wrap">
-                <ng-container *ngFor="let validation of eventValidation.place">
-                  <div class="error-message"
-                       *ngIf=" getControls()[ix].get('place').hasError(validation.type) && (getControls()[ix].get('place').dirty || getControls()[ix].get('place').touched)">
-                    <ion-icon name="information-circle-outline" slot="start"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-
-              <ion-item>
-                <ion-label position="floating">Date</ion-label>
-                <ion-input type="text" name="date" formControlName="date"></ion-input>
-              </ion-item>
-              <div class="validation-errors ion-text-wrap">
-                <ng-container *ngFor="let validation of eventValidation.date">
-                  <div class="error-message"
-                       *ngIf=" getControls()[ix].get('date').hasError(validation.type) && (getControls()[ix].get('date').dirty || getControls()[ix].get('date').touched)">
-                    <ion-icon name="information-circle-outline" slot="start"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-
-
-
-              <ion-item>
-                <ion-label position="floating">Description</ion-label>
-                <ion-textarea type="text" name="description" formControlName="description" spellcheck
-                              rows="5" autoGrow="false"></ion-textarea>
-              </ion-item>
-              <div class="validation-errors ion-text-wrap">
-                <ng-container *ngFor="let validation of eventValidation.description">
-                  <div class="error-message"
-                       *ngIf=" getControls()[ix].get('description').hasError(validation.type) && (getControls()[ix].get('description').dirty || getControls()[ix].get('description').touched)">
-                    <ion-icon name="information-circle-outline" slot="start"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of eventValidation.name">
+                <ion-chip class="validation-chip" color="danger" outline="true"
+                          *ngIf=" getControls()[ix].get('name').hasError(validation.type) && (getControls()[ix].get('name').dirty || getControls()[ix].get('name').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                </ion-chip>
+              </ng-container>
             </div>
 
 
-            <ion-button (click)="deleteEvent(ix)" slot="end" class="ion-margin-top">
-              <ion-icon slot="start" name="close"></ion-icon>
-              Delete Event
-            </ion-button>
+            <ion-item>
+              <ion-label position="floating">Place
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+              <ion-input type="text" name="place" formControlName="place"></ion-input>
+            </ion-item>
 
-            <div class="ion-text-end">
-              <ion-button (click)="saveEvent(ix)" class="submit-btn" type="submit" [disabled]="!getValidity(ix)">
-                <ion-icon slot="start" name="save"></ion-icon>
-                Save Event
-              </ion-button>
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of eventValidation.place">
+                <ion-chip class="validation-chip" color="danger" outline="true"
+                          *ngIf=" getControls()[ix].get('place').hasError(validation.type) && (getControls()[ix].get('place').dirty || getControls()[ix].get('place').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                </ion-chip>
+              </ng-container>
             </div>
+
+
+            <ion-item>
+              <ion-label position="floating">Date
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+              <ion-input type="text" name="date" formControlName="date"></ion-input>
+            </ion-item>
+
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of eventValidation.date">
+                <ion-chip class="validation-chip" color="danger" outline="true"
+                          *ngIf=" getControls()[ix].get('date').hasError(validation.type) && (getControls()[ix].get('date').dirty || getControls()[ix].get('date').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                </ion-chip>
+              </ng-container>
+            </div>
+
+
+            <ion-item>
+              <ion-label position="floating">Description
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+              <ion-textarea type="text" name="description" formControlName="description" spellcheck
+                            rows="5" autoGrow="false"></ion-textarea>
+            </ion-item>
+
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of eventValidation.description">
+                <ion-chip class="validation-chip" color="danger" outline="true"
+                          *ngIf=" getControls()[ix].get('description').hasError(validation.type) && (getControls()[ix].get('description').dirty || getControls()[ix].get('description').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                </ion-chip>
+              </ng-container>
+            </div>
+
+
+            <ion-row class="ion-justify-content-evenly ion-no-margin ion-no-padding ion-wrap ">
+              <ion-col class="ion-align-self-start ion-no-margin ion-no-padding" size-xs="12" size-sm="4">
+                <ion-button (click)="deleteEvent(ix)" class="form-button ion-no-margin" type="button"
+                            color="danger" expand="full">
+                  <ion-icon slot="start" name="close"></ion-icon>
+                  Delete
+                </ion-button>
+              </ion-col>
+
+              <ion-col class="ion-align-self-end ion-no-margin ion-no-padding " size-xs="12" offset-sm="4" size-sm="4">
+                <ion-button (click)="saveEvent(ix)" class="submit-btn form-button ion-no-margin"
+                            type="submit" expand="full" color="primary" [disabled]="!getValidity(ix)">
+                  <ion-icon slot="start" name="save"></ion-icon>
+                  Save
+                </ion-button>
+              </ion-col>
+            </ion-row>
 
           </ion-item-group>
-
-
         </ion-list>
-
       </ion-item-group>
-
     </form>
-
-
   </ion-card>
 
-  <ion-card class="ion-margin-top">
+  <ion-card class="spaced-card ion-margin ion-no-padding">
 
-    <ion-item-divider  *ngIf="showNewEventForm" color="dark" sticky="true">
+    <ion-item-divider *ngIf="showNewEventForm" color="dark" sticky="true">
       <ion-label>
-        <ion-icon class="divider-icon" slot="start" name="clipboard"></ion-icon>
+        <ion-icon class="divider-icon" slot="start" name="add-circle"></ion-icon>
         Add a New Event
       </ion-label>
     </ion-item-divider>
 
-
     <form *ngIf="showNewEventForm" [formGroup]="newEventForm" (ngSubmit)="saveNewEvent()">
 
-      <ion-list inset>
+      <ion-list>
         <ion-item-group>
 
-          <div class="row">
-            <ion-item>
-              <ion-label position="floating">Name</ion-label>
-              <ion-input type="text" name="name" formControlName="name"></ion-input>
-            </ion-item>
-            <div class="validation-errors ion-text-wrap">
-              <ng-container *ngFor="let validation of eventValidation.name">
-                <div class="error-message"
-                     *ngIf="newEventForm.get('name').hasError(validation.type) && (newEventForm.get('name').dirty || newEventForm.get('name').touched)">
-                  <ion-icon name="information-circle-outline" slot="start"></ion-icon>
-                  {{ validation.message }}
-                </div>
-              </ng-container>
-            </div>
+          <ion-item>
+            <ion-label position="floating">Name
+              <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input type="text" name="name" formControlName="name"></ion-input>
+          </ion-item>
+
+          <div class="validation-errors ion-text-wrap">
+            <ng-container *ngFor="let validation of eventValidation.name">
+              <ion-chip class="validation-chip" color="danger" outline="true"
+                        *ngIf="newEventForm.get('name').hasError(validation.type) && (newEventForm.get('name').dirty || newEventForm.get('name').touched)">
+                <ion-icon name="warning"></ion-icon>
+                <ion-label class="ion-text-wrap">
+                  {{validation.message}}
+                </ion-label>
+              </ion-chip>
+            </ng-container>
+          </div>
 
 
+          <ion-item>
+            <ion-label position="floating">Place
+              <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input type="text" name="place" formControlName="place"></ion-input>
+          </ion-item>
 
-            <ion-item>
-              <ion-label position="floating">Place</ion-label>
-              <ion-input type="text" name="place" formControlName="place"></ion-input>
-            </ion-item>
-            <div class="validation-errors ion-text-wrap">
-              <ng-container *ngFor="let validation of eventValidation.place">
-                <div class="error-message"
-                     *ngIf="newEventForm.get('place').hasError(validation.type) && (newEventForm.get('place').dirty || newEventForm.get('place').touched)">
-                  <ion-icon name="information-circle-outline" slot="start"></ion-icon>
-                  {{ validation.message }}
-                </div>
-              </ng-container>
-            </div>
-
-            <ion-item>
-              <ion-label position="floating">Date</ion-label>
-              <ion-input type="text" name="date" formControlName="date"></ion-input>
-            </ion-item>
-            <div class="validation-errors ion-text-wrap">
-              <ng-container *ngFor="let validation of eventValidation.date">
-                <div class="error-message"
-                     *ngIf="newEventForm.get('date').hasError(validation.type) && (newEventForm.get('date').dirty || newEventForm.get('date').touched)">
-                  <ion-icon name="information-circle-outline" slot="start"></ion-icon>
-                  {{ validation.message }}
-                </div>
-              </ng-container>
-            </div>
+          <div class="validation-errors ion-text-wrap">
+            <ng-container *ngFor="let validation of eventValidation.place">
+              <ion-chip class="validation-chip" color="danger" outline="true"
+                        *ngIf="newEventForm.get('place').hasError(validation.type) && (newEventForm.get('place').dirty || newEventForm.get('place').touched)">
+                <ion-icon name="warning"></ion-icon>
+                <ion-label class="ion-text-wrap">
+                  {{validation.message}}
+                </ion-label>
+              </ion-chip>
+            </ng-container>
+          </div>
 
 
+          <ion-item>
+            <ion-label position="floating">Date
+              <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input type="text" name="date" formControlName="date"></ion-input>
+          </ion-item>
 
-            <ion-item>
-              <ion-label position="floating">Description</ion-label>
-              <ion-input type="text" name="description" formControlName="description"></ion-input>
-            </ion-item>
-            <div class="validation-errors ion-text-wrap">
-              <ng-container *ngFor="let validation of eventValidation.description">
-                <div class="error-message"
-                     *ngIf="newEventForm.get('description').hasError(validation.type) && (newEventForm.get('description').dirty || newEventForm.get('description').touched)">
-                  <ion-icon name="information-circle-outline" slot="start"></ion-icon>
-                  {{ validation.message }}
-                </div>
-              </ng-container>
-            </div>
+          <div class="validation-errors ion-text-wrap">
+            <ng-container *ngFor="let validation of eventValidation.date">
+              <ion-chip class="validation-chip" color="danger" outline="true"
+                        *ngIf="newEventForm.get('date').hasError(validation.type) && (newEventForm.get('date').dirty || newEventForm.get('date').touched)">
+                <ion-icon name="warning"></ion-icon>
+                <ion-label class="ion-text-wrap">
+                  {{validation.message}}
+                </ion-label>
+              </ion-chip>
+            </ng-container>
+          </div>
 
 
+          <ion-item>
+            <ion-label position="floating">Description
+              <ion-text color="danger">*</ion-text>
+            </ion-label>
+            <ion-input type="text" name="description" formControlName="description"></ion-input>
+          </ion-item>
+
+          <div class="validation-errors ion-text-wrap">
+            <ng-container *ngFor="let validation of eventValidation.description">
+              <ion-chip class="validation-chip" color="danger" outline="true"
+                        *ngIf="newEventForm.get('description').hasError(validation.type) && (newEventForm.get('description').dirty || newEventForm.get('description').touched)">
+                <ion-icon name="warning"></ion-icon>
+                <ion-label class="ion-text-wrap">
+                  {{validation.message}}
+                </ion-label>
+              </ion-chip>
+            </ng-container>
           </div>
 
         </ion-item-group>
-
       </ion-list>
 
-      <ion-button (click)="deleteNewEvent()" slot="end" class="ion-margin-top">
-        <ion-icon slot="start" name="close"></ion-icon>
-        Remove Event
-      </ion-button>
+      <ion-row class="ion-justify-content-evenly ion-no-margin ion-no-padding ion-wrap ">
+        <ion-col class="ion-align-self-start ion-no-margin ion-no-padding" size-xs="12" size-sm="4">
+          <ion-button (click)="deleteNewEvent()" class="form-button ion-no-margin" type="button"
+                      expand="full" color="danger">
+            <ion-icon slot="start" name="close"></ion-icon>
+            Remove
+          </ion-button>
+        </ion-col>
 
-      <div class="ion-text-end">
-        <ion-button class="submit-btn" type="submit" [disabled]="!newEventForm.valid">
-          <ion-icon slot="start" name="save"></ion-icon>
-          Save Event
-        </ion-button>
-      </div>
+        <ion-col class="ion-align-self-end ion-no-margin ion-no-padding " size-xs="12" offset-sm="4" size-sm="4">
+          <ion-button class="form-button submit-btn ion-no-margin" expand="full" color="primary"
+                      type="submit" [disabled]="!newEventForm.valid">
+            <ion-icon slot="start" name="save"></ion-icon>
+            Save
+          </ion-button>
+        </ion-col>
+      </ion-row>
 
     </form>
 
 
     <div *ngIf="!showNewEventForm">
-      <ion-button (click)="addNewEvent()" slot="end" class="submit-btn ion-no-margin" expand="full"
+      <ion-button (click)="addNewEvent()" class="submit-btn ion-no-margin" expand="full"
                   type="button" color="success">
         <ion-icon slot="start" name="add"></ion-icon>
         Add Event

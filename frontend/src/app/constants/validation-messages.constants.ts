@@ -15,6 +15,8 @@ export const ValidationMessages = {
   ],
   phone: [
     {type: 'required', message: 'Your phone number is required.'},
+    {type: 'pattern', message: 'Please enter a valid phone number.'},
+    {type: 'minlength', message: 'Your phone number must be at least 3 characters long.'},
     {type: 'maxlength', message: 'Your phone number should be less than 100 characters long.'}
   ],
   gender: [

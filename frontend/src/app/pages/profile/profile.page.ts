@@ -59,7 +59,7 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this.title = 'Profile';
-    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
+    this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
     this.currentTime = new Date();
     this.day = String(this.currentTime.getDate()).padStart(2, '0');
     this.month = String(this.currentTime.getMonth() + 1).padStart(2, '0');
@@ -70,6 +70,11 @@ export class ProfilePage implements OnInit {
     this.countries = [
       'Switzerland',
       'Liechtenstein',
+      'Austria',
+      'France',
+      'Germany',
+      'Italy',
+      'USA',
       'Other'
     ];
     this.genders = [
@@ -81,8 +86,8 @@ export class ProfilePage implements OnInit {
 
     this.matchingPasswordsGroup = new FormGroup({
       password: new FormControl('', Validators.compose([
-        Validators.minLength(5),
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$'),
+        Validators.minLength(5),
         Validators.maxLength(500),
       ])),
       confirmPassword: new FormControl('', Validators.maxLength(500))
@@ -128,25 +133,27 @@ export class ProfilePage implements OnInit {
       ])),
       phone: new FormControl('', Validators.compose([
         Validators.required,
+        Validators.pattern('^[+]?[0-9 ]+$'),
+        Validators.minLength(3),
         Validators.maxLength(100)
       ])),
       matchingPasswords: this.matchingPasswordsGroup,
       isServiceProvider: new FormControl(false),
       isEventManager: new FormControl(false),
 
-/*      serviceName: new FormControl(''),
-      serviceCategory: new FormControl(''),
-      eventName: new FormControl(''),
-      eventCategory: new FormControl(''),
-      services: this.formBuilder.array([this.createService()]),
-      events: this.formBuilder.array([this.createEvent()]),*/
+      /*      serviceName: new FormControl(''),
+            serviceCategory: new FormControl(''),
+            eventName: new FormControl(''),
+            eventCategory: new FormControl(''),
+            services: this.formBuilder.array([this.createService()]),
+            events: this.formBuilder.array([this.createEvent()]),*/
 
     });
 
-/*    this.serviceList = this.profileForm.get('services') as FormArray;
-    this.serviceList.removeAt(0);
-    this.eventList = this.profileForm.get('events') as FormArray;
-    this.eventList.removeAt(0);*/
+    /*    this.serviceList = this.profileForm.get('services') as FormArray;
+        this.serviceList.removeAt(0);
+        this.eventList = this.profileForm.get('events') as FormArray;
+        this.eventList.removeAt(0);*/
 
 
   }
