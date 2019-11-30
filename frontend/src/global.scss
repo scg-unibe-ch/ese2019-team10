@@ -31,8 +31,20 @@
 }
 
 ion-toolbar, ion-menu {
-  font-family:  'Nunito Sans', sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
 }
+
+/* General */
+
+h3 {
+  margin: 23px 0 11px 5px;
+}
+
+span.ion-text-left {
+  margin-right: auto;
+}
+
+/* Spacing */
 
 .form-button {
   margin-top: 29px;
@@ -50,11 +62,33 @@ ion-toolbar, ion-menu {
   margin-top: 47px;
 }
 
+.left-margin {
+  margin-left: 11px;
+}
+
+
+/* Text */
+
+.shutter-text {
+  font-weight: bold;
+}
+
+.page-divider {
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
 .validation-errors {
   justify-content: center;
   align-items: center;
   text-align: center
 }
+
+.list-header {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
 
 /* Icons */
 
@@ -70,13 +104,12 @@ ion-toolbar, ion-menu {
   margin-right: 11px;
 }
 
-.left-margin {
-  margin-left: 11px;
+.card-title-icon {
+  margin-right: 13px;
 }
 
 
 /* Messages */
-
 
 .error-message {
   color: var(--ion-color-danger);
@@ -100,10 +133,3 @@ ion-toolbar, ion-menu {
   text-align: center
 }
 
-h3 {
-  margin: 23px 0 11px 5px;
-}
-
-span.ion-text-left {
-  margin-right: auto;
-}

@@ -13,9 +13,9 @@
           <ion-col class="ion-no-margin ion-no-padding">
             <ion-list class="ion-no-margin ion-no-padding">
 
-              <ion-item-divider class="ion-no-margin" sticky="true" color="dark">
+              <ion-item-divider class="page-divider ion-no-margin" sticky="true" color="dark">
+                <ion-icon class="divider-icon" slot="start" name="lock"></ion-icon>
                 <ion-label>
-                  <ion-icon class="divider-icon" slot="start" name="mail"></ion-icon>
                   Account Information
                 </ion-label>
               </ion-item-divider>
@@ -89,20 +89,20 @@
               <div class="validation-errors">
                 <ng-container *ngFor="let validation of registrationMessages.matchingPasswords">
                   <ion-chip class="validation-chip" color="danger" outline="true"
-                  *ngIf="registrationForm.get('matchingPasswords').hasError(validation.type) &&
+                            *ngIf="registrationForm.get('matchingPasswords').hasError(validation.type) &&
                   (registrationForm.get('matchingPasswords').get('confirmPassword').dirty ||
                   registrationForm.get('matchingPasswords').get('confirmPassword').touched)">
-                  <ion-icon name="warning"></ion-icon>
-                  <ion-label class="ion-text-wrap">
-                    {{validation.message}}
-                  </ion-label>
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
                   </ion-chip>
                 </ng-container>
               </div>
 
-              <ion-item-divider class="ion-margin-top" sticky="true" color="dark">
+              <ion-item-divider class="page-divider ion-margin-top" sticky="true" color="dark">
+                <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
                 <ion-label>
-                  <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
                   Personal Information
                 </ion-label>
               </ion-item-divider>
@@ -169,7 +169,7 @@
                 <ion-label position="floating">Postal code</ion-label>
                 <ion-input autocomplete="postal-code" formControlName="postalCode" name="postalCode"
                            type="text"
-                           ></ion-input>
+                ></ion-input>
               </ion-item>
 
               <div class="validation-errors">
@@ -188,7 +188,7 @@
                 <ion-label position="floating">City</ion-label>
                 <ion-input autocomplete="address-level2" formControlName="city" name="city"
                            type="text"
-                           ></ion-input>
+                ></ion-input>
               </ion-item>
 
               <div class="validation-errors">
@@ -204,9 +204,9 @@
               </div>
 
 
-              <ion-item-divider class="ion-margin-top" sticky="true" color="dark">
+              <ion-item-divider class="page-divider ion-margin-top" sticky="true" color="dark">
+                <ion-icon class="divider-icon" name="book" slot="start"></ion-icon>
                 <ion-label>
-                  <ion-icon class="divider-icon" name="book" slot="start"></ion-icon>
                   Legal Matters
                 </ion-label>
               </ion-item-divider>
