@@ -46,6 +46,7 @@ export class SearchPage implements OnInit {
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
     this.searchCategory = 'everything';
     this.searchAttribute = 'everything';
+    this.searchTerm = '';
     this.initialize();
     this.categories = [];
     this.authService.getCategories().subscribe((categories: KeyValuePair[]) => {
