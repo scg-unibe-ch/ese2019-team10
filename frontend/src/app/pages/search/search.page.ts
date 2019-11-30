@@ -7,6 +7,7 @@ import {Service} from '../../models/service.model';
 import {Event} from '../../models/event.model';
 import {User} from '../../models/user.model';
 import {Router} from '@angular/router';
+import {KeyValuePair} from '../../models/key-value-pair.model';
 
 @Component({
   selector: 'app-search',
@@ -30,6 +31,7 @@ export class SearchPage implements OnInit {
   private showServices: boolean;
   private showEvents: boolean;
   private searchTerm: string;
+  public categories: KeyValuePair[];
 
 
   constructor(
@@ -45,6 +47,10 @@ export class SearchPage implements OnInit {
     this.searchCategory = 'everything';
     this.searchAttribute = 'everything';
     this.initialize();
+    this.categories = [];
+    this.authService.getCategories().subscribe((categories: KeyValuePair[]) => {
+      this.categories = categories;
+    });
   }
 
   /**

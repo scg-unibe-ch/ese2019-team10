@@ -11,7 +11,8 @@
         <ion-searchbar #mainSearch id="search-field" class="input-field ion-no-padding ion-no-margin"
                        placeholder="Search..." autocomplete="on" color="light" inputmode="search"
                        type="search"
-                       showCancelButton="focus" (keyup.enter)="search(mainSearch.value)" (ionChange)="getSearchTerm(mainSearch.value)" animated="true">
+                       showCancelButton="focus" (keyup.enter)="search(mainSearch.value)"
+                       (ionChange)="getSearchTerm(mainSearch.value)" animated="true">
         </ion-searchbar>
       </div>
       <ion-button class="search-confirm ion-no-margin" id="search-button" color="primary"
@@ -78,6 +79,14 @@
       </ion-select>
     </ion-item>
 
+    <ion-segment #categorySegment *ngIf="searchAttribute === 'category'" color="tertiary"
+                 (ionChange)="search(categorySegment.value)"
+                 scrollable="true">
+      <ion-segment-button *ngFor="let category of categories" [value]="category.id">
+        <ion-label>{{category.name}}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
 
     <ion-card-content *ngIf="hasSearched" class="ion-no-padding ion-no-margin">
       <ion-list *ngIf="foundResult; else noResultsFound" lines="none">
@@ -90,7 +99,8 @@
             </ion-label>
           </ion-item-divider>
 
-          <ion-card *ngFor="let service of services" class="ion-margin-bottom ion-no-padding" (click)="goToService(service)"
+          <ion-card *ngFor="let service of services" class="ion-margin-bottom ion-no-padding"
+                    (click)="goToService(service)"
                     type="button" button="true">
             <ion-item>
               <ion-badge slot="end" color="warning">Name</ion-badge>

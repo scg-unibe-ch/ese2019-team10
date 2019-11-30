@@ -126,8 +126,8 @@ export class ServicesPage implements OnInit {
   }
 
   initialize() {
-    this.authService.getCategories().subscribe((data: KeyValuePair[]) => {
-      this.categories = data;
+    this.authService.getCategories().subscribe((categories: KeyValuePair[]) => {
+      this.categories = categories;
     });
     this.services = [];
     this.helperArray = [];
