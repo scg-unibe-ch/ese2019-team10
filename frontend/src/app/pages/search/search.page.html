@@ -92,9 +92,9 @@
       <ion-list *ngIf="foundResult; else noResultsFound" lines="none">
 
         <ion-item-group *ngIf="foundServices && showServices">
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+          <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+            <ion-icon class="divider-icon" slot="start" name="build"></ion-icon>
             <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="build"></ion-icon>
               Services
             </ion-label>
           </ion-item-divider>
@@ -107,12 +107,12 @@
               <ion-label class="ion-text-wrap">{{service.name}}</ion-label>
             </ion-item>
             <ion-item>
-              <ion-label class="ion-text-wrap">{{service.description}}</ion-label>
               <ion-badge slot="end" color="warning">Description</ion-badge>
+              <ion-label class="ion-text-wrap">{{service.description}}</ion-label>
             </ion-item>
             <ion-item>
-              <ion-label class="ion-text-wrap">{{service.place}}</ion-label>
               <ion-badge slot="end" color="warning">Place</ion-badge>
+              <ion-label class="ion-text-wrap">{{service.place}}</ion-label>
             </ion-item>
           </ion-card>
 
@@ -120,9 +120,9 @@
 
         <ion-item-group *ngIf="foundEvents && showEvents">
 
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+          <ion-item-divider class=" page-divider ion-margin-top" color="dark" sticky="true">
+            <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
             <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
               Events
             </ion-label>
           </ion-item-divider>
@@ -134,12 +134,12 @@
               <ion-label class="ion-text-wrap">{{event.name}}</ion-label>
             </ion-item>
             <ion-item>
-              <ion-label class="ion-text-wrap">{{event.description}}</ion-label>
               <ion-badge slot="end" color="warning">Description</ion-badge>
+              <ion-label class="ion-text-wrap">{{event.description}}</ion-label>
             </ion-item>
             <ion-item>
-              <ion-label class="ion-text-wrap">{{event.place}}</ion-label>
               <ion-badge slot="end" color="warning">Place</ion-badge>
+              <ion-label class="ion-text-wrap">{{event.place}}</ion-label>
             </ion-item>
           </ion-card>
 
@@ -147,9 +147,9 @@
 
         <ion-list *ngIf="foundUsers && showUsers" lines="none">
 
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+          <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+            <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
             <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
               Users
             </ion-label>
           </ion-item-divider>
@@ -161,12 +161,12 @@
               <ion-label class="ion-text-wrap">{{user.firstName + ' ' + user.lastName}}</ion-label>
             </ion-item>
             <ion-item>
-              <ion-label class="ion-text-wrap">{{user.city}}</ion-label>
               <ion-badge slot="end" color="warning">City</ion-badge>
+              <ion-label class="ion-text-wrap">{{user.city}}</ion-label>
             </ion-item>
             <ion-item>
-              <ion-label class="ion-text-wrap">{{user.country}}</ion-label>
               <ion-badge slot="end" color="warning">Country</ion-badge>
+              <ion-label class="ion-text-wrap">{{user.country}}</ion-label>
             </ion-item>
           </ion-card>
 
@@ -175,9 +175,11 @@
       </ion-list>
 
       <ng-template #noResultsFound>
-        <ion-list-header>
+        <div class="page-text ion-margin ion-padding">
+          <p>
           No results were found. Please try again.
-        </ion-list-header>
+          </p>
+        </div>
       </ng-template>
     </ion-card-content>
 

@@ -18,7 +18,7 @@
           </ion-item-divider>
 
           <ion-item>
-            <ion-note slot="start">E-Mail</ion-note>
+            <ion-badge slot="end" color="warning">E-Mail</ion-badge>
             <ion-label>{{user.email}}</ion-label>
           </ion-item>
 
@@ -31,29 +31,29 @@
           </ion-item-divider>
 
           <ion-item>
-            <ion-note slot="start">First Name</ion-note>
+            <ion-badge slot="end" color="warning">First Name</ion-badge>
             <ion-label>{{user.firstName}}</ion-label>
           </ion-item>
 
 
           <ion-item>
-            <ion-note slot="start">Last Name</ion-note>
+            <ion-badge slot="end" color="warning">Last Name</ion-badge>
             <ion-label>{{user.lastName}}</ion-label>
           </ion-item>
 
 
           <ion-item *ngIf="user.gender.length > 0">
-            <ion-note slot="start">Gender</ion-note>
+            <ion-badge slot="end" color="warning">Gender</ion-badge>
             <ion-label>{{user.gender}}</ion-label>
           </ion-item>
 
           <ion-item *ngIf="user.birthday.length > 0">
-            <ion-note slot="start">Birthday</ion-note>
+            <ion-badge slot="end" color="warning">Birthday</ion-badge>
             <ion-label>{{user.birthday | date: 'd MMMM y'}}</ion-label>
           </ion-item>
 
           <ion-item *ngIf="user.phone.length > 0">
-            <ion-note slot="start">Phone</ion-note>
+            <ion-badge slot="end" color="warning">Phone</ion-badge>
             <ion-label>{{user.phone}}</ion-label>
           </ion-item>
 
@@ -65,31 +65,31 @@
           </ion-item-divider>
 
           <ion-item *ngIf="user.street.length > 0">
-            <ion-note slot="start">Street</ion-note>
+            <ion-badge slot="end" color="warning">Street</ion-badge>
             <ion-label>{{user.street}}</ion-label>
           </ion-item>
 
 
           <ion-item *ngIf="user.postalCode">
-            <ion-note slot="start">Postal Code</ion-note>
+            <ion-badge slot="end" color="warning">Postal Code</ion-badge>
             <ion-label>{{user.postalCode}}</ion-label>
           </ion-item>
 
 
           <ion-item *ngIf="user.city.length > 0">
-            <ion-note slot="start">City</ion-note>
+            <ion-badge slot="end" color="warning">City</ion-badge>
             <ion-label>{{user.city}}</ion-label>
           </ion-item>
 
 
           <ion-item *ngIf="user.country.length > 0">
-            <ion-note slot="start">Country</ion-note>
+            <ion-badge slot="end" color="warning">Country</ion-badge>
             <ion-label>{{user.country}}</ion-label>
           </ion-item>
 
 
           <ion-item *ngIf="user.street.length > 0">
-            <ion-note slot="start">Street</ion-note>
+            <ion-badge slot="end" color="warning">Street</ion-badge>
             <ion-label>{{user.street}}</ion-label>
           </ion-item>
 
