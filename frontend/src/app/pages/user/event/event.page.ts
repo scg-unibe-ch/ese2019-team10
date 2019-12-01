@@ -22,7 +22,7 @@ export class EventPage implements OnInit {
   private eventManager: User;
   private managerName: string;
   private managerId: number;
-
+private eventLoaded: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,6 +38,7 @@ export class EventPage implements OnInit {
     this.title = 'Event';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
     this.event = new Event().deserialize({});
+    this.eventLoaded = false;
   }
 
   ionViewWillEnter() {
@@ -58,10 +59,10 @@ export class EventPage implements OnInit {
     this.authService.loadEvent(eventId).subscribe(event => {
       this.event = event;
       console.log(this.event);
-      this.titleService.setTitle(this.event.name + ' | ' + this.title + appConstants.APPENDED_TITLE);
-
+      this.titleService.setTitle(this.event.name + ' | Service' + appConstants.APPENDED_TITLE);
+      this.title = this.event.name;
       this.loadUser(this.event.userId);
-
+      this.eventLoaded = true;
     });
   }
 

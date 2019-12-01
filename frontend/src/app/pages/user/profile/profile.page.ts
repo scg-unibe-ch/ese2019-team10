@@ -36,8 +36,9 @@ export class ProfilePage implements OnInit {
   public events: Event[];
   public serviceList: FormArray;
   public eventList: FormArray;
-  private loadedServices: boolean;
-  private loadedEvents: boolean;
+  private servicesLoaded: boolean;
+  private eventsLoaded: boolean;
+  private profileLoaded: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -59,8 +60,9 @@ export class ProfilePage implements OnInit {
     this.services = [];
     this.events = [];
     this.user = new User().deserialize({});
-    this.loadedEvents = false;
-    this.loadedServices = false;
+    this.eventsLoaded = false;
+    this.servicesLoaded = false;
+    this.profileLoaded = false;
 
     this.countries = [
       'Switzerland',
@@ -86,18 +88,17 @@ export class ProfilePage implements OnInit {
   public loadUser(userId) {
     this.authService.loadUser(userId).subscribe(user => {
       this.user = user;
-      console.log('this.user: ' + userId);
-      console.log(this.user);
       this.titleService.setTitle(this.user.firstName + '\'s ' + this.title + appConstants.APPENDED_TITLE);
+      this.profileLoaded = true;
 
       if (user.services.length > 0) {
         this.services = this.user.services;
-        this.loadedServices = true;
+        this.servicesLoaded = true;
       }
 
       if (user.events.length > 0) {
         this.events = this.user.events;
-        this.loadedEvents = true;
+        this.eventsLoaded = true;
       }
 
     });

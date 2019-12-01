@@ -6,13 +6,13 @@
 <ion-content class="ion-margin ion-padding">
   <ion-card class="ion-margin ion-no-padding">
 
-    <ion-row>
-      <ion-col>
-        <ion-list inset>
+    <ion-row class="ion-no-margin ion-no-padding">
+      <ion-col class="ion-no-margin ion-no-padding">
+        <ion-list class="ion-no-margin ion-no-padding" *ngIf="profileLoaded">
 
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+          <ion-item-divider class="page-divider ion-no-margin" color="dark" sticky="true">
+            <ion-icon class="divider-icon" slot="start" name="lock"></ion-icon>
             <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="mail"></ion-icon>
               Account Information
             </ion-label>
           </ion-item-divider>
@@ -23,9 +23,9 @@
           </ion-item>
 
 
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+          <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+            <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
             <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
               Personal Information
             </ion-label>
           </ion-item-divider>
@@ -42,66 +42,66 @@
           </ion-item>
 
 
-          <ion-item>
+          <ion-item *ngIf="user.gender.length > 0">
             <ion-note slot="start">Gender</ion-note>
             <ion-label>{{user.gender}}</ion-label>
           </ion-item>
 
-          <ion-item>
+          <ion-item *ngIf="user.birthday.length > 0">
             <ion-note slot="start">Birthday</ion-note>
             <ion-label>{{user.birthday | date: 'd MMMM y'}}</ion-label>
           </ion-item>
 
-          <ion-item>
+          <ion-item *ngIf="user.phone.length > 0">
             <ion-note slot="start">Phone</ion-note>
             <ion-label>{{user.phone}}</ion-label>
           </ion-item>
 
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+          <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
             <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="pin"></ion-icon>
+              <ion-icon class="divider-icon" slot="start" name="map"></ion-icon>
               Address
             </ion-label>
           </ion-item-divider>
 
-          <ion-item>
+          <ion-item *ngIf="user.street.length > 0">
             <ion-note slot="start">Street</ion-note>
             <ion-label>{{user.street}}</ion-label>
           </ion-item>
 
 
-          <ion-item>
+          <ion-item *ngIf="user.postalCode">
             <ion-note slot="start">Postal Code</ion-note>
             <ion-label>{{user.postalCode}}</ion-label>
           </ion-item>
 
 
-          <ion-item>
+          <ion-item *ngIf="user.city.length > 0">
             <ion-note slot="start">City</ion-note>
             <ion-label>{{user.city}}</ion-label>
           </ion-item>
 
 
-          <ion-item>
+          <ion-item *ngIf="user.country.length > 0">
             <ion-note slot="start">Country</ion-note>
             <ion-label>{{user.country}}</ion-label>
           </ion-item>
 
 
-          <ion-item >
+          <ion-item *ngIf="user.street.length > 0">
             <ion-note slot="start">Street</ion-note>
             <ion-label>{{user.street}}</ion-label>
           </ion-item>
 
 
-          <ion-item-divider *ngIf="loadedServices" class="ion-margin-top" color="dark" sticky="true">
+          <ion-item-divider *ngIf="servicesLoaded" class="page-divider ion-margin-top" color="dark" sticky="true">
+            <ion-icon class="divider-icon" slot="start" name="build"></ion-icon>
             <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="build"></ion-icon>
               Services
             </ion-label>
           </ion-item-divider>
 
-          <ion-list>
+          <ion-list *ngIf="servicesLoaded" >
             <ion-item *ngFor="let service of services">
               <ion-label><a href="/user/service/{{service.id}}">
                 {{service.name}}
@@ -110,14 +110,14 @@
             </ion-item>
           </ion-list>
 
-          <ion-item-divider *ngIf="loadedEvents" class="ion-margin-top" color="dark" sticky="true">
+          <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+            <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
             <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
               Events
             </ion-label>
           </ion-item-divider>
 
-          <ion-list>
+          <ion-list *ngIf="eventsLoaded" >
             <ion-item *ngFor="let event of events">
               <ion-label><a href="/user/event/{{event.id}}">
                 {{event.name}}
@@ -125,10 +125,6 @@
               </ion-label>
             </ion-item>
           </ion-list>
-
-
-
-
 
 
         </ion-list>

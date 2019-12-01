@@ -48,15 +48,7 @@ export class ServicePage implements OnInit {
   }
 
   ngOnInit() {
-    this.title = 'Service';
-    this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
-    this.service = new Service().deserialize({});
-    this.service.categoryName = '';
-    this.eventsLoaded = false;
-    this.viewerIsEventManager = false;
-    this.events = [];
-    this.servicesLoaded = false;
-
+    this.initialize();
     this.bookingForm = this.formBuilder.group({
       message: new FormControl('', Validators.compose([
         Validators.maxLength(1000)
@@ -65,13 +57,23 @@ export class ServicePage implements OnInit {
     });
   }
 
-  ionViewWillEnter() {
+
+  initialize() {
+    this.title = 'Service';
+    this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
+    this.service = new Service().deserialize({});
+    this.service.categoryName = '';
     this.serviceId = Number(this.route.snapshot.paramMap.get('serviceId'));
     this.viewerIsEventManager = false;
     this.eventsLoaded = false;
     this.servicesLoaded = false;
+    this.events = [];
     this.loadService(this.serviceId);
     this.checkViewerStatus();
+  }
+
+  ionViewWillEnter() {
+    this.initialize();
   }
 
 
@@ -86,14 +88,12 @@ export class ServicePage implements OnInit {
 
   public loadService(serviceId) {
     this.authService.loadService(serviceId).subscribe(service => {
-      this.servicesLoaded = true;
       this.service = service;
       this.service.categoryName = service.category.name;
-      console.log(this.service);
-      this.titleService.setTitle(this.service.name + ' | ' + this.title + appConstants.APPENDED_TITLE);
-
+      this.titleService.setTitle(this.service.name + ' | Service' + appConstants.APPENDED_TITLE);
+      this.title = this.service.name;
       this.loadUser(this.service.userId);
-
+      this.servicesLoaded = true;
     });
   }
 

@@ -6,13 +6,14 @@
 <ion-content class="ion-margin ion-padding">
   <ion-card class="ion-margin ion-no-padding">
 
-    <ion-row>
-      <ion-col>
-        <ion-list inset>
 
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+    <ion-row class="ion-no-margin ion-no-padding">
+      <ion-col class="ion-no-margin ion-no-padding">
+        <ion-list class="ion-no-margin ion-no-padding" *ngIf="eventLoaded">
+
+          <ion-item-divider class="page-divider ion-no-margin" color="dark" sticky="true">
+            <ion-icon class="divider-icon" slot="start" name="information-circle"></ion-icon>
             <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="mail"></ion-icon>
               Event Information
             </ion-label>
           </ion-item-divider>
