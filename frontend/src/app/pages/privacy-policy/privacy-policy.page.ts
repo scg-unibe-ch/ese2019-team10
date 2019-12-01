@@ -10,6 +10,7 @@ import {appConstants} from '../../constants/app.constants';
 })
 export class PrivacyPolicyPage implements OnInit {
   private title: string;
+  private appTitle: string;
 
 
   constructor(
@@ -20,6 +21,7 @@ export class PrivacyPolicyPage implements OnInit {
   ngOnInit() {
     this.title = 'Privacy Policy';
     this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
+    this.appTitle = appConstants.APP_TITLE;
 
   }
 

@@ -11,6 +11,7 @@ import {appConstants} from '../../constants/app.constants';
 })
 export class TermsPage implements OnInit {
   private title: string;
+  private appTitle: string;
 
   constructor(
     private titleService: Title,
@@ -19,6 +20,7 @@ export class TermsPage implements OnInit {
   ngOnInit() {
     this.title = 'Terms & Conditions';
     this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
+    this.appTitle = appConstants.APP_TITLE;
 
   }
 

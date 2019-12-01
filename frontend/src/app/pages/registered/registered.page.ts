@@ -17,7 +17,7 @@ export class RegisteredPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.title = 'Registered';
+    this.title = 'Welcome!';
     this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
 
   }

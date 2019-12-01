@@ -66,8 +66,27 @@ span.ion-text-left {
   margin-left: 11px;
 }
 
+.toc {
+  margin: 23px 0;
+  padding: 5px 0;
+  border-top: 1px dotted var(--ion-color-tertiary);
+  border-bottom: 1px dotted var(--ion-color-tertiary);
+}
 
 /* Text */
+
+.page-text {
+}
+
+.page-text p {
+  font-size: 1.2em;
+  color: #16161d;
+}
+
+.page-text ul li {
+  font-size: 1em;
+  color: #16161d;
+}
 
 .shutter-text {
   font-weight: bold;
@@ -86,6 +105,25 @@ span.ion-text-left {
 
 .list-header {
   font-size: 1.3em;
+  font-weight: bold;
+}
+
+.page-text .toc h2 {
+  margin: 7px 0 3px 0;
+}
+
+.page-text h2 {
+  margin: 37px 0 13px 0;
+  font-size: 1.3em;
+}
+
+.page-text h3 {
+  margin: 31px 0 13px 0;
+  font-size: 1.2em;
+}
+
+.page-text h2, .page-text h3 {
+  color: var(--ion-color-tertiary);
   font-weight: bold;
 }
 

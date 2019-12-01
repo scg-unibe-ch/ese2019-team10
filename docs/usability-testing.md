@@ -59,11 +59,11 @@ _Observations during the testing, including comments given by the testers._
 
 - Text of error / validation messages too small: They seemed big enough during development but every computer / screen / browser / user combination is different and this wasn't given due consideration during development, leading to some users having difficulty reading the messages.
   - Solution: Increase text size.
-- Text on registered page too small:
-  - Solution: ???
+- Text on registered page too small: We simply used the default Ionic styling for text on pages and assumed that this was enough but we were wrong.
+  - Solution: Increase text size.
 - Bad contrast: Not much work on design had been done at that point, no contrasting testing had been done at all.
   - Solution: ???
-- Too many required fields in profile page:
+- Too many required fields in profile page: Our assumption was that people would want to know a lot about each other on an event platform but this made filling out the profile form somewhat annoying since you had to fill out everything in one go and couldn't fill it out intermittently.
   - Solution: Make some of the fields optional.
 - City / postal code field order: The order wasn't really thought through.
   - Solution: Put postal code field before city field.
