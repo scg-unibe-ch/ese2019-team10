@@ -21,18 +21,7 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
-@import url('https://fonts.googleapis.com/css?family=Nunito|Nunito+Sans&display=swap');
 
-
-/* Fonts */
-
-* {
-  font-family: 'Nunito', 'Roboto', sans-serif;
-}
-
-ion-toolbar, ion-menu {
-  font-family: 'Nunito Sans', sans-serif;
-}
 
 /* General */
 
@@ -79,14 +68,33 @@ span.ion-text-left {
 }
 
 .page-text p {
-  font-size: 1.2em;
+  font-size: 1.3em;
   color: #16161d;
 }
 
 .page-text ul li {
-  font-size: 1em;
+  font-size: 1.1em;
   color: #16161d;
 }
+
+
+.page-text .toc h2 {
+  margin: 7px 0 3px 0;
+}
+
+.page-text h2 {
+  margin: 37px 0 13px 0;
+  font-size: 1.5em;
+}
+
+.page-text h3 {
+  margin: 31px 0 13px 0;
+  font-size: 1.4em;
+}
+
+.page-text h2, .page-text h3 {
+  color: var(--ion-color-tertiary);
+  font-weight: bold;
 
 .shutter-text {
   font-weight: bold;
@@ -108,23 +116,6 @@ span.ion-text-left {
   font-weight: bold;
 }
 
-.page-text .toc h2 {
-  margin: 7px 0 3px 0;
-}
-
-.page-text h2 {
-  margin: 37px 0 13px 0;
-  font-size: 1.3em;
-}
-
-.page-text h3 {
-  margin: 31px 0 13px 0;
-  font-size: 1.2em;
-}
-
-.page-text h2, .page-text h3 {
-  color: var(--ion-color-tertiary);
-  font-weight: bold;
 }
 
 

@@ -1,8 +1,12 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
 
+@import "fonts.css";
+
+
 /** Ionic CSS Variables **/
 :root {
+  --ion-font-family: "Alegreya Sans", "Roboto" , "Helvetica-Neue", "sans-serif";
 
   /** primary **/
   --ion-color-primary: #3880ff;
