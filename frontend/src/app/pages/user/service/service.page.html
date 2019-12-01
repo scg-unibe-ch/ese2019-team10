@@ -19,7 +19,7 @@
 
           <ion-item>
             <ion-note slot="start">Service Provider</ion-note>
-            <ion-label><a href="/user/profile/{{providerId}}">
+            <ion-label><a [routerLink]="['/user/profile/', providerId]">
               {{providerName}}
             </a>
             </ion-label>

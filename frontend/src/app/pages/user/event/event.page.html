@@ -20,7 +20,7 @@
 
           <ion-item>
             <ion-note slot="start">Event Manager</ion-note>
-            <ion-label><a href="/user/profile/{{managerId}}">
+            <ion-label><a [routerLink]="['/user/profile/', managerId]">
               {{managerName}}
             </a>
             </ion-label>

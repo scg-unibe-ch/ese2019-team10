@@ -101,14 +101,13 @@
             </ion-label>
           </ion-item-divider>
 
-          <ion-list *ngIf="servicesLoaded" >
-            <ion-item *ngFor="let service of services">
-              <ion-label><a href="/user/service/{{service.id}}">
-                {{service.name}}
-              </a>
-              </ion-label>
-            </ion-item>
+          <ion-list *ngIf="servicesLoaded" class="ion-no-margin ion-no-padding">
+            <ion-button *ngFor="let service of services" class="form-button ion-no-margin" expand="full" type="button"
+                        color="secondary" [routerLink]="['/user/service/', service.id]">
+              <strong>{{service.name}}</strong>
+            </ion-button>
           </ion-list>
+
 
           <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
             <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
@@ -117,13 +116,11 @@
             </ion-label>
           </ion-item-divider>
 
-          <ion-list *ngIf="eventsLoaded" >
-            <ion-item *ngFor="let event of events">
-              <ion-label><a href="/user/event/{{event.id}}">
-                {{event.name}}
-              </a>
-              </ion-label>
-            </ion-item>
+          <ion-list *ngIf="eventsLoaded" class="ion-no-margin ion-no-padding">
+            <ion-button *ngFor="let event of events" class="form-button ion-no-margin" expand="full" type="button"
+                        color="secondary" [routerLink]="['/user/event/', event.id]">
+              <strong>{{event.name}}</strong>
+            </ion-button>
           </ion-list>
 
 

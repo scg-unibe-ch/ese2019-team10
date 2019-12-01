@@ -88,7 +88,8 @@ export class ProfilePage implements OnInit {
   public loadUser(userId) {
     this.authService.loadUser(userId).subscribe(user => {
       this.user = user;
-      this.titleService.setTitle(this.user.firstName + '\'s ' + this.title + appConstants.APPENDED_TITLE);
+      this.titleService.setTitle(this.user.getFullName() + '\'s Profile' + appConstants.APPENDED_TITLE);
+      this.title = this.user.getFullName() + '\'s Profile';
       this.profileLoaded = true;
 
       if (user.services.length > 0) {
