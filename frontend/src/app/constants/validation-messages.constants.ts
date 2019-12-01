@@ -23,7 +23,9 @@ export const ValidationMessages = {
     {type: 'required', message: 'Your gender is required.'},
   ],
   birthday: [
+    {type: 'datePattern', message: 'Format it as e.g. 31/12/2000'},
     {type: 'required', message: 'Your birthday is required.'},
+    {type: 'maxlength', message: 'Your street should be less than 10 characters long.'}
   ],
   street: [
     {type: 'required', message: 'Your street is required.'},

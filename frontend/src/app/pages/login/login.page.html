@@ -6,69 +6,73 @@
 <ion-content class="ion-margin ion-padding">
   <div class="login-form">
     <ion-card class="ion-margin ion-no-padding">
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <ion-list class="ion-no-margin ion-no-padding" lines="full">
+      <ion-card-content class="ion-no-margin ion-no-padding">
 
-          <ion-item>
-            <ion-label class="ion-text-wrap" position="floating">E-Mail</ion-label>
-            <ion-input autocomplete="email" formControlName="email" name="email" required
-                       type="email"></ion-input>
-          </ion-item>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <ion-list class="ion-no-margin ion-no-padding" lines="full">
 
-          <div class="validation-errors">
-            <ng-container *ngFor="let validation of loginMessages.email">
-              <ion-chip class="validation-chip" color="danger" outline="true"
-                        *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
-                <ion-icon name="warning"></ion-icon>
-                <ion-label class="ion-text-wrap">
-                  {{validation.message}}
+            <ion-item>
+              <ion-label class="ion-text-wrap" position="floating">E-Mail</ion-label>
+              <ion-input autocomplete="email" formControlName="email" name="email" required
+                         type="email"></ion-input>
+            </ion-item>
+
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of loginMessages.email">
+                <ion-chip class="validation-chip" color="danger" outline="true"
+                          *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                </ion-chip>
+              </ng-container>
+            </div>
+
+            <ion-item>
+              <ion-label class="ion-text-wrap" position="floating">Password</ion-label>
+              <ion-input autocomplete="current-password" formControlName="password" name="password"
+                         required
+                         type="password"></ion-input>
+            </ion-item>
+
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of loginMessages.password">
+
+                <ion-chip class="validation-chip" color="danger" outline="true"
+                          *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                </ion-chip>
+              </ng-container>
+            </div>
+
+            <div class="submission-errors">
+              <ion-chip *ngIf="error" class="error ion-margin-vertical" color="warning" outline="true">
+                <ion-icon name="alert"></ion-icon>
+                <ion-label class="error-chip">
+                  {{error}}
                 </ion-label>
               </ion-chip>
-            </ng-container>
-          </div>
-
-          <ion-item>
-            <ion-label class="ion-text-wrap" position="floating">Password</ion-label>
-            <ion-input autocomplete="current-password" formControlName="password" name="password"
-                       required
-                       type="password"></ion-input>
-          </ion-item>
-
-          <div class="validation-errors">
-            <ng-container *ngFor="let validation of loginMessages.password">
-
-              <ion-chip class="validation-chip" color="danger" outline="true"
-                        *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
-                <ion-icon name="warning"></ion-icon>
-                <ion-label class="ion-text-wrap">
-                  {{validation.message}}
-                </ion-label>
-              </ion-chip>
-            </ng-container>
-          </div>
-
-          <div class="submission-errors">
-            <ion-chip *ngIf="error" class="error ion-margin-vertical" color="warning" outline="true">
-              <ion-icon name="alert"></ion-icon>
-              <ion-label class="error-chip">
-                {{error}}
-              </ion-label>
-            </ion-chip>
-          </div>
+            </div>
 
 
-          <ion-row class="ion-no-margin ion-no-padding">
-            <ion-col class="ion-no-margin ion-no-padding">
-              <ion-button [disabled]="!loginForm.valid" class="submit-btn ion-no-margin" expand="full"
-                          type="submit">
-                <ion-icon name="log-in" slot="start"></ion-icon>
-                Login
-              </ion-button>
-            </ion-col>
-          </ion-row>
+            <ion-row class="ion-no-margin ion-no-padding">
+              <ion-col class="ion-no-margin ion-no-padding">
+                <ion-button [disabled]="!loginForm.valid" class="submit-btn ion-no-margin" expand="full"
+                            type="submit">
+                  <ion-icon name="log-in" slot="start"></ion-icon>
+                  Login
+                </ion-button>
+              </ion-col>
+            </ion-row>
 
-        </ion-list>
-      </form>
+          </ion-list>
+        </form>
+      </ion-card-content>
+
     </ion-card>
   </div>
 </ion-content>

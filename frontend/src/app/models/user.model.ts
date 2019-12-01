@@ -32,4 +32,8 @@ export class User implements Deserializable {
   getFullName() {
     return this.firstName + ' ' + this.lastName;
   }
+
+  getFullCity() {
+    return this.postalCode + ' ' + this.city;
+  }
 }

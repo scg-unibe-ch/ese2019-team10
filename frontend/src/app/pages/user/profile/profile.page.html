@@ -5,129 +5,117 @@
 
 <ion-content class="ion-margin ion-padding">
   <ion-card class="ion-margin ion-no-padding">
+    <ion-card-content class="ion-no-margin ion-no-padding">
 
-    <ion-row class="ion-no-margin ion-no-padding">
-      <ion-col class="ion-no-margin ion-no-padding">
-        <ion-list class="ion-no-margin ion-no-padding" *ngIf="profileLoaded">
+      <ion-row class="ion-no-margin ion-no-padding">
+        <ion-col class="ion-no-margin ion-no-padding">
+          <ion-list class="ion-no-margin ion-no-padding" lines="full" *ngIf="profileLoaded">
 
-          <ion-item-divider class="page-divider ion-no-margin" color="dark" sticky="true">
-            <ion-icon class="divider-icon" slot="start" name="lock"></ion-icon>
-            <ion-label>
-              Account Information
-            </ion-label>
-          </ion-item-divider>
+            <ion-item-divider class="page-divider ion-no-margin" color="dark" sticky="true">
+              <ion-icon class="divider-icon" slot="start" name="lock"></ion-icon>
+              <ion-label>
+                Account Information
+              </ion-label>
+            </ion-item-divider>
 
-          <ion-item>
-            <ion-badge slot="end" color="warning">E-Mail</ion-badge>
-            <ion-label>{{user.email}}</ion-label>
-          </ion-item>
-
-
-          <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
-            <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
-            <ion-label>
-              Personal Information
-            </ion-label>
-          </ion-item-divider>
-
-          <ion-item>
-            <ion-badge slot="end" color="warning">First Name</ion-badge>
-            <ion-label>{{user.firstName}}</ion-label>
-          </ion-item>
+            <ion-item>
+              <ion-badge slot="end" color="warning">E-Mail</ion-badge>
+              <ion-label>{{user.email}}</ion-label>
+            </ion-item>
 
 
-          <ion-item>
-            <ion-badge slot="end" color="warning">Last Name</ion-badge>
-            <ion-label>{{user.lastName}}</ion-label>
-          </ion-item>
+            <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+              <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
+              <ion-label>
+                Personal Information
+              </ion-label>
+            </ion-item-divider>
+
+            <ion-item>
+              <ion-badge slot="end" color="warning">Name</ion-badge>
+              <ion-label>{{user.getFullName()}}</ion-label>
+            </ion-item>
+
+            <ion-item *ngIf="user.gender.length > 0">
+              <ion-badge slot="end" color="warning">Gender</ion-badge>
+              <ion-label>{{user.gender}}</ion-label>
+            </ion-item>
+
+            <ion-item *ngIf="user.birthday.length > 0">
+              <ion-badge slot="end" color="warning">Birthday</ion-badge>
+              <ion-label>{{user.birthday | date: 'd MMMM y'}}</ion-label>
+            </ion-item>
+
+            <ion-item *ngIf="user.phone.length > 0">
+              <ion-badge slot="end" color="warning">Phone</ion-badge>
+              <ion-label>{{user.phone}}</ion-label>
+            </ion-item>
+
+            <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+              <ion-label>
+                <ion-icon class="divider-icon" slot="start" name="map"></ion-icon>
+                Address
+              </ion-label>
+            </ion-item-divider>
+
+            <ion-item *ngIf="user.street.length > 0">
+              <ion-badge slot="end" color="warning">Street</ion-badge>
+              <ion-label>{{user.street}}</ion-label>
+            </ion-item>
 
 
-          <ion-item *ngIf="user.gender.length > 0">
-            <ion-badge slot="end" color="warning">Gender</ion-badge>
-            <ion-label>{{user.gender}}</ion-label>
-          </ion-item>
-
-          <ion-item *ngIf="user.birthday.length > 0">
-            <ion-badge slot="end" color="warning">Birthday</ion-badge>
-            <ion-label>{{user.birthday | date: 'd MMMM y'}}</ion-label>
-          </ion-item>
-
-          <ion-item *ngIf="user.phone.length > 0">
-            <ion-badge slot="end" color="warning">Phone</ion-badge>
-            <ion-label>{{user.phone}}</ion-label>
-          </ion-item>
-
-          <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
-            <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="map"></ion-icon>
-              Address
-            </ion-label>
-          </ion-item-divider>
-
-          <ion-item *ngIf="user.street.length > 0">
-            <ion-badge slot="end" color="warning">Street</ion-badge>
-            <ion-label>{{user.street}}</ion-label>
-          </ion-item>
+            <ion-item *ngIf="user.postalCode && (user.city.length > 0)">
+              <ion-badge slot="end" color="warning">City</ion-badge>
+              <ion-label>{{user.getFullCity()}}</ion-label>
+            </ion-item>
 
 
-          <ion-item *ngIf="user.postalCode">
-            <ion-badge slot="end" color="warning">Postal Code</ion-badge>
-            <ion-label>{{user.postalCode}}</ion-label>
-          </ion-item>
+            <ion-item *ngIf="user.country.length > 0">
+              <ion-badge slot="end" color="warning">Country</ion-badge>
+              <ion-label>{{user.country}}</ion-label>
+            </ion-item>
 
 
-          <ion-item *ngIf="user.city.length > 0">
-            <ion-badge slot="end" color="warning">City</ion-badge>
-            <ion-label>{{user.city}}</ion-label>
-          </ion-item>
+            <ion-item *ngIf="user.street.length > 0">
+              <ion-badge slot="end" color="warning">Street</ion-badge>
+              <ion-label>{{user.street}}</ion-label>
+            </ion-item>
 
 
-          <ion-item *ngIf="user.country.length > 0">
-            <ion-badge slot="end" color="warning">Country</ion-badge>
-            <ion-label>{{user.country}}</ion-label>
-          </ion-item>
+            <ion-item-divider *ngIf="servicesLoaded" class="page-divider ion-margin-top" color="dark" sticky="true">
+              <ion-icon class="divider-icon" slot="start" name="build"></ion-icon>
+              <ion-label>
+                Services
+              </ion-label>
+            </ion-item-divider>
+
+            <ion-list *ngIf="servicesLoaded" class="ion-no-margin ion-no-padding">
+              <ion-button *ngFor="let service of services" class="form-button ion-no-margin" expand="full" type="button"
+                          color="secondary" [routerLink]="['/user/service/', service.id]">
+                <strong>{{service.name}}</strong>
+              </ion-button>
+            </ion-list>
 
 
-          <ion-item *ngIf="user.street.length > 0">
-            <ion-badge slot="end" color="warning">Street</ion-badge>
-            <ion-label>{{user.street}}</ion-label>
-          </ion-item>
+            <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+              <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
+              <ion-label>
+                Events
+              </ion-label>
+            </ion-item-divider>
+
+            <ion-list *ngIf="eventsLoaded" class="ion-no-margin ion-no-padding">
+              <ion-button *ngFor="let event of events" class="form-button ion-no-margin" expand="full" type="button"
+                          color="secondary" [routerLink]="['/user/event/', event.id]">
+                <strong>{{event.name}}</strong>
+              </ion-button>
+            </ion-list>
 
 
-          <ion-item-divider *ngIf="servicesLoaded" class="page-divider ion-margin-top" color="dark" sticky="true">
-            <ion-icon class="divider-icon" slot="start" name="build"></ion-icon>
-            <ion-label>
-              Services
-            </ion-label>
-          </ion-item-divider>
-
-          <ion-list *ngIf="servicesLoaded" class="ion-no-margin ion-no-padding">
-            <ion-button *ngFor="let service of services" class="form-button ion-no-margin" expand="full" type="button"
-                        color="secondary" [routerLink]="['/user/service/', service.id]">
-              <strong>{{service.name}}</strong>
-            </ion-button>
           </ion-list>
+        </ion-col>
+      </ion-row>
 
-
-          <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
-            <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
-            <ion-label>
-              Events
-            </ion-label>
-          </ion-item-divider>
-
-          <ion-list *ngIf="eventsLoaded" class="ion-no-margin ion-no-padding">
-            <ion-button *ngFor="let event of events" class="form-button ion-no-margin" expand="full" type="button"
-                        color="secondary" [routerLink]="['/user/event/', event.id]">
-              <strong>{{event.name}}</strong>
-            </ion-button>
-          </ion-list>
-
-
-        </ion-list>
-      </ion-col>
-    </ion-row>
-
-
+    </ion-card-content>
   </ion-card>
 </ion-content>

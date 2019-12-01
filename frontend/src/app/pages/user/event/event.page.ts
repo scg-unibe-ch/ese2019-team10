@@ -19,16 +19,13 @@ import {Event} from '../../../models/event.model';
 export class EventPage implements OnInit {
   public title: string;
   public event: Event;
-  private eventManager: User;
-  private managerName: string;
-  private managerId: number;
-private eventLoaded: boolean;
+  public eventManager: User;
+  public managerName: string;
+  public managerId: number;
+  public eventLoaded: boolean;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private router: Router,
     private authService: AuthService,
-    private alertService: AlertService,
     private titleService: Title,
     private route: ActivatedRoute
   ) {
@@ -59,7 +56,7 @@ private eventLoaded: boolean;
     this.authService.loadEvent(eventId).subscribe(event => {
       this.event = event;
       console.log(this.event);
-      this.titleService.setTitle(this.event.name + ' | Service' + appConstants.APPENDED_TITLE);
+      this.titleService.setTitle(this.event.name + ' | Event' + appConstants.APPENDED_TITLE);
       this.title = this.event.name;
       this.loadUser(this.event.userId);
       this.eventLoaded = true;
