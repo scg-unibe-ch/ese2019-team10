@@ -5,6 +5,7 @@ import {Title} from '@angular/platform-browser';
 import {tap} from 'rxjs/operators';
 
 import {PasswordValidator} from '../../validators/password.validator';
+import {DateValidator} from '../../validators/date.validator';
 import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
 import {ValidationMessages} from '../../constants/validation-messages.constants';
@@ -12,18 +13,6 @@ import {User} from '../../models/user.model';
 import {Observable} from 'rxjs';
 import {appConstants} from '../../constants/app.constants';
 
-
-// import {Service} from '../../models/service.model';
-
-interface Service {
-  name: string;
-  category: string;
-}
-
-interface Event {
-  name: string;
-  category: string;
-}
 
 @Component({
   selector: 'app-profile',
@@ -43,10 +32,6 @@ export class ProfilePage implements OnInit {
   public currentTime = null;
   public validationMessages = ValidationMessages;
   public user: User;
-  public services: Service[];
-  public events: Event[];
-  public serviceList: FormArray;
-  public eventList: FormArray;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -59,17 +44,21 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this.title = 'Profile';
-    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
+    this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
     this.currentTime = new Date();
     this.day = String(this.currentTime.getDate()).padStart(2, '0');
     this.month = String(this.currentTime.getMonth() + 1).padStart(2, '0');
     this.year = this.currentTime.getFullYear();
-    this.services = [];
     this.user = new User().deserialize({});
 
     this.countries = [
-      'Switzerland',
+      'Austria',
+      'France',
+      'Germany',
+      'Italy',
       'Liechtenstein',
+      'Switzerland',
+      'USA',
       'Other'
     ];
     this.genders = [
@@ -81,8 +70,8 @@ export class ProfilePage implements OnInit {
 
     this.matchingPasswordsGroup = new FormGroup({
       password: new FormControl('', Validators.compose([
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$/),
         Validators.minLength(5),
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$'),
         Validators.maxLength(500),
       ])),
       confirmPassword: new FormControl('', Validators.maxLength(500))
@@ -102,126 +91,66 @@ export class ProfilePage implements OnInit {
       email: new FormControl('', Validators.compose([
         Validators.required,
         // Validators.email,
-        Validators.pattern('^[^ @]+@[^ @]+\.[^ @]+$'),
+        Validators.pattern(/^[^ @]+@[^ @]+\.[^ @]+$/),
         Validators.maxLength(100)
       ])),
-      gender: new FormControl('', Validators.required),
-      birthday: new FormControl('', Validators.required),
+      gender: new FormControl('', Validators.compose([
+        Validators.maxLength(100)
+      ])),
+      birthday: new FormControl('', Validators.compose([
+        Validators.maxLength(10),
+        DateValidator.date,
+      ])),
       street: new FormControl('', Validators.compose([
-        Validators.required,
         Validators.maxLength(100)
       ])),
       postalCode: new FormControl('', Validators.compose([
-        Validators.required,
-        // postal codes can have numbers, letters, spaces, and hyphens
-        // Validators.pattern('^[A-Za-z0-9- ]+$'),
-        Validators.pattern('^[0-9]+$'),
+        // postal code should be a number
+        Validators.pattern(/^[0-9]+$/),
         Validators.maxLength(20)
       ])),
       city: new FormControl('', Validators.compose([
-        Validators.required,
         Validators.maxLength(100)
       ])),
       country: new FormControl('', Validators.compose([
-        Validators.required,
         Validators.maxLength(100)
       ])),
       phone: new FormControl('', Validators.compose([
-        Validators.required,
+        // a phone number starts with an optional + and consists of digits and spaces
+        Validators.pattern('^[+]?[0-9 ]+$'),
+        Validators.minLength(3),
         Validators.maxLength(100)
       ])),
       matchingPasswords: this.matchingPasswordsGroup,
       isServiceProvider: new FormControl(false),
       isEventManager: new FormControl(false),
-
-/*      serviceName: new FormControl(''),
-      serviceCategory: new FormControl(''),
-      eventName: new FormControl(''),
-      eventCategory: new FormControl(''),
-      services: this.formBuilder.array([this.createService()]),
-      events: this.formBuilder.array([this.createEvent()]),*/
-
     });
-
-/*    this.serviceList = this.profileForm.get('services') as FormArray;
-    this.serviceList.removeAt(0);
-    this.eventList = this.profileForm.get('events') as FormArray;
-    this.eventList.removeAt(0);*/
-
 
   }
 
+  /**
+   * Load user data when entering profile.
+   */
   ionViewWillEnter() {
     this.loadUser();
-
   }
 
-  get serviceGroup() {
-    return this.profileForm.get('services') as FormArray;
-  }
 
-  get eventGroup() {
-    return this.profileForm.get('events') as FormArray;
-  }
-
-  createService(): FormGroup {
-    return this.formBuilder.group({
-      serviceName: ['', Validators.required],
-      serviceCategory: ['', Validators.required],
-    });
-  }
-
-  createEvent(): FormGroup {
-    return this.formBuilder.group({
-      eventName: ['', Validators.required],
-      eventCategory: ['', Validators.required],
-    });
-  }
-
-  public addService() {
-    // this.services.push({name: this.profileForm.value.serviceName, category: this.profileForm.value.serviceCategory});
-    this.serviceList.push(this.createService());
-    console.log(this.profileForm.value);
-  }
-
-  public deleteService(index: number): void {
-    // this.services.splice(index, 1);
-    this.serviceList.removeAt(index);
-  }
-
-  public addEvent() {
-    // this.events.push({name: this.profileForm.value.eventeName, category: this.profileForm.value.eventCategory});
-    this.eventList.push(this.createEvent());
-    console.log(this.profileForm.value);
-  }
-
-  public deleteEvent(index: number): void {
-    // this.events.splice(index, 1);
-    this.eventList.removeAt(index);
-  }
-
+  /**
+   * Get the saved profile data.
+   */
   public loadUser() {
     this.authService.loadProfile().subscribe(user => {
       this.user = user;
       console.log('this.user');
       console.log(this.user);
-
-      /*      this.profileForm.patchValue({
-              email: this.user.email,
-            });*/
-
       this.profileForm.patchValue(this.user);
-
-      /*      Object.keys(this.user).forEach(k => {
-              const control = this.profileForm.get(k);
-              if (control) {
-                control.setValue(this.user[k], {onlySelf: true});
-              }
-            });*/
-
     });
   }
 
+  /**
+   * Get form data and format it.
+   */
   private prepareProfileSave(): User {
     const form = this.profileForm.value;
     form.password = form.matchingPasswords.password;
@@ -230,24 +159,15 @@ export class ProfilePage implements OnInit {
     return new User().deserialize(form);
   }
 
+  /**
+   * Save user profile
+   */
   onSubmit() {
     const saveUser = this.prepareProfileSave();
     console.log(saveUser);
-
     this.authService.saveProfile(saveUser).subscribe(
       (data: any) => {
-        console.log(data.msg);
-
-        this.alertService.presentToast(data.msg).then(r => {
-          console.log(r);
-        }, err => {
-          console.log(err);
-        });
-      },
-      error => {
-        console.log(error);
-      },
-      () => {
+        this.alertService.presentToast(data.msg).then();
       }
     );
   }

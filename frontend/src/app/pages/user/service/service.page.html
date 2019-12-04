@@ -3,140 +3,136 @@
   </app-header>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-card>
+<ion-content class="ion-margin ion-padding">
+  <ion-card class="ion-margin ion-no-padding">
+    <ion-card-content class="ion-no-margin ion-no-padding">
 
+      <ion-row class="ion-no-margin ion-no-padding">
+        <ion-col class="ion-no-margin ion-no-padding">
+          <ion-list class="ion-no-margin ion-no-padding" lines="full" *ngIf="servicesLoaded">
 
-    <ion-row>
-      <ion-col>
-        <ion-list inset *ngIf="servicesLoaded">
-
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
-            <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="mail"></ion-icon>
-              Service Information
-            </ion-label>
-          </ion-item-divider>
-
-          <ion-item>
-            <ion-note slot="start">Service Provider</ion-note>
-            <ion-label><a href="/user/profile/{{providerId}}">
-              {{providerName}}
-            </a>
+            <ion-item-divider class="page-divider ion-no-margin" color="dark" sticky="true">
+              <ion-icon class="divider-icon" slot="start" name="information-circle"></ion-icon>
+              <ion-label class="ion-text-wrap">
+                Service Information
               </ion-label>
-          </ion-item>
+            </ion-item-divider>
 
-          <ion-item>
-            <ion-note slot="start">Name</ion-note>
-            <ion-label>{{service.name}}</ion-label>
-          </ion-item>
+            <ion-item>
+              <ion-badge slot="end" color="warning">Service Provider</ion-badge>
+              <ion-label><a [routerLink]="['/user/profile/', providerId]">
+                {{providerName}}
+              </a>
+              </ion-label>
+            </ion-item>
 
-          <ion-item>
-            <ion-note slot="start">Category</ion-note>
-            <ion-label>{{service.categoryName}}</ion-label>
-          </ion-item>
+            <ion-item>
+              <ion-badge slot="end" color="warning">Name</ion-badge>
+              <ion-label>{{service.name}}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-badge slot="end" color="warning">Category</ion-badge>
+              <ion-label>{{service.categoryName}}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-badge slot="end" color="warning">Description</ion-badge>
+              <ion-label>{{service.description}}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-badge slot="end" color="warning">Price</ion-badge>
+              <ion-label>{{service.price}}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-badge slot="end" color="warning">Currently offered</ion-badge>
+              <ion-label>{{service.available}}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-badge slot="end" color="warning">Availability</ion-badge>
+              <ion-label>{{service.availability}}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-badge slot="end" color="warning">Place</ion-badge>
+              <ion-label>{{service.place}}</ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-badge slot="end" color="warning">Quantity</ion-badge>
+              <ion-label>{{service.quantity}}</ion-label>
+            </ion-item>
 
 
-          <ion-item>
-            <ion-note slot="start">Description</ion-note>
-            <ion-label>{{service.description}}</ion-label>
-          </ion-item>
-
-
-          <ion-item>
-            <ion-note slot="start">Price</ion-note>
-            <ion-label>{{service.price}}</ion-label>
-          </ion-item>
-
-          <ion-item>
-            <ion-note slot="start">Currently offered</ion-note>
-            <ion-label>{{service.available}}</ion-label>
-          </ion-item>
-
-          <ion-item>
-            <ion-note slot="start">Availability</ion-note>
-            <ion-label>{{service.availability}}</ion-label>
-          </ion-item>
-
-          <ion-item>
-            <ion-note slot="start">Place</ion-note>
-            <ion-label>{{service.place}}</ion-label>
-          </ion-item>
-
-          <ion-item>
-            <ion-note slot="start">Quantity</ion-note>
-            <ion-label>{{service.quantity}}</ion-label>
-          </ion-item>
-
-          <ion-row *ngIf="viewerIsEventManager" class="ion-margin-top">
-
-            <ion-item-divider *ngIf="eventsLoaded" class="ion-margin-top" color="dark" sticky="true">
+            <ion-item-divider *ngIf="viewerIsEventManager && eventsLoaded" class="page-divider ion-margin-top"
+                              color="dark" sticky="true">
+              <ion-icon class="divider-icon" slot="start" name="basket"></ion-icon>
               <ion-label>
-                <ion-icon class="divider-icon" slot="start" name="basket"></ion-icon>
                 You can book this service
               </ion-label>
             </ion-item-divider>
 
             <form [formGroup]="bookingForm" (ngSubmit)="bookService()">
-              <ion-row>
-                <ion-col>
-                  <ion-list inset>
-                    <ion-list-header>
-                      <ion-label>Select the event for which you want to book this service and optionally add a short message.</ion-label>
-                    </ion-list-header>
 
-                    <ion-item>
-                      <ion-label position="floating">Message</ion-label>
-                      <ion-input formControlName="message" name="message"
-                                 type="text"></ion-input>
-                    </ion-item>
-                    <div class="validation-errors">
-                      <ng-container *ngFor="let validation of bookingMessages.message">
-                        <div class="error-message"
-                             *ngIf="bookingForm.get('message').hasError(validation.type) && (bookingForm.get('message').dirty || bookingForm.get('message').touched)">
-                          <ion-icon name="information-circle-outline"></ion-icon>
-                          {{ validation.message }}
-                        </div>
-                      </ng-container>
-                    </div>
+              <div class="page-text ion-padding-horizontal">
+                <p>
+                  Select the event for which you want to book this service and optionally add a short message.
+                </p>
+              </div>
 
-                    <ion-item>
-                      <ion-label position="floating">Event</ion-label>
-                      <ion-select interface="popover" name="eventId" formControlName="eventId">
-                        <ion-select-option *ngFor="let event of events"
-                                           [value]="event.key">{{event.value}}</ion-select-option>
-                      </ion-select>
-                    </ion-item>
-                    <div class="validation-errors">
-                      <ng-container *ngFor="let validation of bookingMessages.events">
-                        <div class="error-message"
-                             *ngIf="bookingForm.get('eventId').hasError(validation.type) && (bookingForm.get('eventId').dirty || bookingForm.get('eventId').touched)">
-                          <ion-icon name="information-circle-outline"></ion-icon>
-                          {{ validation.message }}
-                        </div>
-                      </ng-container>
-                    </div>
+              <ion-item>
+                <ion-label position="floating">Message</ion-label>
+                <ion-input formControlName="message" name="message"
+                           type="text"></ion-input>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of bookingMessages.message">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="bookingForm.get('message').hasError(validation.type) && (bookingForm.get('message').dirty || bookingForm.get('message').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
+                </ng-container>
+              </div>
 
-                      <ion-button  class="submit-btn" expand="full" type="submit"
-                                   [disabled]="!bookingForm.valid">
-                        <ion-icon name="basket" slot="start"></ion-icon>
-                        Book this Service
-                      </ion-button>
+              <ion-item>
+                <ion-label position="floating">Event</ion-label>
+                <ion-select interface="popover" name="eventId" formControlName="eventId">
+                  <ion-select-option *ngFor="let event of events"
+                                     [value]="event.id">{{event.name}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of bookingMessages.events">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="bookingForm.get('eventId').hasError(validation.type) && (bookingForm.get('eventId').dirty || bookingForm.get('eventId').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
+                </ng-container>
+              </div>
 
-                  </ion-list>
-                </ion-col>
-              </ion-row>
+
+              <ion-button class="submit-btn ion-no-margin" expand="full" type="submit"
+                          [disabled]="!bookingForm.valid"
+              >
+                <ion-icon class="button-icon" slot="start" name="basket"></ion-icon>
+                Book this Service
+              </ion-button>
 
             </form>
 
+          </ion-list>
+        </ion-col>
+      </ion-row>
 
-
-          </ion-row>
-
-        </ion-list>
-      </ion-col>
-    </ion-row>
-
-
+    </ion-card-content>
   </ion-card>
 </ion-content>

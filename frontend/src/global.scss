@@ -21,41 +21,129 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
-@import url('https://fonts.googleapis.com/css?family=Merriweather|Merriweather+Sans&display=swap');
 
 
-/* Fonts */
+/* General */
 
-* {
-  font-family: 'Merriweather Sans', 'Roboto', sans-serif;
+ion-chip {
+  min-height: 32px;
+  height: auto;
 }
 
-ion-text {
-  font-family: 'Merriweather', serif;
+h3 {
+  margin: 23px 0 11px 5px;
+}
+
+span.ion-text-left {
+  margin-right: auto;
+}
+
+/* Spacing */
+
+.form-button {
+  margin-top: 29px;
+}
+
+.form-shutter {
+  margin-top: 19px;
+}
+
+.open-shutter {
+  margin-bottom: 37px;
+}
+
+.spaced-card {
+  margin-top: 47px;
+}
+
+.left-margin {
+  margin-left: 11px;
+}
+
+.toc {
+  margin: 23px 0;
+  padding: 5px 0;
+  border-top: 1px dotted var(--ion-color-tertiary);
+  border-bottom: 1px dotted var(--ion-color-tertiary);
+}
+
+/* Text */
+
+.page-text {
+}
+
+.page-text p {
+  font-size: 1.3em;
+  color: #16161d;
+}
+
+.page-text ul li {
+  font-size: 1.1em;
+  color: #16161d;
+}
+
+
+.page-text .toc h2 {
+  margin: 7px 0 3px 0;
+}
+
+.page-text h2 {
+  margin: 37px 0 13px 0;
+  font-size: 1.5em;
+}
+
+.page-text h3 {
+  margin: 31px 0 13px 0;
+  font-size: 1.4em;
+}
+
+.page-text h2, .page-text h3 {
+  color: var(--ion-color-tertiary);
+  font-weight: bold;
+}
+
+.shutter-text {
+  font-weight: bold;
+}
+
+.page-divider {
+  font-size: 1.3em;
+  font-weight: 500;
+}
+
+
+.validation-errors {
+  justify-content: center;
+  align-items: center;
+  text-align: center
+}
+
+.list-header {
+  font-size: 1.3em;
+  font-weight: bold;
 }
 
 
 /* Icons */
 
 .button-icon {
-  margin-right: 9px;
+  margin-right: 11px;
 }
 
 .form-icon {
-  margin-right: 9px;
+  margin-right: 11px;
 }
 
 .divider-icon {
-  margin-right: 9px;
+  margin-right: 11px;
 }
 
-.left-margin {
-  margin-left: 9px;
+.card-title-icon {
+  margin-right: 13px;
 }
 
 
 /* Messages */
-
 
 .error-message {
   color: var(--ion-color-danger);
@@ -65,6 +153,7 @@ ion-text {
 .validation-chip {
   color: var(--ion-color-danger);
   margin: 5px 3px 7px 3px;
+  font-size: 0.9em;
 }
 
 .error-chip {
@@ -78,10 +167,3 @@ ion-text {
   text-align: center
 }
 
-h3 {
-  margin: 20px 0 10px 5px;
-}
-
-span.ion-text-left {
-  margin-right: auto;
-}

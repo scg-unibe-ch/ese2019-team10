@@ -59,11 +59,11 @@ _Observations during the testing, including comments given by the testers._
 
 - Text of error / validation messages too small: They seemed big enough during development but every computer / screen / browser / user combination is different and this wasn't given due consideration during development, leading to some users having difficulty reading the messages.
   - Solution: Increase text size.
-- Text on registered page too small:
-  - Solution: ???
+- Text on registered page too small: We simply used the default Ionic styling for text on pages and assumed that this was enough but we were wrong.
+  - Solution: Increase text size.
 - Bad contrast: Not much work on design had been done at that point, no contrasting testing had been done at all.
-  - Solution: ???
-- Too many required fields in profile page:
+  - Solution: Rethink themes and colour schemes.
+- Too many required fields in profile page: Our assumption was that people would want to know a lot about each other on an event platform but this made filling out the profile form somewhat annoying since you had to fill out everything in one go and couldn't fill it out intermittently.
   - Solution: Make some of the fields optional.
 - City / postal code field order: The order wasn't really thought through.
   - Solution: Put postal code field before city field.
@@ -74,7 +74,7 @@ _Observations during the testing, including comments given by the testers._
 - Phone field isn't restrictive enough: The reason for that is that some people write their phone numbers with slashes, or pluses at the front, or even with brackets. So we just allowed any input.
   - Allow only pluses, numbers and spaces.
 - Availability field unclear: This is a known problem. We just haven't found a good name for this field yet. Picking field names is difficult; they should be as explanatory as entire sentences but consist of only one word (in the ideal case) to keep the form tight.
-  - Solution: Rename the field to ???.
+  - Solution: Rename the field.
 - Home page buttons: The home page was very much unfinished and we didn't know what its function and design were supposed to be.
   - Solution: Revamp the home page.
 
@@ -88,12 +88,9 @@ _Observations during the testing, including comments given by the testers._
 
 #### Actual bugs
 
-- No bottom border on the service name field: The cause of ths bug hasn't been found yet.
-  - Solution: ???
+- No bottom border on the service name field: This was a bug we didn't notice before testing and was due to some combination of default Ionic styling and styling applied with Ionic classes in ion-list.
+  - Solution: Change classes and styling.
 - The search result links didn't work because the frontend expected the search links to include ids and the route to the links was constructed with those ids. These ids were provided by the backend at some point but got removed during some backend changes. Thus the routes couldn't be created and the links didn't work.
   - Solution: Include the ids in the search results again.
 - The route to the terms and conditions was updated at some point but updating the link on the login page was forgotten.
   - Solution: Update the link.
-
-
-

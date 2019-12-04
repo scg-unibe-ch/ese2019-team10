@@ -3,17 +3,16 @@
   </app-header>
 </ion-header>
 
-
-<ion-content>
-
-  <ion-card class="ion-padding">
+<ion-content class="ion-margin ion-padding">
+  <ion-card class="ion-margin ion-padding-top">
 
     <div class="input-outer-padding">
       <div class="input-inner-padding">
         <ion-searchbar #mainSearch id="search-field" class="input-field ion-no-padding ion-no-margin"
                        placeholder="Search..." autocomplete="on" color="light" inputmode="search"
                        type="search"
-                       showCancelButton="focus" (keyup.enter)="search(mainSearch.value)" (ionChange)="getSearchTerm(mainSearch.value)" animated="true">
+                       showCancelButton="focus" (keyup.enter)="search(mainSearch.value)"
+                       (ionChange)="getSearchTerm(mainSearch.value)" animated="true">
         </ion-searchbar>
       </div>
       <ion-button class="search-confirm ion-no-margin" id="search-button" color="primary"
@@ -80,31 +79,40 @@
       </ion-select>
     </ion-item>
 
+    <ion-segment #categorySegment *ngIf="searchAttribute === 'category'" color="tertiary"
+                 (ionChange)="search(categorySegment.value)"
+                 scrollable="true">
+      <ion-segment-button *ngFor="let category of categories" [value]="category.id">
+        <ion-label>{{category.name}}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
 
     <ion-card-content *ngIf="hasSearched" class="ion-no-padding ion-no-margin">
       <ion-list *ngIf="foundResult; else noResultsFound" lines="none">
 
         <ion-item-group *ngIf="foundServices && showServices">
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+          <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+            <ion-icon class="divider-icon" slot="start" name="build"></ion-icon>
             <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="build"></ion-icon>
               Services
             </ion-label>
           </ion-item-divider>
 
-          <ion-card *ngFor="let service of services" class="ion-margin-bottom ion-no-padding" (click)="goToService(service)"
+          <ion-card *ngFor="let service of services" class="ion-margin-bottom ion-no-padding"
+                    (click)="goToService(service)"
                     type="button" button="true">
             <ion-item>
               <ion-badge slot="end" color="warning">Name</ion-badge>
               <ion-label class="ion-text-wrap">{{service.name}}</ion-label>
             </ion-item>
             <ion-item>
-              <ion-label class="ion-text-wrap">{{service.description}}</ion-label>
               <ion-badge slot="end" color="warning">Description</ion-badge>
+              <ion-label class="ion-text-wrap">{{service.description}}</ion-label>
             </ion-item>
             <ion-item>
-              <ion-label class="ion-text-wrap">{{service.place}}</ion-label>
               <ion-badge slot="end" color="warning">Place</ion-badge>
+              <ion-label class="ion-text-wrap">{{service.place}}</ion-label>
             </ion-item>
           </ion-card>
 
@@ -112,9 +120,9 @@
 
         <ion-item-group *ngIf="foundEvents && showEvents">
 
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+          <ion-item-divider class=" page-divider ion-margin-top" color="dark" sticky="true">
+            <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
             <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
               Events
             </ion-label>
           </ion-item-divider>
@@ -126,12 +134,12 @@
               <ion-label class="ion-text-wrap">{{event.name}}</ion-label>
             </ion-item>
             <ion-item>
-              <ion-label class="ion-text-wrap">{{event.description}}</ion-label>
               <ion-badge slot="end" color="warning">Description</ion-badge>
+              <ion-label class="ion-text-wrap">{{event.description}}</ion-label>
             </ion-item>
             <ion-item>
-              <ion-label class="ion-text-wrap">{{event.place}}</ion-label>
               <ion-badge slot="end" color="warning">Place</ion-badge>
+              <ion-label class="ion-text-wrap">{{event.place}}</ion-label>
             </ion-item>
           </ion-card>
 
@@ -139,9 +147,9 @@
 
         <ion-list *ngIf="foundUsers && showUsers" lines="none">
 
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+          <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+            <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
             <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
               Users
             </ion-label>
           </ion-item-divider>
@@ -153,12 +161,12 @@
               <ion-label class="ion-text-wrap">{{user.firstName + ' ' + user.lastName}}</ion-label>
             </ion-item>
             <ion-item>
-              <ion-label class="ion-text-wrap">{{user.city}}</ion-label>
               <ion-badge slot="end" color="warning">City</ion-badge>
+              <ion-label class="ion-text-wrap">{{user.city}}</ion-label>
             </ion-item>
             <ion-item>
-              <ion-label class="ion-text-wrap">{{user.country}}</ion-label>
               <ion-badge slot="end" color="warning">Country</ion-badge>
+              <ion-label class="ion-text-wrap">{{user.country}}</ion-label>
             </ion-item>
           </ion-card>
 
@@ -167,9 +175,11 @@
       </ion-list>
 
       <ng-template #noResultsFound>
-        <ion-list-header>
+        <div class="page-text ion-margin ion-padding">
+          <p>
           No results were found. Please try again.
-        </ion-list-header>
+          </p>
+        </div>
       </ng-template>
     </ion-card-content>
 

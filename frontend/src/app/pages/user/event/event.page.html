@@ -3,57 +3,53 @@
   </app-header>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-card>
+<ion-content class="ion-margin ion-padding">
+  <ion-card class="ion-margin ion-no-padding">
+    <ion-card-content class="ion-no-margin ion-no-padding">
 
+      <ion-row class="ion-no-margin ion-no-padding">
+        <ion-col class="ion-no-margin ion-no-padding">
+          <ion-list class="ion-no-margin ion-no-padding" lines="full" *ngIf="eventLoaded">
 
-    <ion-row>
-      <ion-col>
-        <ion-list inset>
+            <ion-item-divider class="page-divider ion-no-margin" color="dark" sticky="true">
+              <ion-icon class="divider-icon" slot="start" name="information-circle"></ion-icon>
+              <ion-label>
+                Event Information
+              </ion-label>
+            </ion-item-divider>
 
-          <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
-            <ion-label>
-              <ion-icon class="divider-icon" slot="start" name="mail"></ion-icon>
-              Event Information
-            </ion-label>
-          </ion-item-divider>
+            <ion-item>
+              <ion-badge slot="end" color="warning">Event Manager</ion-badge>
+              <ion-label><a [routerLink]="['/user/profile/', managerId]">
+                {{managerName}}
+              </a>
+              </ion-label>
+            </ion-item>
 
-          <ion-item>
-            <ion-note slot="start">Event Manager</ion-note>
-            <ion-label><a href="/user/profile/{{managerId}}">
-              {{managerName}}
-            </a>
-            </ion-label>
-          </ion-item>
+            <ion-item>
+              <ion-badge slot="end" color="warning">Name</ion-badge>
+              <ion-label>{{event.name}}</ion-label>
+            </ion-item>
 
-          <ion-item>
-            <ion-note slot="start">Name</ion-note>
-            <ion-label>{{event.name}}</ion-label>
-          </ion-item>
+            <ion-item>
+              <ion-badge slot="end" color="warning">Description</ion-badge>
+              <ion-label>{{event.description}}</ion-label>
+            </ion-item>
 
+            <ion-item>
+              <ion-badge slot="end" color="warning">Date</ion-badge>
+              <ion-label>{{event.date}}</ion-label>
+            </ion-item>
 
-          <ion-item>
-            <ion-note slot="start">Description</ion-note>
-            <ion-label>{{event.description}}</ion-label>
-          </ion-item>
+            <ion-item>
+              <ion-badge slot="end" color="warning">Place</ion-badge>
+              <ion-label>{{event.place}}</ion-label>
+            </ion-item>
 
+          </ion-list>
+        </ion-col>
+      </ion-row>
 
-          <ion-item>
-            <ion-note slot="start">Date</ion-note>
-            <ion-label>{{event.date}}</ion-label>
-          </ion-item>
-
-
-          <ion-item>
-            <ion-note slot="start">Place</ion-note>
-            <ion-label>{{event.place}}</ion-label>
-          </ion-item>
-
-
-        </ion-list>
-      </ion-col>
-    </ion-row>
-
-
+    </ion-card-content>
   </ion-card>
 </ion-content>

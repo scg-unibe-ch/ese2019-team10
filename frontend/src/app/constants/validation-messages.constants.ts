@@ -15,13 +15,17 @@ export const ValidationMessages = {
   ],
   phone: [
     {type: 'required', message: 'Your phone number is required.'},
+    {type: 'pattern', message: 'Please enter a valid phone number.'},
+    {type: 'minlength', message: 'Your phone number must be at least 3 characters long.'},
     {type: 'maxlength', message: 'Your phone number should be less than 100 characters long.'}
   ],
   gender: [
     {type: 'required', message: 'Your gender is required.'},
   ],
   birthday: [
+    {type: 'datePattern', message: 'Format it as e.g. 31/12/2000'},
     {type: 'required', message: 'Your birthday is required.'},
+    {type: 'maxlength', message: 'Your street should be less than 10 characters long.'}
   ],
   street: [
     {type: 'required', message: 'Your street is required.'},

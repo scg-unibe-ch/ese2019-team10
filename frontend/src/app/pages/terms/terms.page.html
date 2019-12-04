@@ -3,23 +3,27 @@
   </app-header>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-margin ion-padding">
+  <ion-card class="ion-margin ion-no-padding">
 
-  <ion-card>
-    <ion-row>
+    <ion-img src="../../../../assets/books.jpg" alt="books"></ion-img>
+
+    <ion-card-header class="ion-no-margin" color="dark">
       <ion-card-title>
-        <h2>
-          Welcome to Eventum!
-        </h2>
+        <ion-label class="ion-text-wrap">
+          Our terms matter!
+        </ion-label>
       </ion-card-title>
-    </ion-row>
+    </ion-card-header>
 
-    <ion-card-content>
 
-      <p>These terms and conditions outline the rules and regulations for the use of Eventum's Website, located at
-        <a href="http://localhost:8100/">http://localhost:8100/</a>.</p>
+    <ion-card-content class="page-text ion-margin ion-padding">
 
-      <p>By accessing this website we assume you accept these terms and conditions. Do not continue to use Eventum if
+      <p>These terms and conditions outline the rules and regulations for the use of {{appTitle}}'s Website, located at
+        <a [routerLink]="['/home']">http://localhost:8100/</a>.</p>
+
+      <p>By accessing this website we assume you accept these terms and conditions. Do not continue to use {{appTitle}}
+        if
         you
         do not agree to take all of the terms and conditions stated on this page. Our Terms and Conditions were created
         with the help of the <a href="https://www.termsandconditionsgenerator.com">Terms And Conditions Generator</a>
@@ -27,22 +31,22 @@
         the <a href="https://www.termsconditionsgenerator.com">Terms & Conditions Generator</a>.</p>
 
       <p>The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and
-        all
-        Agreements: "Client", "You" and "Your" refers to you, the person log on this website and compliant to the
+        all Agreements: "Client", "You" and "Your" refers to you, the person log on this website and compliant to the
         Company’s terms and conditions. "The Company", "Ourselves", "We", "Our" and "Us", refers to our Company.
-        "Party",
-        "Parties", or "Us", refers to both the Client and ourselves. All terms refer to the offer, acceptance and
+        "Party", "Parties", or "Us", refers to both the Client and ourselves. All terms refer to the offer, acceptance
+        and
         consideration of payment necessary to undertake the process of our assistance to the Client in the most
         appropriate manner for the express purpose of meeting the Client’s needs in respect of provision of the
-        Company’s
-        stated services, in accordance with and subject to, prevailing law of Netherlands. Any use of the above
+        Company’s stated services, in accordance with and subject to, prevailing law of Netherlands. Any use of the
+        above
         terminology or other words in the singular, plural, capitalization and/or he/she or they, are taken as
         interchangeable and therefore as referring to same.</p>
 
       <h3><strong>Cookies</strong></h3>
 
-      <p>We employ the use of cookies. By accessing Eventum, you agreed to use cookies in agreement with the Eventum's
-        Privacy Policy.</p>
+      <p>We employ the use of cookies. By accessing {{appTitle}}, you agreed to use cookies in agreement with
+        the {{appTitle}}'s
+        <a [routerLink]="['/privacy-policy']"> Privacy Policy</a>.</p>
 
       <p>Most interactive websites use cookies to let us retrieve the user’s details for each visit. Cookies are used by
         our website to enable the functionality of certain areas to make it easier for people visiting our website. Some
@@ -50,30 +54,33 @@
 
       <h3><strong>License</strong></h3>
 
-      <p>Unless otherwise stated, Eventum and/or its licensors own the intellectual property rights for all material on
-        Eventum. All intellectual property rights are reserved. You may access this from Eventum for your own personal
+      <p>Unless otherwise stated, {{appTitle}} and/or its licensors own the intellectual property rights for all
+        material on
+        {{appTitle}}. All intellectual property rights are reserved. You may access this from {{appTitle}} for your own
+        personal
         use
         subjected to restrictions set in these terms and conditions.</p>
 
       <p>You must not:</p>
       <ul>
-        <li>Republish material from Eventum</li>
-        <li>Sell, rent or sub-license material from Eventum</li>
-        <li>Reproduce, duplicate or copy material from Eventum</li>
-        <li>Redistribute content from Eventum</li>
+        <li>Republish material from {{appTitle}}</li>
+        <li>Sell, rent or sub-license material from {{appTitle}}</li>
+        <li>Reproduce, duplicate or copy material from {{appTitle}}</li>
+        <li>Redistribute content from {{appTitle}}</li>
       </ul>
 
       <p>This Agreement shall begin on the date hereof.</p>
 
       <p>Parts of this website offer an opportunity for users to post and exchange opinions and information in certain
-        areas of the website. Eventum does not filter, edit, publish or review Comments prior to their presence on the
-        website. Comments do not reflect the views and opinions of Eventum,its agents and/or affiliates. Comments
+        areas of the website. {{appTitle}} does not filter, edit, publish or review Comments prior to their presence on
+        the
+        website. Comments do not reflect the views and opinions of {{appTitle}},its agents and/or affiliates. Comments
         reflect
         the views and opinions of the person who post their views and opinions. To the extent permitted by applicable
-        laws, Eventum shall not be liable for the Comments or for any liability, damages or expenses caused and/or
+        laws, {{appTitle}} shall not be liable for the Comments or for any liability, damages or expenses caused and/or
         suffered as a result of any use of and/or posting of and/or appearance of the Comments on this website.</p>
 
-      <p>Eventum reserves the right to monitor all Comments and to remove any Comments which can be considered
+      <p>{{appTitle}} reserves the right to monitor all Comments and to remove any Comments which can be considered
         inappropriate, offensive or causes breach of these Terms and Conditions.</p>
 
       <p>You warrant and represent that:</p>
@@ -94,7 +101,8 @@
         </li>
       </ul>
 
-      <p>You hereby grant Eventum a non-exclusive license to use, reproduce, edit and authorize others to use, reproduce
+      <p>You hereby grant {{appTitle}} a non-exclusive license to use, reproduce, edit and authorize others to use,
+        reproduce
         and edit any of your Comments in any and all forms, formats or media.</p>
 
       <h3><strong>Hyperlinking to our Content</strong></h3>
@@ -133,7 +141,8 @@
       <p>We will approve link requests from these organizations if we decide that: (a) the link would not make us look
         unfavorably to ourselves or to our accredited businesses; (b) the organization does not have any negative
         records
-        with us; (c) the benefit to us from the visibility of the hyperlink compensates the absence of Eventum; and (d)
+        with us; (c) the benefit to us from the visibility of the hyperlink compensates the absence of {{appTitle}}; and
+        (d)
         the link is in the context of general resource information.</p>
 
       <p>These organizations may link to our home page so long as the link: (a) is not in any way deceptive; (b) does
@@ -144,7 +153,7 @@
 
       <p>If you are one of the organizations listed in paragraph 2 above and are interested in linking to our website,
         you
-        must inform us by sending an e-mail to Eventum. Please include your name, your organization name, contact
+        must inform us by sending an e-mail to {{appTitle}}. Please include your name, your organization name, contact
         information as well as the URL of your site, a list of any URLs from which you intend to link to our Website,
         and
         a list of the URLs on our site to which you would like to link. Wait 2-3 weeks for a response.</p>
@@ -160,7 +169,8 @@
         </li>
       </ul>
 
-      <p>No use of Eventum's logo or other artwork will be allowed for linking absent a trademark license agreement.</p>
+      <p>No use of {{appTitle}}'s logo or other artwork will be allowed for linking absent a trademark license
+        agreement.</p>
 
       <h3><strong>iFrames</strong></h3>
 
@@ -178,7 +188,7 @@
 
       <h3><strong>Your Privacy</strong></h3>
 
-      <p>Please read Privacy Policy</p>
+      <p>Please read {{appTitle}}'s <a [routerLink]="['/privacy-policy']"> Privacy Policy</a></p>
 
       <h3><strong>Reservation of Rights</strong></h3>
 

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule, Title} from '@angular/platform-browser';
-import {RouteReuseStrategy, RouterModule} from '@angular/router';
+import {Router, RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
@@ -49,9 +49,10 @@ export function jwtOptionsFactory(storage) {
         provide: JWT_OPTIONS,
         useFactory: jwtOptionsFactory,
         deps: [Storage],
-      }
+      },
     }),
-    SharedComponentsModule],
+    SharedComponentsModule,
+  ],
   providers: [
     StatusBar,
     SplashScreen,
@@ -63,7 +64,7 @@ export function jwtOptionsFactory(storage) {
       useClass: HttpErrorService,
       multi: true
     },
-    Title
+    Title,
   ],
   bootstrap: [AppComponent]
 })
