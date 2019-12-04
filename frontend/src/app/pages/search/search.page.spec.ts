@@ -6,6 +6,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {IonicStorageModule} from '@ionic/storage';
 
 import {SearchPage} from './search.page';
+import {By} from '@angular/platform-browser';
 
 describe('SearchPage', () => {
   let component: SearchPage;
@@ -37,9 +38,20 @@ describe('SearchPage', () => {
     fixture = TestBed.createComponent(SearchPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    // fixture.autoDetectChanges(true);
   });
+
+
+  it('should call search on button click', () => {
+    spyOn(component, 'search');
+    const elm = fixture.debugElement.query(By.css('#search-button')).nativeElement;
+    elm.click();
+    expect(component.search).toHaveBeenCalled();
+  });
+
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });
