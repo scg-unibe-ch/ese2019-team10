@@ -1,34 +1,34 @@
 export const ServiceValidation = {
   name: [
-    {type: 'required', message: 'Your service should have a name.'},
-    {type: 'maxlength', message: 'Your service\'s name should be less than 100 characters long.'},
+    {type: 'required', message: 'Name is required.'},
+    {type: 'maxlength', message: 'Name must be shorter than 100 characters.'},
   ],
   category: [
-    {type: 'required', message: 'Your service should have a category.'},
-    {type: 'maxlength', message: 'Your service\'s category should be less than 100 characters long.'},
+    {type: 'required', message: 'Category is required.'},
+    {type: 'maxlength', message: 'Category must be shorter than 100 characters.'},
   ],
   available: [
-    {type: 'required', message: 'Your service should have an availability.'},
-    {type: 'maxlength', message: 'Your service\'s availability should be less than 100 characters long.'},
+    {type: 'required', message: 'Availability is required.'},
+    {type: 'maxlength', message: 'Availability must be shorter than 100 characters.'},
   ],
   availability: [
-    {type: 'required', message: 'Your service should have an availability.'},
-    {type: 'maxlength', message: 'Your service\'s availability should be less than 100 characters long.'},
+    {type: 'required', message: 'Availability is required.'},
+    {type: 'maxlength', message: 'Availability must be shorter than 100 characters.'},
   ],
   place: [
-    {type: 'required', message: 'Your service should have a place.'},
-    {type: 'maxlength', message: 'Your service\'s place should be less than 100 characters long.'},
+    {type: 'required', message: 'Place is required.'},
+    {type: 'maxlength', message: 'Place must be shorter than 100 characters.'},
   ],
   price: [
-    {type: 'required', message: 'Your service should have a price.'},
-    {type: 'maxlength', message: 'Your service\'s price should be less than 100 characters long.'},
+    {type: 'required', message: 'Price is required.'},
+    {type: 'maxlength', message: 'Price must be shorter than 100 characters.'},
   ],
   quantity: [
-    {type: 'required', message: 'Your service should have a quantity.'},
-    {type: 'maxlength', message: 'Your service\'s quantity should be less than 100 characters long.'},
+    {type: 'required', message: 'Quantity is required.'},
+    {type: 'maxlength', message: 'Quantity must be shorter than 100 characters.'},
   ],
   description: [
-    {type: 'required', message: 'Your service should have a description.'},
-    {type: 'maxlength', message: 'Your service\'s description should be less than 1000 characters long.'},
+    {type: 'required', message: 'Description is required.'},
+    {type: 'maxlength', message: 'Description must be shorter than 1000 characters.'},
   ],
 };

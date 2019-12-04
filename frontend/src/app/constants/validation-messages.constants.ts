@@ -1,62 +1,62 @@
 export const ValidationMessages = {
   firstName: [
-    {type: 'required', message: 'Your first name is required.'},
-    {type: 'maxlength', message: 'Your first name should be less than 100 characters long.'},
+    {type: 'required', message: 'First name is required.'},
+    {type: 'maxlength', message: 'First name must be shorter than 100 characters.'},
   ],
   lastName: [
-    {type: 'required', message: 'Your last name is required.'},
-    {type: 'maxlength', message: 'Your last name should be less than 100 characters long.'},
+    {type: 'required', message: 'Last name is required.'},
+    {type: 'maxlength', message: 'Last name must be shorter than 100 characters.'},
   ],
   email: [
-    {type: 'required', message: 'Your e-mail address is required.'},
-    {type: 'email', message: 'Please enter a valid e-mail address.'},
-    {type: 'pattern', message: 'Please enter a valid e-mail address.'},
-    {type: 'maxlength', message: 'Your e-mail address must be less than 100 characters long.'}
+    {type: 'required', message: 'E-mail address is required.'},
+    {type: 'email', message: 'Format: ex.ample@example.com'},
+    {type: 'pattern', message: 'Format: ex.ample@example.com'},
+    {type: 'maxlength', message: 'E-mail address must be shorter than 100 characters.'}
   ],
   phone: [
-    {type: 'required', message: 'Your phone number is required.'},
-    {type: 'pattern', message: 'Please enter a valid phone number.'},
-    {type: 'minlength', message: 'Your phone number must be at least 3 characters long.'},
-    {type: 'maxlength', message: 'Your phone number should be less than 100 characters long.'}
+    {type: 'required', message: 'Phone number is required.'},
+    {type: 'pattern', message: 'Only numbers, spaces, and a + at the start are allowed.'},
+    {type: 'minlength', message: 'Phone number must be longer than 3 characters.'},
+    {type: 'maxlength', message: 'Phone number must be shorter than 100 characters.'}
   ],
   gender: [
-    {type: 'required', message: 'Your gender is required.'},
+    {type: 'required', message: 'Gender is required.'},
   ],
   birthday: [
-    {type: 'datePattern', message: 'Format it as e.g. 31/12/2000'},
-    {type: 'required', message: 'Your birthday is required.'},
-    {type: 'maxlength', message: 'Your street should be less than 10 characters long.'}
+    {type: 'datePattern', message: 'Allowed formats: 1/1/1911, 19/09/1999, 31/12/2000'},
+    {type: 'required', message: 'Birthday is required.'},
+    {type: 'maxlength', message: 'Birthday must be shorter than 11 characters.'}
   ],
   street: [
-    {type: 'required', message: 'Your street is required.'},
-    {type: 'maxlength', message: 'Your street should be less than 100 characters long.'}
+    {type: 'required', message: 'Street is required.'},
+    {type: 'maxlength', message: 'Street must be shorter than 100 characters.'}
   ],
   city: [
-    {type: 'required', message: 'Your city is required.'},
-    {type: 'maxlength', message: 'Your city should be less than 100 characters long.'}
+    {type: 'required', message: 'City is required.'},
+    {type: 'maxlength', message: 'City must be shorter than 100 characters.'}
   ],
   postalCode: [
-    {type: 'required', message: 'Your postal code is required.'},
-    {type: 'pattern', message: 'Please enter a valid postal code.'},
-    {type: 'maxlength', message: 'Your postal code should be less than 20 characters long.'}
+    {type: 'required', message: 'Postal code is required.'},
+    {type: 'pattern', message: 'Postal code must only have numbers'},
+    {type: 'maxlength', message: 'Postal code must be shorter than 20 characters.'}
   ],
   country: [
-    {type: 'required', message: 'Your country is required.'},
-    {type: 'maxlength', message: 'Your country should be less than 100 characters long.'}
+    {type: 'required', message: 'Country is required.'},
+    {type: 'maxlength', message: 'Country must be shorter than 100 characters.'}
   ],
   password: [
-    {type: 'required', message: 'Your password is required.'},
-    {type: 'minlength', message: 'Your password must be at least 5 characters long.'},
-    {type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number.'},
-    {type: 'maxlength', message: 'Your password should be less than 500 characters long.'}
+    {type: 'required', message: 'Password is required.'},
+    {type: 'minlength', message: 'Password must be longer than 5 characters.'},
+    {type: 'pattern', message: 'Password must contain at least one uppercase, one lowercase, and one number.'},
+    {type: 'maxlength', message: 'Password must be shorter than 500 characters.'}
   ],
   confirmPassword: [
-    {type: 'required', message: 'Please confirm your password.'}
+    {type: 'required', message: 'You must confirm your password.'}
   ],
   matchingPasswords: [
-    {type: 'areEqual', message: 'Your passwords mismatch.'}
+    {type: 'areEqual', message: 'Your passwords don\'t match.'}
   ],
   terms: [
-    {type: 'pattern', message: 'You need to accept the terms and conditions.'}
+    {type: 'pattern', message: 'You must accept the terms and conditions.'}
   ],
 };

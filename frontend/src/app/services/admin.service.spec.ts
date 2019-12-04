@@ -20,7 +20,7 @@ describe('AdminService', () => {
     jwtHelperSpy = jasmine.createSpyObj('JwtHelperService', ['hide']);
 
     TestBed.configureTestingModule({
-      declarations: [ServicePage],
+      declarations: [],
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
