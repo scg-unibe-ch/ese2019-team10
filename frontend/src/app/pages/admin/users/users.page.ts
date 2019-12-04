@@ -7,7 +7,6 @@ import {AdminService} from '../../../services/admin.service';
 import {User} from '../../../models/user.model';
 import {appConstants} from '../../../constants/app.constants';
 
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.page.html',
@@ -35,85 +34,88 @@ export class UsersPage implements OnInit {
     this.loadedAU = false;
     this.loadedUU = false;
     this.title = 'User Administration';
-    this.titleService.setTitle (this.title + appConstants.APPENDED_TITLE);
+    this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
   }
 
+
+  /**
+   * Sort by alphabetic order, ascending, first by last name, then by first name.
+   * Uses localCompare to avoid problems with unicode sorting.a
+   */
   nameSort(a, b) {
     // sort by last name
-    if (a.lastName > b.lastName) {
+    const surname = a.lastName.localeCompare(b.lastName);
+    if (surname > 0) {
       return 1;
-    }
-    if (a.lastName < b.lastName) {
+    } else if (surname < 0) {
       return -1;
-    }
-    // if last names are equal, sort by first name
-    if (a.firstName > b.firstName) {
-      return 1;
-    }
-    if (a.firstName < b.firstName) {
-      return -1;
+    } else {
+      // if last names are equal, sort by first name
+      const name = a.firstName.localeCompare(b.firstName);
+      if (name > 0) {
+        return 1;
+      } else if (name < 0) {
+        return -1;
+      } else {
+        // default case if both are equal
+        return 0;
+      }
     }
   }
 
+  /**
+   * get approved users from backend, sort them and set variables accordingly
+   */
   showApprovedUsers() {
     this.adminService.getApprovedUsers().subscribe((users: any) => {
-      this.approvedUsers = users;
-      this.approvedUsers = this.approvedUsers.sort(this.nameSort);
+      console.log(users);
+      this.approvedUsers = users.sort(this.nameSort);
       this.numberApproved = this.approvedUsers.length;
       this.loadedAU = true;
       console.log(this.approvedUsers);
     });
   }
 
+  /**
+   * hide approved users by flipping the boolean
+   */
   hideApprovedUsers() {
     this.loadedAU = false;
   }
 
+  /**
+   * get unapproved users from backend, sort them and set variables accordingly
+   */
   showUnapprovedUsers() {
     this.adminService.getUnapprovedUsers().subscribe((users: any) => {
-      this.unapprovedUsers = users;
-      this.unapprovedUsers = this.unapprovedUsers.sort(this.nameSort);
+      this.unapprovedUsers = users.sort(this.nameSort);
       this.numberUnapproved = this.unapprovedUsers.length;
       this.loadedUU = true;
-      console.log(this.unapprovedUsers);
-      /*      this.alertService.presentToast(res).then(r => {
-              console.log(r);
-            }, err => {
-              console.log(err);
-            });*/
+      // console.log(this.unapprovedUsers);
     });
   }
 
+  /**
+   * hide unapproved users by flipping the boolean
+   */
   hideUnapprovedUsers() {
     this.loadedUU = false;
   }
 
+  /**
+   * Approve a user by sending the corresponding user id to the backend.
+   * Then show an approval toast.
+   */
   approveUser(id, email) {
-    console.log(id);
-    this.adminService.approveUser(id).subscribe(val => {
-        console.log('PUT call successful value returned in body',
-          val);
+    this.adminService.approveUser(id).subscribe(() => {
       },
-      response => {
-        console.log('PUT call in error', response);
+      () => {
       },
       () => {
         console.log('The PUT observable is now completed.');
-        this.alertService.presentToast(email + ' has been approved').then(r => {
-          console.log(r);
-        }, err => {
-          console.log(err);
-        });
+        this.alertService.presentToast(email + ' has been approved').then();
       }
     );
-    /*    if (this.loadedAU) {
-          this.loadApprovedUsers();
-        }
-
-        if (this.loadedUU) {
-          this.loadUnapprovedUsers();
-        }*/
-
   }
 
 
