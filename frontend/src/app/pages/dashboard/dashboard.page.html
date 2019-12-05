@@ -15,7 +15,7 @@
 
         <ion-row class="ion-no-margin ion-no-padding">
           <ion-col class="ion-no-margin ion-no-padding">
-            <ion-button type="button" [routerLink]="['/search']" color="primary" class="form-button ion-no-margin"
+            <ion-button type="button" routerLink="/search" color="primary" class="form-button ion-no-margin"
                         expand="full">
               <ion-icon slot="start" name="search" class="button-icon"></ion-icon>
               Search
@@ -37,7 +37,7 @@
 
         <ion-row class="ion-no-margin ion-no-padding">
           <ion-col class="ion-no-margin ion-no-padding">
-            <ion-button type="button" [routerLink]="['/profile']" color="primary" class="form-button ion-no-margin"
+            <ion-button type="button" routerLink="/profile" color="primary" class="form-button ion-no-margin"
                         expand="full">
               <ion-icon slot="start" name="create" class="button-icon"></ion-icon>
               Edit Profile
@@ -47,7 +47,7 @@
 
         <ion-row *ngIf="this.user.isServiceProvider" class="ion-no-margin ion-no-padding">
           <ion-col class="ion-no-margin ion-no-padding">
-            <ion-button type="button" [routerLink]="['/profile/', 'services']" color="primary"
+            <ion-button type="button" routerLink="/profile/services" color="primary"
                         class="form-button ion-no-margin"
                         expand="full">
               <ion-icon slot="start" name="build" class="button-icon"></ion-icon>
@@ -58,7 +58,7 @@
 
         <ion-row *ngIf="this.user.isEventManager" class="ion-no-margin ion-no-padding">
           <ion-col class="ion-no-margin ion-no-padding">
-            <ion-button type="button" [routerLink]="['/profile/', 'events']" color="primary"
+            <ion-button type="button" routerLink="/profile/events" color="primary"
                         class="form-button ion-no-margin"
                         expand="full">
               <ion-icon slot="start" name="gift" class="button-icon"></ion-icon>
@@ -70,7 +70,7 @@
 
         <ion-row *ngIf="this.user.isAdmin" class="ion-no-margin ion-no-padding">
           <ion-col class="ion-no-margin ion-no-padding">
-            <ion-button type="button" [routerLink]="['/admin/users']" color="primary" class="form-button ion-no-margin"
+            <ion-button type="button" routerLink="/admin/users" color="primary" class="form-button ion-no-margin"
                         expand="full">
               <ion-icon slot="start" name="people" class="button-icon"></ion-icon>
               User Administration

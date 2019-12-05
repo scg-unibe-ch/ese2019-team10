@@ -35,6 +35,9 @@ export class AuthService {
   public authenticationState = new BehaviorSubject(false);
   private id = null;
   private admin = false;
+  public adminState = new BehaviorSubject(false);
+  public eventManagerState = new BehaviorSubject(false);
+  public serviceProviderState = new BehaviorSubject(false);
 
   constructor(
     private http: HttpClient,
@@ -98,7 +101,11 @@ export class AuthService {
   }
 
   isEventManager() {
-    return this.loadProfile();
+    return this.eventManagerState.value;
+  }
+
+  isServiceProvider() {
+    return this.serviceProviderState.value;
   }
 
   /**
@@ -108,13 +115,6 @@ export class AuthService {
     return this.http.post(this.url + 'register', credentials, httpOptions)
       .pipe(
         tap(),
-        /*        catchError(e => {
-                  const status = e.status;
-                  if (status === 401) {
-                    this.alertService.presentToast(e.msg).then();
-                  }
-                  throw new Error(e);
-                })*/
       );
   }
 
@@ -236,9 +236,29 @@ export class AuthService {
    * Load the private profile of the user identified by the stored user id.
    */
   loadProfile(): Observable<User> {
-    return this.http.get<User>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
-      map(data => new User().deserialize(data))
-    );
+    return this.http.get<User>(this.url + 'user/profile/' + this.id, httpOptions)
+      .pipe(
+        map(data => new User().deserialize(data)),
+        tap(data => {
+          if (data.isAdmin) {
+            this.adminState.next(true);
+          } else {
+            this.adminState.next(false);
+          }
+          if (data.isEventManager) {
+            this.eventManagerState.next(true);
+          } else {
+            this.eventManagerState.next(false);
+          }
+          if (data.isServiceProvider) {
+            this.serviceProviderState.next(true);
+          } else {
+            this.serviceProviderState.next(false);
+          }
+        })
+      );
+
+
   }
 
   /**
