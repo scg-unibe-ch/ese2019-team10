@@ -1,8 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {NavController, NavParams} from '@ionic/angular';
+import {Component, NgIterable, OnInit} from '@angular/core';
 import {Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {tap} from 'rxjs/operators';
 import {Title} from '@angular/platform-browser';
 
 import {AuthService} from '../../services/auth.service';
@@ -24,6 +22,9 @@ export class LoginPage implements OnInit {
   private loginForm: FormGroup;
   private returnUrl: string;
   private error: string;
+  // this is to solve a type error
+  private emailMessages = ValidationMessages.email as NgIterable<object>;
+  private passwordMessages = ValidationMessages.password as NgIterable<object>;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -35,19 +36,18 @@ export class LoginPage implements OnInit {
   ) {
   }
 
-
+  /**
+   * set up title and form and get the return url.
+   */
   ngOnInit() {
     this.title = 'Login';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
     this.route.queryParams.subscribe(params => this.returnUrl = params.returnUrl || '/dashboard');
 
-    // this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/dashboard';
-    // console.log(this.route.snapshot.queryParams.returnUrl);
-
     this.loginForm = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
-        // Validators.email,
+        Validators.email,
         Validators.maxLength(100)
       ])),
       password: new FormControl('', Validators.compose([
@@ -58,49 +58,35 @@ export class LoginPage implements OnInit {
 
   }
 
+  /**
+   * deserialize the form in preparation for login
+   */
   private prepareLogin(): User {
     return new User().deserialize(this.loginForm.value);
   }
 
+  /**
+   * Tell authService to login. If successful, go to the return url if it exists.
+   */
   onSubmit() {
     const user = this.prepareLogin();
-    console.log(user);
     this.authService.login(user).subscribe(
       () => {
-        // console.log(data.msg);
-        // console.log('return url: ' + this.returnUrl);
         this.authService.authenticationState.subscribe(state => {
-          console.log('auth state: ' + state);
           if (state) {
             this.router.navigateByUrl(this.returnUrl).then();
-          } else {
-            // console.log(state);
-            /*          /!*          this.router.navigate(['login']).then(nav => {
-                                  console.log(nav); // true if navigation is successful
-                                }, err => {
-                                  console.log(err); // when there's an error
-                                });*!/*/
           }
         });
-        /*
-                this.router.navigateByUrl(this.returnUrl, { skipLocationChange: true }).then(nav => {
-                  console.log(nav); // true if navigation is successful
-                }, err => {
-                  console.log('error: ' + err); // when there's an error
-                });
-        */
-
+      // show a quick message
         this.alertService.presentToast('You have logged in. Welcome!').then();
       },
       error => {
-        console.log('login error: ');
-        console.log(error);
+        // display an error beneath the login form in the following cases:
         if (error.message.includes('username/password')) {
           this.error = 'Either your username or your password is wrong.';
         } else if (error.message.includes('not approved')) {
           this.error = 'Your account has not yet been approved.';
         } else {
-
         }
       }
     );

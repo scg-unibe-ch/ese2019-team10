@@ -25,8 +25,8 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.title = 'Home';
-    this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
+    this.title = appConstants.APP_TITLE;
+    this.titleService.setTitle(appConstants.APP_TITLE);
   }
 
 }
