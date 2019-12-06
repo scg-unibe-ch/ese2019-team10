@@ -1,20 +1,20 @@
-import {LoginPage} from './login.po';
+import {RegisterPage} from './register.po';
 import {browser, protractor} from 'protractor';
 
-describe('login page', () => {
-  let page: LoginPage;
+describe('Register page', () => {
+  let page: RegisterPage;
 
   beforeEach(() => {
-    page = new LoginPage();
+    page = new RegisterPage();
     page.navigateTo();
   });
 
-  it('title should be Login', () => {
-    expect(page.getTitleText()).toContain('Login');
+  it('title should be Register', () => {
+    expect(page.getTitleText()).toContain('Register');
   });
 
-  it('button should be LOGIN', () => {
-    expect(page.getButtonText()).toContain('LOGIN');
+  it('button should be REGISTER', () => {
+    expect(page.getButtonText()).toContain('REGISTER');
   });
 
   it('form should start as invalid', () => {
@@ -43,6 +43,14 @@ describe('login page', () => {
     email.sendKeys('test@email.com');
     const password = page.getPasswordInput();
     password.sendKeys('aBc123');
+    const confirmPassword = page.getConfirmPasswordInput();
+    confirmPassword.sendKeys('aBc123');
+    const firstName = page.getFirstNameInput();
+    firstName.sendKeys('Jane');
+    const lastName = page.getLastNameInput();
+    lastName.sendKeys('Doe');
+    const terms = page.getTerms();
+    terms.click();
     const form = page.getForm().getAttribute('class');
     expect(form).toContain('ng-valid');
   });
@@ -52,6 +60,14 @@ describe('login page', () => {
     email.sendKeys('example@mail.com');
     const password = page.getPasswordInput();
     password.sendKeys('examplE0');
+    const confirmPassword = page.getConfirmPasswordInput();
+    confirmPassword.sendKeys('examplE0');
+    const firstName = page.getFirstNameInput();
+    firstName.sendKeys('Jane');
+    const lastName = page.getLastNameInput();
+    lastName.sendKeys('Doe');
+    const terms = page.getTerms();
+    terms.click();
     const loginInput = page.getButton();
     expect(loginInput.isEnabled()).toBe(true);
   });
@@ -61,15 +77,23 @@ describe('login page', () => {
     email.sendKeys('test at email dot com');
     const password = page.getPasswordInput();
     password.sendKeys('this is a password');
+    const confirmPassword = page.getConfirmPasswordInput();
+    confirmPassword.sendKeys('this is a password');
+    const firstName = page.getFirstNameInput();
+    firstName.sendKeys('Jane');
+    const lastName = page.getLastNameInput();
+    lastName.sendKeys('Doe');
+    const terms = page.getTerms();
+    terms.click();
     const form = page.getForm().getAttribute('class');
     expect(form).toContain('ng-invalid');
   });
 
-  it('login should log in', () => {
-    page.login();
+  it('register should register', () => {
+    page.register();
     const EC = protractor.ExpectedConditions;
 
-    browser.wait(EC.urlContains('dashboard'), 5000).then(result => {
+    browser.wait(EC.urlContains('registered'), 5000).then(result => {
       expect(result).toEqual(true);
     });
 

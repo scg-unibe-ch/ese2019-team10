@@ -1,4 +1,4 @@
-import {browser, by, element} from 'protractor';
+import {browser, by, element, protractor} from 'protractor';
 
 export class LoginPage {
   navigateTo() {
@@ -27,5 +27,23 @@ export class LoginPage {
 
   getPasswordInput() {
     return element(by.css('ion-input[name="password"] input'));
+  }
+
+  login() {
+    const email = this.getEmailInput();
+    return email.sendKeys('admin@mail.com').then(() => {
+        const password = this.getPasswordInput();
+        password.sendKeys('xugai4nie9ief5AhshaiSh1aequaiy').then( () => {
+          const loginInput = this.getButton();
+          loginInput.click().then( () => {
+            }
+          );
+          }
+        );
+      }
+    );
+
+
+
   }
 }

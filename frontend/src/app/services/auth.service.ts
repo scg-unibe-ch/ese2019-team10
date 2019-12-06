@@ -97,7 +97,7 @@ export class AuthService {
    * return true if user is an admin.
    */
   isAdmin() {
-    return this.admin;
+    return this.adminState.value;
   }
 
   isEventManager() {
@@ -130,6 +130,11 @@ export class AuthService {
             this.storage.set(ID_KEY, res.userId).then(() => {
               this.id = res.userId;
             });
+            if (res.isAdmin) {
+              this.adminState.next(true);
+            } else {
+              this.adminState.next(false);
+            }
             this.storage.set(ADMIN_KEY, res.isAdmin).then(() => {
               this.admin = res.isAdmin;
             });
