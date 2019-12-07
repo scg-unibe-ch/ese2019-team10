@@ -8,7 +8,7 @@
     <ion-card class="ion-margin ion-no-padding">
       <ion-card-content class="ion-no-margin ion-no-padding">
 
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
           <ion-list class="ion-no-margin ion-no-padding" lines="full">
 
             <ion-item>
@@ -18,7 +18,7 @@
             </ion-item>
 
             <div class="validation-errors">
-              <ng-container *ngFor="let validation of loginMessages.email">
+              <ng-container *ngFor="let validation of emailMessages">
                 <ion-chip class="validation-chip" color="danger" outline="true"
                           *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
                   <ion-icon name="warning"></ion-icon>
@@ -37,7 +37,7 @@
             </ion-item>
 
             <div class="validation-errors">
-              <ng-container *ngFor="let validation of loginMessages.password">
+              <ng-container *ngFor="let validation of passwordMessages">
 
                 <ion-chip class="validation-chip" color="danger" outline="true"
                           *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
@@ -61,7 +61,7 @@
 
             <ion-row class="ion-no-margin ion-no-padding">
               <ion-col class="ion-no-margin ion-no-padding">
-                <ion-button [disabled]="!loginForm.valid" class="submit-btn ion-no-margin" expand="full"
+                <ion-button id="login-button" [disabled]="!loginForm.valid" class="submit-btn ion-no-margin" expand="full"
                             type="submit">
                   <ion-icon name="log-in" slot="start"></ion-icon>
                   Login

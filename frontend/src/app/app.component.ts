@@ -4,6 +4,7 @@ import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {HttpClient} from '@angular/common/http';
 import {NavigationEnd, Router, RouterEvent} from '@angular/router';
+import {combineLatest} from 'rxjs';
 
 import {AuthService} from './services/auth.service';
 import {AuthInterceptorService} from './services/auth-interceptor.service';
@@ -19,8 +20,12 @@ import {AdminService} from './services/admin.service';
 export class AppComponent implements OnInit {
   rootPage: any = 'HomePage';
   navigate: any;
-  loggedIn: any = false;
-
+  loggedIn = false;
+  toggle: any;
+  prefersDark: any;
+  isAdmin = false;
+  isEventManager = false;
+  isServiceProvider = false;
 
   constructor(
     private platform: Platform,
@@ -42,27 +47,14 @@ export class AppComponent implements OnInit {
       this.splashScreen.hide();
       this.authService.authenticationState.subscribe(state => {
         console.log('auth state: ' + state);
-        /*if (state) {
-          this.router.navigateByUrl(this.routingState.getPreviousUrl()).then(nav => {
-            console.log(nav); // true if navigation is successful
-          }, err => {
-            console.log(this.routingState.getPreviousUrl()); // when there's an error
-          });
-        } else {
-          console.log(state);
-/!*          /!*          this.router.navigate(['login']).then(nav => {
-                      console.log(nav); // true if navigation is successful
-                    }, err => {
-                      console.log(err); // when there's an error
-                    });*!/!*!/
-        }*/
       });
+      this.checkToggle(this.prefersDark.matches);
     });
   }
 
   ngOnInit() {
-
     this.router.events.subscribe((event: RouterEvent) => {
+      console.log(event);
       if (event instanceof NavigationEnd) {
         this.navigate.map(p => {
           return p.active = (event.url === p.url);
@@ -70,75 +62,130 @@ export class AppComponent implements OnInit {
       }
     });
 
+
+    // Query for the toggle that is used to change between themes
+    this.toggle = document.querySelector('#themeToggle');
+
+    // Listen for the toggle check/uncheck to toggle the dark class on the <body>
+    this.toggle.addEventListener('ionChange', (ev) => {
+      document.body.classList.toggle('dark', ev.detail.checked);
+    });
+
+    this.prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+    this.prefersDark.addEventListener('change', (e) => {
+      this.checkToggle(e.matches);
+    });
+  }
+
+  checkToggle(shouldCheck: any) {
+    this.toggle.checked = shouldCheck;
   }
 
 
+  /**
+   * log out current user
+   */
   logout() {
     this.authService.logout();
   }
 
-
+  /**
+   * Builds the sidebar menu, showing different entries for logged in users, admins, service providers, event users.
+   */
   sideMenu() {
-    this.authService.authenticationState.subscribe(() => {
 
-      if (this.authService.isAuthenticated()) {
-        this.loggedIn = true;
-        this.navigate =
-          [
-            {
-              title: 'Home',
-              url: '/home',
-              icon: 'home'
-            },
-            {
-              title: 'Dashboard',
-              url: '/dashboard',
-              icon: 'apps'
-            },
-            {
-              title: 'Profile',
-              url: '/profile',
-              icon: 'person'
-            },
-            {
-              title: 'Search',
-              url: '/search',
-              icon: 'search'
-            },
-          ];
-      } else {
-        this.loggedIn = false;
-        this.navigate =
-          [
-            {
-              title: 'Home',
-              url: '/home',
-              icon: 'home'
-            },
-            {
-              title: 'About',
-              url: '/about',
-              icon: 'information-circle'
-            },
-            {
-              title: 'FAQ',
-              url: '/faq',
-              icon: 'help'
-            },
-            {
-              title: 'Login',
-              url: '/login',
-              icon: 'log-in'
-            },
-            {
-              title: 'Register',
-              url: '/register',
-              icon: 'person-add'
-            },
-          ];
-      }
+    combineLatest([this.authService.authenticationState, this.authService.adminState,
+      this.authService.eventManagerState, this.authService.serviceProviderState])
+      .subscribe(results => {
+        console.log('combineLatest results:', results);
+        // [this.loggedIn, this.isAdmin, this.isEventManager, this.isServiceProvider] = results;
+        this.isAdmin = this.authService.isAdmin();
+        this.isEventManager = this.authService.isEventManager();
+        this.isServiceProvider = this.authService.isServiceProvider();
+        this.loggedIn = this.authService.isAuthenticated();
 
-    });
+        if (this.loggedIn) {
+          this.loggedIn = true;
+          this.navigate =
+            [
+              {
+                title: 'Home',
+                url: '/home',
+                icon: 'home'
+              },
+              {
+                title: 'Dashboard',
+                url: '/dashboard',
+                icon: 'apps'
+              },
+              {
+                title: 'Profile',
+                url: '/profile',
+                icon: 'person'
+              },
+              {
+                title: 'Search',
+                url: '/search',
+                icon: 'search'
+              },
+              ...(this.isAdmin ? [{
+                title: 'Manage Users',
+                url: '/admin/users',
+                icon: 'people'
+              }] : []),
+              ...(this.isEventManager ? [{
+                title: 'Manage Events',
+                url: '/profile/events',
+                icon: 'build'
+              }] : []),
+              ...(this.isServiceProvider ? [{
+                title: 'Manage Services',
+                url: '/profile/services',
+                icon: 'gift'
+              }] : []),
+            ];
+        } else {
+          this.loggedIn = false;
+          this.navigate =
+            [
+              {
+                title: 'Home',
+                url: '/home',
+                icon: 'home'
+              },
+              {
+                title: 'Login',
+                url: '/login',
+                icon: 'log-in'
+              },
+              {
+                title: 'Register',
+                url: '/register',
+                icon: 'person-add'
+              },
+              {
+                title: 'About',
+                url: '/about',
+                icon: 'information-circle'
+              },
+              {
+                title: 'Terms & Conditions',
+                url: '/terms-conditions',
+                icon: 'book'
+              },
+              {
+                title: 'Privacy Policy',
+                url: '/privacy-policy',
+                icon: 'finger-print'
+              },
+            ];
+        }
+        // compare current url to menu urls and assign .active if they match
+        this.navigate.map(p => {
+          return p.active = (this.router.url === p.url);
+        });
+      });
 
 
   }

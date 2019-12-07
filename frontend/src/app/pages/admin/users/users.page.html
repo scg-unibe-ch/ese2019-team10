@@ -6,7 +6,7 @@
 <ion-content class="ion-margin ion-padding">
   <ion-card class="ion-margin ion-no-padding">
 
-    <ion-card-header class="ion-no-margin" color="dark">
+    <ion-card-header id="unapproved" class="ion-no-margin" color="dark">
       <ion-card-title>
         <ion-label *ngIf="loadedUU; else noNumber">
           Unapproved Users: {{numberUnapproved}}</ion-label>
@@ -17,7 +17,7 @@
         </ng-template>
       </ion-card-title>
     </ion-card-header>
-    
+
     <ion-button *ngIf="!loadedUU; else hideUnapproved" class="shutter-text submit-btn ion-no-margin" expand="full"
                 type="button"
                 (click)="showUnapprovedUsers()" color="warning">
@@ -67,7 +67,7 @@
   </ion-card>
 
   <ion-card class="ion-margin ion-no-padding spaced-card">
-    <ion-card-header class="ion-no-margin" color="dark">
+    <ion-card-header id="approved" class="ion-no-margin" color="dark">
       <ion-card-title>
         <ion-label *ngIf="loadedAU; else elseBlock">
           Approved Users: {{numberApproved}}</ion-label>

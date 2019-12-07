@@ -8,7 +8,7 @@
     <ion-card-content class="ion-no-margin ion-no-padding">
 
       <div class="registration-form">
-        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <form id="registerForm" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
           <ion-row class="ion-no-margin ion-no-padding">
             <ion-col class="ion-no-margin ion-no-padding">
               <ion-list class="ion-no-margin ion-no-padding">
@@ -219,7 +219,7 @@
 
                 <ion-row class="ion-no-margin ion-no-padding">
                   <ion-col class="ion-no-margin ion-no-padding">
-                    <ion-button class="submit-btn ion-no-margin" expand="full" type="submit"
+                    <ion-button id="register-button" class="submit-btn ion-no-margin" expand="full" type="submit"
                                 [disabled]="!registrationForm.valid"
                     >
                       <ion-icon class="button-icon" slot="start" name="save"></ion-icon>
