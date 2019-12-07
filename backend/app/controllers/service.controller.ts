@@ -4,7 +4,7 @@ import {Category} from '../models/category.model';
 import {User} from '../models/user.model';
 import {Event} from '../models/event.model';
 import {EventService} from '../models/EventService';
-import {respond40IfNotAuthentic} from '../lib/auth.lib';
+import {respond401IfNotAuthentic} from '../lib/auth.lib';
 import {isInstance} from '../lib/database.lib';
 
 const router: Router = Router();
@@ -38,7 +38,7 @@ router.get('/service/:id', async (req: Request, res: Response) => {
  *************************************************************************/
 router.post('/service', async (req: Request, res: Response) => {
   const userId = parseInt(req.body.userId, undefined);
-  if (! respond40IfNotAuthentic(res, userId)) {
+  if (! respond401IfNotAuthentic(res, userId)) {
     return;
   }
 
@@ -64,7 +64,7 @@ router.post('/service', async (req: Request, res: Response) => {
  *************************************************************************/
 router.put('/service/:id', async (req: Request, res: Response) => {
   const userId = parseInt(req.body.userId, undefined);
-  if (! respond40IfNotAuthentic(res, userId)) {
+  if (! respond401IfNotAuthentic(res, userId)) {
     return;
   }
 
@@ -119,7 +119,7 @@ router.delete('/service/:id', async (req: Request, res: Response) => {
   const serviceId = parseInt(req.params.id, undefined);
   Service.destroy({where: {'id': serviceId}})
     .then(() => {
-      res.status(201).json({'msg': 'Service successfully deleted'});
+      res.status(201).json({'msg': 'Service deleted'});
     })
     .catch(result => {
       res.status(500).json({'msg': 'Could not delete service'});
