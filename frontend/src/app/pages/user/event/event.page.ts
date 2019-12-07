@@ -1,13 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Validators, FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
-import {Router, NavigationEnd, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {tap} from 'rxjs/operators';
 
 import {AuthService} from '../../../services/auth.service';
-import {AlertService} from 'src/app/services/alert.service';
 import {User} from '../../../models/user.model';
-import {Observable} from 'rxjs';
 import {appConstants} from '../../../constants/app.constants';
 import {Event} from '../../../models/event.model';
 
