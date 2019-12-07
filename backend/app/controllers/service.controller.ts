@@ -96,52 +96,33 @@ router.put('/service/:id', async (req: Request, res: Response) => {
 router.post('/service/book', async (request: Request, response: Response) => {
   const eventId = parseInt(request.body.eventId, undefined);
   const serviceId = parseInt(request.body.serviceId, undefined);
+  const event = await isInstance(response, Event, eventId, 'Event not found');
+  if (! event) {
+    return;
+  }
+  const service = await isInstance(response, Service, serviceId, 'Service not found');
+  if (! service) {
+    return;
+  }
+  const eventService = new EventService();
+  eventService.post_(request.body);
+  eventService.save().then(() => {
+    // Send message to service provider
 
-  // get event by id, include role-array for checking association wit service later
-  Event.findOne({
-    where: {'id': eventId},
-    include: [{'model': Service, 'as': 'service'}]
-  })
-    .then(event => {
-      Service.findOne({where: {'id': serviceId}})
-        .then(service => {
-          if (!service || !event) {
-            response.status(500).json({'msg': 'Could not process request'});
-          // check if service is already associated with event
-          } else if (event.service.map(s => s.id).includes(service.id)) {
-            response.status(500).json({'msg': 'Service is already booked for this event'});
-          } else {
-            event.$add('service', service);
-            response.status(201).json({'msg': 'Booking created'});
-          }
-        })
-        .catch(error => {
-          console.log(error);
-          response.status(500).json({'msg': 'Service not found, booking not created'});
-        });
-    })
-    .catch(error => {
-      console.log(error);
-      response.status(500).json({'msg': 'Event not found, booking not created'});
+    response.status(201).json({'msg': 'Booking created'});
+  }).catch(() => {
+    response.status(500).json({'msg': 'Booking was not created'});
   });
 });
 
 router.delete('/service/:id', async (req: Request, res: Response) => {
   const serviceId = parseInt(req.params.id, undefined);
-  Service.findOne({where: {'id': serviceId}})
-    .then(service => {
-      if (service) {
-        service.destroy()
-          .then(result => {
-            res.status(201).json({'msg': 'Service successfully deleted'});
-          })
-          .catch(result => {
-            res.status(500).json({'msg': 'Could not delete service'});
-          });
-      } else {
-        res.status(500).json({'msg': 'Service not found'});
-      }
-
+  Service.destroy({where: {'id': serviceId}})
+    .then(() => {
+      res.status(201).json({'msg': 'Service successfully deleted'});
+    })
+    .catch(result => {
+      res.status(500).json({'msg': 'Could not delete service'});
     });
 });
 
