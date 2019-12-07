@@ -27,7 +27,7 @@ export class AuthGuardService implements CanActivate {
     if (this.authService.isAuthenticated()) {
       return true;
     } else {
-      this.router.navigate(['login'], {queryParams: {returnUrl: state.url}}).then(r => {
+      this.router.navigate(['login'], {queryParams: {returnUrl: state.url}}).then(() => {
         this.alertService.presentToast('You need to log in to do this.').then();
       });
       return false;

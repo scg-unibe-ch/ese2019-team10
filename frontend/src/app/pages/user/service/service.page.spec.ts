@@ -5,7 +5,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {IonicStorageModule} from '@ionic/storage';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
+import { FormBuilder} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 
 import {ServicePage} from './service.page';

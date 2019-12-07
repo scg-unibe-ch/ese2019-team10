@@ -4,7 +4,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {IonicStorageModule} from '@ionic/storage';
-import {Validators, FormBuilder, FormGroup, FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 
 import {RegisterPage} from './register.page';

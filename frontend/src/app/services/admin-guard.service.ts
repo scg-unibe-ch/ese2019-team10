@@ -25,7 +25,7 @@ export class AdminGuardService implements CanActivate {
     if (this.authService.isAdmin()) {
       return true;
     } else {
-      this.router.navigate(['dashboard'], {queryParams: {returnUrl: state.url}}).then(r => {
+      this.router.navigate(['dashboard'], {queryParams: {returnUrl: state.url}}).then(() => {
         this.alertService.presentToast('You do not have the necessary authorization.').then();
       });
       return false;

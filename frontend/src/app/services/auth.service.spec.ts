@@ -1,17 +1,14 @@
-import {async, ComponentFixture, getTestBed, TestBed} from '@angular/core/testing';
+import {async, getTestBed, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 
 import {AuthService} from './auth.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {ServicePage} from '../pages/user/service/service.page';
-import {IonicStorageModule, Storage} from '@ionic/storage';
-import {AlertController, IonicModule, Platform} from '@ionic/angular';
+import {IonicStorageModule} from '@ionic/storage';
+import {IonicModule} from '@ionic/angular';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
-import {AlertService} from './alert.service';
-import {Router} from '@angular/router';
+
 
 describe('AuthService', () => {
   let jwtHelperSpy;

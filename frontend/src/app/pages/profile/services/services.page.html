@@ -39,7 +39,7 @@
               </ion-button>
             </ng-template>
 
-            <ion-item-group [formGroupName]="ix" [hidden]="!this.helperArray[ix]">
+            <ion-item-group [formGroupName]="ix.toString()" [hidden]="!this.helperArray[ix]">
 
               <ion-item>
                 <ion-label position="floating">Name
