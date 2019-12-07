@@ -1,4 +1,4 @@
-import {browser, by, element, protractor} from 'protractor';
+import {browser, by, element} from 'protractor';
 
 export class RegisterPage {
   navigateTo() {
@@ -54,20 +54,19 @@ export class RegisterPage {
   register() {
     const email = this.getEmailInput();
     const random = this.getRandomIntInclusive(1000, 1000000);
-    email.sendKeys(random.toString() + 'e@mail.com');
+    email.sendKeys(random.toString() + 'e@mail.com').then();
     const password = this.getPasswordInput();
-    password.sendKeys('examplE0');
+    password.sendKeys('examplE0').then();
     const confirmPassword = this.getConfirmPasswordInput();
-    confirmPassword.sendKeys('examplE0');
+    confirmPassword.sendKeys('examplE0').then();
     const firstName = this.getFirstNameInput();
-    firstName.sendKeys('Jane');
+    firstName.sendKeys('Jane').then();
     const lastName = this.getLastNameInput();
-    lastName.sendKeys('Doe');
+    lastName.sendKeys('Doe').then();
     const terms = this.getTerms();
-    terms.click();
+    terms.click().then();
     const input = this.getButton();
-    input.click();
-
+    input.click().then();
   }
 
 }

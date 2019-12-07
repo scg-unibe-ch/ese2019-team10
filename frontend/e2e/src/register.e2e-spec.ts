@@ -17,25 +17,25 @@ describe('Register page', () => {
     expect(page.getButtonText()).toContain('REGISTER');
   });
 
-  it('form should start as invalid', () => {
-    const form = page.getForm().getAttribute('class');
-    expect(form).toContain('ng-invalid');
+  it('form should be invalid at first', () => {
+    const registerForm = page.getForm().getAttribute('class');
+    expect(registerForm).toContain('ng-invalid');
   });
 
-  it('form should stay invalid when clicked', () => {
+  it('form should stay invalid even when clicked', () => {
     const email = page.getEmailInput();
     email.click();
     const password = page.getPasswordInput();
     password.click();
-    const form = page.getForm().getAttribute('class');
-    expect(form).toContain('ng-invalid');
+    const registerForm = page.getForm().getAttribute('class');
+    expect(registerForm).toContain('ng-invalid');
   });
 
   it('button should start as disabled', () => {
-    const loginInput = page.getButton();
+    const registerInput = page.getButton();
     // the following should work but doesn't because disabled is set to "" instead of "true".
     // expect(loginInput.isEnabled()).toBe(false);
-    expect(loginInput.getAttribute('aria-disabled')).toEqual('true');
+    expect(registerInput.getAttribute('aria-disabled')).toEqual('true');
   });
 
   it('form should be valid when filled out', () => {

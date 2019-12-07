@@ -1,5 +1,5 @@
 <ion-header>
-  <app-header [title]="title">
+  <app-header class="search" [title]="title">
   </app-header>
 </ion-header>
 
@@ -175,7 +175,7 @@
       </ion-list>
 
       <ng-template #noResultsFound>
-        <div class="page-text ion-margin ion-padding">
+        <div id="noResults" class="page-text ion-margin ion-padding">
           <p>
           No results were found. Please try again.
           </p>

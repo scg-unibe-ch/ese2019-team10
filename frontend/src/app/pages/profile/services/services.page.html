@@ -1,5 +1,5 @@
 <ion-header>
-  <app-header [title]="title">
+  <app-header class="services" [title]="title">
   </app-header>
 </ion-header>
 
@@ -244,7 +244,7 @@
 
     <ion-card-content class="ion-no-margin ion-no-padding">
 
-      <form *ngIf="showNewServiceForm" [formGroup]="newServiceForm" (ngSubmit)="saveNewService()">
+      <form id="newServiceForm" *ngIf="showNewServiceForm" [formGroup]="newServiceForm" (ngSubmit)="saveNewService()">
 
         <ion-list>
           <ion-item-group>
@@ -416,7 +416,7 @@
 
         <ion-row class="ion-justify-content-evenly ion-no-margin ion-no-padding ion-wrap ">
           <ion-col class="ion-align-self-start ion-no-margin ion-no-padding" size-xs="12" size-sm="4">
-            <ion-button (click)="deleteNewService()" class="form-button ion-no-margin" type="button"
+            <ion-button id="remove-button" (click)="deleteNewService()" class="form-button ion-no-margin" type="button"
                         expand="full" color="danger">
               <ion-icon slot="start" name="close"></ion-icon>
               Remove
@@ -424,7 +424,7 @@
           </ion-col>
 
           <ion-col class="ion-align-self-end ion-no-margin ion-no-padding " size-xs="12" offset-sm="4" size-sm="4">
-            <ion-button class="form-button submit-btn ion-no-margin" type="submit"
+            <ion-button id="save-button" class="form-button submit-btn ion-no-margin" type="submit"
                         [disabled]="!newServiceForm.valid" expand="full" color="primary">
               <ion-icon slot="start" name="save"></ion-icon>
               Save
@@ -436,7 +436,7 @@
 
 
       <div *ngIf="!showNewServiceForm">
-        <ion-button (click)="addNewService()" class="submit-btn ion-no-margin" expand="full"
+        <ion-button id="addNewServiceButton" (click)="addNewService()" class="submit-btn ion-no-margin" expand="full"
                     type="button" color="success">
           <ion-icon slot="start" name="add"></ion-icon>
           Add Service

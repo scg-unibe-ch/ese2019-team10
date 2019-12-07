@@ -15,7 +15,7 @@ describe('User Administration page', () => {
       loginPage.login().then( () => {
         browser.sleep(1000);
         const EC = protractor.ExpectedConditions;
-        browser.wait(EC.urlContains('dashboard'), 5000).then(result => {
+        browser.wait(EC.urlContains('dashboard'), 5000).then(() => {
           element(by.css('ion-button[routerLink="/admin/users"]')).click().then ( () => {
               browser.wait(EC.urlContains('users'), 5000);
             }
