@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {tap} from 'rxjs/operators';
 
 import {PasswordValidator} from '../../validators/password.validator';
 import {AuthService} from '../../services/auth.service';
@@ -20,7 +19,7 @@ import {appConstants} from '../../constants/app.constants';
 
 export class RegisterPage implements OnInit {
   private title: string;
-  private registrationMessages = ValidationMessages;
+  public registrationMessages = ValidationMessages;
   private registrationForm: FormGroup;
   private matchingPasswordsGroup: FormGroup;
 

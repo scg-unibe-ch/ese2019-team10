@@ -1,5 +1,5 @@
 <ion-header>
-  <app-header [title]="title">
+  <app-header class="dashboard" [title]="title">
   </app-header>
 </ion-header>
 
@@ -80,7 +80,7 @@
 
         <ion-row class="ion-no-margin ion-no-padding">
           <ion-col class="ion-no-margin ion-no-padding">
-            <ion-button type="button" (click)="logout()" color="primary" class="ion-no-margin form-button"
+            <ion-button id="logout-button" type="button" (click)="logout()" color="primary" class="ion-no-margin form-button"
                         expand="full">
               <ion-icon slot="start" name="log-out" class="button-icon"></ion-icon>
               Logout

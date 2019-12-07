@@ -4,7 +4,6 @@ import {RouterTestingModule} from '@angular/router/testing';
 
 import {AuthInterceptorService} from './auth-interceptor.service';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {ServicePage} from '../pages/user/service/service.page';
 import {IonicStorageModule} from '@ionic/storage';
 import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';

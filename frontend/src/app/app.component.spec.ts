@@ -5,31 +5,13 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {IonicModule, Platform} from '@ionic/angular';
 import {SplashScreen} from '@ionic-native/splash-screen/ngx';
 import {StatusBar} from '@ionic-native/status-bar/ngx';
-import {provideRoutes, Routes, RouterModule} from '@angular/router';
 import {Component} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {RouterTestingModule} from '@angular/router/testing';
-import {JWT_OPTIONS, JwtHelperService, JwtModule, JwtModuleOptions} from '@auth0/angular-jwt';
-import {IonicStorageModule, Storage} from '@ionic/storage';
-import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AppRoutingModule} from './app-routing.module';
-import {SharedComponentsModule} from './components/shared-components.module';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import {IonicStorageModule} from '@ionic/storage';
 
-/*export function jwtOptionsFactory(storage) {
-  return {
-    authHeader: 'auth',
-    authPrefix: '',
-    headerName: 'auth',
-    authScheme: '',
-    tokenGetter: () => {
-      return storage.get('access_token');
-    },
-    whitelistedDomains: ['localhost:3000']
-  };
-}*/
 
 describe('AppComponent', () => {
 
@@ -58,6 +40,8 @@ describe('AppComponent', () => {
         {provide: SplashScreen, useValue: splashScreenSpy},
         {provide: Platform, useValue: platformSpy},
         {provide: JwtHelperService, useValue: jwtHelperSpy},
+        HttpTestingController,
+        Component,
       ],
     }).compileComponents();
     jwtHelper = TestBed.get(JwtHelperService);

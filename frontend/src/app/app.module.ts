@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule, Title} from '@angular/platform-browser';
-import {Router, RouteReuseStrategy, RouterModule, Routes} from '@angular/router';
+import { RouteReuseStrategy, RouterModule} from '@angular/router';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 

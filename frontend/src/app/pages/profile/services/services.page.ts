@@ -1,14 +1,10 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
-import {Validators, FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
-import {Router, NavigationEnd} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Validators, FormBuilder, FormGroup, FormArray} from '@angular/forms';
+import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {map, tap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
 
-import {PasswordValidator} from '../../../validators/password.validator';
 import {AuthService} from '../../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
-import {ValidationMessages} from '../../../constants/validation-messages.constants';
 import {User} from '../../../models/user.model';
 import {Service} from '../../../models/service.model';
 import {appConstants} from '../../../constants/app.constants';
@@ -24,15 +20,11 @@ import {KeyValuePair} from '../../../models/key-value-pair.model';
 
 export class ServicesPage implements OnInit {
   public title: string;
-  public serviceForm: FormGroup;
-  public matchingPasswordsGroup: FormGroup;
   public countries: Array<string>;
-  public genders: Array<string>;
   public day = null;
   public month = null;
   public year = null;
   public currentTime = null;
-  public validationMessages = ValidationMessages;
   public serviceValidation = ServiceValidation;
   public categories: KeyValuePair[];
 
@@ -40,13 +32,11 @@ export class ServicesPage implements OnInit {
   public services: Service[];
   public events: Event[];
   public serviceList: FormArray;
-  public eventList: FormArray;
   public loadedServices: boolean;
   data;
   private savedServices: FormGroup;
   private showNewServiceForm: boolean;
   private newServiceForm: FormGroup;
-  private savedServicesForm: FormGroup;
   helperArray: Array<boolean>;
 
 
@@ -56,7 +46,6 @@ export class ServicesPage implements OnInit {
     private authService: AuthService,
     private alertService: AlertService,
     private titleService: Title,
-    // private ref: ChangeDetectorRef,
   ) {
   }
 
@@ -67,62 +56,12 @@ export class ServicesPage implements OnInit {
     this.categories = [];
 
     this.initialize();
-    /* this.currentTime = new Date();
-     this.day = String(this.currentTime.getDate()).padStart(2, '0');
-     this.month = String(this.currentTime.getMonth() + 1).padStart(2, '0');
-     this.year = this.currentTime.getFullYear();*/
-    /*    this.serviceForm = this.formBuilder.group({
-          isServiceProvider: new FormControl(false),
-          serviceName: new FormControl(''),
-          serviceCategory: new FormControl(''),
-          services: this.formBuilder.array([this.createService()]),
-        });*/
-    /*    this.savedServicesForm = this.formBuilder.group({
-          name: ['', Validators.required],
-          category: ['', Validators.required],
-          description: ['', Validators.required],
-          price: ['', Validators.required],
-          place: ['', Validators.required],
-          availability: ['', Validators.required],
-          quantity: ['', Validators.required],
-        });*/
-    // this.serviceList = this.serviceForm.get('services') as FormArray;
-    // this.serviceList.removeAt(0);
   }
 
 
   ionViewWillEnter() {
     this.initialize();
     this.loadServices();
-    /*    this.data = [
-          {
-            category: 'food',
-            name: 'appetisers',
-            description: 'Lorem ipsum dolor sit amet.',
-            price: '250CHF',
-            availability: 'Saturday and Sunday, from 8am to 12pm',
-            place: 'Zurich',
-            quantity: '5 plates of appetisers',
-            id: 3,
-            show: false,
-          },
-          {
-            category: 'food',
-            name: 'assorted cheese',
-            description: 'Lorem ipsum dolor sit amet',
-            price: '250CHF',
-            availability: 'Saturday and Sunday, from 8am to 12pm',
-            place: 'Zurich',
-            quantity: '5 plates of appetisers',
-            id: 66,
-            show: false,
-          }
-        ];
-        for (const service of this.data) {
-          console.log(service);
-          this.addService(service);
-        }
-        this.serviceList.patchValue(this.data);*/
   }
 
   initialize() {
@@ -231,18 +170,14 @@ export class ServicesPage implements OnInit {
 
 
   public addService() {
-    // this.services.push({name: this.serviceForm.value.serviceName, category: this.serviceForm.value.serviceCategory});
     this.serviceList.push(this.createService());
-    // console.log(this.savedServices.value);
   }
 
   public deleteService(index: number): void {
-    // this.services.splice(index, 1);
     const id = this.getProperty(index, 'id');
     const service = {
       serviceId: id,
     };
-    // this.serviceList.removeAt(index);
     this.authService.deleteService(service).subscribe((data: any) => {
       this.initialize();
       this.loadServices();
@@ -257,7 +192,6 @@ export class ServicesPage implements OnInit {
       this.services = user.services;
       if (this.services.length > 0) {
         for (const service of this.services) {
-          // console.log(service);
           if (service.category) {
             service.categoryId = service.category.id;
           }
@@ -270,33 +204,15 @@ export class ServicesPage implements OnInit {
 
       }
 
-
-      /*      this.serviceForm.patchValue({
-              email: this.user.email,
-            });*/
-
-      // this.serviceForm.patchValue(this.user);
-
-      /*      Object.keys(this.user).forEach(k => {
-              const control = this.serviceForm.get(k);
-              if (control) {
-                control.setValue(this.user[k], {onlySelf: true});
-              }
-            });*/
-
     });
   }
 
   public showService(index: number): void {
-    // this.services.splice(index, 1);
     this.helperArray[index] = true;
-    // this.ref.detectChanges();
   }
 
   public hideService(index: number): void {
-    // this.services.splice(index, 1);
     this.helperArray[index] = false;
-    // this.ref.detectChanges();
   }
 
 

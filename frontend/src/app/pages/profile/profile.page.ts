@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Validators, FormBuilder, FormGroup, FormControl, FormArray} from '@angular/forms';
-import {Router, NavigationEnd} from '@angular/router';
+import {Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
+import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {tap} from 'rxjs/operators';
 
 import {PasswordValidator} from '../../validators/password.validator';
 import {DateValidator} from '../../validators/date.validator';
@@ -10,7 +9,6 @@ import {AuthService} from '../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
 import {ValidationMessages} from '../../constants/validation-messages.constants';
 import {User} from '../../models/user.model';
-import {Observable} from 'rxjs';
 import {appConstants} from '../../constants/app.constants';
 
 

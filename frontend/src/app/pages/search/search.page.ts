@@ -93,7 +93,6 @@ export class SearchPage implements OnInit {
         searchTerm: term,
       };
 
-      // console.log(searchObject);
       // re-initialize before searching
       this.initialize();
 
@@ -116,8 +115,6 @@ export class SearchPage implements OnInit {
         if (this.foundServices || this.foundEvents || this.foundUsers) {
           this.foundResult = true;
         }
-
-        // console.log(result);
       });
 
     }

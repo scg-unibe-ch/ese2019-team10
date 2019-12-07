@@ -4,14 +4,12 @@ import {
   HttpInterceptor,
   HttpHandler,
   HttpRequest,
-  HttpResponse,
-  HttpErrorResponse, HttpClient
+  HttpErrorResponse,
 } from '@angular/common/http';
-import {Platform, AlertController} from '@ionic/angular';
+import {AlertController} from '@ionic/angular';
 
 import {Observable, throwError} from 'rxjs';
-import {retry, catchError, map} from 'rxjs/operators';
-import {AlertService} from './alert.service';
+import {retry, catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +18,6 @@ export class HttpErrorService implements HttpInterceptor {
 
   constructor(
     private alertController: AlertController,
-    private alertService: AlertService,
   ) {
   }
 
@@ -32,13 +29,7 @@ export class HttpErrorService implements HttpInterceptor {
       .pipe(
         // don't retry
         retry(0),
-        /*        map((event: HttpEvent<any>) => {
-                  if (event instanceof HttpResponse) {
-                    console.log('event--->>>', event);
-                    // this.errorDialogService.openDialog(event);
-                  }
-                  return event;
-                }),*/
+
         catchError((error: HttpErrorResponse) => {
           let errorMessage: string;
           if (error.error instanceof ErrorEvent) {

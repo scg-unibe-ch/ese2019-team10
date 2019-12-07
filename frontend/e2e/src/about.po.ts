@@ -6,9 +6,6 @@ export class AboutPage {
   }
 
 
-  getParagraphText() {
-    return element(by.deepCss('app-root ion-text')).getText();
-  }
 
   getTitleText() {
     return element(by.deepCss('app-header ion-title')).getText();

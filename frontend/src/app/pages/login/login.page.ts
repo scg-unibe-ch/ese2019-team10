@@ -23,8 +23,8 @@ export class LoginPage implements OnInit {
   private returnUrl: string;
   private error: string;
   // this is to solve a type error
-  private emailMessages = ValidationMessages.email as NgIterable<object>;
-  private passwordMessages = ValidationMessages.password as NgIterable<object>;
+  private emailMessages = this.loginMessages.email as NgIterable<object>;
+  private passwordMessages = this.loginMessages.password as NgIterable<object>;
 
   constructor(
     public formBuilder: FormBuilder,

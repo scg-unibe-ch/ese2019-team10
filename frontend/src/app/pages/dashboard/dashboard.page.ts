@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 
 import {AuthService} from '../../services/auth.service';
-import {AdminService} from '../../services/admin.service';
 import {WelcomeMessages} from '../../constants/welcome-messages.constants';
 import {appConstants} from '../../constants/app.constants';
 import {User} from '../../models/user.model';
@@ -26,7 +25,6 @@ export class DashboardPage implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private adminService: AdminService,
     private titleService: Title,
   ) {
   }

@@ -7,8 +7,6 @@ import {NavigationEnd, Router, RouterEvent} from '@angular/router';
 import {combineLatest} from 'rxjs';
 
 import {AuthService} from './services/auth.service';
-import {AuthInterceptorService} from './services/auth-interceptor.service';
-import {AdminService} from './services/admin.service';
 
 
 @Component({
@@ -34,8 +32,6 @@ export class AppComponent implements OnInit {
     private httpClient: HttpClient,
     private router: Router,
     private authService: AuthService,
-    private authInterceptorService: AuthInterceptorService,
-    private adminService: AdminService,
   ) {
     this.sideMenu();
     this.initializeApp();

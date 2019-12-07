@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Platform, AlertController} from '@ionic/angular';
-import {HttpClient, HttpHeaders, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Storage} from '@ionic/storage';
 import {tap, catchError, map} from 'rxjs/operators';
@@ -142,10 +142,6 @@ export class AuthService {
           });
         }),
         catchError(e => {
-          /*          const status = e.status;
-                    if (status === 401) {
-                      this.alertService.presentToast(e.msg).then();
-                    }*/
           throw new Error(e);
         })
       );
