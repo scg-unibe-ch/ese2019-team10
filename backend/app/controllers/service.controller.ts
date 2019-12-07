@@ -69,10 +69,26 @@ router.put('/service/:id', async (req: Request, res: Response) => {
   }
 
   const serviceId = parseInt(req.params.id, undefined);
+  const categoryId: number = req.body.categoryId;
   Service.findOne({where: {id: serviceId}}).then(service => {
     if (!service) {
       res.status(404).json('no such service');
       return;
+    }
+
+    if (categoryId !== service.categoryId) {
+      Category.findOne({where: {'id': categoryId}})
+        .then(newCategory => {
+          if (newCategory) {
+            service.$set('category', newCategory);
+          } else {
+            throw Error(`No category with id ${categoryId}`);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          throw Error('Error while setting category');
+        });
     }
     service.update({
       name: req.body.name,
