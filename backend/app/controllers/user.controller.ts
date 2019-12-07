@@ -5,7 +5,7 @@ import {Role} from '../models/role.model';
 import {Service} from '../models/service.model';
 import {Category} from '../models/category.model';
 import {EventService} from '../models/EventService';
-import {isAuthentic} from '../lib/auth.lib';
+import {respond40IfNotAuthentic} from '../lib/auth.lib';
 import {isInstance} from '../lib/database.lib';
 
 const router: Router = Router();
@@ -137,7 +137,7 @@ router.post('/event', async (req: Request, res: Response) => {
   // search for user with requested email
   const userId = parseInt(req.body.userId, undefined);
 
-  if (! isAuthentic(res, userId)) {
+  if (! respond40IfNotAuthentic(res, userId)) {
     return;
   }
 
@@ -163,7 +163,7 @@ router.post('/event', async (req: Request, res: Response) => {
 *************************************************************************/
 router.put('/event/:id', async (request: Request, response: Response) => {
   const userId = parseInt(request.body.userId, undefined);
-  if (! isAuthentic(response, userId)) {
+  if (! respond40IfNotAuthentic(response, userId)) {
     return;
   }
 

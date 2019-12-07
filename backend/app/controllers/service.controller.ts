@@ -4,7 +4,7 @@ import {Category} from '../models/category.model';
 import {User} from '../models/user.model';
 import {Event} from '../models/event.model';
 import {EventService} from '../models/EventService';
-import {isAuthentic} from '../lib/auth.lib';
+import {respond40IfNotAuthentic} from '../lib/auth.lib';
 import {isInstance} from '../lib/database.lib';
 
 const router: Router = Router();
@@ -38,7 +38,7 @@ router.get('/service/:id', async (req: Request, res: Response) => {
  *************************************************************************/
 router.post('/service', async (req: Request, res: Response) => {
   const userId = parseInt(req.body.userId, undefined);
-  if (! isAuthentic(res, userId)) {
+  if (! respond40IfNotAuthentic(res, userId)) {
     return;
   }
 
@@ -64,7 +64,7 @@ router.post('/service', async (req: Request, res: Response) => {
  *************************************************************************/
 router.put('/service/:id', async (req: Request, res: Response) => {
   const userId = parseInt(req.body.userId, undefined);
-  if (! isAuthentic(res, userId)) {
+  if (! respond40IfNotAuthentic(res, userId)) {
     return;
   }
 
