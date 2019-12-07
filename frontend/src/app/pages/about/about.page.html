@@ -4,31 +4,56 @@
 </ion-header>
 
 <ion-content class="ion-margin ion-padding">
-  <div class="about-page">
-    <ion-card class="ion-margin ion-no-padding">
-      <ion-card-content class="ion-no-margin ion-no-padding">
+  <ion-card class="constrained-card ion-margin ion-no-padding">
 
-        <ion-button class="ion-no-margin" expand="full" routerLink="/faq"
-                    type="button">
-          <ion-icon slot="start" name="help" class="button-icon"></ion-icon>
-          Frequently Asked Questions
-        </ion-button>
+    <ion-img src="../../../../assets/helpful.jpg" alt="faq"></ion-img>
 
-        <ion-button class="ion-no-margin form-button" expand="full"
-                    routerLink="/terms-conditions"
-                    type="button">
-          <ion-icon slot="start" name="book" class="button-icon"></ion-icon>
-          Terms & Conditions
-        </ion-button>
+    <ion-card-header class="ion-no-margin" color="dark">
+      <ion-card-title>
+        <ion-label class="ion-text-wrap">
+          Answers to common questions
+        </ion-label>
+      </ion-card-title>
+    </ion-card-header>
 
-        <ion-button class="ion-no-margin form-button" expand="full"
-                    routerLink="/privacy-policy"
-                    type="button">
-          <ion-icon slot="start" name="finger-print" class="button-icon"></ion-icon>
-          Privacy Policy
-        </ion-button>
+    <ion-button class="ion-no-margin form-button" expand="full"
+                routerLink="/terms-conditions"
+                type="button" fill="outline">
+      <ion-icon slot="start" name="book" class="button-icon"></ion-icon>
+      Terms & Conditions
+    </ion-button>
 
-      </ion-card-content>
-    </ion-card>
-  </div>
+    <ion-button class="ion-no-margin form-button" expand="full"
+                routerLink="/privacy-policy"
+                type="button" fill="outline">
+      <ion-icon slot="start" name="finger-print" class="button-icon"></ion-icon>
+      Privacy Policy
+    </ion-button>
+
+
+    <ion-card-content class="page-text ion-margin ion-padding">
+
+      <h3>What is this app for?</h3>
+      <p>It's an event platform where service providers can promote their services, event managers can create events and search for services that they want to book for their events.</p>
+
+      <h3>Do I have to register?</h3>
+      <p>Yes, if you want to use this platform, you need to create an account.</p>
+
+      <h3>What are my rights and obligations when I register?</h3>
+      <p>Please read our <a routerLink="/terms-conditions">terms and conditions</a> which has important information registered users and unregistered visitors..</p>
+
+      <h3>Do you protect my privacy?</h3>
+      <p>Please read our <a routerLink="/privacy-policy">privacy policy</a> which answers this in every detail.</p>
+
+      <h3>I forgot my password. How can I reset it?</h3>
+      <p>Please contact our <a href="mailto:admin@mail.com">administrator</a>.</p>
+
+      <h3>How do I delete my account?</h3>
+      <p>Please contact our <a href="mailto:admin@mail.com">administrator</a>.</p>
+
+    </ion-card-content>
+
+
+  </ion-card>
 </ion-content>
+

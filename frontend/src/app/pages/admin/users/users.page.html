@@ -4,7 +4,7 @@
 </ion-header>
 
 <ion-content class="ion-margin ion-padding">
-  <ion-card class="ion-margin ion-no-padding">
+  <ion-card class="constrained-card ion-margin ion-no-padding">
 
     <ion-card-header id="unapproved" class="ion-no-margin" color="dark">
       <ion-card-title>
@@ -66,7 +66,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="ion-margin ion-no-padding spaced-card">
+  <ion-card class="constrained-card ion-margin ion-no-padding spaced-card">
     <ion-card-header id="approved" class="ion-no-margin" color="dark">
       <ion-card-title>
         <ion-label *ngIf="loadedAU; else elseBlock">

@@ -38,6 +38,22 @@ span.ion-text-left {
   margin-right: auto;
 }
 
+.constrained-card {
+  max-width: 900px;
+  width: 90%; // adjust width on your ion-card suitable on your screen
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.search-card {
+  max-width: 1234px;
+  width: 90%; // adjust width on your ion-card suitable on your screen
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 /* Spacing */
 
 .form-button {
