@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   navigate: any;
   loggedIn = false;
   toggle: any;
-  prefersDark: any;
+  prefersDark: any = false;
   isAdmin = false;
   isEventManager = false;
   isServiceProvider = false;
@@ -50,14 +50,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.router.events.subscribe((event: RouterEvent) => {
-      console.log(event);
       if (event instanceof NavigationEnd) {
         this.navigate.map(p => {
           return p.active = (event.url === p.url);
         });
       }
     });
-
 
     // Query for the toggle that is used to change between themes
     this.toggle = document.querySelector('#themeToggle');
@@ -68,14 +66,25 @@ export class AppComponent implements OnInit {
     });
 
     this.prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    this.checkToggle(this.prefersDark.matches);
+    document.body.classList.toggle('dark', this.prefersDark.matches);
+
+    console.log('dark');
+    console.log(this.prefersDark);
 
     this.prefersDark.addEventListener('change', (e) => {
       this.checkToggle(e.matches);
     });
+
   }
 
   checkToggle(shouldCheck: any) {
     this.toggle.checked = shouldCheck;
+  }
+
+  checkDarkness() {
+
+
   }
 
 
@@ -94,7 +103,7 @@ export class AppComponent implements OnInit {
     combineLatest([this.authService.authenticationState, this.authService.adminState,
       this.authService.eventManagerState, this.authService.serviceProviderState])
       .subscribe(results => {
-        console.log('combineLatest results:', results);
+        // console.log('combineLatest results:', results);
         // [this.loggedIn, this.isAdmin, this.isEventManager, this.isServiceProvider] = results;
         this.isAdmin = this.authService.isAdmin();
         this.isEventManager = this.authService.isEventManager();
