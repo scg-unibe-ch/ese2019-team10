@@ -29,7 +29,7 @@ This hybrid app was created during and for the 2019 ESE course. It consists of a
 - Docker and `docker-compose` should be installed. Please notice that you will have to use Linux or Mac to run the Docker stack. You cannot run the stack on Windows. The reason is that the the database will be stored on the Filesystem of the Docker host and the database container is not able to address Windows-style paths correctly (it uses Unix-style paths, `/` instead of `\`).
 
 ### Getting started
-- Clone this repo on your machine and immediately delete `.git` folder.
+- Clone this repo on your machine.
 - Navigate (in your terminal) into the cloned folder and type `docker-compose -f docker-compose-all.yml up --build`. This will download all the Docker images needed, start the containers and build our application.
 - You're done! Open your browser and go to [localhost:8100](http://localhost:8100).
 You can do all of this in one line in your terminal. If you are using Linux make sure your current user is a member of the the `docker` group (which has some [security implications](https://docs.docker.com/engine/security/security/)) or run the command as root. Once you have Docker and docker-compose set up, just run 
