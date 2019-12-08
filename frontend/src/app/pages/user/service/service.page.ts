@@ -96,6 +96,7 @@ export class ServicePage implements OnInit {
 
   public loadEvents() {
     if (this.viewer.events.length > 0) {
+      this.events = [];
       for (const event of this.viewer.events) {
         this.events.push(
           {id: event.id, name: event.name},
