@@ -5,6 +5,8 @@ import {AuthService} from '../../services/auth.service';
 import {WelcomeMessages} from '../../constants/welcome-messages.constants';
 import {appConstants} from '../../constants/app.constants';
 import {User} from '../../models/user.model';
+import {Service} from '../../models/service.model';
+import {Event} from '../../models/event.model';
 
 
 @Component({
@@ -22,6 +24,10 @@ export class DashboardPage implements OnInit {
   private isServiceProvider: boolean;
   private isEventManager: boolean;
   public user: User;
+  public services: Service[];
+  public events: Event[];
+  private servicesLoaded: boolean;
+  private eventsLoaded: boolean;
 
   constructor(
     private authService: AuthService,
@@ -33,6 +39,10 @@ export class DashboardPage implements OnInit {
     this.title = 'Dashboard';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
     this.user = new User().deserialize({});
+    this.services = [];
+    this.events = [];
+    this.eventsLoaded = false;
+    this.servicesLoaded = false;
   }
 
   initialize() {
@@ -71,6 +81,14 @@ export class DashboardPage implements OnInit {
       console.log(this.user);
       const message = this.loadMessage();
       this.data = message + ', ' + this.user.firstName + ' ' + this.user.lastName + '!';
+      if (user.services.length > 0) {
+        this.services = this.user.services;
+        this.servicesLoaded = true;
+      }
+      if (user.events.length > 0) {
+        this.events = this.user.events;
+        this.eventsLoaded = true;
+      }
     });
   }
 

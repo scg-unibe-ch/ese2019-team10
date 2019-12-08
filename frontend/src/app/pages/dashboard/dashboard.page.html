@@ -4,91 +4,157 @@
 </ion-header>
 
 <ion-content class="ion-margin ion-padding">
-  <div class="dashboard-page">
-    <ion-card class="ion-margin ion-no-padding">
+  <div class='row'>
+    <div class='column'>
+      <div class='left-column'>
 
-      <ion-card-header class="ion-margin ion-padding" translucent="">
-        <ion-card-title class="ion-text-center ion-text-wrap">{{ data }}</ion-card-title>
-      </ion-card-header>
+        <ion-card class="ion-no-margin ion-no-padding">
 
-      <ion-card-content class="ion-no-margin ion-no-padding">
-
-        <ion-row class="ion-no-margin ion-no-padding">
-          <ion-col class="ion-no-margin ion-no-padding">
-            <ion-button type="button" routerLink="/search" color="primary" class="form-button ion-no-margin"
-                        expand="full">
-              <ion-icon slot="start" name="search" class="button-icon"></ion-icon>
-              Search
-            </ion-button>
-          </ion-col>
-        </ion-row>
+          <ion-img src="../../../../assets/midi.jpg" alt="dashboard tools"></ion-img>
 
 
-        <ion-row *ngIf="this.user.id" class="ion-no-margin ion-no-padding">
-          <ion-col class="ion-no-margin ion-no-padding">
-            <ion-button type="button" [routerLink]="['/user/profile/', this.user.id]" color="primary"
-                        class="form-button ion-no-margin"
-                        expand="full">
-              <ion-icon slot="start" name="person" class="button-icon"></ion-icon>
-              View Profile
-            </ion-button>
-          </ion-col>
-        </ion-row>
+          <ion-card-content class="ion-no-margin ion-no-padding">
 
-        <ion-row class="ion-no-margin ion-no-padding">
-          <ion-col class="ion-no-margin ion-no-padding">
-            <ion-button type="button" routerLink="/profile" color="primary" class="form-button ion-no-margin"
-                        expand="full">
-              <ion-icon slot="start" name="create" class="button-icon"></ion-icon>
-              Edit Profile
-            </ion-button>
-          </ion-col>
-        </ion-row>
+            <ion-row class="ion-no-margin ion-no-padding">
+              <ion-col class="ion-no-margin ion-no-padding">
+                <ion-button type="button" routerLink="/search" color="primary" class="form-button ion-no-margin"
+                            expand="full">
+                  <ion-icon slot="start" name="search" class="button-icon"></ion-icon>
+                  Search
+                </ion-button>
+              </ion-col>
+            </ion-row>
 
-        <ion-row *ngIf="this.user.isServiceProvider" class="ion-no-margin ion-no-padding">
-          <ion-col class="ion-no-margin ion-no-padding">
-            <ion-button type="button" routerLink="/profile/services" color="primary"
-                        class="form-button ion-no-margin"
+
+            <ion-item-divider class="page-divider ion-margin-top" color="dark"
+                              sticky="true">
+              <ion-icon class="divider-icon" slot="start" name="contacts"></ion-icon>
+              <ion-label>
+                Profile
+              </ion-label>
+            </ion-item-divider>
+
+
+            <ion-row *ngIf="this.user.id" class="ion-no-margin ion-no-padding">
+              <ion-col class="ion-no-margin ion-no-padding">
+                <ion-button type="button" [routerLink]="['/user/profile/', this.user.id]" color="primary"
+                            class="form-button ion-no-margin"
+                            expand="full">
+                  <ion-icon slot="start" name="person" class="button-icon"></ion-icon>
+                  View Profile
+                </ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-no-margin ion-no-padding">
+              <ion-col class="ion-no-margin ion-no-padding">
+                <ion-button type="button" routerLink="/profile" color="primary" class="form-button ion-no-margin"
+                            expand="full">
+                  <ion-icon slot="start" name="create" class="button-icon"></ion-icon>
+                  Edit Profile
+                </ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-item-divider *ngIf="this.user.isAdmin"  class="page-divider ion-margin-top" color="dark"
+                              sticky="true">
+              <ion-icon class="divider-icon" slot="start" name="lock"></ion-icon>
+              <ion-label>
+                Admin
+              </ion-label>
+            </ion-item-divider>
+
+            <ion-row *ngIf="this.user.isAdmin" class="ion-no-margin ion-no-padding">
+              <ion-col class="ion-no-margin ion-no-padding">
+                <ion-button type="button" routerLink="/admin/users" color="primary" class="form-button ion-no-margin"
+                            expand="full">
+                  <ion-icon slot="start" name="people" class="button-icon"></ion-icon>
+                  User Administration
+                </ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-no-margin ion-no-padding">
+              <ion-col class="ion-no-margin ion-no-padding">
+                <ion-button id="logout-button" type="button" (click)="logout()" color="tertiary"
+                            class="ion-no-margin form-button"
+                            expand="full">
+                  <ion-icon slot="start" name="log-out" class="button-icon"></ion-icon>
+                  Logout
+                </ion-button>
+              </ion-col>
+            </ion-row>
+
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+    <div class='column'>
+      <div class='right-column'>
+        <ion-card class="ion-no-margin ion-no-padding">
+
+          <ion-img src="../../../../assets/planning.jpg" alt="dashboard tools"></ion-img>
+
+
+          <ion-card-header class="ion-margin ion-padding" translucent="">
+            <ion-card-title class="ion-text-center ion-text-wrap">{{ data }}</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content class="ion-no-margin ion-no-padding">
+
+
+            <ion-item-divider *ngIf="this.user.isServiceProvider" class="page-divider ion-margin-top" color="dark"
+                              sticky="true">
+              <ion-icon class="divider-icon" slot="start" name="construct"></ion-icon>
+              <ion-label>
+                Services
+              </ion-label>
+            </ion-item-divider>
+
+
+            <ion-button *ngIf="this.user.isServiceProvider" type="button" routerLink="/profile/services" color="primary"
+                        class="form-button ion-no-margin ion-no-padding"
                         expand="full">
               <ion-icon slot="start" name="build" class="button-icon"></ion-icon>
               Manage Services
             </ion-button>
-          </ion-col>
-        </ion-row>
 
-        <ion-row *ngIf="this.user.isEventManager" class="ion-no-margin ion-no-padding">
-          <ion-col class="ion-no-margin ion-no-padding">
-            <ion-button type="button" routerLink="/profile/events" color="primary"
-                        class="form-button ion-no-margin"
+
+            <ion-list *ngIf="servicesLoaded" class="ion-no-margin ion-no-padding">
+              <ion-button *ngFor="let service of services" class="form-button ion-no-margin" expand="full" type="button"
+                          color="secondary" [routerLink]="['/user/service/', service.id]">
+                <strong>{{service.name}}</strong>
+              </ion-button>
+            </ion-list>
+
+
+            <ion-item-divider *ngIf="this.user.isEventManager" class="page-divider ion-margin-top" color="dark"
+                              sticky="true">
+              <ion-icon class="divider-icon" slot="start" name="calendar"></ion-icon>
+              <ion-label>
+                Events
+              </ion-label>
+            </ion-item-divider>
+
+
+            <ion-button *ngIf="this.user.isEventManager" type="button" routerLink="/profile/events" color="primary"
+                        class="form-button ion-no-margin ion-no-padding"
                         expand="full">
               <ion-icon slot="start" name="gift" class="button-icon"></ion-icon>
               Manage Events
             </ion-button>
-          </ion-col>
-        </ion-row>
 
 
-        <ion-row *ngIf="this.user.isAdmin" class="ion-no-margin ion-no-padding">
-          <ion-col class="ion-no-margin ion-no-padding">
-            <ion-button type="button" routerLink="/admin/users" color="primary" class="form-button ion-no-margin"
-                        expand="full">
-              <ion-icon slot="start" name="people" class="button-icon"></ion-icon>
-              User Administration
-            </ion-button>
-          </ion-col>
-        </ion-row>
+            <ion-list *ngIf="eventsLoaded" class="ion-no-margin ion-no-padding">
+              <ion-button *ngFor="let event of events" class="form-button ion-no-margin" expand="full" type="button"
+                          color="secondary" [routerLink]="['/user/event/', event.id]">
+                <strong>{{event.name}}</strong>
+              </ion-button>
+            </ion-list>
 
-        <ion-row class="ion-no-margin ion-no-padding">
-          <ion-col class="ion-no-margin ion-no-padding">
-            <ion-button id="logout-button" type="button" (click)="logout()" color="primary" class="ion-no-margin form-button"
-                        expand="full">
-              <ion-icon slot="start" name="log-out" class="button-icon"></ion-icon>
-              Logout
-            </ion-button>
-          </ion-col>
-        </ion-row>
-
-      </ion-card-content>
-    </ion-card>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
   </div>
 </ion-content>

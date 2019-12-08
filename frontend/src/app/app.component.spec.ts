@@ -11,6 +11,7 @@ import {AppComponent} from './app.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {IonicStorageModule} from '@ionic/storage';
+import {NavigationEnd, Router, RouterEvent} from '@angular/router';
 
 
 describe('AppComponent', () => {

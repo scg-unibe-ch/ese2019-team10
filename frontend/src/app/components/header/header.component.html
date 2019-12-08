@@ -7,4 +7,14 @@
 <!--    <ion-icon [name]="icon"></ion-icon>-->
     {{title}}
   </ion-title>
+  <ion-buttons slot="end">
+    <ion-button *ngIf="!loggedIn && !onLogin" (click)="goToLogin()">
+      <ion-icon slot="icon-only" name="log-in"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="loggedIn && !onSearch" (click)="goToSearch()">
+      <ion-icon slot="icon-only" name="search"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+
+
 </ion-toolbar>

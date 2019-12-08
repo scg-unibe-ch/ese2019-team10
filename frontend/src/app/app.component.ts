@@ -42,9 +42,9 @@ export class AppComponent implements OnInit {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.authService.authenticationState.subscribe(state => {
-        console.log('auth state: ' + state);
+        // console.log('auth state: ' + state);
       });
-      this.checkToggle(this.prefersDark.matches);
+      // this.checkToggle(this.prefersDark.matches);
     });
   }
 
@@ -80,11 +80,6 @@ export class AppComponent implements OnInit {
 
   checkToggle(shouldCheck: any) {
     this.toggle.checked = shouldCheck;
-  }
-
-  checkDarkness() {
-
-
   }
 
 
