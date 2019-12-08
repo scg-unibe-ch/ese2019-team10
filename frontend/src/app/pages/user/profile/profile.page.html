@@ -97,7 +97,7 @@
             </ion-list>
 
 
-            <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+            <ion-item-divider *ngIf="eventsLoaded" class="page-divider ion-margin-top" color="dark" sticky="true">
               <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
               <ion-label>
                 Events
