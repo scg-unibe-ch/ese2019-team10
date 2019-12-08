@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Validators, FormBuilder, FormGroup, FormArray} from '@angular/forms';
-import {Router} from '@angular/router';
+import {Router, NavigationExtras} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 
 import {AuthService} from '../../../services/auth.service';
@@ -10,6 +10,8 @@ import {Service} from '../../../models/service.model';
 import {appConstants} from '../../../constants/app.constants';
 import {ServiceValidation} from '../../../constants/service-validation.constants';
 import {KeyValuePair} from '../../../models/key-value-pair.model';
+import { ServiceRequests, EventServices } from './services.class';
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -37,6 +39,7 @@ export class ServicesPage implements OnInit {
   private savedServices: FormGroup;
   private showNewServiceForm: boolean;
   private newServiceForm: FormGroup;
+  private serviceRequests = new Array<ServiceRequests>();
   helperArray: Array<boolean>;
 
 
@@ -46,6 +49,7 @@ export class ServicesPage implements OnInit {
     private authService: AuthService,
     private alertService: AlertService,
     private titleService: Title,
+    public navCtrl: NavController
   ) {
   }
 
@@ -62,6 +66,7 @@ export class ServicesPage implements OnInit {
   ionViewWillEnter() {
     this.initialize();
     this.loadServices();
+    this.loadRequests();
   }
 
   initialize() {
@@ -232,6 +237,43 @@ export class ServicesPage implements OnInit {
         this.alertService.presentToast(data.msg).then();
       },
     );
+  }
+
+  public loadRequests() {
+    this.authService.getRequests().subscribe(request => {
+      this.serviceRequests = this.parseRequests(request);
+      console.log(this.serviceRequests);
+    });
+  }
+
+  private parseRequests(request: any) {
+    const objArrayServiceRequest = new Array<ServiceRequests>();
+    for (const service of request) {
+      const objServiceRequest = new ServiceRequests();
+      objServiceRequest.serviceId = service.id;
+      objServiceRequest.serviceName = service.name;
+      for (const eventService of service.eventServices) {
+        const eventServices = new EventServices();
+        eventServices.eventId = eventService.eventId;
+        eventServices.eventName = eventService.event.name;
+        eventServices.message = eventService.message;
+        eventServices.userName = eventService.event.user.firstName;
+        eventServices.userEmail = eventService.event.user.email;
+        objServiceRequest.requests.push(eventServices);
+      }
+      objArrayServiceRequest.push(objServiceRequest);
+    }
+    return objArrayServiceRequest;
+  }
+
+  public viewServiceRequest(request: any, serviceId: number) {
+    request.serviceId = serviceId;
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        requestData: JSON.stringify(request)
+      }
+    };
+    this.router.navigate(['profile/service-request'], navigationExtras);
   }
 
 }

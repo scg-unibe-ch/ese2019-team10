@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <app-header class="services" [title]="title">
+    </app-header>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>From: {{ requestData.userName }}</ion-item>
+  <ion-item>Event: {{ requestData.eventName }}</ion-item>
+  <ion-item>Message: {{ requestData.message }}</ion-item>
+  <ion-item>You can ask something to: {{ requestData.userEmail }}</ion-item>
+  <ion-item>
+    <ion-textarea placeholder="Enter your reply here ..." [(ngModel)]="reply">
+    </ion-textarea>
+  </ion-item>
+  <ion-button color="danger" (click)="confirmService(false)">
+    Reject
+  </ion-button>
+  <ion-button color="secondary" (click)="confirmService(true)">
+    Confirm
+  </ion-button>
+</ion-content>

@@ -50,6 +50,10 @@ const routes: Routes = [
     path: 'admin/users', loadChildren: './pages/admin/users/users.module#UsersPageModule',
     canActivate: [AuthGuardService, AdminGuardService]
   },
+  {
+    path: 'profile/service-request', loadChildren: './pages/profile/service-request/service-request.module#ServiceRequestPageModule',
+    canActivate: [AuthGuardService]
+  },
   {path: '**', loadChildren: './pages/page-not-found/page-not-found.module#PageNotFoundPageModule'},
 
 ];

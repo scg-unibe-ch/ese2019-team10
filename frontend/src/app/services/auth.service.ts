@@ -12,6 +12,7 @@ import {Router} from '@angular/router';
 import {AlertService} from './alert.service';
 import {Service} from '../models/service.model';
 import {Event} from '../models/event.model';
+import { ServiceRequests, EventServices } from '../pages/profile/services/services.class';
 
 
 const TOKEN_KEY = 'access_token';
@@ -302,5 +303,19 @@ export class AuthService {
     );
   }
 
+  /**
+   * Get services requests of the user.
+   */
+  getRequests(): Observable<any> {
+    return this.http.get<any>(this.url + 'user/service/to-confirm/' + this.id, httpOptions);
+  }
+
+  /**
+   * Confirm or reject a service request.
+   */
+  confirmService(confirmation) {
+    return this.http.put(this.url + 'user/confirm/', confirmation, httpOptions).pipe(
+    );
+  }
 
 }
