@@ -21,14 +21,14 @@ This hybrid app was created during and for the 2019 ESE course. It consists of a
 ## Installation Guide
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/en/) and NPM should be installed (NPM is installed automatically with latest versions of Node.js) which are needed by both **frontend** and **backend** projects. You can verify whether you have both by running `node -v` and `npm -v` in terminal or command prompt.
-- [Angular CLI](https://cli.angular.io/) should be globally installed:
-  - `npm install -g @angular/cli`
-- [Ionic](https://ionicframework.com/) should be globally installed: 
-   - `npm install -g ionic`
-- Docker should be installed.
+- Docker and `docker-compose` should be installed. Please notice that you will have to use Linux or Mac to run the Docker stack. You cannot run the stack on Windows. The reason is that the the database will be stored on the Filesystem of the Docker host and the database container is not able to address Windows-style paths correctly (it uses Unix-style paths, `/` instead of `\`).
 
 ### Getting started
 - Clone this repo on your machine and immediately delete `.git` folder.
-- [frontend](https://github.com/JoelNiklaus/ESE-2019-Scaffolding/tree/master/frontend) and [backend](https://github.com/JoelNiklaus/ESE-2019-Scaffolding/tree/master/backend) contain instructions to set up the projects on your machines.
+- Navigate (in your terminal) into the cloned folder and type `docker-compose -f docker-compose-all.yml up --build`. This will download all the Docker images needed, start the containers and build our application.
+- You're done! Open your browser and go to [localhost:8100](http://localhost:8100).
+You can do all of this in one line in your terminal. Once you have Docker and docker-compose set up, just run 
+```bash
+git clone https://github.com/scg-unibe-ch/ese2019-team10.git && cd ese2019-team10 && docker-compose -f docker-compose-all.yml up --build
+```
 
