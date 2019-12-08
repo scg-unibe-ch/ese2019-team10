@@ -8,21 +8,29 @@ ion-slide {
 #first-slide {
   --background: url(../../../assets/confetti.jpg) no-repeat center/cover fixed;
   background: url(../../../assets/confetti.jpg) no-repeat center/cover fixed;
+  background-color: rgba(0, 0, 0, 0.1); // Tint color
+  background-blend-mode: multiply;
 }
 
 #second-slide {
   --background: url(../../../assets/service.jpg) no-repeat center/cover fixed;
   background: url(../../../assets/service.jpg) no-repeat center/cover fixed;
+  background-color: rgba(0, 0, 0, 0.3); // Tint color
+  background-blend-mode: multiply;
 }
 
 #third-slide {
   --background: url(../../../assets/fire.jpg) no-repeat center/cover fixed;
   background: url(../../../assets/fire.jpg) no-repeat center/cover fixed;
+  background-color: rgba(0, 0, 0, 0.2); // Tint color
+  background-blend-mode: multiply;
 }
 
 #fourth-slide {
   --background: url(../../../assets/powder.jpg) no-repeat center/cover fixed;
   background: url(../../../assets/powder.jpg) no-repeat center/cover fixed;
+  background-color: rgba(0, 0, 0, 0.2); // Tint color
+  background-blend-mode: multiply;
 }
 
 .single-slide {
@@ -91,13 +99,14 @@ ion-slide {
 .column-text {
   font-size: 1.3em;
   line-height: 1.5em;
-  margin: 0;
-  padding: 0;
+  margin: 0 5px;
+  padding: 5px 0;
   max-width: 400px;
+  text-align: justify;
 }
 
 .first-text {
-  margin-left: 0;
+  margin: 19px 0 0 0;
 }
 
 .second-text {
@@ -147,15 +156,32 @@ ion-slide {
 
 .left-column {
   padding-right: 30px;
-  padding-left: 0;
+  padding-left: 5px;
   margin-left: auto;
   text-align: left;
 }
 
 .right-column {
   padding-left: 30px;
-  padding-right: 0;
+  padding-right: 5px;
   margin-right: auto;
+}
+
+
+@media (max-width: 650px) {
+  .left-column {
+    text-align: center;
+  }
+  .first-text, .second-text, .third-text {
+    margin-left: 0;
+  }
+
+  .left-column, .right-column {
+    margin: 3px;
+    padding: 11px;
+  }
+
+
 }
 
 /*

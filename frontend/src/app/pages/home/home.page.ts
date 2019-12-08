@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
-import { ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import {ViewChild} from '@angular/core';
+import {IonSlides} from '@ionic/angular';
 import {appConstants} from '../../constants/app.constants';
 import {Router} from '@angular/router';
 
@@ -15,20 +15,17 @@ import {Router} from '@angular/router';
 export class HomePage implements OnInit {
   private title: string;
   slideOpts = {
-    initialSlide: 1,
+    initialSlide: 0,
     speed: 400
   };
 
   @ViewChild('slides', {static: false}) ionSlides: IonSlides;
-
-
 
   constructor(
     private titleService: Title,
     private router: Router,
   ) {
   }
-
 
   ngOnInit() {
     this.title = appConstants.APP_TITLE;
@@ -43,7 +40,6 @@ export class HomePage implements OnInit {
   goToPreviousSlide() {
     this.ionSlides.slidePrev().then();
   }
-
 
 
   async finish() {
