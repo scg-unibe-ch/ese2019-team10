@@ -27,7 +27,7 @@ This hybrid app was created during and for the 2019 ESE course. It consists of a
 - Clone this repo on your machine and immediately delete `.git` folder.
 - Navigate (in your terminal) into the cloned folder and type `docker-compose -f docker-compose-all.yml up --build`. This will download all the Docker images needed, start the containers and build our application.
 - You're done! Open your browser and go to [localhost:8100](http://localhost:8100).
-You can do all of this in one line in your terminal. Once you have Docker and docker-compose set up, just run 
+You can do all of this in one line in your terminal. If you are using Linux make sure your current user is a member of the the `docker` group (which has some [security implications](https://docs.docker.com/engine/security/security/)) or run the command as root. Once you have Docker and docker-compose set up, just run 
 ```bash
 git clone https://github.com/scg-unibe-ch/ese2019-team10.git && cd ese2019-team10 && docker-compose -f docker-compose-all.yml up --build
 ```
