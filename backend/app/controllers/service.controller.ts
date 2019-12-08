@@ -4,7 +4,7 @@ import {Category} from '../models/category.model';
 import {User} from '../models/user.model';
 import {Event} from '../models/event.model';
 import {EventService} from '../models/EventService';
-import {respond40IfNotAuthentic} from '../lib/auth.lib';
+import {respond401IfNotAuthentic} from '../lib/auth.lib';
 import {isInstance} from '../lib/database.lib';
 
 const router: Router = Router();
@@ -38,7 +38,7 @@ router.get('/service/:id', async (req: Request, res: Response) => {
  *************************************************************************/
 router.post('/service', async (req: Request, res: Response) => {
   const userId = parseInt(req.body.userId, undefined);
-  if (! respond40IfNotAuthentic(res, userId)) {
+  if (! respond401IfNotAuthentic(res, userId)) {
     return;
   }
 
@@ -64,15 +64,31 @@ router.post('/service', async (req: Request, res: Response) => {
  *************************************************************************/
 router.put('/service/:id', async (req: Request, res: Response) => {
   const userId = parseInt(req.body.userId, undefined);
-  if (! respond40IfNotAuthentic(res, userId)) {
+  if (! respond401IfNotAuthentic(res, userId)) {
     return;
   }
 
   const serviceId = parseInt(req.params.id, undefined);
+  const categoryId: number = req.body.categoryId;
   Service.findOne({where: {id: serviceId}}).then(service => {
     if (!service) {
       res.status(404).json('no such service');
       return;
+    }
+
+    if (categoryId !== service.categoryId) {
+      Category.findOne({where: {'id': categoryId}})
+        .then(newCategory => {
+          if (newCategory) {
+            service.$set('category', newCategory);
+          } else {
+            throw Error(`No category with id ${categoryId}`);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          throw Error('Error while setting category');
+        });
     }
     service.update({
       name: req.body.name,
@@ -119,7 +135,7 @@ router.delete('/service/:id', async (req: Request, res: Response) => {
   const serviceId = parseInt(req.params.id, undefined);
   Service.destroy({where: {'id': serviceId}})
     .then(() => {
-      res.status(201).json({'msg': 'Service successfully deleted'});
+      res.status(201).json({'msg': 'Service deleted'});
     })
     .catch(result => {
       res.status(500).json({'msg': 'Could not delete service'});
