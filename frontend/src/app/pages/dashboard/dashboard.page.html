@@ -10,7 +10,7 @@
 
         <ion-card class="ion-no-margin ion-no-padding">
 
-          <ion-img src="../../../../assets/tools.jpg" alt="dashboard tools"></ion-img>
+          <ion-img src="../../../../assets/midi.jpg" alt="dashboard tools"></ion-img>
 
 
           <ion-card-content class="ion-no-margin ion-no-padding">
@@ -24,6 +24,15 @@
                 </ion-button>
               </ion-col>
             </ion-row>
+
+
+            <ion-item-divider class="page-divider ion-margin-top" color="dark"
+                              sticky="true">
+              <ion-icon class="divider-icon" slot="start" name="contacts"></ion-icon>
+              <ion-label>
+                Profile
+              </ion-label>
+            </ion-item-divider>
 
 
             <ion-row *ngIf="this.user.id" class="ion-no-margin ion-no-padding">
@@ -47,6 +56,13 @@
               </ion-col>
             </ion-row>
 
+            <ion-item-divider *ngIf="this.user.isAdmin"  class="page-divider ion-margin-top" color="dark"
+                              sticky="true">
+              <ion-icon class="divider-icon" slot="start" name="lock"></ion-icon>
+              <ion-label>
+                Admin
+              </ion-label>
+            </ion-item-divider>
 
             <ion-row *ngIf="this.user.isAdmin" class="ion-no-margin ion-no-padding">
               <ion-col class="ion-no-margin ion-no-padding">
@@ -60,7 +76,7 @@
 
             <ion-row class="ion-no-margin ion-no-padding">
               <ion-col class="ion-no-margin ion-no-padding">
-                <ion-button id="logout-button" type="button" (click)="logout()" color="primary"
+                <ion-button id="logout-button" type="button" (click)="logout()" color="tertiary"
                             class="ion-no-margin form-button"
                             expand="full">
                   <ion-icon slot="start" name="log-out" class="button-icon"></ion-icon>
@@ -77,7 +93,7 @@
       <div class='right-column'>
         <ion-card class="ion-no-margin ion-no-padding">
 
-          <ion-img src="../../../../assets/tools2.jpg" alt="dashboard tools"></ion-img>
+          <ion-img src="../../../../assets/planning.jpg" alt="dashboard tools"></ion-img>
 
 
           <ion-card-header class="ion-margin ion-padding" translucent="">
@@ -89,7 +105,7 @@
 
             <ion-item-divider *ngIf="this.user.isServiceProvider" class="page-divider ion-margin-top" color="dark"
                               sticky="true">
-              <ion-icon class="divider-icon" slot="start" name="build"></ion-icon>
+              <ion-icon class="divider-icon" slot="start" name="construct"></ion-icon>
               <ion-label>
                 Services
               </ion-label>
@@ -97,7 +113,7 @@
 
 
             <ion-button *ngIf="this.user.isServiceProvider" type="button" routerLink="/profile/services" color="primary"
-                        class="ion-no-margin ion-no-padding"
+                        class="form-button ion-no-margin ion-no-padding"
                         expand="full">
               <ion-icon slot="start" name="build" class="button-icon"></ion-icon>
               Manage Services
@@ -114,7 +130,7 @@
 
             <ion-item-divider *ngIf="this.user.isEventManager" class="page-divider ion-margin-top" color="dark"
                               sticky="true">
-              <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
+              <ion-icon class="divider-icon" slot="start" name="calendar"></ion-icon>
               <ion-label>
                 Events
               </ion-label>
@@ -122,7 +138,7 @@
 
 
             <ion-button *ngIf="this.user.isEventManager" type="button" routerLink="/profile/events" color="primary"
-                        class="ion-no-margin ion-no-padding"
+                        class="form-button ion-no-margin ion-no-padding"
                         expand="full">
               <ion-icon slot="start" name="gift" class="button-icon"></ion-icon>
               Manage Events
