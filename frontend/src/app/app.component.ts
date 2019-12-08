@@ -82,11 +82,6 @@ export class AppComponent implements OnInit {
     this.toggle.checked = shouldCheck;
   }
 
-  checkDarkness() {
-
-
-  }
-
 
   /**
    * log out current user
