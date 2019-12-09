@@ -46,6 +46,7 @@ Once you have set up the app, you can register an account. Accounts have to be a
 ## Further information
 - [Backend readme](https://github.com/scg-unibe-ch/ese2019-team10/tree/master/backend/README.md)
 - [Frontend readme](https://github.com/scg-unibe-ch/ese2019-team10/tree/master/frontend/README.md)
+- [Documentation](https://github.com/scg-unibe-ch/ese2019-team10/tree/master/docs)
 - [Wiki](https://github.com/scg-unibe-ch/ese2019-team10/wiki), especially the following articles:
   - [API](https://github.com/scg-unibe-ch/ese2019-team10/wiki/API)
   - [Technology](https://github.com/scg-unibe-ch/ese2019-team10/wiki/Technology)
