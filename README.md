@@ -32,3 +32,10 @@ You can do all of this in one line in your terminal. If you are using Linux make
 git clone https://github.com/scg-unibe-ch/ese2019-team10.git && cd ese2019-team10 && docker-compose -f docker-compose-all.yml up --build
 ```
 - [Further information about docker and some troubleshooting](https://github.com/scg-unibe-ch/ese2019-team10/wiki/Technology)
+
+### The architecture
+The `docker-compose` command above sets up the following stack:
+- A webserver serving the frontend (as mentioned above, you can find it under [localhost:8100](http://localhost:8100))
+- A webserver serving the REST API (this will listen on `localhost:3000`)
+- The database (only reachable from inside the docker network)
+- pgadmin (listening on `localhost:8081`) with default credentials admin@mail.com:admin
