@@ -234,7 +234,7 @@
 
   <ion-card class="constrained-card ion-margin ion-no-padding">
 
-    <ion-card-header *ngIf="loadedServices" class="ion-no-margin" color="dark">
+    <ion-card-header *ngIf="serviceRequests.length > 0" class="ion-no-margin" color="dark">
       <ion-card-title>
         <ion-label>
           Service requests to confirm
@@ -242,7 +242,7 @@
       </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content class="ion-no-margin ion-no-padding">
+    <ion-card-content *ngIf="serviceRequests.length > 0" class="ion-no-margin ion-no-padding">
       <ion-card *ngFor="let serviceRequest of serviceRequests">
         <ion-card-title>
           <ion-label class="ion-text-wrap">
