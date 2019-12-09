@@ -7,11 +7,11 @@ This hybrid app was created during and for the 2019 ESE course. It consists of a
  - Projects are separated in this way because in the future one can easily replace either of them if the team decides to use another technology e.g. React JS for frontend or Django REST framework for backend
 
 ## Technologies
-- [Ionic](https://ionicframework.com/) 5.4.2
-- Express.js 4.17.1
-- Docker v x.x
+- [Ionic](https://ionicframework.com/)
+- [Express.js](https://expressjs.com/)
+- [Docker](https://www.docker.com/)
 - [Node.js](https://nodejs.org/en/)
-- NPM
+- [NPM](https://www.npmjs.com/)
 - [Angular CLI](https://cli.angular.io/)
 - Database: 
   - [PostgreSQL](https://www.postgresql.org/download/) 12.1
@@ -31,4 +31,4 @@ You can do all of this in one line in your terminal. If you are using Linux make
 ```bash
 git clone https://github.com/scg-unibe-ch/ese2019-team10.git && cd ese2019-team10 && docker-compose -f docker-compose-all.yml up --build
 ```
-
+- [Further information about docker and some troubleshooting](https://github.com/scg-unibe-ch/ese2019-team10/wiki/Technology)
