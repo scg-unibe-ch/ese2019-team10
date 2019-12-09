@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Validators, FormBuilder, FormGroup, FormArray} from '@angular/forms';
-import {Router} from '@angular/router';
+import {Router, NavigationExtras} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 
 import {AuthService} from '../../../services/auth.service';
@@ -9,6 +9,7 @@ import {User} from '../../../models/user.model';
 import {Event} from '../../../models/event.model';
 import {appConstants} from '../../../constants/app.constants';
 import {EventValidation} from '../../../constants/event-validation.constants';
+import { UserRequests } from '../services/services.class';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class EventsPage implements OnInit {
   private showNewEventForm: boolean;
   private newEventForm: FormGroup;
   helperArray: Array<boolean>;
+  private serviceRequests: Array<any>;
 
 
   constructor(
@@ -49,7 +51,7 @@ export class EventsPage implements OnInit {
   ngOnInit() {
     this.title = 'Events';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
-
+    this.serviceRequests = [];
     this.initialize();
   }
 
@@ -57,6 +59,7 @@ export class EventsPage implements OnInit {
   ionViewWillEnter() {
     this.initialize();
     this.loadEvents();
+    this.loadRequests();
   }
 
   initialize() {
@@ -209,4 +212,51 @@ export class EventsPage implements OnInit {
     );
   }
 
+  public loadRequests() {
+    this.authService.getUserRequests().subscribe(request => {
+      this.serviceRequests = this.parseUserRequests(request);
+    });
+  }
+
+  private parseUserRequests(request: any) {
+    const objArrayUserRequest = new Array<any>();
+    for (const event of request) {
+      for (const eventService of event.eventServices) {
+        const objUserRequest = new UserRequests();
+        objUserRequest.eventId = eventService.eventId;
+        objUserRequest.eventName = event.name;
+        objUserRequest.serviceName = eventService.service.name;
+        objUserRequest.serviceId = eventService.serviceId;
+        objUserRequest.reply = eventService.reply;
+        objUserRequest.message = eventService.message;
+        objUserRequest.responded = eventService.responded;
+        objUserRequest.booked = eventService.booked;
+        if (objUserRequest.responded === true &&
+          (objUserRequest.booked === false ||
+          objUserRequest.booked === null)) {
+          objUserRequest.status = 'Rejected';
+        }
+        if (objUserRequest.responded === false &&
+          (objUserRequest.booked === false ||
+          objUserRequest.booked === null)) {
+          objUserRequest.status = 'Pending';
+        }
+        if (objUserRequest.booked === true) {
+          objUserRequest.status = 'Confirmed';
+        }
+        objArrayUserRequest.push(objUserRequest);
+      }
+    }
+    return objArrayUserRequest;
+  }
+
+  public viewServiceRequest(serviceRequest: any) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        requestData: JSON.stringify(serviceRequest)
+      },
+      skipLocationChange: true
+    };
+    this.router.navigate(['profile/event-request'], navigationExtras);
+  }
 }

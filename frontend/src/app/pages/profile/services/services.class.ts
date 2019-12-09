@@ -16,3 +16,15 @@ export class EventServices {
   userName: string;
   userEmail: string;
 }
+
+export class UserRequests {
+  eventId: number;
+  serviceId: number;
+  serviceName: string;
+  eventName: string;
+  reply: string;
+  message: string;
+  responded: boolean;
+  booked: boolean;
+  status: string;
+}

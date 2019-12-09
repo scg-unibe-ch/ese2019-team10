@@ -304,7 +304,7 @@ export class AuthService {
   }
 
   /**
-   * Get services requests of the user.
+   * Get service requests of the user.
    */
   getRequests(): Observable<any> {
     return this.http.get<any>(this.url + 'user/service/to-confirm/' + this.id, httpOptions);
@@ -314,7 +314,15 @@ export class AuthService {
    * Confirm or reject a service request.
    */
   confirmService(confirmation) {
-    return this.http.put(this.url + 'user/confirm/', confirmation, httpOptions).pipe(
+    return this.http.put(this.url + 'user/service/confirm/', confirmation, httpOptions).pipe(
+    );
+  }
+
+  /**
+   * Get a list of a user's service requests.
+   */
+  getUserRequests() {
+    return this.http.get(this.url + 'user/service/list-requests/' + this.id, httpOptions).pipe(
     );
   }
 

@@ -151,7 +151,24 @@
     </ion-card-content>
 
   </ion-card>
-
+  <ion-card class="constrained-card ion-margin ion-no-padding">
+    <ion-card-header *ngIf="serviceRequests.length > 0" class="ion-no-margin" color="dark">
+      <ion-card-title>
+        <ion-label>
+          Your service requests
+        </ion-label>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf="serviceRequests.length > 0" class="ion-no-margin ion-no-padding">
+      <ion-list>
+        <ion-item *ngFor="let serviceRequest of serviceRequests">
+          <ion-button (click)='viewServiceRequest(serviceRequest)' fill="clear">
+            {{serviceRequest.serviceName}} is {{serviceRequest.status}}
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
   <ion-card class="constrained-card spaced-card ion-margin ion-no-padding">
 
     <ion-card-header *ngIf="showNewEventForm" class="ion-no-margin" color="dark">

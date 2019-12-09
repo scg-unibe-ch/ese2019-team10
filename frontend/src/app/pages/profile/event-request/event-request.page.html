@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <app-header class="service-requests" [title]="title">
+    </app-header>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="requestData != null; else nodata">
+  <ion-item>Your event: {{ requestData.eventName }}</ion-item>
+  <ion-item>Request from: {{ requestData.serviceName }}</ion-item>
+  <ion-item>Status: {{ requestData.status }}</ion-item>
+  <ion-item>Your message: {{ requestData.message }}</ion-item>
+  <ion-item>Reply: {{ requestData.reply }}</ion-item>
+  <ion-button *ngIf="requestData.status == 'Pending' || requestData.status == 'Rejected'" color="danger" (click)="deleteRequest()">
+    Delete
+  </ion-button>
+  </div>
+  <ng-template #nodata><p>There is no request information.</p></ng-template>
+</ion-content>

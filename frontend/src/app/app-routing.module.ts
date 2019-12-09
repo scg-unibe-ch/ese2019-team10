@@ -54,6 +54,10 @@ const routes: Routes = [
     path: 'profile/service-request', loadChildren: './pages/profile/service-request/service-request.module#ServiceRequestPageModule',
     canActivate: [AuthGuardService]
   },
+  {
+    path: 'profile/event-request', loadChildren: './pages/profile/event-request/event-request.module#EventRequestPageModule',
+    canActivate: [AuthGuardService]
+  },
   {path: '**', loadChildren: './pages/page-not-found/page-not-found.module#PageNotFoundPageModule'},
 
 ];
