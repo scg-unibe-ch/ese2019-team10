@@ -136,14 +136,14 @@ async function searchService(searchTerm: string, searchAttribute: string, result
   // this is ad-hoc and should be improved later
   if (searchAttribute === 'category') {
     // search a category with the given search term as name
-    await Category.find({where: {'name': searchTerm}}).then( (category) => {
+    await Category.find({
+      where: {'id': searchTerm},
+      include: [{'model': Service, 'as': 'services'}]
+    })
+    .then( (category) => {
       if (category) {
-        // if found, search a service with the categoryId set to the id of the this category
-        Service.find({where: {'categoryId': category.id}}).then((service) => {
-          if (service) {
-            result.addServices([service]);
-          }
-        });
+        // if found, add all services of this category to the result
+        result.addServices(category.services);
       }
     });
 
@@ -260,11 +260,9 @@ class Search {
 router.post('/', async (req: Request, res: Response) => {
   try {
     const search: Search = new Search(req.body);
-    let results!: SearchResult;
-
-    res.statusCode = 200;
-    results = await search.getResults();
-    res.send(results.String());
+    search.getResults().then( results => {
+      res.status(200).send(results.String());
+    });
   } catch (e) {
     console.log(e);
     res.statusMessage = e.message;
