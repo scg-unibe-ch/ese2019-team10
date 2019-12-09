@@ -6,7 +6,7 @@ export class LoginPage {
   }
 
   getButtonText() {
-    return element(by.deepCss('app-root ion-button')).getText();
+    return element(by.deepCss('app-root ion-button[id="login-button"]')).getText();
   }
 
   getTitleText() {

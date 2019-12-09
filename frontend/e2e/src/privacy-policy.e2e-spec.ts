@@ -17,8 +17,8 @@ describe('Privacy Policy page', () => {
     expect(page.getHeaderText()).toContain('Your privacy matters!');
   });
 
-  it('image should contain door', () => {
-    expect(page.getImageText()).toContain('door');
+  it('image should contain book', () => {
+    expect(page.getImageText()).toContain('book');
   });
 
 });
