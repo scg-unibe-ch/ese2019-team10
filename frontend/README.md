@@ -1,5 +1,12 @@
 # Front-End Scaffolding
 
+### Prerequisites
+- [Node.js](https://nodejs.org/en/) and NPM should be installed (NPM is installed automatically with latest versions of Node.js) which are needed by both **frontend** and **backend** projects. You can verify whether you have both by running `node -v` and `npm -v` in terminal or command prompt.
+- [Angular CLI](https://cli.angular.io/) should be globally installed:
+  - `npm install -g @angular/cli`
+- [Ionic](https://ionicframework.com/) should be globally installed: 
+   - `npm install -g ionic`
+
 ## Initial Setup
 1. Install [Node.js](https://nodejs.org/en/) (must be done already, as it is a part of prerequisite!)
 1. `cd` into this frontend folder with your terminal or command prompt
