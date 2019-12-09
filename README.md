@@ -40,5 +40,15 @@ The `docker-compose` command above sets up the following stack:
 - The database (only reachable from inside the docker network)
 - pgadmin (listening on `localhost:8081`) with default credentials admin@mail.com:admin
 
-# Usage
+## Usage
 Once you have set up the app, you can register an account. Accounts have to be approved by an administrator before they can be uese. Because of this, **there is a default admin account with username 'admin@mail.com' and password 'xugai4nie9ief5AhshaiSh1aequaiy'** (you can set another password under 'Edit Profile' on the dashboard when logged in). New users can be approved under 'User Administration' on the admin dashboard.
+
+## Further information
+- [Backend readme](https://github.com/scg-unibe-ch/ese2019-team10/tree/master/backend)
+- [Frontend readme](https://github.com/scg-unibe-ch/ese2019-team10/tree/master/frontend)
+- [Wiki], especially the following articles:
+  - [API](https://github.com/scg-unibe-ch/ese2019-team10/wiki/API)
+  - [Technology](https://github.com/scg-unibe-ch/ese2019-team10/wiki/Technology)
+
+
+
