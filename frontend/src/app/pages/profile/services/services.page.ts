@@ -271,7 +271,8 @@ export class ServicesPage implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         requestData: JSON.stringify(request)
-      }
+      },
+      skipLocationChange: true
     };
     this.router.navigate(['profile/service-request'], navigationExtras);
   }

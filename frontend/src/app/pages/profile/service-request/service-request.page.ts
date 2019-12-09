@@ -11,7 +11,7 @@ import {AlertService} from 'src/app/services/alert.service';
 })
 
 export class ServiceRequestPage implements OnInit {
-  public requestData: any;
+  public requestData = null;
   public title: string;
   public reply: string;
 

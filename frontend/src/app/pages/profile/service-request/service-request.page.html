@@ -6,6 +6,7 @@
 </ion-header>
 
 <ion-content>
+  <div *ngIf="requestData != null; else nodata">
   <ion-item>From: {{ requestData.userName }}</ion-item>
   <ion-item>Event: {{ requestData.eventName }}</ion-item>
   <ion-item>Message: {{ requestData.message }}</ion-item>
@@ -20,4 +21,6 @@
   <ion-button color="secondary" (click)="confirmService(true)">
     Confirm
   </ion-button>
+  </div>
+  <ng-template #nodata><p>There is no event information.</p></ng-template>
 </ion-content>
