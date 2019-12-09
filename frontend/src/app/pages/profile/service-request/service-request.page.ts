@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 import {AlertService} from 'src/app/services/alert.service';
+import {appConstants} from '../../../constants/app.constants';
+import {Title} from '@angular/platform-browser';
 
 
 @Component({
@@ -16,13 +18,18 @@ export class ServiceRequestPage implements OnInit {
   public reply: string;
 
   ngOnInit() {
-    this.title = 'Service request';
+    this.title = 'Service Requests';
+    this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
+
   }
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
     private alertService: AlertService,
+    private titleService: Title,
+
   ) {
     this.route.queryParams.subscribe(params => {
       if (params && params.requestData) {
@@ -42,7 +49,7 @@ export class ServiceRequestPage implements OnInit {
     console.log(confirmation);
     this.authService.confirmService(confirmation).subscribe((data: any) => {
         this.alertService.presentToast(data.msg).then(() => {
-          this.router.navigate(['profile/services']);
+          this.router.navigate(['profile/services']).then();
         });
       }
     );

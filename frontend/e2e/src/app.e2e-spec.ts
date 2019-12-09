@@ -9,8 +9,6 @@ describe('new app', () => {
 
   it('should be blank', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toContain('Welcome');
     expect(page.getTitleText()).toContain('Eventum');
-
   });
 });

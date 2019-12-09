@@ -118,7 +118,7 @@ app.use('/api/admin', CheckLoginController, CheckAdminController, AdminControlle
 app.use('/api/user', CheckLoginController, UserController);
 app.use('/api/search', SearchController);
 app.use('/api/category', CategoryController);
-app.use('/api/user', ServiceController);
+app.use('/api/user/service', CheckLoginController, ServiceController);
 
 // .sync() is not recommended for production, yes, but I use it for development!
 sequelize.sync().then(() => {

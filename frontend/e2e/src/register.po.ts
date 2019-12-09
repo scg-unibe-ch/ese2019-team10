@@ -6,7 +6,7 @@ export class RegisterPage {
   }
 
   getButtonText() {
-    return element(by.deepCss('app-root ion-button')).getText();
+    return element(by.deepCss('app-root ion-button[id="register-button"]')).getText();
   }
 
   getTitleText() {
