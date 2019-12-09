@@ -35,12 +35,12 @@ export class EventRequestPage implements OnInit {
   }
 
   deleteRequest() {
-    const confirmation = {
+    const request = {
       eventId: this.requestData.eventId,
       serviceId: this.requestData.serviceId
     };
-    console.log(confirmation);
-    this.authService.confirmService(confirmation).subscribe((data: any) => {
+    console.log(request);
+    this.authService.deleteServiceRequest(request).subscribe((data: any) => {
         this.alertService.presentToast(data.msg).then(() => {
           this.router.navigate(['profile/events']).then();
         });

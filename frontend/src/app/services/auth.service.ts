@@ -326,4 +326,12 @@ export class AuthService {
     );
   }
 
+  /**
+   * Delete a user's service request.
+   */
+  deleteServiceRequest(request) {
+    console.log(request);
+    return this.http.delete(this.url + 'user/service/request/' + request.eventId + '/' + request.serviceId, httpOptions);
+  }
+
 }
