@@ -41,4 +41,4 @@ The `docker-compose` command above sets up the following stack:
 - pgadmin (listening on `localhost:8081`) with default credentials admin@mail.com:admin
 
 # Usage
-Once you have set up the app, you can register an account. Accounts have to be approved by an administrator before they can be uese. Because of this, **there is a default admin account with username 'admin@mail.com' and password 'xugai4nie9ief5AhshaiSh1aequaiy'**. 
+Once you have set up the app, you can register an account. Accounts have to be approved by an administrator before they can be uese. Because of this, **there is a default admin account with username 'admin@mail.com' and password 'xugai4nie9ief5AhshaiSh1aequaiy'** (you can set another password under 'Edit Profile' on the dashboard when logged in). New users can be approved under 'User Administration' on the admin dashboard.
