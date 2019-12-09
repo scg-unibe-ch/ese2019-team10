@@ -29,5 +29,6 @@ function checkAndHandleJWT(req: Request, res: Response, next: NextFunction) {
 router.get('/*', checkAndHandleJWT);
 router.put('/*', checkAndHandleJWT);
 router.post('/*', checkAndHandleJWT);
+router.delete('/*', checkAndHandleJWT);
 
 export const CheckLoginController: Router = router;

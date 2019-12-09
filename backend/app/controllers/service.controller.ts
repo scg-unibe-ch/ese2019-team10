@@ -133,11 +133,18 @@ router.post('/service/book', async (request: Request, response: Response) => {
 
 router.delete('/service/:id', async (req: Request, res: Response) => {
   const serviceId = parseInt(req.params.id, undefined);
-  Service.destroy({where: {'id': serviceId}})
-    .then(() => {
-      res.status(201).json({'msg': 'Service deleted'});
+  Service.findOne({where: {'id': serviceId}})
+    .then(service  => {
+      if (!service) {
+        res.status(404).json({'msg': 'Service not found'});
+      } else if (respond401IfNotAuthentic(res, service.userId)) {
+        service.destroy().then(() => {
+          res.status(201).json({'msg': 'Service deleted'});
+        });
+      }
     })
     .catch(result => {
+      console.log(result);
       res.status(500).json({'msg': 'Could not delete service'});
     });
 });
