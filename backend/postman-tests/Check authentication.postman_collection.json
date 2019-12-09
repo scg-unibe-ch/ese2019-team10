@@ -1,0 +1,1016 @@
+{
+	"info": {
+		"_postman_id": "578a42da-3e5f-416e-a5d9-d0ca325b771c",
+		"name": "Check authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "csrf prevention preflight 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abfb3ed7-d990-4e95-8c8e-955c7471d57e",
+						"exec": [
+							"pm.test(\"Access-Control-Allow-Origin\", function () {",
+							"    pm.response.to.have.header(\"Access-Control-Allow-Origin\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7c62ce4b-4c0b-4681-8561-1659a83aac29",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Body says success\", function () {",
+							"    pm.response.to.have.body({\"msg\": \"User created\"});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd1e743c-1705-4664-837a-6b85fc56643b",
+						"exec": [
+							"const firstName = Math.random().toString(36).substring(7);",
+							"const lastName = Math.random().toString(36).substring(7);",
+							"const  email = firstName + '.' + lastName + '@mail.com'",
+							"pm.globals.set('firstName', firstName);",
+							"pm.globals.set('lastName', lastName);",
+							"pm.globals.set('email', email)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"{{firstName}}\",\n\t\"lastName\": \"{{lastName}}\",\n\t\"email\": \"{{email}}\",\n\t\"street\": \"addr\",\n\t\"password\": \"p4ssw0rd\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"register"
+					]
+				},
+				"description": "creates a user in the database via /api/register"
+			},
+			"response": []
+		},
+		{
+			"name": "csrf prevention preflight 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abfb3ed7-d990-4e95-8c8e-955c7471d57e",
+						"exec": [
+							"pm.test(\"Access-Control-Allow-Origin\", function () {",
+							"    pm.response.to.have.header(\"Access-Control-Allow-Origin\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bad login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bdf2edb0-3976-4ae9-960d-d7d59b53caf9",
+						"exec": [
+							"pm.test(\"Status code is 401 (unauthorized)\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test(\"Body says not approved\", function () {",
+							"    pm.response.to.have.body({\"msg\": \"Failed to log in: Wrong username/password\"});",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"wrong.account@worng.mail.com\",\n\t\"password\": \"wr0ngp4ss\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "login with bad credentials"
+			},
+			"response": []
+		},
+		{
+			"name": "csrf prevention preflight 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abfb3ed7-d990-4e95-8c8e-955c7471d57e",
+						"exec": [
+							"pm.test(\"Access-Control-Allow-Origin\", function () {",
+							"    pm.response.to.have.header(\"Access-Control-Allow-Origin\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login as user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1a9c48e6-fd11-48bd-917d-f15b50a70511",
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test(\"Body says not approved\", function () {",
+							"    pm.response.to.have.body({\"msg\": \"Failed to log in: Account not approved yet\"});",
+							"});",
+							"",
+							"pm.globals.set('idToken', pm.response.json().idToken)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "31eb3265-80bc-44be-8fa9-f20bcd0516bc",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"p4ssw0rd\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "logs in with email \"david.herrmann@protonmail.com\" and password \"p4ssw0r\""
+			},
+			"response": []
+		},
+		{
+			"name": "csrf prevention preflight 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abfb3ed7-d990-4e95-8c8e-955c7471d57e",
+						"exec": [
+							"pm.test(\"Access-Control-Allow-Origin\", function () {",
+							"    pm.response.to.have.header(\"Access-Control-Allow-Origin\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login as admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9ad01265-9750-44e6-ad0d-d1389f0473a6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.globals.set('idToken', pm.response.json().idToken)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"admin@mail.com\",\n\t\"password\": \"xugai4nie9ief5AhshaiSh1aequaiy\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "csrf prevention preflight 5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abfb3ed7-d990-4e95-8c8e-955c7471d57e",
+						"exec": [
+							"pm.test(\"Access-Control-Allow-Origin\", function () {",
+							"    pm.response.to.have.header(\"Access-Control-Allow-Origin\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/admin/to-approve",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"to-approve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get to-approve as admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abf0f581-eba4-49ff-bc44-06c1ba83d853",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let max = 0;",
+							"pm.response.json().forEach((user) => {if (user.id > max) {max = user.id}});",
+							"pm.globals.set('newId', max);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/admin/to-approve",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"to-approve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get approved without token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abf0f581-eba4-49ff-bc44-06c1ba83d853",
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/admin/approved",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"approved"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "csrf prevention preflight 6",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abfb3ed7-d990-4e95-8c8e-955c7471d57e",
+						"exec": [
+							"pm.test(\"Access-Control-Allow-Origin\", function () {",
+							"    pm.response.to.have.header(\"Access-Control-Allow-Origin\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/admin/approve",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"approve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "approve new id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d27496d3-3640-4bf3-9192-872de8c68f93",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"user approved message\", function () {",
+							"    pm.response.json().msg === \"User approved\";",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "auth",
+						"value": "{{idToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/admin/approve/{{newId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"approve",
+						"{{newId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "csrf prevention preflight 7",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abfb3ed7-d990-4e95-8c8e-955c7471d57e",
+						"exec": [
+							"pm.test(\"Access-Control-Allow-Origin\", function () {",
+							"    pm.response.to.have.header(\"Access-Control-Allow-Origin\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login as user 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1a9c48e6-fd11-48bd-917d-f15b50a70511",
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body says not approved\", function () {",
+							"    pm.response.json().id === \"{{newId}}\";",
+							"});",
+							"",
+							"pm.globals.set('idToken', pm.response.json().idToken)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "31eb3265-80bc-44be-8fa9-f20bcd0516bc",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"p4ssw0rd\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "logs in with email \"david.herrmann@protonmail.com\" and password \"p4ssw0r\""
+			},
+			"response": []
+		},
+		{
+			"name": "csrf prevention preflight 7 Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abfb3ed7-d990-4e95-8c8e-955c7471d57e",
+						"exec": [
+							"pm.test(\"Access-Control-Allow-Origin\", function () {",
+							"    pm.response.to.have.header(\"Access-Control-Allow-Origin\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/admin/approved",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"approved"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get approved",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abf0f581-eba4-49ff-bc44-06c1ba83d853",
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test(\"not authorized msg\", function () {",
+							"    pm.response.json() === {\"msg\": \"You are not authorized to do this!\"};",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/admin/approved",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"approved"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "csrf prevention preflight 8",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abfb3ed7-d990-4e95-8c8e-955c7471d57e",
+						"exec": [
+							"pm.test(\"Access-Control-Allow-Origin\", function () {",
+							"    pm.response.to.have.header(\"Access-Control-Allow-Origin\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/admin/to-approve",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"to-approve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get to-approve",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abf0f581-eba4-49ff-bc44-06c1ba83d853",
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test(\"not authorized msg\", function () {",
+							"    pm.response.json() === {\"msg\": \"You are not authorized to do this!\"};",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/admin/to-approve",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"to-approve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "csrf prevention preflight 9",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abfb3ed7-d990-4e95-8c8e-955c7471d57e",
+						"exec": [
+							"pm.test(\"Access-Control-Allow-Origin\", function () {",
+							"    pm.response.to.have.header(\"Access-Control-Allow-Origin\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/user/profile/{{newId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"profile",
+						"{{newId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get profile info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bdb3b46-747f-40b8-8918-49c105151135",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"value": "{{idToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/user/profile/{{newId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"profile",
+						"{{newId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "csrf prevention preflight 10",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abfb3ed7-d990-4e95-8c8e-955c7471d57e",
+						"exec": [
+							"pm.test(\"Access-Control-Allow-Origin\", function () {",
+							"    pm.response.to.have.header(\"Access-Control-Allow-Origin\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/user/profile/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"profile",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get foreign profile info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "35039091-2a84-4d5e-beb8-8f3d24f5b2c6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"value": "{{idToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/user/profile/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"profile",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
