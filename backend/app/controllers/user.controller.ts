@@ -7,6 +7,7 @@ import {Category} from '../models/category.model';
 import {EventService} from '../models/EventService';
 import {respond401IfNotAuthentic} from '../lib/auth.lib';
 import {isInstance} from '../lib/database.lib';
+import {sha3_256} from 'js-sha3';
 
 const router: Router = Router();
 
@@ -98,6 +99,14 @@ router.put('/profile/:id', async (request: Request, response: Response) => {
       });
       return;
     }
+
+    if (request.body.password.length > 0) {
+      const sha3Hash: string = sha3_256(request.body.password);
+      user.update({
+        passwordHash: sha3Hash
+      });
+    }
+
     user.update({
       firstName: request.body.firstName,
       lastName: request.body.lastName,
@@ -111,7 +120,7 @@ router.put('/profile/:id', async (request: Request, response: Response) => {
       country: request.body.country
     });
 
-    // Add or update RoleUser
+    // Add or update role
     if (request.body.isEventManager) {
       user.makeEventManager();
     } else {
