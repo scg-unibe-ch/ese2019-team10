@@ -1,7 +1,7 @@
 # Eventum: An Event Platform App
 
 This hybrid app was created during and for the 2019 ESE course. It consists of a frontend which is an Ionic application and a backend which is a Node.js application written in Typescript which uses the express.js framework:
-- The main project folder contains two subfolders: frontend and backend. These two are projects on their own which you will run independently. 
+- The [main project folder](https://github.com/scg-unibe-ch/ese2019-team10/) contains two subfolders: frontend and backend. These two are projects on their own which you will run independently. 
  - The [backend](https://github.com/scg-unibe-ch/ese2019-team10/tree/master/backend) folder contains an express project that serves as a REST API, exposes endpoints to accept HTTP requests. For received HTTP requests, it in turn returns JSON data.
  - The [frontend](https://github.com/scg-unibe-ch/ese2019-team10/tree/master/frontend) folder contains an Ionic project, which makes HTTP requests to the backend and processes the JSON data received i.e. make changes if required and display it on the UI.
  - Projects are separated in this way because in the future one can easily replace either of them if the team decides to use another technology e.g. React JS for frontend or Django REST framework for backend
