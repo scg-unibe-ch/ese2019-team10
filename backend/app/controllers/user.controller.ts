@@ -100,6 +100,11 @@ router.put('/profile/:id', async (request: Request, response: Response) => {
       return;
     }
 
+    // check if the profile to update is the profile of the currently logged in user and respond 401 if not
+    if (! respond401IfNotAuthentic(response, user.id)) {
+      return;
+    }
+
     if (request.body.password.length > 0) {
       const sha3Hash: string = sha3_256(request.body.password);
       user.update({
@@ -172,19 +177,22 @@ router.post('/event', async (req: Request, res: Response) => {
 *************************************************************************/
 router.put('/event/:id', async (request: Request, response: Response) => {
   const userId = parseInt(request.body.userId, undefined);
-  if (! respond401IfNotAuthentic(response, userId)) {
-    return;
-  }
 
   const eventId = parseInt(request.params.id, undefined);
   const user = await isInstance(response, User, userId, 'User not found');
   if (! user) {
     return;
   }
-  const event = await isInstance(response, Event, eventId, 'Event not found');
+  const event: Event = await isInstance(response, Event, eventId, 'Event not found');
   if (! event) {
     return;
   }
+
+  // check if the currently logged in user is the owner of the event to update and respond 401 if not
+  if (! respond401IfNotAuthentic(response, event.userId)) {
+    return;
+  }
+
 
   Event.update({
     name: request.body.name,
@@ -204,37 +212,20 @@ router.put('/event/:id', async (request: Request, response: Response) => {
 });
 
 /************************************************************************
-* Endpoint to confirm or reject a service request                       *
-*************************************************************************/
-router.put('/confirm', async (request: Request, response: Response) => {
-  const eventId = parseInt(request.body.eventId, undefined);
-  const serviceId = parseInt(request.body.serviceId, undefined);
-
-  EventService.update({
-    booked: request.body.booked,
-    responded: true,
-    reply: request.body.reply
-  }, {
-    where: {
-      eventId: eventId,
-      serviceId: serviceId
-    }
-  }).then(() => {
-    response.status(200).json({'msg': 'Booking updated'});
-  }).catch(()  => {
-    response.status(500).json({'msg': 'Error, booking not updated'});
-  });
-});
-
-/************************************************************************
 * Endpoint to delete an event                                            *
 *************************************************************************/
 router.delete('/event/:id', async (request: Request, response: Response) => {
   const eventId = parseInt(request.params.id, undefined);
-  const event = await isInstance(response, Event, eventId, 'Event not found');
+  const event: Event = await isInstance(response, Event, eventId, 'Event not found');
   if (! event) {
     return;
   }
+
+  // check if the logged in user is the owner of the event and respond 401 if not
+  if (! respond401IfNotAuthentic(response, event.userId)) {
+    return;
+  }
+
   Event.destroy({
     where: {
       id: eventId

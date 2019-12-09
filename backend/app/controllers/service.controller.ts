@@ -12,7 +12,7 @@ const router: Router = Router();
 /************************************************************************
  * Endpoint to get a service                                             *
  *************************************************************************/
-router.get('/service/:id', async (req: Request, res: Response) => {
+router.get('/:id', async (req: Request, res: Response) => {
   const serviceId = parseInt(req.params.id, undefined);
 
   Service.findOne({
@@ -36,7 +36,7 @@ router.get('/service/:id', async (req: Request, res: Response) => {
 /************************************************************************
  * Endpoint to to create a new service                                   *
  *************************************************************************/
-router.post('/service', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
   const userId = parseInt(req.body.userId, undefined);
   if (! respond401IfNotAuthentic(res, userId)) {
     return;
@@ -62,7 +62,7 @@ router.post('/service', async (req: Request, res: Response) => {
 /************************************************************************
  * Endpoint to edit a service                                            *
  *************************************************************************/
-router.put('/service/:id', async (req: Request, res: Response) => {
+router.put('/:id', async (req: Request, res: Response) => {
   const userId = parseInt(req.body.userId, undefined);
   if (! respond401IfNotAuthentic(res, userId)) {
     return;
@@ -109,7 +109,7 @@ router.put('/service/:id', async (req: Request, res: Response) => {
 /************************************************************************
  * Endpoint to create a new booking                                      *
  *************************************************************************/
-router.post('/service/book', async (request: Request, response: Response) => {
+router.post('/book', async (request: Request, response: Response) => {
   const eventId = parseInt(request.body.eventId, undefined);
   const serviceId = parseInt(request.body.serviceId, undefined);
   const event = await isInstance(response, Event, eventId, 'Event not found');
@@ -131,7 +131,7 @@ router.post('/service/book', async (request: Request, response: Response) => {
   });
 });
 
-router.delete('/service/:id', async (req: Request, res: Response) => {
+router.delete('/:id', async (req: Request, res: Response) => {
   const serviceId = parseInt(req.params.id, undefined);
   Service.findOne({where: {'id': serviceId}})
     .then(service  => {
@@ -152,7 +152,7 @@ router.delete('/service/:id', async (req: Request, res: Response) => {
 /************************************************************************
  * Endpoint to list a service requests to be confirmed                   *
  *************************************************************************/
-router.get('/service/to-confirm/:id', async (request: Request, response: Response) => {
+router.get('/to-confirm/:id', async (request: Request, response: Response) => {
   const userId = parseInt(request.params.id, undefined);
 
   Service.findAll({
@@ -184,6 +184,36 @@ router.get('/service/to-confirm/:id', async (request: Request, response: Respons
   }).catch((error)  => {
     response.statusCode = 500;
     response.json({'msg': 'Error, there is not request list' + error});
+  });
+});
+
+/************************************************************************
+ * Endpoint to confirm or reject a service request                       *
+ *************************************************************************/
+router.post('/confirm', async (request: Request, response: Response) => {
+  const eventId = parseInt(request.body.eventId, undefined);
+  const serviceId = parseInt(request.body.serviceId, undefined);
+
+  const service: Service = await isInstance(response, Service, serviceId, 'No such service');
+
+  // check if the logged in user is the owner of the event and respond 401 if not
+  if (! respond401IfNotAuthentic(response, service.userId)) {
+    return;
+  }
+
+  EventService.update({
+    booked: request.body.booked,
+    responded: true,
+    reply: request.body.reply
+  }, {
+    where: {
+      eventId: eventId,
+      serviceId: serviceId
+    }
+  }).then(() => {
+    response.status(200).json({'msg': 'Booking updated'});
+  }).catch(()  => {
+    response.status(500).json({'msg': 'Error, booking not updated'});
   });
 });
 
