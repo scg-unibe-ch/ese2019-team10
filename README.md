@@ -2,8 +2,8 @@
 
 This hybrid app was created during and for the 2019 ESE course. It consists of a frontend which is an Ionic application and a backend which is a Node.js application written in Typescript which uses the express.js framework:
 - The main project folder contains two subfolders: frontend and backend. These two are projects on their own which you will run independently. 
- - The backend folder contains an express project that serves as a REST API, exposes endpoints to accept HTTP requests. For received HTTP requests, it in turn returns JSON data.
- - The frontend folder contains an Ionic project, which makes HTTP requests to the backend and processes the JSON data received i.e. make changes if required and display it on the UI.
+ - The [backend](https://github.com/scg-unibe-ch/ese2019-team10/tree/master/backend) folder contains an express project that serves as a REST API, exposes endpoints to accept HTTP requests. For received HTTP requests, it in turn returns JSON data.
+ - The [frontend](https://github.com/scg-unibe-ch/ese2019-team10/tree/master/frontend) folder contains an Ionic project, which makes HTTP requests to the backend and processes the JSON data received i.e. make changes if required and display it on the UI.
  - Projects are separated in this way because in the future one can easily replace either of them if the team decides to use another technology e.g. React JS for frontend or Django REST framework for backend
 
 ## Technologies
@@ -44,9 +44,9 @@ The `docker-compose` command above sets up the following stack:
 Once you have set up the app, you can register an account. Accounts have to be approved by an administrator before they can be uese. Because of this, **there is a default admin account with username 'admin@mail.com' and password 'xugai4nie9ief5AhshaiSh1aequaiy'** (you can set another password under 'Edit Profile' on the dashboard when logged in). New users can be approved under 'User Administration' on the admin dashboard.
 
 ## Further information
-- [Backend readme](https://github.com/scg-unibe-ch/ese2019-team10/tree/master/backend)
-- [Frontend readme](https://github.com/scg-unibe-ch/ese2019-team10/tree/master/frontend)
-- [Wiki], especially the following articles:
+- [Backend readme](https://github.com/scg-unibe-ch/ese2019-team10/tree/master/backend/README.md)
+- [Frontend readme](https://github.com/scg-unibe-ch/ese2019-team10/tree/master/frontend/README.md)
+- [Wiki](https://github.com/scg-unibe-ch/ese2019-team10/wiki), especially the following articles:
   - [API](https://github.com/scg-unibe-ch/ese2019-team10/wiki/API)
   - [Technology](https://github.com/scg-unibe-ch/ese2019-team10/wiki/Technology)
 
