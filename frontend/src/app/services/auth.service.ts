@@ -314,7 +314,7 @@ export class AuthService {
    * Confirm or reject a service request.
    */
   confirmService(confirmation) {
-    return this.http.put(this.url + 'user/service/confirm/', confirmation, httpOptions).pipe(
+    return this.http.post(this.url + 'user/service/confirm/', confirmation, httpOptions).pipe(
     );
   }
 

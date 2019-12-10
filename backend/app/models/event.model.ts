@@ -27,6 +27,9 @@ export class Event extends Model<Event> {
   @Column
   public userId!: number;
 
+  @HasMany(() => EventService)
+  public eventServices!: EventService[];
+
   /*@BelongsTo(() => City)
   public cityId!: City;
 

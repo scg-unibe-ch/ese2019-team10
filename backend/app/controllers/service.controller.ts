@@ -131,6 +131,9 @@ router.post('/book', async (request: Request, response: Response) => {
   });
 });
 
+/*************************************************************************
+ * Endpoint to delete a service                                          *
+ *************************************************************************/
 router.delete('/:id', async (req: Request, res: Response) => {
   const serviceId = parseInt(req.params.id, undefined);
   Service.findOne({where: {'id': serviceId}})
@@ -149,7 +152,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
     });
 });
 
-/************************************************************************
+/*************************************************************************
  * Endpoint to list a service requests to be confirmed                   *
  *************************************************************************/
 router.get('/to-confirm/:id', async (request: Request, response: Response) => {
@@ -187,7 +190,7 @@ router.get('/to-confirm/:id', async (request: Request, response: Response) => {
   });
 });
 
-/************************************************************************
+/*************************************************************************
  * Endpoint to confirm or reject a service request                       *
  *************************************************************************/
 router.post('/confirm', async (request: Request, response: Response) => {
@@ -214,6 +217,65 @@ router.post('/confirm', async (request: Request, response: Response) => {
     response.status(200).json({'msg': 'Booking updated'});
   }).catch(()  => {
     response.status(500).json({'msg': 'Error, booking not updated'});
+  });
+});
+
+/*************************************************************************
+ * Endpoint to delete a service request                                  *
+ *************************************************************************/
+router.delete('/request/:eventId/:serviceId', async (req: Request, res: Response) => {
+  const serviceId = parseInt(req.params.serviceId, undefined);
+  const eventId = parseInt(req.params.eventId, undefined);
+  EventService.findOne({where: {'serviceId': serviceId, 'eventId': eventId}})
+    .then(request  => {
+      if (!request) {
+        res.status(404).json({'msg': 'Service request not found'});
+      } else {
+        request.destroy().then(() => {
+          res.status(201).json({'msg': 'Service request deleted'});
+        });
+      }
+    })
+    .catch(result => {
+      console.log(result);
+      res.status(500).json({'msg': 'Could not delete service request'});
+    });
+});
+
+/*************************************************************************
+ * Endpoint to list a user's service requests                            *
+ *************************************************************************/
+router.get('/list-requests/:id', async (request: Request, response: Response) => {
+  const userId = parseInt(request.params.id, undefined);
+
+  Event.findAll({
+    where: {
+      userId: userId
+    },
+    attributes: [
+      'name'
+    ],
+    include: [{
+      model: EventService,
+      attributes: [
+        'eventId',
+        'serviceId',
+        'message',
+        'reply',
+        'responded',
+        'booked',
+      ],
+      include: [{
+        model: Service,
+        attributes: ['name'],
+      }],
+    }],
+  }).then(result => {
+    response.statusCode = 200;
+    response.json(result);
+  }).catch((error)  => {
+    response.statusCode = 500;
+    response.json({'msg': 'Error, there is not request list' + error});
   });
 });
 

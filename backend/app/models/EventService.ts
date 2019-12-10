@@ -31,6 +31,9 @@ export class EventService extends Model<EventService> {
   @BelongsTo(() => Event)
   public event!: Event;
 
+  @BelongsTo(() => Service)
+  public service!: Service;
+
   @ForeignKey(() => Event)
   @Column
   public eventId!: number;
