@@ -232,12 +232,12 @@
 
   </ion-card>
 
-  <ion-card class="constrained-card ion-margin ion-no-padding">
+  <ion-card class="spaced-card constrained-card ion-margin ion-no-padding">
 
     <ion-card-header *ngIf="serviceRequests.length > 0" class="ion-no-margin" color="dark">
       <ion-card-title>
         <ion-label>
-          Service requests to confirm
+          New Service Requests
         </ion-label>
       </ion-card-title>
     </ion-card-header>
@@ -245,20 +245,21 @@
     <ion-card-content *ngIf="serviceRequests.length > 0" class="ion-no-margin ion-no-padding">
       <ion-card *ngFor="let serviceRequest of serviceRequests">
         <ion-card-title>
-          <b class="ion-margin">Request for:</b>
-          <ion-label class="ion-text-wrap ion-margin">
-             {{serviceRequest.serviceName}}
+          <ion-label class="ion-text-wrap ion-padding">
+            Requests for <em>{{serviceRequest.serviceName}}</em>
           </ion-label>
         </ion-card-title>
-        <ion-card-content>
-        <ion-list>
-          <ion-item *ngFor="let request of serviceRequest.requests">
-            <ion-button (click)='viewServiceRequest(request, serviceRequest.serviceId)' fill="clear">
-              {{request.eventName}}
-              <ion-icon name="arrow-dropright"></ion-icon>
-            </ion-button>
-          </ion-item>
-        </ion-list>
+        <ion-card-content class="ion-no-margin ion-no-padding">
+          <ion-list class="ion-no-margin ion-no-padding">
+            <ion-item *ngFor="let request of serviceRequest.requests"
+                      class="spaced-button ion-no-margin ion-no-padding">
+              <ion-button size="default" expand="full" class="ion-no-margin"
+                          (click)='viewServiceRequest(request, serviceRequest.serviceId)' fill="clear">
+                {{request.eventName}}
+                <ion-icon name="arrow-dropright"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-list>
         </ion-card-content>
       </ion-card>
     </ion-card-content>
@@ -329,7 +330,8 @@
               <ion-label>Currently offered
                 <ion-text color="danger">*</ion-text>
               </ion-label>
-              <ion-toggle slot="start" name="available" formControlName="available" color="success" checked></ion-toggle>
+              <ion-toggle slot="start" name="available" formControlName="available" color="success"
+                          checked></ion-toggle>
             </ion-item>
 
             <div class="validation-errors ion-text-wrap">

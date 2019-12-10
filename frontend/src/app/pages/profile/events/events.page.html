@@ -120,7 +120,7 @@
                   </ion-chip>
                 </ng-container>
               </div>
-              <ion-button class="ion-text-wrap" fill="clear"  routerLink="/search">
+              <ion-button class="ion-text-wrap" fill="clear" routerLink="/search">
                 <ion-icon slot="start" name="add-circle"></ion-icon>
                 Add a service
               </ion-button>
@@ -151,19 +151,20 @@
     </ion-card-content>
 
   </ion-card>
-  <ion-card class="constrained-card ion-margin ion-no-padding">
+  <ion-card class="spaced-card constrained-card ion-margin ion-no-padding">
     <ion-card-header *ngIf="serviceRequests.length > 0" class="ion-no-margin" color="dark">
       <ion-card-title>
         <ion-label>
-          Your service requests
+          Your Service Requests
         </ion-label>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content *ngIf="serviceRequests.length > 0" class="ion-no-margin ion-no-padding">
-      <ion-list>
-        <ion-item *ngFor="let serviceRequest of serviceRequests">
-          <ion-button (click)='viewServiceRequest(serviceRequest)' fill="clear">
-            {{serviceRequest.serviceName}} is {{serviceRequest.status}}
+      <ion-list class="ion-no-margin ion-no-padding">
+        <ion-item class=" spaced-button ion-no-margin ion-no-padding" *ngFor="let serviceRequest of serviceRequests">
+          <ion-button size="default" expand="full" class=" ion-no-margin" (click)='viewServiceRequest(serviceRequest)'
+                      fill="clear">
+            <em>{{serviceRequest.serviceName}}</em> &nbsp; is {{serviceRequest.status}}
             <ion-icon name="arrow-dropright"></ion-icon>
           </ion-button>
         </ion-item>
