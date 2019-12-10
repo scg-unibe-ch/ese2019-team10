@@ -66,7 +66,7 @@ router.get('/profile/:id', async (req: Request, res: Response) => {
 
     res.status(200).json(userRoleJSON);
   }).catch((e) => {
-    res.status(500).json({'msg': 'Error with user profile'});
+    res.status(204).json({'msg': 'Error with user profile'});
   });
 });
 
@@ -94,7 +94,7 @@ router.put('/profile/:id', async (request: Request, response: Response) => {
 
   User.findOne({where: {id: userId}}).then(user => {
     if (!user) {
-      response.status(500).json({
+      response.status(204).json({
         msg: 'No such user',
       });
       return;
@@ -139,7 +139,7 @@ router.put('/profile/:id', async (request: Request, response: Response) => {
 
     response.status(200).json({'msg': 'User updated'});
   }).catch(error => {
-    response.status(500).json({'msg': 'Error, user not updated'});
+    response.status(204).json({'msg': 'Error, user not updated'});
     console.log(error);
   });
 });
@@ -168,7 +168,7 @@ router.post('/event', async (req: Request, res: Response) => {
       user.$add('events', eventInstance);
     });
   }).catch(() => {
-    res.status(500).json({'msg': 'Event was not created'});
+    res.status(204).json({'msg': 'Event was not created'});
   });
 });
 
@@ -207,7 +207,7 @@ router.put('/event/:id', async (request: Request, response: Response) => {
   }).then(() => {
     response.status(200).json({'msg': 'Event updated'});
   }).catch(() => {
-    response.status(500).json({'msg': 'Error, event not updated'});
+    response.status(204).json({'msg': 'Error, event not updated'});
   });
 });
 
@@ -233,7 +233,7 @@ router.delete('/event/:id', async (request: Request, response: Response) => {
   }).then(() => {
     response.status(201).json({'msg': 'Event deleted'});
     }).catch(() => {
-    response.status(500).json({'msg': 'Error, event not deleted'});
+    response.status(204).json({'msg': 'Error, event not deleted'});
   });
 });
 

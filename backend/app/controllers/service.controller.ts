@@ -54,7 +54,7 @@ router.post('/', async (req: Request, res: Response) => {
       res.status(201).json({'msg': 'Service created'});
       user.$add('services', serviceInstance);
     }).catch(error => {
-      res.status(500).json({'msg': 'Service was not created'});
+      res.status(204).json({'msg': 'Service was not created'});
     });
   });
 });
@@ -101,7 +101,7 @@ router.put('/:id', async (req: Request, res: Response) => {
     });
     res.status(200).json({'msg': 'Service updated'});
   }).catch(() => {
-    res.status(500).json({'msg': 'Error, service not updated'});
+    res.status(204).json({'msg': 'Error, service not updated'});
   });
 });
 
@@ -120,14 +120,23 @@ router.post('/book', async (request: Request, response: Response) => {
   if (! service) {
     return;
   }
-  const eventService = new EventService();
-  eventService.post_(request.body);
-  eventService.save().then(() => {
-    // Send message to service provider
-
-    response.status(201).json({'msg': 'Booking created'});
-  }).catch(() => {
-    response.status(500).json({'msg': 'Booking was not created'});
+  // Validate if the service is already booked
+  EventService.findOne({where: {serviceId: serviceId, eventId: eventId}}).then(booking => {
+    if (booking) {
+      response.status(201).json({'msg': 'You have already booked this service'});
+      return;
+    } else {
+      const eventService = new EventService();
+      eventService.post_(request.body);
+      eventService.save().then(() => {
+        // Send message to service provider
+        response.status(201).json({'msg': 'Booking created'});
+      }).catch(() => {
+        response.status(204).json({'msg': 'Booking was not created'});
+      });
+    }
+  }).catch((error) => {
+    console.log(error);
   });
 });
 
@@ -148,7 +157,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
     })
     .catch(result => {
       console.log(result);
-      res.status(500).json({'msg': 'Could not delete service'});
+      res.status(204).json({'msg': 'Could not delete service'});
     });
 });
 
@@ -182,11 +191,9 @@ router.get('/to-confirm/:id', async (request: Request, response: Response) => {
       }],
     }],
   }).then(result => {
-    response.statusCode = 200;
-    response.json(result);
+    response.status(204).json(result);
   }).catch((error)  => {
-    response.statusCode = 500;
-    response.json({'msg': 'Error, there is not request list' + error});
+    response.status(204).json({'msg': 'Error, there is not request list' + error});
   });
 });
 
@@ -216,7 +223,7 @@ router.post('/confirm', async (request: Request, response: Response) => {
   }).then(() => {
     response.status(200).json({'msg': 'Booking updated'});
   }).catch(()  => {
-    response.status(500).json({'msg': 'Error, booking not updated'});
+    response.status(204).json({'msg': 'Error, booking not updated'});
   });
 });
 
@@ -238,7 +245,7 @@ router.delete('/request/:eventId/:serviceId', async (req: Request, res: Response
     })
     .catch(result => {
       console.log(result);
-      res.status(500).json({'msg': 'Could not delete service request'});
+      res.status(204).json({'msg': 'Could not delete service request'});
     });
 });
 
@@ -274,7 +281,7 @@ router.get('/list-requests/:id', async (request: Request, response: Response) =>
     response.statusCode = 200;
     response.json(result);
   }).catch((error)  => {
-    response.statusCode = 500;
+    response.statusCode = 204;
     response.json({'msg': 'Error, there is not request list' + error});
   });
 });
