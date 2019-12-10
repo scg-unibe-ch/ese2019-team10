@@ -15,7 +15,7 @@ router.post('/', async (req: Request, res: Response) => {
         res.statusCode = 201;
         res.json({'msg': 'User created'});
       }).catch(error  => {
-        res.statusCode = 500;
+        res.statusCode = 204;
         res.json({'msg': 'Error, user not created'});
       });
     // otherwise send 400
