@@ -7,14 +7,39 @@
 
 <ion-content>
   <div *ngIf="requestData != null; else nodata">
-  <ion-item>Your event: {{ requestData.eventName }}</ion-item>
-  <ion-item>Request from: {{ requestData.serviceName }}</ion-item>
-  <ion-item>Status: {{ requestData.status }}</ion-item>
-  <ion-item>Your message: {{ requestData.message }}</ion-item>
-  <ion-item>Reply: {{ requestData.reply }}</ion-item>
-  <ion-button *ngIf="requestData.status == 'Pending' || requestData.status == 'Rejected'" color="danger" (click)="deleteRequest()">
-    Delete
-  </ion-button>
+    <ion-card class="constrained-card ion-margin ion-no-padding">
+      <ion-card-header class="ion-no-margin" color="dark">
+        <ion-card-title>
+          <ion-label>
+            Event: {{ requestData.eventName }}
+          </ion-label>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="ion-no-margin ion-no-padding">
+        <ion-item><b>Request from:</b><ion-label margin>{{ requestData.serviceName }}</ion-label></ion-item>
+        <ion-item><b>Status:</b><ion-label margin> {{ requestData.status }}</ion-label></ion-item>
+        <ion-item><b>Your message:</b><ion-label margin> {{ requestData.message }}</ion-label></ion-item>
+        <ion-item><b>Reply:</b> <ion-label margin>{{ requestData.reply }}</ion-label></ion-item>
+        <ion-button *ngIf="requestData.status == 'Pending' || requestData.status == 'Rejected'" color="danger" (click)="deleteRequest()">
+          Delete
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
   </div>
-  <ng-template #nodata><p>There is no request information.</p></ng-template>
+  <ng-template #nodata>
+    <ion-card class="constrained-card ion-margin ion-no-padding">
+      <ion-card-header class="ion-no-margin" color="dark">
+        <ion-card-title>
+          <ion-label>
+            Something went wrong
+          </ion-label>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="ion-no-margin ion-no-padding">
+        <ion-label>
+          There is no request information.
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
 </ion-content>
