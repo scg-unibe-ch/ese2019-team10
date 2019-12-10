@@ -18,9 +18,8 @@ export class ServiceRequestPage implements OnInit {
   public reply: string;
 
   ngOnInit() {
-    this.title = 'Service Requests';
+    this.title = 'Service Request';
     this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
-
   }
 
   constructor(
