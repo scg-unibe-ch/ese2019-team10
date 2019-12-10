@@ -1,51 +1,136 @@
 <ion-header>
-  <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      Event App
-    </ion-title>
-  </ion-toolbar>
+  <app-header [title]="title">
+  </app-header>
 </ion-header>
 
-<ion-content class="home-body">
+<ion-content class="ion-no-margin ion-no-padding" fullscreen scroll-y="false">
+  <ion-slides #slides [options]="slideOpts">
 
-  <div>
+    <ion-slide class="single-slide" id="first-slide">
 
-    <ion-card class="home-buttons">
+      <div class='row'>
+        <div class='column'>
+          <div class='left-column'>
+            <p class="first-text">Better Events</p>
+            <p class="second-text">Better Services</p>
+            <p class="third-text">Better Future</p>
+          </div>
+        </div>
 
-      <ion-row>
-        <ion-card-title>
-          <h2>
-            <ion-text color="light">Welcome!</ion-text>
-          </h2>
-        </ion-card-title>
-      </ion-row>
+        <div class='column'>
+          <div class='right-column'>
+            <p class="column-text">Join now to organize astonishing events,
+              book the best services from talented professionals,
+              and create unforgettable experiences!</p>
+            <p>
+              <ion-button shape="round" strong="true" size="large" class="join-button" fill="outline"
+                          routerLink="/register">
+                Join
+              </ion-button>
+            </p>
+          </div>
+        </div>
+      </div>
 
-      <!--
-            <ion-row>
-              <ion-card-content>
-                <ion-text color="light"><p>Please log in or register to start using this event platform.</p></ion-text>
-              </ion-card-content>
-            </ion-row>
-      -->
+      <ion-button shape="round" size="large" class="next-button" (click)="goToNextSlide()">
+        <ion-icon class="next-icon" slot="icon-only" name="arrow-dropright"></ion-icon>
+      </ion-button>
+    </ion-slide>
 
-      <ion-row class="ion-margin-top">
-        <ion-button type="button" [routerLink]="['/login']" color="light" fill="outline" class="login">
-          <ion-icon slot="start" name="log-in"></ion-icon>
-          Log in
-        </ion-button>
-      </ion-row>
+    <ion-slide class="single-slide" id="second-slide">
+      <ion-button shape="round" size="large" class="previous-button" (click)="goToPreviousSlide()">
+        <ion-icon class="previous-icon" slot="icon-only" name="arrow-dropleft"></ion-icon>
+      </ion-button>
+      <div class='row'>
+        <div class='column'>
+          <div class='left-column'>
+            <p class="first-text">More Events</p>
+            <p class="second-text">More Clients</p>
+            <p class="third-text">More Money</p>
+          </div>
+        </div>
 
-      <ion-row class="ion-margin-top">
-        <ion-button type="button" [routerLink]="['/register']" color="light" fill="outline" class="register">
-          <ion-icon slot="start" name="person-add"></ion-icon>
-          Register
-        </ion-button>
-      </ion-row>
+        <div class='column'>
+          <div class='right-column'>
+            <p class="column-text">Join now to find the best clients,
+              offer your services to excellent event managers,
+              and make grand celebrations happen! </p>
+            <p>
+              <ion-button shape="round" strong="true" size="large" class="join-button" fill="outline"
+                          routerLink="/register">
+                Join
+              </ion-button>
+            </p>
+          </div>
+        </div>
+      </div>
 
-    </ion-card>
+      <ion-button shape="round" size="large" class="next-button" (click)="goToNextSlide()">
+        <ion-icon class="next-icon" slot="icon-only" name="arrow-dropright"></ion-icon>
+      </ion-button>
+    </ion-slide>
 
-  </div>
+    <ion-slide class="single-slide" id="third-slide">
+      <ion-button shape="round" size="large" class="previous-button" (click)="goToPreviousSlide()">
+        <ion-icon class="previous-icon" slot="icon-only" name="arrow-dropleft"></ion-icon>
+      </ion-button>
+      <div class='row'>
+        <div class='column'>
+          <div class='left-column'>
+            <div class="left-content">
+              <p class="first-text">Our Platform</p>
+              <p class="second-text">Your Events</p>
+              <p class="third-text">Your Services</p>
+            </div>
+          </div>
+        </div>
+        <div class='column'>
+          <div class='right-column'>
+            <p class="column-text">With your talent and our platform with can make every event happen, from the smallest
+              two-person ceremony to the biggest party, whatever event you want to organise, whatever service you want
+              to offer.
+            </p>
+            <p>
+              <ion-button shape="round" strong="true" size="large" class="join-button" fill="outline"
+                          routerLink="/register">
+                Join
+              </ion-button>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <ion-button shape="round" size="large" class="next-button" (click)="goToNextSlide()">
+        <ion-icon class="next-icon" slot="icon-only" name="arrow-dropright"></ion-icon>
+      </ion-button>
+    </ion-slide>
+
+
+    <ion-slide class="single-slide" id="fourth-slide">
+      <ion-button shape="round" size="large" class="previous-button" (click)="goToPreviousSlide()">
+        <ion-icon class="previous-icon" slot="icon-only" name="arrow-dropleft"></ion-icon>
+      </ion-button>
+      <div class="end-box">
+        <p class="end-text">This is your world</p>
+        <p class="end-text">This is your time</p>
+        <p class="end-text">This is your life</p>
+        <p>
+          <ion-button shape="round" strong="true" size="large" class="join-button" fill="outline"
+                      routerLink="/register">
+            Join Now
+          </ion-button>
+        </p>
+
+        <p>
+          <ion-button shape="round" strong="true" class="about-button" fill="outline"
+                      routerLink="/about">
+            About
+          </ion-button>
+        </p>
+      </div>
+    </ion-slide>
+
+
+  </ion-slides>
+
 </ion-content>

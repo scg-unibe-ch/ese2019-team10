@@ -1,13 +1,25 @@
 import {Injectable} from '@angular/core';
 import {Platform, AlertController} from '@ionic/angular';
-import {HttpClient, HttpHeaders, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {Storage} from '@ionic/storage';
-import {environment} from '../../environments/environment';
-import {tap, catchError} from 'rxjs/operators';
+import {tap, catchError, map} from 'rxjs/operators';
 import {BehaviorSubject, Observable} from 'rxjs';
 
+import {environment} from '../../environments/environment';
+import {User} from '../models/user.model';
+import {Router} from '@angular/router';
+import {AlertService} from './alert.service';
+import {Service} from '../models/service.model';
+import {Event} from '../models/event.model';
+import { ServiceRequests, EventServices } from '../pages/profile/services/services.class';
+
+
 const TOKEN_KEY = 'access_token';
+const ID_KEY = 'user_id';
+const ADMIN_KEY = 'is_admin';
+
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
@@ -19,22 +31,32 @@ const httpOptions = {
 })
 
 export class AuthService {
-
-  url = environment.url;
-  user = null;
-  authenticationState = new BehaviorSubject(false);
+  public url = environment.url;
+  public user = null;
+  public authenticationState = new BehaviorSubject(false);
+  private id = null;
+  private admin = false;
+  public adminState = new BehaviorSubject(false);
+  public eventManagerState = new BehaviorSubject(false);
+  public serviceProviderState = new BehaviorSubject(false);
 
   constructor(
     private http: HttpClient,
     private helper: JwtHelperService,
     private storage: Storage,
     private plt: Platform,
-    private alertController: AlertController) {
+    private alertController: AlertController,
+    private alertService: AlertService,
+    private router: Router,
+  ) {
     this.plt.ready().then(() => {
       this.checkToken();
     });
   }
 
+  /**
+   * Check if there is a token in the storage. If there is, check if it is expired. If it is, remove the token from the storage.
+   */
   checkToken() {
     this.storage.get(TOKEN_KEY).then(token => {
       if (token) {
@@ -44,94 +66,272 @@ export class AuthService {
         if (!isExpired) {
           this.user = decoded;
           this.authenticationState.next(true);
+          this.storage.get(ID_KEY).then(id => {
+            this.id = id;
+          });
+          this.storage.get(ADMIN_KEY).then(bool => {
+            this.admin = bool;
+          });
         } else {
           this.storage.remove(TOKEN_KEY).then(() => {
             this.authenticationState.next(false);
+            this.storage.remove(ID_KEY).then(() => {
+              this.id = null;
+            });
+            this.storage.remove(ADMIN_KEY).then(() => {
+              this.admin = false;
+            });
           });
         }
       }
     });
   }
 
-  register(credentials) {
-    return this.http.post(this.url + 'register', credentials);
-  }
-
-  approveUser(userID) {
-
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json');
-
-
-    return this.http.put(this.url + 'register/approve/' + userID,
-      {},
-      {headers});
-  }
-
-  saveProfile(credentials) {
-    return this.http.post(this.url + 'profile', credentials).pipe(
-      catchError(e => {
-        this.showAlert(e.error.msg);
-        throw new Error(e);
-      })
-    );
-  }
-
-  login(credentials): Observable<any> {
-    console.log(credentials);
-    this.user = this.helper.decodeToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c');
-    console.log(this.user);
-
-    return this.http.post(this.url + 'login', credentials, httpOptions)
-      .pipe(
-        tap((res: any) => {
-          this.storage.set(TOKEN_KEY, res.token).then(() => {
-            this.user = this.helper.decodeToken(res.idToken);
-            this.authenticationState.next(true);
-          });
-        }),
-        /*        catchError(e => {
-                  this.showAlert(e.error.msg);
-                  throw new Error(e);
-                })*/
-      );
-  }
-
-  logout() {
-    this.storage.remove(TOKEN_KEY).then(() => {
-      this.authenticationState.next(false);
-    });
-  }
-
-  getApprovedUsers() {
-    return this.http.get(this.url + 'register/approved');
-    /*
-        .pipe(
-          catchError(e => {
-            const status = e.status;
-            if (status === 401) {
-              this.showAlert('You are not authorized for this!');
-              // this.logout();
-            }
-            throw new Error(e);
-          })
-        );*/
-  }
-
-  getUnapprovedUsers() {
-    return this.http.get(this.url + 'register/to-approve');
-  }
-
+  /**
+   * return true if user is authenticated
+   */
   isAuthenticated() {
     return this.authenticationState.value;
   }
 
-  showAlert(msg) {
-    const alert = this.alertController.create({
-      message: msg,
-      header: 'Error',
-      buttons: ['OK']
-    });
-    alert.then(a => a.present());
+  /**
+   * return true if user is an admin.
+   */
+  isAdmin() {
+    return this.adminState.value;
   }
+
+  isEventManager() {
+    return this.eventManagerState.value;
+  }
+
+  isServiceProvider() {
+    return this.serviceProviderState.value;
+  }
+
+  /**
+   * call the registration api with the provided credentials.
+   */
+  register(credentials) {
+    return this.http.post(this.url + 'register', credentials, httpOptions)
+      .pipe(
+        tap(),
+      );
+  }
+
+  /**
+   * Call the login api wih the provided credentials. If successful, store the token and set the user.
+   */
+  login(credentials): Observable<any> {
+    return this.http.post(this.url + 'login', credentials, httpOptions)
+      .pipe(
+        tap((res: any) => {
+          this.storage.set(TOKEN_KEY, res.idToken).then(() => {
+            this.user = this.helper.decodeToken(res.idToken);
+            this.storage.set(ID_KEY, res.userId).then(() => {
+              this.id = res.userId;
+            });
+            if (res.isAdmin) {
+              this.adminState.next(true);
+            } else {
+              this.adminState.next(false);
+            }
+            this.storage.set(ADMIN_KEY, res.isAdmin).then(() => {
+              this.admin = res.isAdmin;
+            });
+            this.authenticationState.next(true);
+          });
+        }),
+        catchError(e => {
+          throw new Error(e);
+        })
+      );
+  }
+
+  /**
+   * Log the user out by remove the token from the storage, removing the user id, and changing the authentication state to false.
+   */
+  logout() {
+    this.storage.remove(TOKEN_KEY).then(() => {
+      this.authenticationState.next(false);
+      this.storage.remove(ID_KEY).then(() => {
+        this.id = null;
+      });
+      this.storage.remove(ADMIN_KEY).then(() => {
+        this.admin = false;
+      });
+      this.router.navigate(['/', 'home']).then();
+      this.alertService.presentToast('You have logged out. See you soon!').then();
+    });
+  }
+
+  /**
+   * Save a user profile with the provided credentials.
+   */
+  saveProfile(credentials) {
+    return this.http.put(this.url + 'user/profile/' + this.id, credentials, httpOptions).pipe(
+    );
+  }
+
+  /**
+   * Save a service with the given service data.
+   */
+  saveService(service) {
+    service.userId = this.id;
+    return this.http.put(this.url + 'user/service/' + service.id, service, httpOptions);
+  }
+
+  /**
+   * Save an event with the given event data.
+   */
+  saveEvent(event) {
+    event.userId = this.id;
+    return this.http.put(this.url + 'user/event/' + event.id, event, httpOptions);
+  }
+
+  /**
+   * Save a new service with the provided service data.
+   */
+  saveNewService(service) {
+    service.userId = this.id;
+    return this.http.post(this.url + 'user/service', service, httpOptions);
+  }
+
+  saveNewEvent(event) {
+    event.userId = this.id;
+    return this.http.post(this.url + 'user/event', event, httpOptions);
+  }
+
+  deleteService(service) {
+    service.userId = this.id;
+    console.log(service);
+    return this.http.delete(this.url + 'user/service/' + service.serviceId, httpOptions);
+  }
+
+  deleteEvent(event) {
+    event.userId = this.id;
+    console.log(event);
+    return this.http.delete(this.url + 'user/event/' + event.eventId, httpOptions);
+  }
+
+  /**
+   * Load services by loading the user profile.
+   */
+  loadServices(): Observable<User> {
+    /*    return this.http.get<Service[]>(this.url + 'user/profile/get' + this.id, httpOptions).pipe(
+          map((services: any[]) => services.map((service) => new Service().deserialize(service)))
+        );*/
+    return this.loadProfile();
+  }
+
+  /**
+   * Load events by loading the user profile.
+   */
+  loadEvents(): Observable<User> {
+    /*return this.http.get<Array<Service>>(this.url + 'user/profile/' + this.id, httpOptions).pipe(
+      map(data => console.log(data))
+    );*/
+    return this.loadProfile();
+  }
+
+  /**
+   * Load the private profile of the user identified by the stored user id.
+   */
+  loadProfile(): Observable<User> {
+    return this.http.get<User>(this.url + 'user/profile/' + this.id, httpOptions)
+      .pipe(
+        map(data => new User().deserialize(data)),
+        tap(data => {
+          if (data.isAdmin) {
+            this.adminState.next(true);
+          } else {
+            this.adminState.next(false);
+          }
+          if (data.isEventManager) {
+            this.eventManagerState.next(true);
+          } else {
+            this.eventManagerState.next(false);
+          }
+          if (data.isServiceProvider) {
+            this.serviceProviderState.next(true);
+          } else {
+            this.serviceProviderState.next(false);
+          }
+        })
+      );
+
+
+  }
+
+  /**
+   * Load the public profile of a user identified by the provided user id.
+   */
+  loadUser(userId): Observable<User> {
+    return this.http.get<User>(this.url + 'user/profile/' + userId, httpOptions).pipe(
+      map(data => new User().deserialize(data))
+    );
+  }
+
+  loadEvent(eventId): Observable<Event> {
+    return this.http.get<Event>(this.url + 'user/event/' + eventId, httpOptions).pipe(
+      map(data => new Event().deserialize(data))
+    );
+  }
+
+  loadService(serviceId): Observable<Service> {
+    return this.http.get<Service>(this.url + 'user/service/' + serviceId, httpOptions).pipe(
+      map(data => new Service().deserialize(data))
+    );
+  }
+
+  bookService(service) {
+    // service.bookerId = this.id;
+    // console.log(service);
+    return this.http.post(this.url + 'user/service/book', service, httpOptions);
+  }
+
+
+  search(searchObject) {
+    return this.http.post(this.url + 'search', searchObject).pipe(
+      // map((users: any[]) => users.map((user) => new User().deserialize(user)))
+    );
+  }
+
+  getCategories() {
+    return this.http.get(this.url + 'category/list', httpOptions).pipe(
+      // map(data => new Service().deserialize(data))
+    );
+  }
+
+  /**
+   * Get service requests of the user.
+   */
+  getRequests(): Observable<any> {
+    return this.http.get<any>(this.url + 'user/service/to-confirm/' + this.id, httpOptions);
+  }
+
+  /**
+   * Confirm or reject a service request.
+   */
+  confirmService(confirmation) {
+    return this.http.post(this.url + 'user/service/confirm/', confirmation, httpOptions).pipe(
+    );
+  }
+
+  /**
+   * Get a list of a user's service requests.
+   */
+  getUserRequests() {
+    return this.http.get(this.url + 'user/service/list-requests/' + this.id, httpOptions).pipe(
+    );
+  }
+
+  /**
+   * Delete a user's service request.
+   */
+  deleteServiceRequest(request) {
+    console.log(request);
+    return this.http.delete(this.url + 'user/service/request/' + request.eventId + '/' + request.serviceId, httpOptions);
+  }
+
 }

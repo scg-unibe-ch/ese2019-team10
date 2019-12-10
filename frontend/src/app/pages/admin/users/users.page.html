@@ -1,0 +1,122 @@
+<ion-header>
+  <app-header [title]="title">
+  </app-header>
+</ion-header>
+
+<ion-content class="ion-margin ion-padding">
+  <ion-card class="constrained-card ion-margin ion-no-padding">
+
+    <ion-card-header id="unapproved" class="ion-no-margin" color="dark">
+      <ion-card-title>
+        <ion-label *ngIf="loadedUU; else noNumber">
+          Unapproved Users: {{numberUnapproved}}</ion-label>
+        <ng-template #noNumber>
+          <ion-label>
+            Unapproved Users
+          </ion-label>
+        </ng-template>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-button *ngIf="!loadedUU; else hideUnapproved" class="shutter-text submit-btn ion-no-margin" expand="full"
+                type="button"
+                (click)="showUnapprovedUsers()" color="warning">
+      <ion-icon slot="start" name="arrow-dropdown"></ion-icon>
+      Show Users
+    </ion-button>
+    <ng-template #hideUnapproved>
+      <ion-button class="shutter-text submit-btn ion-no-margin" expand="full" type="button"
+                  (click)="hideUnapprovedUsers()"
+                  color="warning">
+        <ion-icon slot="start" name="arrow-dropup"></ion-icon>
+        Hide Users
+      </ion-button>
+    </ng-template>
+
+    <ion-card-content class="ion-no-margin ion-no-padding">
+      <ion-list *ngIf="loadedUU">
+        <ion-list-header class="ion-margin ion-padding" *ngIf="numberUnapproved > 0">
+          <ion-label class="list-header" color="medium">The following users are waiting for approval:</ion-label>
+        </ion-list-header>
+        <ion-list-header class="ion-margin ion-padding" *ngIf="numberUnapproved === 0">
+          <ion-label class="list-header" color="medium">No users are waiting for approval.</ion-label>
+        </ion-list-header>
+
+        <ion-item *ngFor="let user of unapprovedUsers">
+          <ion-avatar slot="start">
+            <img src="../../../../assets/supervised_user_circle-24px.svg" alt="unverified avatar">
+          </ion-avatar>
+          <ion-label class="ion-text-wrap">
+            <h2>{{user.getFullName()}}</h2>
+            <h3>{{user.email}}</h3>
+            <p>{{'ID: ' + user.id}}</p>
+          </ion-label>
+
+          <ion-button class="ion-text-uppercase ion-align-self-center" expand="default"
+                      type="submit" shape="round" size="default"
+                      (click)="approveUser(user.id, user.email)">
+            <ion-icon slot="start" name="key" class="button-icon"></ion-icon>
+            Approve
+          </ion-button>
+
+        </ion-item>
+
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="constrained-card ion-margin ion-no-padding spaced-card">
+    <ion-card-header id="approved" class="ion-no-margin" color="dark">
+      <ion-card-title>
+        <ion-label *ngIf="loadedAU; else elseBlock">
+          Approved Users: {{numberApproved}}</ion-label>
+        <ng-template #elseBlock>
+          <ion-label>
+            Approved Users
+          </ion-label>
+        </ng-template>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-button *ngIf="!loadedAU; else hideApproved" class="shutter-text submit-btn ion-no-margin" expand="full"
+                type="button"
+                (click)="showApprovedUsers()" color="success">
+      <ion-icon slot="start" name="arrow-dropdown"></ion-icon>
+      Show Users
+    </ion-button>
+    <ng-template #hideApproved>
+      <ion-button class=" shutter-text submit-btn ion-no-margin" expand="full" type="button"
+                  (click)="hideApprovedUsers()"
+                  color="success">
+        <ion-icon slot="start" name="arrow-dropup"></ion-icon>
+        Hide Users
+      </ion-button>
+    </ng-template>
+
+
+    <ion-card-content class="ion-no-margin ion-no-padding">
+      <ion-list *ngIf="loadedAU">
+        <ion-list-header class="ion-margin ion-padding" *ngIf="numberApproved > 0">
+          <ion-label class="list-header" color="medium">The following users have already been approved:</ion-label>
+        </ion-list-header>
+        <ion-list-header class="ion-margin ion-padding" *ngIf="numberApproved === 0">
+          <ion-label class="list-header" color="medium">No user has been approved.</ion-label>
+        </ion-list-header>
+
+        <ion-item *ngFor="let user of approvedUsers">
+          <ion-avatar slot="start">
+            <img src="../../../../assets/verified_user-24px.svg" alt="verified avatar">
+          </ion-avatar>
+          <ion-label class="ion-text-wrap">
+            <h2>{{user.getFullName()}}</h2>
+            <h3>{{user.email}}</h3>
+            <p>{{'ID: ' + user.id}}</p>
+          </ion-label>
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>

@@ -1,0 +1,483 @@
+<ion-header>
+  <app-header class="services" [title]="title">
+  </app-header>
+</ion-header>
+
+<ion-content class="ion-margin ion-padding">
+  <ion-card class="constrained-card ion-margin ion-no-padding">
+
+    <ion-card-header *ngIf="loadedServices" class="ion-no-margin" color="dark">
+      <ion-card-title>
+        <ion-label>
+          Your Saved Services
+        </ion-label>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="ion-no-margin ion-no-padding">
+
+      <form *ngIf="loadedServices" class="services-form" [formGroup]="savedServices">
+
+        <ion-item-group formArrayName="services" class="ion-no-margin ion-no-padding">
+
+          <ion-list class="ion-no-margin ion-no-padding" *ngFor="let service of getControls(); index as ix">
+
+            <ion-button *ngIf="!this.helperArray[ix]; else hideThisService"
+                        class="form-shutter ion-no-margin ion-no-padding"
+                        expand="full"
+                        type="button"
+                        (click)="showService(ix)" color="tertiary">
+              <ion-icon slot="start" name="arrow-dropdown"></ion-icon>
+              Show {{getProperty(ix, 'name')}}
+            </ion-button>
+            <ng-template #hideThisService>
+              <ion-button class="form-shutter ion-no-margin ion-no-padding" expand="full" type="button"
+                          (click)="hideService(ix)"
+                          color="tertiary">
+                <ion-icon slot="start" name="arrow-dropup"></ion-icon>
+                Hide {{getProperty(ix, 'name')}}
+              </ion-button>
+            </ng-template>
+
+            <ion-item-group [formGroupName]="ix.toString()" [hidden]="!this.helperArray[ix]">
+
+              <ion-item>
+                <ion-label position="floating">Name
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" name="name" formControlName="name"></ion-input>
+              </ion-item>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.name">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf=" getControls()[ix].get('name').hasError(validation.type) && (getControls()[ix].get('name').dirty || getControls()[ix].get('name').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
+                </ng-container>
+              </div>
+
+
+              <ion-item>
+                <ion-label position="floating">Category
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" name="categoryId" formControlName="categoryId">
+                  <ion-select-option *ngFor="let category of categories"
+                                     [value]="category.id">{{category.name}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.category">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf=" getControls()[ix].get('categoryId').hasError(validation.type) && (getControls()[ix].get('categoryId').dirty || getControls()[ix].get('categoryId').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
+                </ng-container>
+              </div>
+
+
+              <ion-item>
+                <ion-label>Currently offered
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-toggle slot="start" name="available" formControlName="available" color="success"></ion-toggle>
+              </ion-item>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.available">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf=" getControls()[ix].get('available').hasError(validation.type) && (getControls()[ix].get('available').dirty || getControls()[ix].get('available').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
+                </ng-container>
+              </div>
+
+
+              <ion-item>
+                <ion-label position="floating">Availability
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" name="availability" formControlName="availability"></ion-input>
+              </ion-item>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.availability">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf=" getControls()[ix].get('availability').hasError(validation.type) && (getControls()[ix].get('availability').dirty || getControls()[ix].get('availability').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
+                </ng-container>
+              </div>
+
+
+              <ion-item>
+                <ion-label position="floating">Place
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" name="place" formControlName="place"></ion-input>
+              </ion-item>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.place">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf=" getControls()[ix].get('place').hasError(validation.type) && (getControls()[ix].get('place').dirty || getControls()[ix].get('place').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
+                </ng-container>
+              </div>
+
+
+              <ion-item>
+                <ion-label position="floating">Price
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" name="price" formControlName="price"></ion-input>
+              </ion-item>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.price">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf=" getControls()[ix].get('price').hasError(validation.type) && (getControls()[ix].get('price').dirty || getControls()[ix].get('price').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
+                </ng-container>
+              </div>
+
+
+              <ion-item>
+                <ion-label position="floating">Quantity
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" name="quantity" formControlName="quantity"></ion-input>
+              </ion-item>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.quantity">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf=" getControls()[ix].get('quantity').hasError(validation.type) && (getControls()[ix].get('quantity').dirty || getControls()[ix].get('quantity').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
+                </ng-container>
+              </div>
+
+
+              <ion-item>
+                <ion-label position="floating">Description
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-textarea type="text" name="description" formControlName="description" spellcheck
+                              rows="5" autoGrow="false"></ion-textarea>
+              </ion-item>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of serviceValidation.description">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf=" getControls()[ix].get('description').hasError(validation.type) && (getControls()[ix].get('description').dirty || getControls()[ix].get('description').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
+                </ng-container>
+              </div>
+
+
+              <ion-row class="ion-justify-content-evenly ion-no-margin ion-no-padding ion-wrap ">
+                <ion-col class="ion-align-self-start ion-no-margin ion-no-padding" size-xs="12" size-sm="4">
+                  <ion-button (click)="deleteService(ix)" class="form-button ion-no-margin" type="button"
+                              color="danger" expand="full">
+                    <ion-icon slot="start" name="close"></ion-icon>
+                    Delete
+                  </ion-button>
+                </ion-col>
+
+                <ion-col class="ion-align-self-end ion-no-margin ion-no-padding " size-xs="12" offset-sm="4"
+                         size-sm="4">
+                  <ion-button (click)="saveService(ix)" class="submit-btn form-button ion-no-margin"
+                              type="submit" expand="full" color="primary" [disabled]="!getValidity(ix)">
+                    <ion-icon slot="start" name="save"></ion-icon>
+                    Save
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+
+            </ion-item-group>
+          </ion-list>
+        </ion-item-group>
+      </form>
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card class="spaced-card constrained-card ion-margin ion-no-padding">
+
+    <ion-card-header *ngIf="serviceRequests.length > 0" class="ion-no-margin" color="dark">
+      <ion-card-title>
+        <ion-label>
+          New Service Requests
+        </ion-label>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content *ngIf="serviceRequests.length > 0" class="ion-no-margin ion-no-padding">
+      <ion-card *ngFor="let serviceRequest of serviceRequests">
+        <ion-card-title>
+          <ion-label class="ion-text-wrap ion-padding">
+            Requests for <em>{{serviceRequest.serviceName}}</em>
+          </ion-label>
+        </ion-card-title>
+        <ion-card-content class="ion-no-margin ion-no-padding">
+          <ion-list class="ion-no-margin ion-no-padding">
+            <ion-item *ngFor="let request of serviceRequest.requests"
+                      class="spaced-button ion-no-margin ion-no-padding">
+              <ion-button size="default" expand="full" class="ion-no-margin"
+                          (click)='viewServiceRequest(request, serviceRequest.serviceId)' fill="clear">
+                {{request.eventName}}
+                <ion-icon name="arrow-dropright"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card class="constrained-card spaced-card ion-margin ion-no-padding">
+
+    <ion-card-header *ngIf="showNewServiceForm" class="ion-no-margin" color="dark">
+      <ion-card-title>
+        <ion-label>
+          Add a New Service
+        </ion-label>
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="ion-no-margin ion-no-padding">
+
+      <form id="newServiceForm" *ngIf="showNewServiceForm" [formGroup]="newServiceForm" (ngSubmit)="saveNewService()">
+
+        <ion-list>
+          <ion-item-group>
+
+            <ion-item>
+              <ion-label position="floating">Name
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+              <ion-input type="text" name="name" formControlName="name"></ion-input>
+            </ion-item>
+
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.name">
+                <ion-chip class="validation-chip" color="danger" outline="true"
+                          *ngIf="newServiceForm.get('name').hasError(validation.type) && (newServiceForm.get('name').dirty || newServiceForm.get('name').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                </ion-chip>
+              </ng-container>
+            </div>
+
+
+            <ion-item>
+              <ion-label position="floating">Category
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+              <ion-select interface="popover" name="categoryId" formControlName="categoryId">
+                <ion-select-option *ngFor="let category of categories"
+                                   [value]="category.id">{{category.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.category">
+                <ion-chip class="validation-chip" color="danger" outline="true"
+                          *ngIf="newServiceForm.get('categoryId').hasError(validation.type) && (newServiceForm.get('categoryId').dirty || newServiceForm.get('categoryId').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                </ion-chip>
+              </ng-container>
+            </div>
+
+
+            <ion-item>
+              <ion-label>Currently offered
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+              <ion-toggle slot="start" name="available" formControlName="available" color="success"
+                          checked></ion-toggle>
+            </ion-item>
+
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.available">
+                <ion-chip class="validation-chip" color="danger" outline="true"
+                          *ngIf="newServiceForm.get('available').hasError(validation.type) && (newServiceForm.get('available').dirty || newServiceForm.get('available').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                </ion-chip>
+              </ng-container>
+            </div>
+
+
+            <ion-item>
+              <ion-label position="floating">Available dates and times
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+              <ion-input type="text" name="availability" formControlName="availability"></ion-input>
+            </ion-item>
+
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.availability">
+                <ion-chip class="validation-chip" color="danger" outline="true"
+                          *ngIf="newServiceForm.get('availability').hasError(validation.type) && (newServiceForm.get('availability').dirty || newServiceForm.get('availability').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                </ion-chip>
+              </ng-container>
+            </div>
+
+
+            <ion-item>
+              <ion-label position="floating">Place
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+              <ion-input type="text" name="place" formControlName="place"></ion-input>
+            </ion-item>
+
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.place">
+                <ion-chip class="validation-chip" color="danger" outline="true"
+                          *ngIf="newServiceForm.get('place').hasError(validation.type) && (newServiceForm.get('place').dirty || newServiceForm.get('place').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                </ion-chip>
+              </ng-container>
+            </div>
+
+
+            <ion-item>
+              <ion-label position="floating">Price
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+              <ion-input type="text" name="price" formControlName="price"></ion-input>
+            </ion-item>
+
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.price">
+                <ion-chip class="validation-chip" color="danger" outline="true"
+                          *ngIf="newServiceForm.get('price').hasError(validation.type) && (newServiceForm.get('price').dirty || newServiceForm.get('price').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                </ion-chip>
+              </ng-container>
+            </div>
+
+
+            <ion-item>
+              <ion-label position="floating">Quantity
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+              <ion-input type="text" name="quantity" formControlName="quantity"></ion-input>
+            </ion-item>
+
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.quantity">
+                <ion-chip class="validation-chip" color="danger" outline="true"
+                          *ngIf="newServiceForm.get('quantity').hasError(validation.type) && (newServiceForm.get('quantity').dirty || newServiceForm.get('quantity').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                </ion-chip>
+              </ng-container>
+            </div>
+
+
+            <ion-item>
+              <ion-label position="floating">Description
+                <ion-text color="danger">*</ion-text>
+              </ion-label>
+              <ion-input type="text" name="description" formControlName="description"></ion-input>
+            </ion-item>
+
+            <div class="validation-errors ion-text-wrap">
+              <ng-container *ngFor="let validation of serviceValidation.description">
+                <ion-chip class="validation-chip" color="danger" outline="true"
+                          *ngIf="newServiceForm.get('description').hasError(validation.type) && (newServiceForm.get('description').dirty || newServiceForm.get('description').touched)">
+                  <ion-icon name="warning"></ion-icon>
+                  <ion-label class="ion-text-wrap">
+                    {{validation.message}}
+                  </ion-label>
+                </ion-chip>
+              </ng-container>
+            </div>
+
+          </ion-item-group>
+        </ion-list>
+
+        <ion-row class="ion-justify-content-evenly ion-no-margin ion-no-padding ion-wrap ">
+          <ion-col class="ion-align-self-start ion-no-margin ion-no-padding" size-xs="12" size-sm="4">
+            <ion-button id="remove-button" (click)="deleteNewService()" class="form-button ion-no-margin" type="button"
+                        expand="full" color="danger">
+              <ion-icon slot="start" name="close"></ion-icon>
+              Remove
+            </ion-button>
+          </ion-col>
+
+          <ion-col class="ion-align-self-end ion-no-margin ion-no-padding " size-xs="12" offset-sm="4" size-sm="4">
+            <ion-button id="save-button" class="form-button submit-btn ion-no-margin" type="submit"
+                        [disabled]="!newServiceForm.valid" expand="full" color="primary">
+              <ion-icon slot="start" name="save"></ion-icon>
+              Save
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+      </form>
+
+
+      <div *ngIf="!showNewServiceForm">
+        <ion-button id="addNewServiceButton" (click)="addNewService()" class="submit-btn ion-no-margin" expand="full"
+                    type="button" color="success">
+          <ion-icon slot="start" name="add"></ion-icon>
+          Add Service
+        </ion-button>
+      </div>
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>

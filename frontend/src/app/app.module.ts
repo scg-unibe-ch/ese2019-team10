@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {RouteReuseStrategy, RouterModule} from '@angular/router';
+import {BrowserModule, Title} from '@angular/platform-browser';
+import { RouteReuseStrategy, RouterModule} from '@angular/router';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
@@ -14,12 +14,14 @@ import {JwtModule, JWT_OPTIONS} from '@auth0/angular-jwt';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HttpErrorService} from './services/http-error.service';
-
-// import { LoginPage} from './pages/login/login.page';
-// import { RegisterPage} from './pages/register/register.page';
+import {SharedComponentsModule} from './components/shared-components.module';
 
 export function jwtOptionsFactory(storage) {
   return {
+    authHeader: 'auth',
+    authPrefix: '',
+    headerName: 'auth',
+    authScheme: '',
     tokenGetter: () => {
       return storage.get('access_token');
     },
@@ -31,10 +33,6 @@ export function jwtOptionsFactory(storage) {
 @NgModule({
   declarations: [
     AppComponent,
-    // TodoListComponent,
-    // TodoItemComponent,
-    // LoginPage,
-    // RegisterPage
   ],
   entryComponents: [],
   imports: [
@@ -51,17 +49,22 @@ export function jwtOptionsFactory(storage) {
         provide: JWT_OPTIONS,
         useFactory: jwtOptionsFactory,
         deps: [Storage],
-      }
-    })],
+      },
+    }),
+    SharedComponentsModule,
+  ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    {
+      provide: RouteReuseStrategy, useClass: IonicRouteStrategy
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorService,
       multi: true
-    }
+    },
+    Title,
   ],
   bootstrap: [AppComponent]
 })

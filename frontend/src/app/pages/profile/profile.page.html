@@ -1,127 +1,145 @@
 <ion-header>
-  <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      Profile
-    </ion-title>
-  </ion-toolbar>
+  <app-header class="profile" [title]="title">
+  </app-header>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-card>
+<ion-content class="ion-margin ion-padding">
+  <ion-card class="constrained-card ion-margin ion-no-padding">
+    <ion-card-content class="ion-no-margin ion-no-padding">
 
-    <ion-row>
-      <ion-card-content>
-        <p>Please register to be able to plan an event or offer your services.</p>
-      </ion-card-content>
-    </ion-row>
+      <form id="profileForm" class="profile" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <ion-row class="ion-no-margin ion-no-padding">
+          <ion-col class="ion-no-margin ion-no-padding">
+            <ion-list class="ion-no-margin ion-no-padding">
 
-    <div class="registration-form">
-      <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
-        <ion-row>
-          <ion-col>
-            <ion-list inset>
-
-              <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+              <ion-item-divider class="page-divider" color="dark" sticky="true">
+                <ion-icon class="divider-icon" slot="start" name="lock"></ion-icon>
                 <ion-label>
-                  <ion-icon class="form-icon" slot="start" name="mail"></ion-icon>
                   Account Information
                 </ion-label>
               </ion-item-divider>
 
               <ion-item>
-                <ion-label position="floating">E-Mail</ion-label>
-                <ion-input type="email" name="email" formControlName="email" required></ion-input>
+                <ion-label position="floating">E-Mail
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="email" name="email" formControlName="email" autocomplete="email" required></ion-input>
               </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.email">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('email').hasError(validation.type) && (registrationForm.get('email').dirty || registrationForm.get('email').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of validationMessages.email">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="profileForm.get('email').hasError(validation.type) && (profileForm.get('email').dirty || profileForm.get('email').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
+
 
               <div formGroupName="matchingPasswords">
 
                 <ion-item>
-                  <ion-label position="floating">Password</ion-label>
-                  <ion-input type="password" name="password" formControlName="password" required></ion-input>
+                  <ion-label position="floating">New password</ion-label>
+                  <ion-input type="password" name="password" formControlName="password" autocomplete="new-password"
+                  ></ion-input>
                 </ion-item>
-                <div class="validation-errors">
-                  <ng-container *ngFor="let validation of registrationMessages.password">
-                    <div class="error-message"
-                         *ngIf="registrationForm.get('matchingPasswords').get('password').hasError(validation.type) && (registrationForm.get('matchingPasswords').get('password').dirty || registrationForm.get('matchingPasswords').get('password').touched)">
-                      <ion-icon name="information-circle-outline"></ion-icon>
-                      {{ validation.message }}
-                    </div>
+
+                <div class="validation-errors ion-text-wrap">
+                  <ng-container *ngFor="let validation of validationMessages.password">
+                    <ion-chip class="validation-chip" color="danger" outline="true"
+                              *ngIf="profileForm.get('matchingPasswords').get('password').hasError(validation.type) && (profileForm.get('matchingPasswords').get('password').dirty || profileForm.get('matchingPasswords').get('password').touched)">
+                      <ion-icon name="warning"></ion-icon>
+                      <ion-label class="ion-text-wrap">
+                        {{validation.message}}
+                      </ion-label>
+                    </ion-chip>
                   </ng-container>
                 </div>
 
                 <ion-item>
-                  <ion-label position="floating">Confirm password</ion-label>
+                  <ion-label position="floating">Confirm new password</ion-label>
                   <ion-input type="password" name="confirmPassword" formControlName="confirmPassword"
-                             required></ion-input>
+                             autocomplete="new-password"
+                  ></ion-input>
                 </ion-item>
-                <div class="validation-errors">
-                  <ng-container *ngFor="let validation of registrationMessages.confirmPassword">
-                    <div class="error-message"
-                         *ngIf="registrationForm.get('matchingPasswords').get('confirmPassword').hasError(validation.type) && (registrationForm.get('matchingPasswords').get('confirmPassword').dirty || registrationForm.get('matchingPasswords').get('confirmPassword').touched)">
-                      <ion-icon name="information-circle-outline"></ion-icon>
-                      {{ validation.message }}
-                    </div>
+
+                <div class="validation-errors ion-text-wrap">
+                  <ng-container *ngFor="let validation of validationMessages.confirmPassword">
+                    <ion-chip class="validation-chip" color="danger" outline="true"
+                              *ngIf="profileForm.get('matchingPasswords').get('confirmPassword').hasError(validation.type) && (profileForm.get('matchingPasswords').get('confirmPassword').dirty || profileForm.get('matchingPasswords').get('confirmPassword').touched)">
+                      <ion-icon name="warning"></ion-icon>
+                      <ion-label class="ion-text-wrap">
+                        {{validation.message}}
+                      </ion-label>
+                    </ion-chip>
                   </ng-container>
                 </div>
 
               </div>
 
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.matchingPasswords">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('matchingPasswords').hasError(validation.type) && (registrationForm.get('matchingPasswords').get('confirmPassword').dirty || registrationForm.get('matchingPasswords').get('confirmPassword').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of validationMessages.matchingPasswords">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="profileForm.get('matchingPasswords').hasError(validation.type) && (profileForm.get('matchingPasswords').get('confirmPassword').dirty || profileForm.get('matchingPasswords').get('confirmPassword').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
 
-              <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+              <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+                <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
                 <ion-label>
-                  <ion-icon class="form-icon" slot="start" name="person"></ion-icon>
                   Personal Information
                 </ion-label>
               </ion-item-divider>
 
               <ion-item>
-                <ion-label position="floating">First Name</ion-label>
-                <ion-input type="text" name="firstName" formControlName="firstName" required></ion-input>
+                <ion-label position="floating">First Name
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" name="firstName" formControlName="firstName" autocomplete="given-name"
+                           required></ion-input>
               </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.firstName">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('firstName').hasError(validation.type) && (registrationForm.get('firstName').dirty || registrationForm.get('firstName').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of validationMessages.firstName">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="profileForm.get('firstName').hasError(validation.type) && (profileForm.get('firstName').dirty || profileForm.get('firstName').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
 
+
               <ion-item>
-                <ion-label position="floating">Last Name</ion-label>
-                <ion-input type="text" name="lastName" formControlName="lastName" required></ion-input>
+                <ion-label position="floating">Last Name
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" name="lastName" formControlName="lastName" autocomplete="family-name"
+                           required></ion-input>
               </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.lastName">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('lastName').hasError(validation.type) && (registrationForm.get('lastName').dirty || registrationForm.get('lastName').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of validationMessages.lastName">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="profileForm.get('lastName').hasError(validation.type) && (profileForm.get('lastName').dirty || profileForm.get('lastName').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
+
 
               <ion-item>
                 <ion-label position="floating">Gender</ion-label>
@@ -129,78 +147,120 @@
                   <ion-select-option *ngFor="let gender of genders" [value]="gender">{{gender}}</ion-select-option>
                 </ion-select>
               </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.gender">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('gender').hasError(validation.type) && (registrationForm.get('gender').dirty || registrationForm.get('gender').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of validationMessages.gender">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="profileForm.get('gender').hasError(validation.type) && (profileForm.get('gender').dirty || profileForm.get('gender').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
+
+
+              <ion-item>
+                <ion-label position="floating">Birthday</ion-label>
+                <ion-input type="text" name="birthday" formControlName="birthday" placeholder="DD/MM/YYYY" autocomplete="bday"></ion-input>
+              </ion-item>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of validationMessages.birthday">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="profileForm.get('birthday').hasError(validation.type) && (profileForm.get('birthday').dirty || profileForm.get('birthday').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
+                </ng-container>
+              </div>
+
 
               <ion-item>
                 <ion-label position="floating">Phone</ion-label>
-                <ion-input type="tel" name="phone" formControlName="phone" required></ion-input>
+                <ion-input type="tel" name="phone" formControlName="phone" autocomplete="tel"></ion-input>
               </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.phone">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('phone').hasError(validation.type) && (registrationForm.get('phone').dirty || registrationForm.get('phone').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of validationMessages.phone">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="profileForm.get('phone').hasError(validation.type) && (profileForm.get('phone').dirty || profileForm.get('phone').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
 
-              <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
+
+              <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+                <ion-icon class="divider-icon" slot="start" name="map"></ion-icon>
                 <ion-label>
-                  <ion-icon class="form-icon" slot="start" name="pin"></ion-icon>
                   Address
                 </ion-label>
               </ion-item-divider>
 
+
               <ion-item>
                 <ion-label position="floating">Street</ion-label>
-                <ion-input type="text" name="street" formControlName="street" required></ion-input>
+                <ion-input type="text" name="street" formControlName="street" autocomplete="street-address"
+                ></ion-input>
               </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.street">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('street').hasError(validation.type) && (registrationForm.get('street').dirty || registrationForm.get('street').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of validationMessages.street">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="profileForm.get('street').hasError(validation.type) && (profileForm.get('street').dirty || profileForm.get('street').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
+
 
               <ion-item>
                 <ion-label position="floating">Postal Code</ion-label>
-                <ion-input type="text" name="postalCode" formControlName="postalCode" required></ion-input>
+                <ion-input type="text" name="postalCode" formControlName="postalCode" autocomplete="postal-code"
+                ></ion-input>
               </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.postalCode">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('postalCode').hasError(validation.type) && (registrationForm.get('postalCode').dirty || registrationForm.get('postalCode').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of validationMessages.postalCode">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="profileForm.get('postalCode').hasError(validation.type) && (profileForm.get('postalCode').dirty || profileForm.get('postalCode').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
 
+
               <ion-item>
                 <ion-label position="floating">City</ion-label>
-                <ion-input type="text" name="city" formControlName="city" required></ion-input>
+                <ion-input type="text" name="city" formControlName="city" autocomplete="address-level2"
+                ></ion-input>
               </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.city">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('city').hasError(validation.type) && (registrationForm.get('city').dirty || registrationForm.get('city').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of validationMessages.city">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="profileForm.get('city').hasError(validation.type) && (profileForm.get('city').dirty || profileForm.get('city').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
+
 
               <ion-item>
                 <ion-label position="floating">Country</ion-label>
@@ -208,59 +268,50 @@
                   <ion-select-option *ngFor="let country of countries" [value]="country">{{country}}</ion-select-option>
                 </ion-select>
               </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.country">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('country').hasError(validation.type) && (registrationForm.get('country').dirty || registrationForm.get('country').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
+
+              <div class="validation-errors ion-text-wrap">
+                <ng-container *ngFor="let validation of validationMessages.country">
+                  <ion-chip class="validation-chip" color="danger" outline="true"
+                            *ngIf="profileForm.get('country').hasError(validation.type) && (profileForm.get('country').dirty || profileForm.get('country').touched)">
+                    <ion-icon name="warning"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      {{validation.message}}
+                    </ion-label>
+                  </ion-chip>
                 </ng-container>
               </div>
 
 
-              <ion-item-divider class="ion-margin-top" color="dark" sticky="true">
-                <ion-label>
-                  <ion-icon class="form-icon" slot="start" name="clipboard"></ion-icon>
-                  Terms & Conditions
+              <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+                <ion-icon class="divider-icon" slot="start" name="flame"></ion-icon>
+                <ion-label class="ion-text-wrap">
+                  Events and services
                 </ion-label>
               </ion-item-divider>
 
 
-              <ion-button class="terms ion-text-capitalize" type="button" routerDirection="forward" target="_blank"
-                          href="/terms" color="medium" fill="outline" expand="block">
-              <span class="ion-text-left">Read the terms
-              <ion-icon class="left-margin" name="open"></ion-icon></span>
-              </ion-button>
+              <ion-item>
+                <ion-label>I want to provide a service</ion-label>
+                <ion-checkbox name="isServiceProvider" formControlName="isServiceProvider"></ion-checkbox>
+              </ion-item>
 
 
               <ion-item>
-                <ion-label>I accept</ion-label>
-                <ion-checkbox name="terms" formControlName="terms"></ion-checkbox>
+                <ion-label>I want to plan an event</ion-label>
+                <ion-checkbox name="isEventManager" formControlName="isEventManager"></ion-checkbox>
               </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of registrationMessages.terms">
-                  <div class="error-message"
-                       *ngIf="registrationForm.get('terms').hasError(validation.type) && (registrationForm.get('terms').dirty || registrationForm.get('terms').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
 
-              <ion-row class="ion-margin-top">
-                <ion-button class="submit-btn" expand="full" type="submit" [disabled]="!registrationForm.valid">
-                  <ion-icon slot="start" name="person-add"></ion-icon>
-                  Register
-                </ion-button>
-              </ion-row>
+
+              <ion-button id="save-button" class="submit-btn ion-no-margin" expand="full" type="submit" color="primary"
+                          [disabled]="!profileForm.valid">
+                <ion-icon slot="start" name="save"></ion-icon>
+                Save
+              </ion-button>
 
             </ion-list>
           </ion-col>
         </ion-row>
-
       </form>
-    </div>
-
+    </ion-card-content>
   </ion-card>
 </ion-content>

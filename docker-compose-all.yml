@@ -9,28 +9,30 @@ services:
     restart: "no"
     ports:
       - "3000:3000"
-    command: sh -c "./wait-for-it.sh -t 20 database:3306 -- node ./build/server.js"
+    command: sh -c "./wait-for-it.sh -t 20 database:5432 -- node ./build/server.js"
   database:
-    image: mariadb:10.0
+    image: postgres:12
     restart: always
     networks:
       dev-net:
         aliases:
           - app-database
     environment:
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_DATABASE: app_db
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: root
+      POSTGRES_DB: app_db
     volumes:
-      - ../ese-db-volume:/var/lib/mysql
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+      - ../ese-db-volume:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
     restart: always
     networks:
       - dev-net
     ports:
       - "8081:80"
     environment:
-      - PMA_HOST=app-database
+      - PGADMIN_DEFAULT_EMAIL=pgadmin@mail.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
   frontend-webserver:
     build: frontend/
     networks:
@@ -41,3 +43,7 @@ services:
     command: npm run ng serve
 networks:
   dev-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16

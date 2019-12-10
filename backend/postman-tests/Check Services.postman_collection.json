@@ -1,0 +1,880 @@
+{
+	"info": {
+		"_postman_id": "68567c2e-1114-409f-a27b-818749e1f371",
+		"name": "Check Services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7c62ce4b-4c0b-4681-8561-1659a83aac29",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Body says success\", function () {",
+							"    pm.response.to.have.body({\"msg\": \"User created\"});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd1e743c-1705-4664-837a-6b85fc56643b",
+						"exec": [
+							"const firstName = Math.random().toString(36).substring(7);",
+							"const lastName = Math.random().toString(36).substring(7);",
+							"const  email = firstName + '.' + lastName + '@mail.com'",
+							"pm.globals.set('firstName', firstName);",
+							"pm.globals.set('lastName', lastName);",
+							"pm.globals.set('email', email)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"{{firstName}}\",\n\t\"lastName\": \"{{lastName}}\",\n\t\"email\": \"{{email}}\",\n\t\"street\": \"addr\",\n\t\"password\": \"p4ssw0rd\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"register"
+					]
+				},
+				"description": "creates a user in the database via /api/register"
+			},
+			"response": []
+		},
+		{
+			"name": "login as admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9ad01265-9750-44e6-ad0d-d1389f0473a6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.globals.set('idToken', pm.response.json().idToken)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"admin@mail.com\",\n\t\"password\": \"xugai4nie9ief5AhshaiSh1aequaiy\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create admin service",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f9590fc7-543c-43e0-9d0f-78665dbd7816",
+						"exec": [
+							"const serviceName = Math.random().toString(36).substring(7);",
+							"pm.globals.set('serviceName', serviceName);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c825b1c9-90d3-4272-ba4d-806b866eadd8",
+						"exec": [
+							"pm.test(\"Was successful\", function() {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.have.body({\"msg\": \"Service created\"})",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"{{serviceName}}\",\n  \"description\": \"Lorem ipsum dolor sit amet\",\n  \"price\": \"250CHF\",\n  \"availability\": \"Saturday and Sunday, from 8am to 12pm\",\n  \"place\": \"Zurich\",\n  \"available\": true,\n  \"quantity\": \"5 plates of appetisers\",\n  \"categoryId\": 3,\n  \"userId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/service",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"service"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get to-approve as admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abf0f581-eba4-49ff-bc44-06c1ba83d853",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let max = 0;",
+							"pm.response.json().forEach((user) => {if (user.id > max) {max = user.id}});",
+							"pm.globals.set('newId', max);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/admin/to-approve",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"to-approve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "approve new id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d27496d3-3640-4bf3-9192-872de8c68f93",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"user approved message\", function () {",
+							"    pm.response.json().msg === \"User approved\";",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "auth",
+						"value": "{{idToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/admin/approve/{{newId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"approve",
+						"{{newId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login as user 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1a9c48e6-fd11-48bd-917d-f15b50a70511",
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body says not approved\", function () {",
+							"    pm.response.json().id === \"{{newId}}\";",
+							"});",
+							"",
+							"pm.globals.set('idToken', pm.response.json().idToken)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "31eb3265-80bc-44be-8fa9-f20bcd0516bc",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"p4ssw0rd\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "logs in with email \"david.herrmann@protonmail.com\" and password \"p4ssw0r\""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Service",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f9590fc7-543c-43e0-9d0f-78665dbd7816",
+						"exec": [
+							"const serviceName = Math.random().toString(36).substring(7);",
+							"pm.globals.set('serviceName', serviceName);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c825b1c9-90d3-4272-ba4d-806b866eadd8",
+						"exec": [
+							"pm.test(\"Was successful\", function() {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.have.body({\"msg\": \"Service created\"})",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"{{serviceName}}\",\n  \"description\": \"Lorem ipsum dolor sit amet\",\n  \"price\": \"250CHF\",\n  \"availability\": \"Saturday and Sunday, from 8am to 12pm\",\n  \"place\": \"Zurich\",\n  \"available\": true,\n  \"quantity\": \"5 plates of appetisers\",\n  \"categoryId\": 3,\n  \"userId\": {{newId}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/service",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"service"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get profile info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bdb3b46-747f-40b8-8918-49c105151135",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"newService = pm.response.json().services[0]",
+							"",
+							"pm.test(\"event info correct\", function() {",
+							"    pm.expect(newService['name']).to.be.equal(pm.globals.get('serviceName'))",
+							"    pm.expect(newService['description']).to.be.equal(\"Lorem ipsum dolor sit amet\")",
+							"    pm.expect(newService['price']).to.be.equal(\"250CHF\")",
+							"    pm.expect(newService['available']).to.be.equal(true)",
+							"    pm.expect(newService['quantity']).to.be.equal(\"5 plates of appetisers\")",
+							"    pm.expect(newService['category']['id']).to.be.equal(3)",
+							"    pm.expect(newService['category']['name']).to.be.equal(\"Objects\")",
+							"    pm.expect(newService['price']).to.be.equal(\"250CHF\")",
+							"    pm.expect(newService['place']).to.be.equal(\"Zurich\")",
+							"})",
+							"",
+							"pm.globals.set('newServiceId', newService['id'])"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"value": "{{idToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/user/profile/{{newId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"profile",
+						"{{newId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get new service",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bdb3b46-747f-40b8-8918-49c105151135",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"newService = pm.response.json()",
+							"",
+							"pm.test(\"event info correct\", function() {",
+							"    pm.expect(newService['name']).to.be.equal(pm.globals.get('serviceName'))",
+							"    pm.expect(newService['description']).to.be.equal(\"Lorem ipsum dolor sit amet\")",
+							"    pm.expect(newService['price']).to.be.equal(\"250CHF\")",
+							"    pm.expect(newService['available']).to.be.equal(true)",
+							"    pm.expect(newService['quantity']).to.be.equal(\"5 plates of appetisers\")",
+							"    pm.expect(newService['categoryId']).to.be.equal(3)",
+							"    pm.expect(newService['price']).to.be.equal(\"250CHF\")",
+							"    pm.expect(newService['place']).to.be.equal(\"Zurich\")",
+							"    pm.expect(newService['userId']).to.be.equal(pm.globals.get('newId'))",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/user/service/{{newServiceId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"service",
+						"{{newServiceId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "confirm test",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth",
+						"value": "{{idToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"serviceProviderId\": 1223,\n  \"serviceId\": \"{{newServiceId}}\",\n  \"eventManagerId\": 923,\n  \"eventId\": 313,\n  \"reply\": \"Yeah, sure.\",\n  \"responded\": true,\n  \"booked\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/service/confirm",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"service",
+						"confirm"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update service",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f9590fc7-543c-43e0-9d0f-78665dbd7816",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c825b1c9-90d3-4272-ba4d-806b866eadd8",
+						"exec": [
+							"pm.test(\"Was successful\", function() {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"pm.test(\"Message says uupdated\", function() {",
+							"    pm.response.to.have.body({\"msg\": \"Service updated\"})",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "auth",
+						"value": "{{idToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"{{serviceName}}\",\n  \"description\": \"Better description\",\n  \"price\": \"250CHF\",\n  \"availability\": \"Saturday and Sunday, from 8am to 12pm\",\n  \"place\": \"Bern\",\n  \"available\": true,\n  \"quantity\": \"9999 plates of appetisers\",\n  \"categoryId\": 2,\n  \"userId\": {{newId}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/service/{{newServiceId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"service",
+						"{{newServiceId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get updated service",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bdb3b46-747f-40b8-8918-49c105151135",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"newService = pm.response.json()",
+							"",
+							"pm.test(\"event info correct\", function() {",
+							"    pm.expect(newService['name']).to.be.equal(pm.globals.get('serviceName'))",
+							"    pm.expect(newService['description']).to.be.equal(\"Better description\")",
+							"    pm.expect(newService['price']).to.be.equal(\"250CHF\")",
+							"    pm.expect(newService['available']).to.be.equal(true)",
+							"    pm.expect(newService['quantity']).to.be.equal(\"9999 plates of appetisers\")",
+							"    pm.expect(newService['categoryId']).to.be.equal(2)",
+							"    pm.expect(newService['price']).to.be.equal(\"250CHF\")",
+							"    pm.expect(newService['place']).to.be.equal(\"Bern\")",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/user/service/{{newServiceId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"service",
+						"{{newServiceId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete service",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bdb3b46-747f-40b8-8918-49c105151135",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Message says deleted\", function () {",
+							"    pm.response.to.have.body({'msg': 'Service deleted'})",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/user/service/{{newServiceId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"service",
+						"{{newServiceId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete service again",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bdb3b46-747f-40b8-8918-49c105151135",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Message says not found\", function () {",
+							"    pm.response.to.have.body({'msg': 'Service not found'})",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/user/service/{{newServiceId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"service",
+						"{{newServiceId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete foreign service",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bdb3b46-747f-40b8-8918-49c105151135",
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							"pm.test(\"Message says not found\", function () {",
+							"    pm.response.to.have.body({'msg': 'You are not allowed to do this'})",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "08e58bbf-7b97-4757-9ae1-109e54f98a85",
+						"exec": [
+							"adminServiceId = pm.globals.get('newServiceId') - 1",
+							"pm.globals.set('adminServiceId', adminServiceId)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/user/service/{{adminServiceId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"service",
+						"{{adminServiceId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "unsuccsessfully try to get deleted event",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bdb3b46-747f-40b8-8918-49c105151135",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"",
+							"});",
+							"pm.test(\"Message says no such serviced\", function () {",
+							"    pm.response.to.have.body({'msg': 'No such service'})",
+							"});",
+							"    "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/user/service/{{newServiceId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"service",
+						"{{newServiceId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

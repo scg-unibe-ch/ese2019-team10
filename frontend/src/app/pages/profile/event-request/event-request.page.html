@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <app-header class="service-requests" [title]="title">
+    </app-header>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="requestData != null; else nodata">
+    <ion-card class="constrained-card ion-margin ion-no-padding">
+      <ion-card-header class="ion-no-margin" color="dark">
+        <ion-card-title>
+          <ion-label>
+            Event: {{ requestData.eventName }}
+          </ion-label>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="ion-no-margin ion-no-padding">
+        <ion-item><b>Request from:</b>
+          <ion-label class="ion-margin ion-text-wrap">{{ requestData.serviceName }}</ion-label>
+        </ion-item>
+        <ion-item><b>Status:</b>
+          <ion-label class="ion-margin ion-text-wrap"> {{ requestData.status }}</ion-label>
+        </ion-item>
+        <ion-item><b>Your message:</b>
+          <ion-label class="ion-margin ion-text-wrap"> {{ requestData.message }}</ion-label>
+        </ion-item>
+        <ion-item><b>Reply:</b>
+          <ion-label class="ion-margin ion-text-wrap">{{ requestData.reply }}</ion-label>
+        </ion-item>
+
+
+        <ion-button class="end-button submit-btn ion-no-margin" expand="full"
+                    *ngIf="requestData.status == 'Pending' || requestData.status == 'Rejected'" color="danger"
+                    (click)="deleteRequest()">
+          <ion-icon slot="start" name="close"></ion-icon>
+          Delete
+        </ion-button>
+
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <ng-template #nodata>
+    <ion-card class="constrained-card ion-margin ion-no-padding">
+      <ion-card-header class="ion-no-margin" color="dark">
+        <ion-card-title>
+          <ion-label>
+            Something went wrong
+          </ion-label>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="ion-no-margin ion-no-padding">
+        <ion-label>
+          There is no request information.
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+</ion-content>

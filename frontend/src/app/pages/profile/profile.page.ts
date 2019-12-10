@@ -1,78 +1,62 @@
 import {Component, OnInit} from '@angular/core';
 import {Validators, FormBuilder, FormGroup, FormControl} from '@angular/forms';
-import {PasswordValidator} from '../../validators/password.validator';
 import {Router} from '@angular/router';
+import {Title} from '@angular/platform-browser';
+
+import {PasswordValidator} from '../../validators/password.validator';
+import {DateValidator} from '../../validators/date.validator';
 import {AuthService} from '../../services/auth.service';
+import {AlertService} from 'src/app/services/alert.service';
+import {ValidationMessages} from '../../constants/validation-messages.constants';
+import {User} from '../../models/user.model';
+import {appConstants} from '../../constants/app.constants';
+
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
+
 export class ProfilePage implements OnInit {
+  public title: string;
+  public profileForm: FormGroup;
+  public matchingPasswordsGroup: FormGroup;
+  public countries: Array<string>;
+  public genders: Array<string>;
+  public day = null;
+  public month = null;
+  public year = null;
+  public currentTime = null;
+  public validationMessages = ValidationMessages;
+  public user: User;
 
   constructor(
-    public formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private alertService: AlertService,
+    private titleService: Title,
   ) {
   }
 
-  registrationForm: FormGroup;
-  matchingPasswordsGroup: FormGroup;
-  countries: Array<string>;
-  genders: Array<string>;
-
-  registrationMessages = {
-    firstName: [
-      {type: 'required', message: 'First name is required.'}
-    ],
-    lastName: [
-      {type: 'required', message: 'Last name is required.'}
-    ],
-    email: [
-      {type: 'required', message: 'E-mail is required.'},
-      {type: 'pattern', message: 'Please enter a valid e-mail.'}
-    ],
-    phone: [
-      {type: 'required', message: 'Phone number is required.'},
-    ],
-    gender: [
-      {type: 'required', message: 'Gender is required.'},
-    ],
-    street: [
-      {type: 'required', message: 'Street is required.'},
-    ],
-    postalCode: [
-      {type: 'required', message: 'Postal code is required.'},
-      {type: 'pattern', message: 'Please enter a valid postal code.'}
-    ],
-    city: [
-      {type: 'required', message: 'City is required.'},
-    ],
-    country: [
-      {type: 'required', message: 'Country is required.'},
-    ],
-    password: [
-      {type: 'required', message: 'Password is required.'},
-      {type: 'minlength', message: 'Password must be at least 5 characters long.'},
-      {type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number.'}
-    ],
-    confirmPassword: [
-      {type: 'required', message: 'Confirm password is required.'}
-    ],
-    matchingPasswords: [
-      {type: 'areEqual', message: 'Password mismatch.'}
-    ],
-    terms: [
-      {type: 'pattern', message: 'You must accept terms and conditions.'}
-    ],
-  };
-
   ngOnInit() {
+    this.title = 'Profile';
+    this.titleService.setTitle(this.title + appConstants.APPENDED_TITLE);
+    this.currentTime = new Date();
+    this.day = String(this.currentTime.getDate()).padStart(2, '0');
+    this.month = String(this.currentTime.getMonth() + 1).padStart(2, '0');
+    this.year = this.currentTime.getFullYear();
+    this.user = new User().deserialize({});
+
     this.countries = [
-      'Switzerland',
+      'Austria',
+      'France',
+      'Germany',
+      'Italy',
       'Liechtenstein',
+      'Switzerland',
+      'USA',
       'Other'
     ];
     this.genders = [
@@ -81,46 +65,109 @@ export class ProfilePage implements OnInit {
       'Other'
     ];
 
+
     this.matchingPasswordsGroup = new FormGroup({
       password: new FormControl('', Validators.compose([
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$/),
         Validators.minLength(5),
-        Validators.required,
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+        Validators.maxLength(500),
       ])),
-      confirmPassword: new FormControl('', Validators.required)
+      confirmPassword: new FormControl('', Validators.maxLength(500))
     }, (formGroup: FormGroup) => {
       return PasswordValidator.areEqual(formGroup);
     });
 
-    this.registrationForm = this.formBuilder.group({
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
+    this.profileForm = this.formBuilder.group({
+      firstName: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
+      lastName: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])),
       email: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+        // Validators.email,
+        Validators.pattern(/^[^ @]+@[^ @]+\.[^ @]+$/),
+        Validators.maxLength(100)
       ])),
-      gender: new FormControl('', Validators.required),
-      street: new FormControl('', Validators.required),
+      gender: new FormControl('', Validators.compose([
+        Validators.maxLength(100)
+      ])),
+      birthday: new FormControl('', Validators.compose([
+        Validators.maxLength(10),
+        DateValidator.date,
+      ])),
+      street: new FormControl('', Validators.compose([
+        Validators.maxLength(100)
+      ])),
       postalCode: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('^[0-9]+$')
+        // postal code should be a number
+        Validators.pattern(/^[0-9]+$/),
+        Validators.maxLength(20)
       ])),
-      city: new FormControl('', Validators.required),
-      country: new FormControl('', Validators.required),
-      phone: new FormControl('', Validators.required),
+      city: new FormControl('', Validators.compose([
+        Validators.maxLength(100)
+      ])),
+      country: new FormControl('', Validators.compose([
+        Validators.maxLength(100)
+      ])),
+      phone: new FormControl('', Validators.compose([
+        // a phone number starts with an optional + and consists of digits and spaces
+        Validators.pattern('^[+]?[0-9 ]+$'),
+        Validators.minLength(3),
+        Validators.maxLength(100)
+      ])),
       matchingPasswords: this.matchingPasswordsGroup,
-      terms: new FormControl(false, Validators.pattern('true'))
+      isServiceProvider: new FormControl(false),
+      isEventManager: new FormControl(false),
+    });
+
+  }
+
+  /**
+   * Load user data when entering profile.
+   */
+  ionViewWillEnter() {
+    this.loadUser();
+  }
+
+
+  /**
+   * Get the saved profile data.
+   */
+  public loadUser() {
+    this.authService.loadProfile().subscribe(user => {
+      this.user = user;
+      console.log('this.user');
+      console.log(this.user);
+      this.profileForm.patchValue(this.user);
     });
   }
 
-  onSubmit(value) {
-    console.log(value);
-    this.authService.saveProfile(this.registrationForm.value).subscribe();
-    this.router.navigate(['/', 'registered']).then(nav => {
-      console.log(nav); // true if navigation is successful
-    }, err => {
-      console.log(err); // when there's an error
-    });
+  /**
+   * Get form data and format it.
+   */
+  private prepareProfileSave(): User {
+    const form = this.profileForm.value;
+    form.password = form.matchingPasswords.password;
+    form.matchingPasswords = undefined;
+    delete form.matchingPasswords;
+    return new User().deserialize(form);
+  }
+
+  /**
+   * Save user profile
+   */
+  onSubmit() {
+    const saveUser = this.prepareProfileSave();
+    console.log(saveUser);
+    this.authService.saveProfile(saveUser).subscribe(
+      (data: any) => {
+        this.alertService.presentToast(data.msg).then();
+      }
+    );
   }
 
 }

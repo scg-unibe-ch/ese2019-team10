@@ -1,0 +1,40 @@
+.input-outer-padding {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.input-inner-padding {
+  width: auto;
+  height: auto;
+  padding: 0;
+  border-top-left-radius: 20px;
+}
+
+.input-field {
+  width: 100%;
+  display: block;
+  /*resets for hiding the input boundaries */
+  border: 1px solid var(--ion-color-primary);
+  margin: 0;
+  padding: 0;
+  outline: none;
+  font-family: sans-serif;
+  font-size: 16px;
+}
+
+.search-confirm {
+  height:100%;
+  padding: 0;
+  /* here the magic begins */
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  --border-radius: 0;
+}
+
+
+
+.search-confirm:hover {
+}

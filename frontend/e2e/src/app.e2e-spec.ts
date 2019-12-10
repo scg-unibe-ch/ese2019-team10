@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('new App', () => {
+describe('new app', () => {
   let page: AppPage;
 
   beforeEach(() => {
@@ -9,6 +9,6 @@ describe('new App', () => {
 
   it('should be blank', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toContain('The world is your oyster.');
+    expect(page.getTitleText()).toContain('Eventum');
   });
 });

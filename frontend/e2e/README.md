@@ -1,0 +1,1 @@
+The tests work (best) on a new installation. If too many services and events are added, some might fail due to scrolling issues making some elements unclickable. Unfortunately, we didn't have time to fix these issues and make the tests scroll to the buttons before attempting to click them.

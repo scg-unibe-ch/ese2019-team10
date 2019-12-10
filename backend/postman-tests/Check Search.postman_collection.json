@@ -1,0 +1,1033 @@
+{
+	"info": {
+		"_postman_id": "00a00aa0-e983-4145-8715-eda0c28dcc94",
+		"name": "Check Search",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7c62ce4b-4c0b-4681-8561-1659a83aac29",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Body says success\", function () {",
+							"    pm.response.to.have.body({\"msg\": \"User created\"});",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cd1e743c-1705-4664-837a-6b85fc56643b",
+						"exec": [
+							"const firstName = Math.random().toString(36).substring(7);",
+							"const lastName = Math.random().toString(36).substring(7);",
+							"const  email = firstName + '.' + lastName + '@mail.com'",
+							"pm.globals.set('firstName', firstName);",
+							"pm.globals.set('lastName', lastName);",
+							"pm.globals.set('email', email)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\": \"{{firstName}}\",\n\t\"lastName\": \"{{lastName}}\",\n\t\"email\": \"{{email}}\",\n\t\"street\": \"addr\",\n\t\"password\": \"p4ssw0rd\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"register"
+					]
+				},
+				"description": "creates a user in the database via /api/register"
+			},
+			"response": []
+		},
+		{
+			"name": "login as admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9ad01265-9750-44e6-ad0d-d1389f0473a6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.globals.set('idToken', pm.response.json().idToken)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"admin@mail.com\",\n\t\"password\": \"xugai4nie9ief5AhshaiSh1aequaiy\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get to-approve as admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abf0f581-eba4-49ff-bc44-06c1ba83d853",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let max = 0;",
+							"pm.response.json().forEach((user) => {if (user.id > max) {max = user.id}});",
+							"pm.globals.set('newId', max);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/admin/to-approve",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"to-approve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "approve new id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d27496d3-3640-4bf3-9192-872de8c68f93",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"user approved message\", function () {",
+							"    pm.response.json().msg === \"User approved\";",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "auth",
+						"value": "{{idToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/admin/approve/{{newId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"admin",
+						"approve",
+						"{{newId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login as user 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1a9c48e6-fd11-48bd-917d-f15b50a70511",
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body says not approved\", function () {",
+							"    pm.response.json().id === \"{{newId}}\";",
+							"});",
+							"",
+							"pm.globals.set('idToken', pm.response.json().idToken)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "31eb3265-80bc-44be-8fa9-f20bcd0516bc",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"p4ssw0rd\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				},
+				"description": "logs in with email \"david.herrmann@protonmail.com\" and password \"p4ssw0r\""
+			},
+			"response": []
+		},
+		{
+			"name": "Create Event",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f9590fc7-543c-43e0-9d0f-78665dbd7816",
+						"exec": [
+							"const eventName = Math.random().toString(36).substring(7);",
+							"pm.globals.set('eventName1', eventName);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c825b1c9-90d3-4272-ba4d-806b866eadd8",
+						"exec": [
+							"pm.test(\"Was successful\", function() {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.have.body({\"msg\": \"Event created\"})",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "auth",
+						"value": "{{idToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"{{eventName}}\",\n  \"description\": \"Ut enim ad minim veniam word\",\n  \"date\": \"Friday evening, December 20, 2019\",\n  \"place\": \"Zurich\",\n  \"userId\": {{newId}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/event",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"event"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Event 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f9590fc7-543c-43e0-9d0f-78665dbd7816",
+						"exec": [
+							"const eventName = Math.random().toString(36).substring(7);",
+							"pm.globals.set('eventName2', eventName);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c825b1c9-90d3-4272-ba4d-806b866eadd8",
+						"exec": [
+							"pm.test(\"Was successful\", function() {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.have.body({\"msg\": \"Event created\"})",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"{{eventName}}\",\n  \"description\": \"Ut enim ad minim veniam word\",\n  \"date\": \"Friday evening, December 20, 2019\",\n  \"place\": \"Bern\",\n  \"userId\": {{newId}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/event",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"event"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Service",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f9590fc7-543c-43e0-9d0f-78665dbd7816",
+						"exec": [
+							"const serviceName = Math.random().toString(36).substring(7);",
+							"pm.globals.set('serviceName1', serviceName);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c825b1c9-90d3-4272-ba4d-806b866eadd8",
+						"exec": [
+							"pm.test(\"Was successful\", function() {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.have.body({\"msg\": \"Service created\"})",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"{{serviceName}}\",\n  \"description\": \"Lorem ipsum dolor sit amet\",\n  \"price\": \"250CHF\",\n  \"availability\": \"Saturday and Sunday, from 8am to 12pm\",\n  \"place\": \"Zurich\",\n  \"available\": true,\n  \"quantity\": \"5 plates of appetisers word\",\n  \"categoryId\": 3,\n  \"userId\": {{newId}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/service",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"service"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Service 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f9590fc7-543c-43e0-9d0f-78665dbd7816",
+						"exec": [
+							"const serviceName = Math.random().toString(36).substring(7);",
+							"pm.globals.set('serviceName2', serviceName);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c825b1c9-90d3-4272-ba4d-806b866eadd8",
+						"exec": [
+							"pm.test(\"Was successful\", function() {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.have.body({\"msg\": \"Service created\"})",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"{{serviceName}}\",\n  \"description\": \"Lorem ipsum dolor sit amet\",\n  \"price\": \"250CHF\",\n  \"availability\": \"Saturday and Sunday, from 8am to 12pm\",\n  \"place\": \"Zurich\",\n  \"available\": true,\n  \"quantity\": \"5 plates of appetisers word\",\n  \"categoryId\": 3,\n  \"userId\": {{newId}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/service",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"service"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Service 3",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f9590fc7-543c-43e0-9d0f-78665dbd7816",
+						"exec": [
+							"const serviceName = Math.random().toString(36).substring(7);",
+							"pm.globals.set('serviceName3', serviceName);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c825b1c9-90d3-4272-ba4d-806b866eadd8",
+						"exec": [
+							"pm.test(\"Was successful\", function() {",
+							"    pm.response.to.have.status(201);",
+							"    pm.response.to.have.body({\"msg\": \"Service created\"})",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "auth",
+						"type": "text",
+						"value": "{{idToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"{{serviceName}}\",\n  \"description\": \"Lorem ipsum dolor sit amet\",\n  \"price\": \"250CHF\",\n  \"availability\": \"Saturday and Sunday, from 8am to 12pm\",\n  \"place\": \"Zurich\",\n  \"available\": true,\n  \"quantity\": \"5 plates of appetisers word\",\n  \"categoryId\": 1,\n  \"userId\": {{newId}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/user/service",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"service"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get profile info Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bdb3b46-747f-40b8-8918-49c105151135",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"serviceIds = pm.response.json().services.map(service => service.id)",
+							"eventIds = pm.response.json().events.map(event => event.id)",
+							"",
+							"pm.globals.set('serviceIds', serviceIds)",
+							"pm.globals.set('eventIds', eventIds)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth",
+						"value": "{{idToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3000/api/user/profile/{{newId}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"profile",
+						"{{newId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f33b98b8-cc7f-4511-baae-e91efea68c1e",
+						"exec": [
+							"pm.test(\"Successful\", function() {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"Only events\", function() {",
+							"    pm.expect(pm.response.json().services.length).to.be.equal(0)",
+							"    pm.expect(pm.response.json().users.length).to.be.equal(0)",
+							"})",
+							"",
+							"pm.test(\"contains new events\", function() {",
+							"    const eventIds = pm.globals.get('eventIds')",
+							"    for(let i = 0; i < eventIds.length; i++) {",
+							"        pm.expect(pm.response.json().events.map(event => event.id)).to.be.an('array').that.does.include(eventIds[i]);",
+							"    }",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"searchCategory\": \"everything\",\n  \"searchTerm\": \"enim december\",\n  \"searchAttribute\": \"everything\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/search",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f33b98b8-cc7f-4511-baae-e91efea68c1e",
+						"exec": [
+							"pm.test(\"Successful\", function() {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"Only services\", function() {",
+							"    pm.expect(pm.response.json().events.length).to.be.equal(0)",
+							"    pm.expect(pm.response.json().users.length).to.be.equal(0)",
+							"})",
+							"",
+							"pm.test(\"contains new services\", function() {",
+							"    const servicetIds = pm.globals.get('serviceIds')",
+							"    for(let i = 0; i < serviceIds.length; i++) {",
+							"        pm.expect(pm.response.json().services.map(service => service.id)).to.be.an('array').that.does.include(serviceIds[i]);",
+							"    }",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"searchCategory\": \"everything\",\n  \"searchTerm\": \"dolor appetisers 250CHF\",\n  \"searchAttribute\": \"everything\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/search",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f33b98b8-cc7f-4511-baae-e91efea68c1e",
+						"exec": [
+							"pm.test(\"Successful\", function() {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"Only services and events\", function() {",
+							"    pm.expect(pm.response.json().users.length).to.be.equal(0)",
+							"})",
+							"",
+							"pm.test(\"contains new services\", function() {",
+							"    const servicetIds = pm.globals.get('serviceIds')",
+							"    for(let i = 0; i < serviceIds.length; i++) {",
+							"        pm.expect(pm.response.json().services.map(service => service.id)).to.be.an('array').that.does.include(serviceIds[i]);",
+							"    }",
+							"})",
+							"",
+							"pm.test(\"contains new events\", function() {",
+							"    const eventIds = pm.globals.get('eventIds')",
+							"    for(let i = 0; i < eventIds.length; i++) {",
+							"        pm.expect(pm.response.json().events.map(event => event.id)).to.be.an('array').that.does.include(eventIds[i]);",
+							"    }",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"searchCategory\": \"everything\",\n  \"searchTerm\": \"word\",\n  \"searchAttribute\": \"everything\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/search",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search 4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f33b98b8-cc7f-4511-baae-e91efea68c1e",
+						"exec": [
+							"pm.test(\"Successful\", function() {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"Only services\", function() {",
+							"    pm.expect(pm.response.json().events.length).to.be.equal(0)",
+							"    pm.expect(pm.response.json().users.length).to.be.equal(0)",
+							"})",
+							"",
+							"pm.test(\"contains new services\", function() {",
+							"    const servicetIds = pm.globals.get('serviceIds')",
+							"    for(let i = 0; i < serviceIds.length; i++) {",
+							"        pm.expect(pm.response.json().services.map(service => service.id)).to.be.an('array').that.does.include(serviceIds[i]);",
+							"    }",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"searchCategory\": \"services\",\n  \"searchTerm\": \"word\",\n  \"searchAttribute\": \"everything\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/search",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search 5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f33b98b8-cc7f-4511-baae-e91efea68c1e",
+						"exec": [
+							"pm.test(\"Successful\", function() {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"Only events\", function() {",
+							"    pm.expect(pm.response.json().services.length).to.be.equal(0)",
+							"    pm.expect(pm.response.json().users.length).to.be.equal(0)",
+							"})",
+							"",
+							"pm.test(\"contains new events\", function() {",
+							"    const eventIds = pm.globals.get('eventIds')",
+							"    for(let i = 0; i < eventIds.length; i++) {",
+							"        pm.expect(pm.response.json().events.map(event => event.id)).to.be.an('array').that.does.include(eventIds[i]);",
+							"    }",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"searchCategory\": \"events\",\n  \"searchTerm\": \"word\",\n  \"searchAttribute\": \"everything\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/search",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search 6",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f33b98b8-cc7f-4511-baae-e91efea68c1e",
+						"exec": [
+							"pm.test(\"Successful\", function() {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"pm.test(\"Only services\", function() {",
+							"    pm.expect(pm.response.json().events.length).to.be.equal(0)",
+							"    pm.expect(pm.response.json().users.length).to.be.equal(0)",
+							"})",
+							"",
+							"pm.test(\"contains two new services\", function() {",
+							"    const servicetIds = pm.globals.get('serviceIds')",
+							"    for(let i = 0; i < 2; i++) {",
+							"        pm.expect(pm.response.json().services.map(service => service.id)).to.be.an('array').that.does.include(serviceIds[i]);",
+							"    }",
+							"})",
+							"",
+							"pm.test(\"does not contain third service\", function() {",
+							"    pm.expect(pm.response.json().services.map(service => service.id)).to.be.an('array').that.does.not.include(serviceIds[2]);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"searchCategory\": \"services\",\n  \"searchTerm\": \"3\",\n  \"searchAttribute\": \"category\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/search",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"search"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

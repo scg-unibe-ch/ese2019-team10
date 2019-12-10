@@ -1,0 +1,189 @@
+<ion-header>
+  <app-header class="search" [title]="title">
+  </app-header>
+</ion-header>
+
+<ion-content class="ion-margin ion-padding">
+  <ion-card class="search-card ion-margin ion-padding-top">
+
+    <div class="input-outer-padding">
+      <div class="input-inner-padding">
+        <ion-searchbar #mainSearch id="search-field" class="input-field ion-no-padding ion-no-margin"
+                       placeholder="Search..." autocomplete="on" color="light" inputmode="search"
+                       type="search"
+                       showCancelButton="focus" (keyup.enter)="search(mainSearch.value)"
+                       (ionChange)="getSearchTerm(mainSearch.value)" animated="true">
+        </ion-searchbar>
+      </div>
+      <ion-button class="search-confirm ion-no-margin" id="search-button" color="primary"
+                  (click)="search(mainSearch.value)">
+        <ion-icon name="search" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+
+
+    <ion-segment #segmentCategory color="tertiary" (ionChange)="selectCategory(segmentCategory.value)"
+                 scrollable="true">
+      <ion-segment-button value="everything" checked>
+        <ion-label>Everything</ion-label>
+        <ion-icon name="infinite"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="services">
+        <ion-label>Services</ion-label>
+        <ion-icon name="build"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="events">
+        <ion-label>Events</ion-label>
+        <ion-icon name="gift"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="user">
+        <ion-label>Users</ion-label>
+        <ion-icon name="person"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+
+
+    <ion-item *ngIf="searchCategory === 'services'">
+      <ion-label>Refine your search:</ion-label>
+      <ion-select [(ngModel)]="searchAttribute" value="Category" interface="alert" ok-text="OK" cancel-text="Cancel">
+        <ion-select-option value="everything" selected>Everything</ion-select-option>
+        <ion-select-option value="name">Name</ion-select-option>
+        <ion-select-option value="category">Category</ion-select-option>
+        <ion-select-option value="description">Description</ion-select-option>
+        <ion-select-option value="price">Price</ion-select-option>
+        <ion-select-option value="availability">Availability</ion-select-option>
+        <ion-select-option value="place">Place</ion-select-option>
+        <ion-select-option value="quantity">Quantity</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="searchCategory === 'events'">
+      <ion-label>Refine your search:</ion-label>
+      <ion-select [(ngModel)]="searchAttribute" value="Category" interface="alert" ok-text="OK" cancel-text="Cancel">
+        <ion-select-option value="everything" selected>Everything</ion-select-option>
+        <ion-select-option value="name">Name</ion-select-option>
+        <ion-select-option value="description">Description</ion-select-option>
+        <ion-select-option value="date">Date</ion-select-option>
+        <ion-select-option value="place">Place</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="searchCategory === 'user'">
+      <ion-label>Refine your search:</ion-label>
+      <ion-select [(ngModel)]="searchAttribute" value="Category" interface="alert" ok-text="OK" cancel-text="Cancel">
+        <ion-select-option value="everything" selected>Everything</ion-select-option>
+        <ion-select-option value="firstName">First Name</ion-select-option>
+        <ion-select-option value="lastName">Last Name</ion-select-option>
+        <ion-select-option value="city">City</ion-select-option>
+        <ion-select-option value="country">Country</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-segment #categorySegment *ngIf="searchAttribute === 'category'" color="tertiary"
+                 (ionChange)="search(categorySegment.value)"
+                 scrollable="true">
+      <ion-segment-button *ngFor="let category of categories" [value]="category.id">
+        <ion-label>{{category.name}}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+
+    <ion-card-content *ngIf="hasSearched" class="ion-no-padding ion-no-margin">
+      <ion-list *ngIf="foundResult; else noResultsFound" lines="none">
+
+        <ion-item-group *ngIf="foundServices && showServices">
+          <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+            <ion-icon class="divider-icon" slot="start" name="build"></ion-icon>
+            <ion-label>
+              Services
+            </ion-label>
+          </ion-item-divider>
+
+          <ion-card *ngFor="let service of services" class="ion-margin-bottom ion-no-padding"
+                    (click)="goToService(service)"
+                    type="button" button="true">
+            <ion-item>
+              <ion-badge slot="end" color="warning">Name</ion-badge>
+              <ion-label class="ion-text-wrap">{{service.name}}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-badge slot="end" color="warning">Description</ion-badge>
+              <ion-label class="ion-text-wrap">{{service.description}}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-badge slot="end" color="warning">Place</ion-badge>
+              <ion-label class="ion-text-wrap">{{service.place}}</ion-label>
+            </ion-item>
+          </ion-card>
+
+        </ion-item-group>
+
+        <ion-item-group *ngIf="foundEvents && showEvents">
+
+          <ion-item-divider class=" page-divider ion-margin-top" color="dark" sticky="true">
+            <ion-icon class="divider-icon" slot="start" name="gift"></ion-icon>
+            <ion-label>
+              Events
+            </ion-label>
+          </ion-item-divider>
+
+          <ion-card *ngFor="let event of events" class="ion-margin-bottom" (click)="goToEvent(event)" type="button"
+                    button="true">
+            <ion-item>
+              <ion-badge slot="end" color="warning">Name</ion-badge>
+              <ion-label class="ion-text-wrap">{{event.name}}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-badge slot="end" color="warning">Description</ion-badge>
+              <ion-label class="ion-text-wrap">{{event.description}}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-badge slot="end" color="warning">Place</ion-badge>
+              <ion-label class="ion-text-wrap">{{event.place}}</ion-label>
+            </ion-item>
+          </ion-card>
+
+        </ion-item-group>
+
+        <ion-list *ngIf="foundUsers && showUsers" lines="none">
+
+          <ion-item-divider class="page-divider ion-margin-top" color="dark" sticky="true">
+            <ion-icon class="divider-icon" slot="start" name="person"></ion-icon>
+            <ion-label>
+              Users
+            </ion-label>
+          </ion-item-divider>
+
+          <ion-card *ngFor="let user of users" class="ion-margin-bottom" (click)="goToUser(user)" type="button"
+                    button="true">
+            <ion-item>
+              <ion-badge slot="end" color="warning">Name</ion-badge>
+              <ion-label class="ion-text-wrap">{{user.firstName + ' ' + user.lastName}}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-badge slot="end" color="warning">City</ion-badge>
+              <ion-label class="ion-text-wrap">{{user.city}}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-badge slot="end" color="warning">Country</ion-badge>
+              <ion-label class="ion-text-wrap">{{user.country}}</ion-label>
+            </ion-item>
+          </ion-card>
+
+        </ion-list>
+
+      </ion-list>
+
+      <ng-template #noResultsFound>
+        <div id="noResults" class="page-text ion-margin ion-padding">
+          <p>
+          No results were found. Please try again.
+          </p>
+        </div>
+      </ng-template>
+    </ion-card-content>
+
+  </ion-card>
+
+
+</ion-content>

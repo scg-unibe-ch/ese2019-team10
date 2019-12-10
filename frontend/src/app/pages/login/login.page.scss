@@ -1,15 +1,34 @@
-.ion-margin-top {
-  margin-top: 30px;
+ion-content {
+  .login-form {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
-.form-icon {
-  margin-right: 9px;
+ion-card {
+  max-width: 400px;
+  width: 90%;
 }
 
-.left-margin {
-  margin-left: 9px;
-}
 
-span.ion-text-left {
-  margin-right: auto;
-}
+
+/*ion-input {
+  background-color: #f6f6f6;
+  color: #000000;
+  padding: 15px 32px;
+  text-decoration: none;
+  font-size: 16px;
+  width: 85%;
+  border: 2px solid #f6f6f6;
+  transition: all 0.5s ease-in-out;
+  height: 35px;
+  text-align: center;
+  margin: 0 auto 10px;
+  box-shadow: inset 0 1px 2px rgba(27, 31, 35, .075);
+}*/
+
+
