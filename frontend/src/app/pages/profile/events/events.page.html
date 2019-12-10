@@ -164,6 +164,7 @@
         <ion-item *ngFor="let serviceRequest of serviceRequests">
           <ion-button (click)='viewServiceRequest(serviceRequest)' fill="clear">
             {{serviceRequest.serviceName}} is {{serviceRequest.status}}
+            <ion-icon name="arrow-dropright"></ion-icon>
           </ion-button>
         </ion-item>
       </ion-list>

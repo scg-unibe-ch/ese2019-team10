@@ -16,9 +16,9 @@
         </ion-card-title>
       </ion-card-header>
       <ion-card-content class="ion-no-margin ion-no-padding">
-        <ion-item><b>Event:</b><ion-label margin>{{ requestData.eventName }}</ion-label></ion-item>
-        <ion-item><b>Message:</b><ion-label margin> {{ requestData.message }}</ion-label></ion-item>
-        <ion-item><b>You can ask something to:</b><ion-label margin> {{ requestData.userEmail }}</ion-label></ion-item>
+        <ion-item><b>Event:</b><ion-label class="ion-margin">{{ requestData.eventName }}</ion-label></ion-item>
+        <ion-item><b>Message:</b><ion-label class="ion-margin"> {{ requestData.message }}</ion-label></ion-item>
+        <ion-item><b>You can ask something to:</b><ion-label class="ion-margin"> {{ requestData.userEmail }}</ion-label></ion-item>
         <ion-item><ion-textarea placeholder="Enter your reply here ..." [(ngModel)]="reply">
           </ion-textarea>
         </ion-item>

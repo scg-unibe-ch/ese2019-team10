@@ -245,8 +245,9 @@
     <ion-card-content *ngIf="serviceRequests.length > 0" class="ion-no-margin ion-no-padding">
       <ion-card *ngFor="let serviceRequest of serviceRequests">
         <ion-card-title>
-          <ion-label class="ion-text-wrap">
-            Request for: {{serviceRequest.serviceName}}
+          <b class="ion-margin">Request for:</b>
+          <ion-label class="ion-text-wrap ion-margin">
+             {{serviceRequest.serviceName}}
           </ion-label>
         </ion-card-title>
         <ion-card-content>
@@ -254,6 +255,7 @@
           <ion-item *ngFor="let request of serviceRequest.requests">
             <ion-button (click)='viewServiceRequest(request, serviceRequest.serviceId)' fill="clear">
               {{request.eventName}}
+              <ion-icon name="arrow-dropright"></ion-icon>
             </ion-button>
           </ion-item>
         </ion-list>

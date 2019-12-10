@@ -16,10 +16,10 @@
         </ion-card-title>
       </ion-card-header>
       <ion-card-content class="ion-no-margin ion-no-padding">
-        <ion-item><b>Request from:</b><ion-label margin>{{ requestData.serviceName }}</ion-label></ion-item>
-        <ion-item><b>Status:</b><ion-label margin> {{ requestData.status }}</ion-label></ion-item>
-        <ion-item><b>Your message:</b><ion-label margin> {{ requestData.message }}</ion-label></ion-item>
-        <ion-item><b>Reply:</b> <ion-label margin>{{ requestData.reply }}</ion-label></ion-item>
+        <ion-item><b>Request from:</b><ion-label class="ion-margin">{{ requestData.serviceName }}</ion-label></ion-item>
+        <ion-item><b>Status:</b><ion-label class="ion-margin"> {{ requestData.status }}</ion-label></ion-item>
+        <ion-item><b>Your message:</b><ion-label class="ion-margin"> {{ requestData.message }}</ion-label></ion-item>
+        <ion-item><b>Reply:</b> <ion-label class="ion-margin">{{ requestData.reply }}</ion-label></ion-item>
         <ion-button *ngIf="requestData.status == 'Pending' || requestData.status == 'Rejected'" color="danger" (click)="deleteRequest()">
           Delete
         </ion-button>
