@@ -37,7 +37,7 @@ ion-slide {
   color: #ffffff;
 }
 
-.join-button {
+.join-button, .about-button {
   margin-top: 30px;
   color: white;
   --color: white;
@@ -50,11 +50,10 @@ ion-slide {
   --color-hover: black;
 }
 
-.join-button:hover {
+.join-button:hover, .about-button:hover {
   color: black;
   --color: black;
 }
-
 
 .next-button, .previous-button {
   background: none;
@@ -74,13 +73,13 @@ ion-slide {
 .next-button {
   position: absolute;
   right: 5px;
-  top: 50%;
+  bottom: 40%;
 }
 
 .previous-button {
   position: absolute;
   left: 5px;
-  top: 50%;
+  bottom: 40%;
 }
 
 .next-icon, .previous-icon {
@@ -191,6 +190,9 @@ ion-slide {
     padding-left: 25px;
   }
 
+  .next-button, .previous-button {
+    bottom: 5px;
+  }
 }
 
 
@@ -211,32 +213,42 @@ ion-slide {
   }
 }
 
-/*
 
-ion-content {
-  div {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+@media (max-width: 500px) {
+  .join-button {
+    margin-top: 10px;
   }
-}
 
-ion-card {
-  box-shadow: none !important;
-  border: none !important;
-}
+  .first-text, .second-text, .third-text {
+    font-size: 1.4em;
+  }
 
-.home-buttons {
-  text-align: center;
-  align-self: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 20px;
-  max-width: 500px;
-}
-*/
+  .column-text {
+    font-size: 1.1em;
+    line-height: 1.2em;
+  }
 
+  .first-text {
+    margin-top: 11px;
+  }
+
+  .second-text {
+    margin-top: 11px;
+  }
+
+  .third-text {
+    margin-top: 11px;
+  }
+
+  .end-text {
+    margin-top: 5px;
+    padding-top: 5px;
+    font-size: 1.6em;
+  }
+
+  .join-button, .about-button {
+    margin-top: 10px;
+  }
+
+
+}
