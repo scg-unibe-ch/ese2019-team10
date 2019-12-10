@@ -16,18 +16,39 @@
         </ion-card-title>
       </ion-card-header>
       <ion-card-content class="ion-no-margin ion-no-padding">
-        <ion-item><b>Event:</b><ion-label class="ion-margin">{{ requestData.eventName }}</ion-label></ion-item>
-        <ion-item><b>Message:</b><ion-label class="ion-margin"> {{ requestData.message }}</ion-label></ion-item>
-        <ion-item><b>You can ask something to:</b><ion-label class="ion-margin"> {{ requestData.userEmail }}</ion-label></ion-item>
-        <ion-item><ion-textarea placeholder="Enter your reply here ..." [(ngModel)]="reply">
+        <ion-item><b>Event:</b>
+          <ion-label class="ion-margin ion-text-wrap">{{ requestData.eventName }}</ion-label>
+        </ion-item>
+        <ion-item><b class="ion-text-wrap">Message:</b>
+          <ion-label class="ion-margin ion-text-wrap"> {{ requestData.message }}</ion-label>
+        </ion-item>
+        <ion-item><b class="ion-text-wrap">Ask / reply to:</b>
+          <ion-label class="ion-margin ion-text-wrap"> {{ requestData.userEmail }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-textarea placeholder="Enter your reply here ..." [(ngModel)]="reply">
           </ion-textarea>
         </ion-item>
-        <ion-button color="danger" (click)="confirmService(false)">
-          Reject
-        </ion-button>
-        <ion-button color="secondary" (click)="confirmService(true)">
-          Confirm
-        </ion-button>
+
+        <ion-row class="ion-justify-content-evenly ion-no-margin ion-no-padding ion-wrap ">
+          <ion-col class="ion-align-self-start ion-no-margin ion-no-padding" size-xs="12" size-sm="4">
+            <ion-button class="form-button submit-btn ion-no-margin" color="danger" type="button"
+                        expand="full" (click)="confirmService(false)">
+              <ion-icon slot="start" name="close"></ion-icon>
+              Reject
+            </ion-button>
+          </ion-col>
+
+          <ion-col class="ion-align-self-end ion-no-margin ion-no-padding " size-xs="12" offset-sm="4" size-sm="4">
+            <ion-button class="form-button submit-btn ion-no-margin" color="primary" type="button"
+                        expand="full" (click)="confirmService(true)">
+              <ion-icon slot="start" name="checkmark"></ion-icon>
+              Confirm
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+
       </ion-card-content>
     </ion-card>
   </div>
